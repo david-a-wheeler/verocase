@@ -4,7 +4,7 @@ Argevide
 https://www.argevide.com/documents/ltac.txt
 
 1. LTAC is a text format for representing assurance case arguments regardless of the notation originally used. LTAC can be mapped to GSN, CAE, TRUST-IT, and SACM notations. An LTAC argument contains a set of elements, each presented in a separate line.
-2. LTAC defines its own argument element types that can be mapped to GSN, CAE, TRUST-IT, and SACM. LTAC defines its own syntax described below which is different from the rules of GSN, CAE, TRUST-IT, or SACM. Only the rules desribed below apply to LTAC.
+2. LTAC defines its own argument element types that can be mapped to GSN, CAE, TRUST-IT, and SACM. LTAC defines its own syntax described below which is different from the rules of GSN, CAE, TRUST-IT, or SACM. Only the rules described below apply to LTAC.
 3. The allowed element types are Claim, Strategy, Justification, Evidence, Context and Assumption. Each argument package in LTAC should start (at the top) with a claim.
 4. A keyword 'Link' is used to cite an already specified argument element within the same package.
 5. Each argument element is defined in one line in LTAC that begins with dash and a type keyword (or 'Link' keyword) followed optionally by an identifier, e.g.
@@ -42,7 +42,7 @@ https://www.argevide.com/documents/ltac.txt
   i) LTAC can be used to present a single module argument, not modular arguments. Interfaces and away elements cannot be represented in LTAC. Other more advanced notations can be used to represent modular arguments.
   j) It's not allowed to add additional text to LTAC argumentation. Each line must contain one argument element. We don't allow blank lines so that an LTAC is usually also legal markdown.
   k) LTAC is a code. In Markdown you should place 3 backticks ` ``` ` on a line above and below the code block to present LTAC arguments.
-  l) Elements can end with "{Options}" which may influence how they are translated into various formats.
+  l) Elements can include "{Options}" which may influence how they are translated into various formats.
 
 # LTAC example
 ```
@@ -51,8 +51,9 @@ https://www.argevide.com/documents/ltac.txt
   - Strategy S1: Decompose safety argument by system hazards
     - Claim G2: All hazards have been identified
       - Evidence Ev1: Hazard analysis (HARA report.pdf)
-    - Claim G3: All hazards have been mitigated
+    - Claim G3: All hazards have been mitigated {defeated}
       - Link Ev1
+    - Claim ^[Package Verification] Verification: Hazard mitigation verified
 ```
 
 # LTAC mapping to GSN (Goal Structuring Notation)
@@ -92,7 +93,7 @@ LTAC arguments can be mapped to CAE.
   Typically this doesn't need to be shown separately in LTAC, but it *does*
   need to be in LTAC when applying options to the relationship.
 
-By default assertionDeclation=asserted and abstract=false.
+By default assertionDeclaration=asserted and abstract=false.
 Any element that uses an
 external reference sets its assertionDeclaration=asCited.
 
@@ -144,7 +145,7 @@ Element         = Indent Bullet WS NodeType [WS Identifier] ":" WS Text [WS Refe
                   [ ElementList ] 
                 | Indent Bullet WS "Link" WS Identifier [WS Options] Newline ;
 
-Bullet = "-" | "*"
+Bullet = "-" | "*" ;
 
 NodeType        = "Claim" | "Strategy" | "Evidence" | "Justification" | "Context" | "Assumption" | "Relation";
 

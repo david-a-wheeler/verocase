@@ -40,8 +40,9 @@ https://www.argevide.com/documents/ltac.txt
     - Justifications and Assumptions should be used for higher-level claims and strategies.
     - If a Claim is to be supported by Evidence and by Strategy, the Evidence should be replaced by a Claim describing it and this Claim can be supported by this Evidence element
   i) LTAC can be used to present a single module argument, not modular arguments. Interfaces and away elements cannot be represented in LTAC. Other more advanced notations can be used to represent modular arguments.
-  j) It's not allowed to add additional text to LTAC argumentation. Each line should contain one argument element or be left blank.
+  j) It's not allowed to add additional text to LTAC argumentation. Each line must contain one argument element. We don't allow blank lines so that an LTAC is usually also legal markdown.
   k) LTAC is a code. In Markdown you should place 3 backticks ` ``` ` on a line above and below the code block to present LTAC arguments.
+  l) Elements can end with "{Options}" which may influence how they are translated into various formats.
 
 # LTAC example
 ```
@@ -92,7 +93,8 @@ LTAC arguments can be mapped to CAE.
   need to be in LTAC when applying options to the relationship.
 
 By default assertionDeclation=asserted and abstract=false.
-If there is an external reference, its assertionDeclaration=asCited.
+Any element that uses an
+external reference sets its assertionDeclaration=asCited.
 
 Certain options are defined to enable better SACM support:
 

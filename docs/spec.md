@@ -94,10 +94,10 @@ In markdown being read in, if a code block (using ` or ~)
 is marked as being `ltac` format, its contents will be read as an LTAC
 argument (package). In addition, if there is an HTML comment
 on a line of its own saying
-<tt>&lt;--&nbsp;ltac&nbsp;--&gt;</tt>
+`<!-- ltac -->`
 then the lines afterwards until are an LTAC argument (package) until
 a corresponding line
-<tt>&lt;--&nbsp;end&nbsp;ltac&nbsp;--&gt;</tt>.
+`<!-- end ltac -->`.
 
 Any one LTAC argument (package)
 is expected to have one topmost Element
@@ -107,19 +107,19 @@ The system must record a map from the "Package ID" to the
 the parsed LTAC data, as it is likely to need it later.
 
 A line with
-<tt>&lt;--&nbsp;ltac-config&nbsp;--&gt;</tt>
+`<!-- ltac-config -->`
 contains lines of JSON for configuration information until its corresponding
-<tt>&lt;--&nbsp;end&nbsp;ltac-config&nbsp;--&gt;</tt>.
+`<!-- end ltac-config -->`.
 
 Any line beginning with 1+ `#` followed by a space is a markdown header.
 If the header begins with "Package" or an Element type (e.g., "Claim"),
 it's remembered as the default "current element".
 
 Any line of the form
-<tt>&lt;--&nbsp;ltac&nbsp;INFO--&gt;</tt>
+`<!-- ltac INFO -->`
 is copied back out, but the following lines are replaced with updated data
 until the corresponding line
-<tt>&lt;--&nbsp;end&nbsp;ltac&nbsp;--&gt;</tt>.
+`<!-- end ltac -->`.
 Exactly what is replaced depends on INFO.
 INFO has a TYPE, optionally followed by a space and element identifier
 (if no element identifier is given the default "current element" is used).
@@ -194,6 +194,7 @@ class Node:
     cited_pkg: str          # package name from ^[PkgName] prefix; empty = default
     depth: int              # 0-based indentation level (0 = root)
     parent: Optional['Node'] # back-reference; None for roots
+    link_target: Optional['Node'] # for Link nodes: the referenced node (None otherwise)
     mermaid_id: str         # computed valid mermaid node id (set after parse)
 ```
 
@@ -267,10 +268,8 @@ ref      ::= WS '(' reftext ')'   (external reference, at very end)
 - Lines beginning with `#` or that are blank are ignored (comments/blanks).
 - The `:` separator is the FIRST colon after the node type keyword; everything
   before it (after the keyword) is the identifier, everything after is text.
-- The external reference `(ref)` appears at the end of the line, after any
-  `{OPTIONS}` block (or before it – check both orders).
-- The `{OPTIONS}` block is stripped from the end of the line first.
-- The `(ref)` block is extracted next.
+- Per the EBNF, `(ref)` comes before `{OPTIONS}`: `Text [Reference] [Options]`.
+  Strip `{OPTIONS}` from the end of the line first, then strip `(ref)`.
 
 ### Parser algorithm (class LTACParser)
 
@@ -291,7 +290,7 @@ Steps:
 1. Maintain a **depth stack** of `(depth, node)` pairs; initially empty.
 2. For each non-blank, non-comment line:
    a. Count leading spaces; compute `depth = spaces // 2`.
-   b. Strip leading spaces and the `- ` prefix.
+   b. Strip leading spaces and the `- ` or `* ` bullet prefix.
    c. Strip trailing `{OPTIONS}` → parse_options() → node.options.
    d. Strip trailing `(ref)` → node.ext_ref.
    e. Match the nodetype keyword.
@@ -326,7 +325,7 @@ Steps:
 | Context              | any                | `ID[("<b>LABEL</b>&nbsp;↗<br>TEXT")]`           |
 | Assumption           | any                | `ID["<b>LABEL</b><br>TEXT<br>ASSUMED"]`         |
 | Justification        | any                | `ID["<b>LABEL</b><br>TEXT"]`                    |
-| Connector            | any                | `ID((" ")):::connector`                          |
+| Connector            | any                | `ID((&hairsp;)):::connector`                     |
 | Relation             | (no mermaid node)  | (Relation is implicit; sets options on edge)     |
 | Link                 | (no new node)      | (only adds edges to the link_target node)        |
 
@@ -346,6 +345,7 @@ For each non-Context, non-Link, non-Relation node X (that has children):
    ```
    inference_sources = []
    context_children = []
+   context_children_of_strategy = []
    for child in X.effective_children():     # see Connector handling below
        if child.node_type == 'Context':
            context_children.append(child)
@@ -371,7 +371,7 @@ For each non-Context, non-Link, non-Relation node X (that has children):
    - If `len(inference_sources) == 1` and no metaClaim on X:
      - Unreified: `src_id --> X_id`
    - If `len(inference_sources) >= 2` or metaClaim:
-     - Create: `DotN((" ")):::sacmDot`
+     - Create: `DotN((&hairsp;)):::sacmDot`
      - For each source: `src_id --- DotN`
      - Then: `DotN --> X_id`
 
@@ -552,16 +552,14 @@ flowchart BT
     C3[["<b>C3</b><br>Secure development process is followed"]]
     Ctx1[("<b>Ctx1</b>&nbsp;↗<br>Scope is release v2.4")]
     A1["<b>A1</b><br>The threat model is current<br>ASSUMED"]
-    Dot1((" ")):::sacmDot
-    Dot2((" ")):::sacmDot
-    E1 --- Dot1
-    Dot1 --> C2
+    Dot1((&hairsp;)):::sacmDot
+    E1 --> C2
     Ctx1 --o AR1
-    C2 --- Dot2
-    C3 --- Dot2
-    AR1 --- Dot2
-    A1 --- Dot2
-    Dot2 --> C1
+    C2 --- Dot1
+    C3 --- Dot1
+    AR1 --- Dot1
+    A1 --- Dot1
+    Dot1 --> C1
     BottomPadding[ ]:::invisible ~~~ C1
 ```
 ````
@@ -574,16 +572,16 @@ Not shown: We also need to generate `click` lines.
 - `A1` (Assumption) → Claim with `ASSUMED` suffix.
 - `Ctx1` (Context child of AR1) → ArtifactReference cylinder shape,
   `--o` context arrow pointing to AR1.
-- `E1` (Evidence, sole child of C2) → unreified form allowed but
-  the example in docs uses a Dot1 (either is acceptable).
+- `E1` (Evidence, sole child of C2) → unreified: single inference source produces
+  a direct `E1 --> C2` arrow (no dot).
 - `C2`, `C3`, `AR1`, and `A1` are all in the C1 inference path,
-  sharing one sacmDot `Dot2 --> C1`.
+  sharing one sacmDot `Dot1 --> C1`.
 
 ---
 
 ## Key Design Decisions
 
-1. **Single file** `script/ltac2mermaid`, Python 3.8+ (uses dataclasses,
+1. **Single file** `ltacproc`, Python 3.8+ (uses dataclasses,
    walrus operator avoided for 3.8 compat). Shebang: `#!/usr/bin/env python3`.
 
 2. **Read all before render**: parser builds full AST first; renderer then
@@ -608,9 +606,9 @@ Not shown: We also need to generate `click` lines.
 8. **Relation nodes**: no mermaid node of their own; they annotate the
    relationship between grandparent and their children with options.
 
-9. **Hair space in sacmDot**: the dot text is a hair space (U+200A),
-   consistent with the convention in `docs/sacm-mermaid.md`. Use the
-   literal character in the string, or `\u200a`.
+9. **Hair space in sacmDot**: the dot text uses the HTML entity `&hairsp;`
+   (U+200A hair space), consistent with the convention in `docs/sacm-mermaid.md`.
+   Using the entity form keeps the character visible in source.
 
 10. **ext_ref**: the external reference text `(scan.html)` is available on
     Evidence/Context nodes but is not rendered into the mermaid label by

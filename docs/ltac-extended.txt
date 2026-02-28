@@ -35,10 +35,10 @@ https://www.argevide.com/documents/ltac.txt
     - Claim -> Claim, Strategy, Assumption, Justification, Evidence
     - Strategy -> Claim, Justification, Assumption
     - Justification -> Claim, Strategy, Evidence
-    - Any element -> Context
+    - Any element -> Context, Relation
   h) Claims supported by Evidence should not be supported by any Justifications, Assumptions nor Strategies.
     - Justifications and Assumptions should be used for higher-level claims and strategies.
-	- If a Claim is to be supported by Evidence and by Strategy, the Evidence should be replaced by a Claim describing it and this Claim can be supported by this Evidence element
+    - If a Claim is to be supported by Evidence and by Strategy, the Evidence should be replaced by a Claim describing it and this Claim can be supported by this Evidence element
   i) LTAC can be used to present a single module argument, not modular arguments. Interfaces and away elements cannot be represented in LTAC. Other more advanced notations can be used to represent modular arguments.
   j) It's not allowed to add additional text to LTAC argumentation. Each line should contain one argument element or be left blank.
   k) LTAC is a code. In Markdown you should place 3 backticks ` ``` ` on a line above and below the code block to present LTAC arguments.
@@ -86,10 +86,12 @@ LTAC arguments can be mapped to CAE.
 - Assumption in LTAC corresponds to Claim with assertionDeclaration
   "assumed" in SACM.
 - Justification in LTAC corresponds to Claim in SACM.
-- Relation in LTAC corresponds to AssertedRelationship in SACM; in many
-  cases this is implied and doesn't need to be shown separately.
+- Link in LTAC is used to cite elements in SACM which support more than one argument element.
+- Relation in LTAC corresponds to AssertedRelationship in SACM.
+  Typically this doesn't need to be shown separately in LTAC, but it *does*
+  need to be in LTAC when applying options to the relationship.
 
-By default assertionDeclation=asserted.
+By default assertionDeclation=asserted and abstract=false.
 If there is an external reference, its assertionDeclaration=asCited.
 
 Certain options are defined to enable better SACM support:
@@ -118,10 +120,14 @@ will become siblings of the Strategy and share the AssertedRelationship.
 
 This specification extends LTAC as follows:
 
-- Adds mapping to SACM.
 - Adds external identifiers beginning with "^", with an optional package name.
-  Now an "LTACargument" is really an "LTACpackage", and you can have many
-  with links to each other.
+- An "LTACargument" is really an "LTACpackage".
+  Any LTACargument can refer to other LTACarguments and specific elements
+  in them, equivalent to how
+  SACM packages can refer to elements in other SACM packages.
+  This added support for cross-links is critical for non-trivial
+  assurance cases.
+- Adds mapping to SACM.
 - Adds a "Relation" so SACM relationships can be defined
 - Allows {Options} for richer mapping
 - Allows "-" or "*" as bullets, not just "-"

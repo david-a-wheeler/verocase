@@ -1,0 +1,109 @@
+# Formatting rules for Lightweight Text Assurance Case (LTAC) format
+v1.1.2, 26.02.2026
+Argevide
+https://www.argevide.com/documents/ltac.txt
+
+1. LTAC is a text format for representing assurance case arguments regardless of the notation originally used. LTAC can be mapped to GSN, CAE and TRUST-IT notations. LTAC argument contains a set of elements, each presented in a separate line.
+2. LTAC defines its own argument element types that can be mapped to GSN, CAE and TRUST-IT. LTAC defines its own syntaxt descibed below which is different from the rules of GSN, TRUST-IT and CAE. Only the rules desribed below apply to LTAC.
+3. The allowed element types are Claim, Strategy, Justification, Evidence, Context and Assumption. Each argument in LTAC should start with a claim.
+4. A keyword 'Link' is used to cite already specified argument element
+5. Each argument element is defined in one line in LTAC that begins with dash and a type keyword (or 'Link' keyword) followed optionally by an identifier, e.g.
+  - Claim C1
+  - Strategy S1
+  - Justification J1
+  - Evidence E1
+  - Context X1
+  - Assumption A1
+  - Link C4
+6. If an element is to be used more than once, it should be defined once only and other occurences should be defined as links. A Link entry is a citation of previously defined element (often evidence or context) without repeating it.
+7. Identifiers are optional, but when specified, they should be unique within the assurance case argument except links. Links are citations of existing elements and they use existing identifiers.
+  - Identifiers G1, G2 can be used for claims, or Cxt1, Cxt2 can be used for context elements. Any lettes, digits and other characters except ':' can be used in identifiers. Identifiers’ prefixes other than presented in point 1 are acceptable.
+8. After the identifier, a colon (':') separates it from the descriptive text, the element name. The text cannot contain new line characters. The text can contain colons (':') . An example of a correct element definition:
+```
+  - Claim C1: System is sufficiently safe
+```
+9. Argument structure
+  a) The assurance case argument is structured using indentation. Two spaces are added for each level of the argument structure.
+  b) Child nodes (sub-claims, evidence, strategies, etc.) are indented under their parents.
+  c) Each indentation level, two spaces, represents one step deeper in the argument hierarchy.
+  d) Hyphens '-' are used at the start of each line to mark list items.
+  e) Evidence references may cite external artifacts, written inside parentheses at the end of element name
+  f) Justifications may need to be supported by evidence or an argument: subclaims or a strategy.
+  g) The following relationships are permitted within the argument structure, which is presented in the format 'element -> sub-element'. Any relationships not listed below are not permitted.
+    - Claim -> Claim, Strategy, Assumption, Justification, Evidence
+    - Strategy -> Claim, Justification, Assumption
+    - Justification -> Claim, Strategy, Evidence
+    - Any element -> Context
+  h) Claims supported by Evidence should not be supported by any Justifications, Assumptions nor Strategies.
+    - Justifications and Assumptions should be used for higher-level claims and strategies.
+	- If a Claim is to be supported by Evidence and by Strategy, the Evidence should be replaced by a Claim describing it and this Claim can be supported by this Evidence element
+  i) LTAC can be used to present a single module argument, not modular arguments. Interfaces and away elements cannot be represented in LTAC. Other more advanced notations can be used to represent modular arguments.
+  j) It's not allowed to add additional text to LTAC argumentation. Each line should contain one argument element or be left blank.
+  k) LTAC is a code. In Markdown you should place 3 backticks ` ``` ` on a line above and below the code block to present LTAC arguments.
+
+# LTAC example
+```
+- Claim G1: The system is acceptably safe for operation
+  - Context X1: System specification (Dev17_specification_v1.3.pdf)
+  - Strategy S1: Decompose safety argument by system hazards
+    - Claim G2: All hazards have been identified
+      - Evidence Ev1: Hazard analysis (HARA report.pdf)
+    - Claim G3: All hazards have been mitigated
+      - Link Ev1
+```
+
+# LTAC mapping to GSN (Goal Structuring Notation)
+LTAC arguments can be mapped to GSN.
+ - Claim in LTAC corresponds to Goal in GSN.
+ - Evidence in LTAC corresponds to Solution in GSN.
+ - The remaining element type names are consistent in LTAC and GSN.
+ - Links in LTAC are used to cite elements in GSN which support more than one argument element.
+
+# LTAC mapping to TRUST-IT
+LTAC arguments can be mapped to TRUST-IT.
+ - Justification in LTAC corresponds to Rationale in TRUST-IT.
+ - Evidence in LTAC corresponds to Reference in TRUST-IT.
+ - Context in LTAC corresponds to Information in TRUST-IT.
+ - The remaining element type names are consistent in LTAC and TRUST-IT.
+ - Links in LTAC are used to cite elements in TRUST-IT which support more than one argument element.
+ 
+# LTAC mapping to CAE (Claims Arguments Evidence)
+LTAC arguments can be mapped to CAE.
+ - Strategy in LTAC corresponds to Argument in CAE.
+ - Assumption in LTAC corresponds to Claim accepted as true in CAE.
+ - Justification in LTAC corresponds to Side Claim in CAE.
+ - The remaining element type names are consistent in LTAC and CAE.
+ - Links in LTAC are used to cite elements in CAE which support more than one argument element.
+
+
+# EBNF grammar for LTAC argument:
+
+LTACargument    = ElementList ;
+
+ElementList     = { Element } ;
+
+Element         = Indent "-" WS NodeType [WS Identifier] ":" WS Text [WS Reference] Newline
+                  [ ElementList ] 
+                | Indent "-" WS "Link" WS Identifier Newline ;
+
+NodeType        = "Claim" | "Strategy" | "Evidence" | "Justification" | "Context" | "Assumption";
+
+Identifier      = { Character - ":" - Newline } ;   (* e.g., C1, C1.1, Ev5, J1, X3 *)
+
+Text            = { Character - Newline } ;       (* descriptive label text *)
+
+Reference       = "(" , { Character - ")" - Newline } , ")" ; (* e.g. (Doc-HAZ-2025) *)
+
+Indent          = { "  " } ;   (* each indentation level = 2 spaces *)
+
+Newline         = "\n" ;
+
+WS              = " " | "\t" ;
+Character       = ? any printable character ? ;
+
+
+# License
+LTAC is licensed under the Creative Commons Attribution 4.0 International License.
+To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/
+
+Comments and questions regarding LTAC should be sent to support@argevide.com

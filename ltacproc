@@ -103,39 +103,55 @@ def to_github_fragment(text: str) -> str:
     return text.strip('-')
 
 
-def make_diagram_id(identifier: str, counter: list) -> str:
-    """Return a valid diagram node id for the given LTAC identifier.
+# Mermaid flowchart node ID rules are defined by the NODE_STRING token in the
+# flowchart JISON grammar.  Hyphens and dots are permitted in node IDs; only
+# characters with syntactic meaning in Mermaid (spaces, brackets, edge markers,
+# etc.) must be removed.  The reserved word "end" (all lowercase) breaks the
+# parser and must be avoided.  Leading digits require an underscore prefix.
+# Sources:
+#   https://github.com/mermaid-js/mermaid/blob/develop/packages/mermaid/src/diagrams/flowchart/parser/flow.jison
+#   https://mermaid.js.org/syntax/flowchart.html
+def make_mermaid_id(identifier: str, counter: list) -> str:
+    """Return a valid Mermaid node id for the given LTAC identifier.
 
-    Used by all diagram renderers (SACM/mermaid, GSN/mermaid, etc.).
-    Ids must match [A-Za-z0-9_]+.
-    - Hyphens and dots become underscores.
-    - Other non-alphanumeric characters are removed.
-    - If identifier is empty, generate '_auto{N}' using counter[0]++.
-    - Prefix with underscore if the first character is a digit.
+    Hyphens and dots are preserved (both are legal in Mermaid node IDs).
+    Spaces are converted to underscores; other characters that are syntactically
+    meaningful in Mermaid (brackets, angle brackets, parentheses, braces) are
+    removed.
+    The reserved word 'end' is suffixed with '_' to avoid a Mermaid parse error.
+    If the result is empty, generates '_auto{N}' using counter[0]++.
+    Prefixes with underscore if the first character is a digit.
 
-    >>> make_diagram_id("C1", [0])
+    >>> make_mermaid_id("C1", [0])
     'C1'
-    >>> make_diagram_id("AR-1.0", [0])
-    'AR_1_0'
-    >>> make_diagram_id("1st", [0])
+    >>> make_mermaid_id("AR-1.0", [0])
+    'AR-1.0'
+    >>> make_mermaid_id("hello world", [0])
+    'hello_world'
+    >>> make_mermaid_id("1st", [0])
     '_1st'
-    >>> make_diagram_id("", [0])
+    >>> make_mermaid_id("end", [0])
+    'end_'
+    >>> make_mermaid_id("", [0])
     '_auto0'
-    >>> make_diagram_id("", [3])
+    >>> make_mermaid_id("", [3])
     '_auto3'
     """
     if not identifier:
         idx = counter[0]
         counter[0] += 1
         return f'_auto{idx}'
-    result = re.sub(r'[-.]', '_', identifier)
-    result = re.sub(r'[^A-Za-z0-9_]', '', result)
+    # Spaces become underscores; other Mermaid-syntax characters are removed.
+    result = re.sub(r'\s', '_', identifier)
+    result = re.sub(r'[()\[\]{}<>]', '', result)
     if not result:
         idx = counter[0]
         counter[0] += 1
         return f'_auto{idx}'
     if result[0].isdigit():
         result = '_' + result
+    if result == 'end':
+        result = 'end_'
     return result
 
 
@@ -281,7 +297,7 @@ class LTACParser:
         ref = (m.group('ref') or '').strip()
         options = parse_options(m.group('options') or '')
 
-        diagram_id = make_diagram_id(identifier, self._id_counter)
+        diagram_id = make_mermaid_id(identifier, self._id_counter)
 
         node = Node(
             node_type=nodetype,
@@ -532,6 +548,36 @@ def render_html(roots: List[Node], base_url: str = '') -> str:
 _HAIR_SPACE = '\u200a'
 
 
+def _sacm_assertion_suffix(node_type: str, options: Set[str]) -> str:
+    """Return the mermaid assertion-state suffix for the given node type and options.
+
+    Priority: defeated > axiomatic > assumed > needsSupport.
+    Assumption node type is treated as "assumed" regardless of options.
+
+    >>> _sacm_assertion_suffix('Claim', {'defeated'})
+    '<br>✗'
+    >>> _sacm_assertion_suffix('Claim', {'axiomatic'})
+    '<br>━━━'
+    >>> _sacm_assertion_suffix('Assumption', set())
+    '<br>ASSUMED'
+    >>> _sacm_assertion_suffix('Claim', {'assumed'})
+    '<br>ASSUMED'
+    >>> _sacm_assertion_suffix('Claim', {'needssupport'})
+    '<br>...'
+    >>> _sacm_assertion_suffix('Claim', set())
+    ''
+    """
+    if 'defeated' in options:
+        return '<br>✗'
+    if 'axiomatic' in options:
+        return '<br>━━━'
+    if node_type == 'Assumption' or 'assumed' in options:
+        return '<br>ASSUMED'
+    if 'needssupport' in options:
+        return '<br>...'
+    return ''
+
+
 def _sacm_node_decl(node: 'Node') -> str:
     """Return the mermaid node-declaration line for a single LTAC node.
 
@@ -549,18 +595,7 @@ def _sacm_node_decl(node: 'Node') -> str:
     etxt = escape_html(node.text) if node.text else ''
     opts = node.options
 
-    # Assertion-state suffix: priority defeated > axiomatic > assumed > needsSupport.
-    # Assumption node type is treated as "assumed" regardless of options.
-    if 'defeated' in opts:
-        suffix = '<br>✗'
-    elif 'axiomatic' in opts:
-        suffix = '<br>━━━'
-    elif node.node_type == 'Assumption' or 'assumed' in opts:
-        suffix = '<br>ASSUMED'
-    elif 'needssupport' in opts:
-        suffix = '<br>...'
-    else:
-        suffix = ''
+    suffix = _sacm_assertion_suffix(node.node_type, opts)
 
     # Evidence and Context use the cylinder shape with a &nbsp;↗ after the ID.
     if node.node_type in ('Evidence', 'Context'):
@@ -704,14 +739,7 @@ def _sacm_collect_edges(
                 edge_lines.append(f'    {child.diagram_id} --- {node.diagram_id}')
         return
 
-    if node.node_type == 'Strategy':
-        # Just recurse; the enclosing Claim handles edge emission for this group.
-        for child in node.children:
-            if child.node_type != 'Link':
-                _sacm_collect_edges(child, dot_counter, dot_decls, edge_lines)
-        return
-
-    if node.node_type == 'Relation':
+    if node.node_type in ('Strategy', 'Relation'):
         # Just recurse; the enclosing Claim handles edge emission for this group.
         for child in node.children:
             if child.node_type != 'Link':
@@ -898,6 +926,21 @@ def parse_selector(selector: str) -> Tuple[str, Optional[str]]:
     return display_type, element_id
 
 
+def _render_or_all(
+    element_id: Optional[str],
+    all_roots: List[Node],
+    render_fn,
+    base_url: str,
+    registry: Dict[str, Node],
+    current_element: Optional[Node],
+) -> str:
+    """Resolve element_id and render, or render all packages if element_id is '*'."""
+    if element_id == '*':
+        return render_all_packages(all_roots, render_fn, base_url)
+    nodes = resolve_element(element_id, registry, all_roots, current_element)
+    return render_fn(nodes, base_url)
+
+
 def render_selector(
     selector: str,
     registry: Dict[str, Node],
@@ -915,22 +958,13 @@ def render_selector(
 
     if display_type == 'sacm/mermaid':
         sacm_base_url = config.get('base_url', '')
-        if element_id == '*':
-            return render_all_packages(all_roots, render_sacm, sacm_base_url)
-        nodes = resolve_element(element_id, registry, all_roots, current_element)
-        return render_sacm(nodes, sacm_base_url)
+        return _render_or_all(element_id, all_roots, render_sacm, sacm_base_url, registry, current_element)
 
     if display_type == 'ltac/markdown':
-        if element_id == '*':
-            return render_all_packages(all_roots, render_markdown, base_url)
-        nodes = resolve_element(element_id, registry, all_roots, current_element)
-        return render_markdown(nodes, base_url)
+        return _render_or_all(element_id, all_roots, render_markdown, base_url, registry, current_element)
 
     if display_type == 'ltac/html':
-        if element_id == '*':
-            return render_all_packages(all_roots, render_html, base_url)
-        nodes = resolve_element(element_id, registry, all_roots, current_element)
-        return render_html(nodes, base_url)
+        return _render_or_all(element_id, all_roots, render_html, base_url, registry, current_element)
 
     # statement, references, info operate on a single node
     if element_id == '*':
@@ -1136,6 +1170,52 @@ def _check_header_coverage(registry: Dict[str, Node], seen_headers: set) -> None
             warn(f"element {ident} has no corresponding header in any processed file")
 
 
+def _inline_rewrite_file(
+    path: str,
+    registry: Dict[str, Node],
+    all_roots: List[Node],
+    config: dict,
+    seen_headers: set,
+) -> None:
+    """Process a single file in --inline mode, rewriting it atomically if content changed.
+
+    Reads the file, renders all ltac regions, and writes back only if the content
+    differs.  Leaves the file unchanged if any processing errors occur.
+    """
+    global _had_error
+    error_before = _had_error
+    try:
+        with open(path) as f:
+            original = f.read()
+    except OSError as e:
+        error(f"cannot open {path!r}: {e}")
+        return
+    buf = io.StringIO()
+    with io.StringIO(original) as src:
+        process_document_stream(src, buf, registry, all_roots, config, seen_headers)
+    if _had_error and not error_before:
+        # Errors occurred while processing this file; leave it untouched.
+        return
+    new_content = buf.getvalue()
+    if new_content == original:
+        return  # No change; skip the write.
+    dir_ = os.path.dirname(os.path.abspath(path))
+    try:
+        fd, tmp = tempfile.mkstemp(dir=dir_)
+        try:
+            with os.fdopen(fd, 'w') as tf:
+                tf.write(new_content)
+            os.replace(tmp, path)
+        except Exception:
+            try:
+                os.unlink(tmp)
+            except OSError:
+                pass
+            raise
+    except OSError as e:
+        error(f"cannot write {path!r}: {e}")
+
+
 def run_selftests() -> None:
     """Run all doctests embedded in this module and exit.
 
@@ -1179,37 +1259,7 @@ def main() -> None:
     elif args.inline:
         seen_headers: set = set()
         for path in args.files:
-            error_before = _had_error
-            try:
-                with open(path) as f:
-                    original = f.read()
-            except OSError as e:
-                error(f"cannot open {path!r}: {e}")
-                continue
-            buf = io.StringIO()
-            with io.StringIO(original) as src:
-                process_document_stream(src, buf, registry, all_roots, config, seen_headers)
-            if _had_error and not error_before:
-                # Errors occurred while processing this file; leave it untouched.
-                continue
-            new_content = buf.getvalue()
-            if new_content == original:
-                continue  # No change; skip the write.
-            dir_ = os.path.dirname(os.path.abspath(path))
-            try:
-                fd, tmp = tempfile.mkstemp(dir=dir_)
-                try:
-                    with os.fdopen(fd, 'w') as tf:
-                        tf.write(new_content)
-                    os.replace(tmp, path)
-                except Exception:
-                    try:
-                        os.unlink(tmp)
-                    except OSError:
-                        pass
-                    raise
-            except OSError as e:
-                error(f"cannot write {path!r}: {e}")
+            _inline_rewrite_file(path, registry, all_roots, config, seen_headers)
         _check_header_coverage(registry, seen_headers)
     else:
         seen_headers: set = set()

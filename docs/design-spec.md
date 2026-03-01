@@ -1,4 +1,4 @@
-# Specification for ltacproc
+# Design specification for ltacproc
 
 The script `ltacproc` is a Python3 script for processing
 our extended version of Lightweight Text Assurance Case (LTAC) format
@@ -135,11 +135,6 @@ is expected to have one topmost Element
 package "Package ID" where ID is the ID of the topmost Element.
 The system must record a map from the "Package ID" to the
 parsed LTAC data, as it is likely to need it later.
-
-A line with
-`<!-- ltac-config -->`
-contains lines of JSON for configuration information until its corresponding
-`<!-- end ltac-config -->`.
 
 Any line beginning with 1+ `#` followed by a space is a Markdown header
 (this detection applies to Markdown files; plain HTML files do not use

@@ -5,11 +5,13 @@ See docs/design-spec.md for the full specification.
 """
 
 import argparse
+import copy
 import io
 import json
 import os
 import re
 import sys
+from collections import deque
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Set, Tuple
 
@@ -557,6 +559,101 @@ def _sacm_node_decl(node: 'Node') -> str:
     return f'    {did}{shape}{abstract_cls}'
 
 
+# Standard mermaid YAML frontmatter and opening classDef lines shared by all
+# sacm/mermaid diagrams.  The closing ``` fence is appended by render_sacm().
+_SACM_HEADER = (
+    '```mermaid\n'
+    '---\n'
+    'config:\n'
+    '  theme: neutral\n'
+    '  flowchart:\n'
+    '    curve: linear\n'
+    '    htmlLabels: true\n'
+    '    rankSpacing: 60\n'
+    '    nodeSpacing: 45\n'
+    '    padding: 15\n'
+    '---\n'
+    'flowchart BT\n'
+    '    classDef invisible opacity:0\n'
+    '    classDef sacmDot fill:#000,stroke:#000\n'
+    '    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;\n'
+    '    classDef abstractClaim stroke-width:2px,stroke-dasharray: 5 5;'
+)
+
+
+def _sacm_copy_forest(roots: List['Node']) -> List['Node']:
+    """Return an independent deep copy of the node forest.
+
+    Uses copy.deepcopy so all internal back-references (parent, link_target,
+    children) are remapped to copied nodes.  The originals are untouched,
+    allowing other renderers (ltac/markdown, GSN, …) to use them normally.
+    """
+    return copy.deepcopy(roots)
+
+
+def _sacm_collect_bfs(roots: List['Node']) -> List['Node']:
+    """Return every node in the forest in BFS order (roots first)."""
+    result = []
+    q = deque(roots)
+    while q:
+        node = q.popleft()
+        result.append(node)
+        q.extend(node.children)
+    return result
+
+
+def _sacm_edge_line(src_id: str, tgt_id: str, is_context: bool) -> str:
+    """Return one mermaid edge line using '--o' for context or '-->' for inference."""
+    arrow = '--o' if is_context else '-->'
+    return f'    {src_id} {arrow} {tgt_id}'
+
+
+def _sacm_edges_postorder(node: 'Node', lines: list) -> None:
+    """Append edge lines to *lines* in DFS post-order (deepest leaves first).
+
+    Each non-root node emits one direct edge to its parent.
+    Relation and Link nodes are skipped (handled in later steps).
+    """
+    for child in node.children:
+        _sacm_edges_postorder(child, lines)
+    if node.parent is not None and node.node_type not in ('Relation', 'Link'):
+        lines.append(_sacm_edge_line(
+            node.diagram_id,
+            node.parent.diagram_id,
+            node.node_type == 'Context',
+        ))
+
+
+def render_sacm(roots: List['Node'], base_url: str = '') -> str:
+    """Render package roots as a complete SACM/mermaid code block.
+
+    Returns the full mermaid fenced block (opening ``` mermaid … closing ```).
+    The original nodes are not modified; a deep copy is used internally.
+    """
+    roots = _sacm_copy_forest(roots)
+    lines = [_SACM_HEADER]
+
+    # Node declarations in BFS order (roots first, then children level by level).
+    for node in _sacm_collect_bfs(roots):
+        decl = _sacm_node_decl(node)
+        if decl:
+            lines.append(decl)
+
+    # Edges in DFS post-order (deepest leaves first, root-level edges last).
+    # The invisible BottomPadding node prevents GitHub's diagram controls from
+    # obscuring the bottom of the diagram.
+    edge_lines = []
+    for root in roots:
+        _sacm_edges_postorder(root, edge_lines)
+    if roots:
+        first_id = roots[0].diagram_id
+        edge_lines.insert(0, f'    BottomPadding[ ]:::invisible ~~~ {first_id}')
+    lines.extend(edge_lines)
+
+    lines.append('```')
+    return '\n'.join(lines)
+
+
 def resolve_element(
     element_id: Optional[str],
     registry: Dict[str, Node],
@@ -592,7 +689,7 @@ def render_all_packages(all_roots: List[Node], render_fn, base_url: str) -> str:
     return '\n\n'.join(blocks)
 
 
-_VALID_DISPLAY_TYPES = {'ltac/markdown', 'ltac/html', 'statement', 'references', 'info'}
+_VALID_DISPLAY_TYPES = {'ltac/markdown', 'ltac/html', 'sacm/mermaid', 'statement', 'references', 'info'}
 
 
 def parse_selector(selector: str) -> Tuple[str, Optional[str]]:
@@ -624,6 +721,13 @@ def render_selector(
     """
     display_type, element_id = parse_selector(selector)
     base_url = config.get('markdown_base_url', '')
+
+    if display_type == 'sacm/mermaid':
+        sacm_base_url = config.get('base_url', '')
+        if element_id == '*':
+            return render_all_packages(all_roots, render_sacm, sacm_base_url)
+        nodes = resolve_element(element_id, registry, all_roots, current_element)
+        return render_sacm(nodes, sacm_base_url)
 
     if display_type == 'ltac/markdown':
         if element_id == '*':

@@ -755,16 +755,21 @@ def render_sacm(roots: List['Node'], base_url: str = '') -> str:
     Returns the full mermaid fenced block (opening ```mermaid … closing ```).
     The original nodes are not modified; a deep copy is used internally.
     Output structure: header → node declarations (BFS) → sacmDot declarations
-    → BottomPadding + edges (DFS post-order, deepest first).
+    → click lines → blank line → BottomPadding + edges (DFS post-order, deepest first).
     """
     roots = _sacm_copy_forest(roots)
 
-    # Node declarations in BFS order (roots first, then children level by level).
+    # Node declarations (BFS) and click lines collected in a single pass.
     node_decl_lines = []
+    click_lines = []
     for node in _sacm_collect_bfs(roots):
         decl = _sacm_node_decl(node)
         if decl:
             node_decl_lines.append(decl)
+        if node.node_type not in ('Relation', 'Link'):
+            url = _node_url(node, base_url)
+            if url:
+                click_lines.append(f'    click {node.diagram_id} "{url}"')
 
     # Collect sacmDot declarations and edges via the inference group algorithm.
     dot_counter = [1]
@@ -781,6 +786,7 @@ def render_sacm(roots: List['Node'], base_url: str = '') -> str:
     lines = [_SACM_HEADER]
     lines.extend(node_decl_lines)
     lines.extend(dot_decls)
+    lines.extend(click_lines)
     if edge_lines:
         lines.append('')  # blank line between declarations and edges
         lines.extend(edge_lines)

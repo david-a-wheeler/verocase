@@ -5,6 +5,7 @@ See docs/design-spec.md for the full specification.
 """
 
 import argparse
+import json
 import sys
 
 _had_error = False # If true, we saw an error during processing
@@ -35,6 +36,32 @@ def panic(msg: str) -> None:
 def notify(msg: str) -> None:
     """Print an informational notification to stderr."""
     print(f"ltacproc: {msg}", file=sys.stderr)
+
+
+DEFAULT_CONFIG = {
+    'base_url': '',
+    'markdown_base_url': '',
+}
+
+
+def load_config(json_str: str) -> dict:
+    """Load and validate configuration from a JSON string.
+
+    If json_str is None, return a copy of DEFAULT_CONFIG.
+    Unknown keys produce a warning; known keys are merged over the defaults.
+    """
+    if json_str is None:
+        return dict(DEFAULT_CONFIG)
+    try:
+        parsed = json.loads(json_str)
+    except json.JSONDecodeError as e:
+        panic(f"invalid JSON in --config: {e}")
+    for key in parsed:
+        if key not in DEFAULT_CONFIG:
+            warn(f"unknown config key: {key!r}")
+    config = dict(DEFAULT_CONFIG)
+    config.update({k: v for k, v in parsed.items() if k in DEFAULT_CONFIG})
+    return config
 
 
 def main() -> None:
@@ -82,7 +109,8 @@ def main() -> None:
     if args.error:
         _strict = True
 
-    notify("options parsed OK")
+    config = load_config(args.config)
+    notify(f"config: {config}")
 
     if _had_error:
         sys.exit(1)

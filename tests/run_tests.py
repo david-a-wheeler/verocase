@@ -7,8 +7,10 @@ or:
 """
 
 import os
+import shutil
 import subprocess
 import sys
+import tempfile
 import unittest
 
 # Locate ltacproc relative to this file so tests work from any directory.
@@ -110,6 +112,58 @@ class TestSelectSacm(unittest.TestCase):
         self.assertEqual(result.returncode, 0)
         self.assertEqual(normalise(result.stdout), read_fixture('doc-simple.md.expected'))
         self.assertEqual(normalise(result.stderr), read_fixture('doc-simple.md.stderr'))
+
+
+class TestInlineMode(unittest.TestCase):
+    def _tmp_copy(self, name):
+        """Copy a fixture to a fresh temp file and return its path."""
+        fd, path = tempfile.mkstemp(suffix='.md')
+        os.close(fd)
+        shutil.copy(fixture(name), path)
+        return path
+
+    def test_inline_updates_file(self):
+        """--inline rewrites a file with stale regions to the correct content."""
+        tmp = self._tmp_copy('inline-input.md')
+        try:
+            result = run('--ltac', fixture('simple.ltac'), '--inline', tmp)
+            self.assertEqual(result.returncode, 0)
+            self.assertEqual(result.stdout, '')
+            self.assertEqual(normalise(result.stderr), read_fixture('inline-expected.stderr'))
+            with open(tmp) as f:
+                self.assertEqual(normalise(f.read()), read_fixture('inline-expected.md'))
+        finally:
+            os.unlink(tmp)
+
+    def test_inline_idempotent(self):
+        """Running --inline twice produces the same result; second run makes no changes."""
+        tmp = self._tmp_copy('inline-input.md')
+        try:
+            run('--ltac', fixture('simple.ltac'), '--inline', tmp)
+            mtime_after_first = os.path.getmtime(tmp)
+            result = run('--ltac', fixture('simple.ltac'), '--inline', tmp)
+            self.assertEqual(result.returncode, 0)
+            self.assertEqual(result.stdout, '')
+            self.assertEqual(normalise(result.stderr), read_fixture('inline-expected.stderr'))
+            self.assertEqual(os.path.getmtime(tmp), mtime_after_first)
+            with open(tmp) as f:
+                self.assertEqual(normalise(f.read()), read_fixture('inline-expected.md'))
+        finally:
+            os.unlink(tmp)
+
+    def test_inline_error_leaves_file_unchanged(self):
+        """--inline on a file with a parse error leaves the file unchanged."""
+        tmp = self._tmp_copy('inline-error-input.md')
+        try:
+            original = read_fixture('inline-error-input.md')
+            result = run('--ltac', fixture('simple.ltac'), '--inline', tmp)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertEqual(result.stdout, '')
+            self.assertIn('unclosed', result.stderr)
+            with open(tmp) as f:
+                self.assertEqual(normalise(f.read()), original)
+        finally:
+            os.unlink(tmp)
 
 
 if __name__ == '__main__':

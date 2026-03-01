@@ -608,48 +608,117 @@ def _sacm_edge_line(src_id: str, tgt_id: str, is_context: bool) -> str:
     return f'    {src_id} {arrow} {tgt_id}'
 
 
-def _sacm_edges_postorder(node: 'Node', lines: list) -> None:
-    """Append edge lines to *lines* in DFS post-order (deepest leaves first).
+def _sacm_collect_edges(
+    node: 'Node',
+    dot_counter: list,
+    dot_decls: list,
+    edge_lines: list,
+) -> None:
+    """Collect sacmDot declarations and edges for *node* and its subtree.
 
-    Each non-root node emits one direct edge to its parent.
+    Edges are appended in DFS post-order (deepest leaves first, so the last
+    edge written connects to the top-level root).
+
+    Inference group rule: a Strategy's non-Context children are absorbed into
+    the *grandparent's* inference group rather than forming their own group.
+    This means Strategy nodes call this function recursively for their children
+    but do not emit any inference edges themselves.
+
     Relation and Link nodes are skipped (handled in later steps).
     """
+    if node.node_type == 'Strategy':
+        # A Strategy does not form its own inference group; its children are
+        # absorbed into the enclosing Claim's group.  Just recurse downward.
+        for child in node.children:
+            if child.node_type not in ('Relation', 'Link'):
+                _sacm_collect_edges(child, dot_counter, dot_decls, edge_lines)
+        return
+
+    # --- Non-strategy node: build this node's inference group ---
+
+    context_children = []      # direct Context children → emit ctx --o node
+    strategy_children = []     # direct Strategy children
+    # strategy_ctx: strategy.diagram_id → list of that strategy's Context children
+    strategy_ctx: Dict[str, list] = {}
+    inference_sources = []     # ordered sources for this node's sacmDot/edge
+
     for child in node.children:
-        _sacm_edges_postorder(child, lines)
-    if node.parent is not None and node.node_type not in ('Relation', 'Link'):
-        lines.append(_sacm_edge_line(
-            node.diagram_id,
-            node.parent.diagram_id,
-            node.node_type == 'Context',
-        ))
+        if child.node_type == 'Context':
+            context_children.append(child)
+        elif child.node_type == 'Strategy':
+            strategy_children.append(child)
+            ctx_of_s = []
+            for gc in child.children:
+                if gc.node_type == 'Context':
+                    ctx_of_s.append(gc)
+                elif gc.node_type not in ('Relation', 'Link'):
+                    inference_sources.append(gc)   # grandchild absorbed into group
+            inference_sources.append(child)        # strategy itself is also a source
+            strategy_ctx[child.diagram_id] = ctx_of_s
+        elif child.node_type not in ('Relation', 'Link'):
+            inference_sources.append(child)
+
+    # Recurse into all children first (post-order: deepest edges come first).
+    for child in node.children:
+        if child.node_type not in ('Relation', 'Link'):
+            _sacm_collect_edges(child, dot_counter, dot_decls, edge_lines)
+
+    # Emit inference edges for this node.
+    if len(inference_sources) == 1:
+        edge_lines.append(_sacm_edge_line(
+            inference_sources[0].diagram_id, node.diagram_id, False))
+    elif len(inference_sources) >= 2:
+        dot_id = f'Dot{dot_counter[0]}'
+        dot_counter[0] += 1
+        dot_decls.append(f'    {dot_id}(("{_HAIR_SPACE}")):::sacmDot')
+        for src in inference_sources:
+            edge_lines.append(f'    {src.diagram_id} --- {dot_id}')
+        edge_lines.append(f'    {dot_id} --> {node.diagram_id}')
+
+    # Emit context edges: direct Context children connect to this node.
+    for ctx in context_children:
+        edge_lines.append(_sacm_edge_line(ctx.diagram_id, node.diagram_id, True))
+
+    # Emit context edges: Context children of Strategy children connect to
+    # their own Strategy node (not to this node).
+    for s in strategy_children:
+        for ctx in strategy_ctx.get(s.diagram_id, []):
+            edge_lines.append(_sacm_edge_line(ctx.diagram_id, s.diagram_id, True))
 
 
 def render_sacm(roots: List['Node'], base_url: str = '') -> str:
     """Render package roots as a complete SACM/mermaid code block.
 
-    Returns the full mermaid fenced block (opening ``` mermaid … closing ```).
+    Returns the full mermaid fenced block (opening ```mermaid … closing ```).
     The original nodes are not modified; a deep copy is used internally.
+    Output structure: header → node declarations (BFS) → sacmDot declarations
+    → BottomPadding + edges (DFS post-order, deepest first).
     """
     roots = _sacm_copy_forest(roots)
-    lines = [_SACM_HEADER]
 
     # Node declarations in BFS order (roots first, then children level by level).
+    node_decl_lines = []
     for node in _sacm_collect_bfs(roots):
         decl = _sacm_node_decl(node)
         if decl:
-            lines.append(decl)
+            node_decl_lines.append(decl)
 
-    # Edges in DFS post-order (deepest leaves first, root-level edges last).
-    # The invisible BottomPadding node prevents GitHub's diagram controls from
-    # obscuring the bottom of the diagram.
-    edge_lines = []
+    # Collect sacmDot declarations and edges via the inference group algorithm.
+    dot_counter = [1]
+    dot_decls: list = []
+    edge_lines: list = []
     for root in roots:
-        _sacm_edges_postorder(root, edge_lines)
-    if roots:
-        first_id = roots[0].diagram_id
-        edge_lines.insert(0, f'    BottomPadding[ ]:::invisible ~~~ {first_id}')
-    lines.extend(edge_lines)
+        _sacm_collect_edges(root, dot_counter, dot_decls, edge_lines)
 
+    # The invisible BottomPadding node prevents GitHub's diagram controls from
+    # obscuring the bottom of the diagram; it must be the first edge line.
+    if roots:
+        edge_lines.insert(0, f'    BottomPadding[ ]:::invisible ~~~ {roots[0].diagram_id}')
+
+    lines = [_SACM_HEADER]
+    lines.extend(node_decl_lines)
+    lines.extend(dot_decls)
+    lines.extend(edge_lines)
     lines.append('```')
     return '\n'.join(lines)
 

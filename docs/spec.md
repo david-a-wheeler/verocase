@@ -14,11 +14,10 @@ and other diagram formats.
 It can also generate a markdown indented bullet list that looks like LTAC
 format but adds hyperlinks, as well as other useful information.
 
-Perhaps most usefully, it can process a markdown file and replace marked
-sections with updated generated information. As a result,
-users can simply run the
-program with a sequence of markdown filenames, and the program
-will update the markdown with the latest LTAC information.
+Perhaps most usefully, it can process a markdown or HTML file and replace
+marked sections with updated generated information. As a result,
+users can simply run the program with a sequence of filenames, and the program
+will update those files with the latest LTAC information.
 
 The specification of LTAC we implement is in file
 [docs/ltac-extended.txt](docs/ltac-extended.txt).
@@ -59,7 +58,7 @@ Meaning:
   (such as regions with a start but no end) are considered errors.
 * `[--ltac|-l] FILENAME`: The given FILENAME with this argument
    is read as a sequence of 1+ LTAC cases (packages),
-   separated by at least 1 blank line and/or comment line beginning with `#`.
+   separated by at least 1 blank line.
 * `[--select|-s SELECTOR]`: Print *just* the selected information identified
   by SELECTOR to stdout.
   SELECTOR must begin with a known display type,
@@ -73,7 +72,7 @@ Meaning:
    that would match an element (Package..., Claim...,
   etc.) is used, and if there wasn't one, the most recently read LTAC package.
   If files are given, they are read, and marked regions are used as input
-  wherever appropriate. However, the content of the files are *not* output.
+  wherever appropriate. However, the content of the files is *not* output.
   This option is incompatible with `--inline`.
   See the "SELECTOR" section below.
 * `[--validate]`: Report warnings and errors on stderr (as usual),
@@ -92,7 +91,7 @@ By default, this is a filter that reads files (or stdin if none given),
 which are presumably markdown and/or HTML.
 It will load data, perform replacements in marked regions
 (see the section below on marked regions), and print to standard out
-a concatentation of the files with those replacements performed.
+a concatenation of the files with those replacements performed.
 Note that by default it does not change any source input files.
 
 The `--validate` option lets you simply validate without printing anything
@@ -116,10 +115,15 @@ result, since it may need to reorganize some nodes.
 
 ## Marked Regions
 
-In markdown being read in, if a code block (using ` or ~)
-is marked as being `ltac` format, its contents will be read as an LTAC
-argument (package). In addition, if there is an HTML comment
-on a line of its own saying
+The primary marked-region mechanism uses HTML comments (`<!-- ... -->`),
+which work identically in both HTML and Markdown files.
+Fenced code blocks (using ` or ~ delimiters) are a Markdown-specific
+alternative for LTAC input only.
+
+If a fenced code block is marked as `ltac` format, its contents are read
+as an LTAC argument (package).
+
+If there is an HTML comment on a line of its own saying
 `<!-- ltac -->`
 then the subsequent lines are treated as an LTAC argument (package) until
 a corresponding line
@@ -130,16 +134,17 @@ is expected to have one topmost Element
 (it should be a Claim). This block of LTAC is considered to be the
 package "Package ID" where ID is the ID of the topmost Element.
 The system must record a map from the "Package ID" to the
-the parsed LTAC data, as it is likely to need it later.
+parsed LTAC data, as it is likely to need it later.
 
 A line with
 `<!-- ltac-config -->`
 contains lines of JSON for configuration information until its corresponding
 `<!-- end ltac-config -->`.
 
-Any line beginning with 1+ `#` followed by a space is a markdown header.
-If the header begins with "Package" or an Element type (e.g., "Claim"),
-it's remembered as the default "current element".
+Any line beginning with 1+ `#` followed by a space is a Markdown header
+(this detection applies to Markdown files; plain HTML files do not use
+this syntax). If the header begins with "Package" or an Element type
+(e.g., "Claim"), it's remembered as the default "current element".
 
 Any line of the form
 `<!-- ltac SELECTOR -->`
@@ -150,7 +155,7 @@ Exactly what is replaced depends on SELECTOR.
 
 ## SELECTOR
 
-Often you want specific information in a specific information;
+Often you want to select specific information in a specific format;
 SELECTOR lets you specify what you want to see.
 
 SELECTOR begins with a display type,
@@ -312,7 +317,6 @@ options    ::= '{' option (',' option)* '}'
 ```
 
 - `INDENT` is a multiple of 2 spaces; `depth = len(INDENT) / 2`.
-- Lines beginning with `#` or that are blank are ignored (comments/blanks).
 - The `:` separator is the FIRST colon after the node type keyword; everything
   before it (after the keyword) is the identifier, everything after is text.
 - Per the EBNF, `(ref)` comes before `{OPTIONS}`: `Text [Reference] [Options]`.
@@ -481,7 +485,7 @@ flowchart BT
 
 ---
 
-## GSN Renderer (--gsn mode)
+## GSN Renderer (gsn/mermaid selector)
 
 GSN mappings to mermaid shapes:
 
@@ -503,60 +507,73 @@ Output header uses `flowchart BT` without sacmDot classDef.
 
 ---
 
-## Inline Mode (--inline / -i)
+## Document Processing Algorithm
 
-### Detection
+Both default (filter) mode and `--inline` mode process files using the same
+algorithm. The only difference is the output destination: default mode writes
+to stdout; `--inline` writes each file back in place.
+Input files may be Markdown or HTML; the `<!-- ... -->` comment mechanism
+works identically in both. Fenced code blocks are Markdown-specific.
 
-Find fenced LTAC code blocks in markdown.
+### Two-pass approach
 
-For example:
+Because a `<!-- ltac SELECTOR -->` output region may reference LTAC packages
+defined later in the same file or in another file, processing is done in two
+passes over the full set of inputs:
+
+**Pass 1 — Load:** Read all inputs in order (first the `--ltac` file if given,
+then each listed file or stdin). Parse all LTAC packages and
+`<!-- ltac-config -->` blocks encountered, building the complete node registry.
+No output is generated in pass 1.
+
+**Pass 2 — Render:** Re-process each file line by line using the complete
+registry, emitting lines and replacing selector output regions.
+
+### State machine (pass 2)
 
 ```
-N backticks or tildes (N >= 3) followed immediately by 'ltac'
-... LTAC content lines ...
-N backticks (same count, on their own line)
+state: reading | in_ltac_fence | in_html_ltac | in_config | in_selector_output
 ```
 
-The fence marker character is backtick or tilde.
+**`reading`:**
+- Fenced block open (N ≥ 3 backticks or tildes immediately followed by `ltac`):
+  save fence-open line; record N and fence character; → `in_ltac_fence`
+- `<!-- ltac -->`: save line; → `in_html_ltac`
+- `<!-- ltac-config -->`: save line; → `in_config`
+- `<!-- ltac SELECTOR -->` (SELECTOR non-empty): save line and SELECTOR;
+  render SELECTOR against current registry; → `in_selector_output`
+- Line matching `^#+ ` (Markdown header; not applicable in plain HTML): update current-element context; emit
+- Anything else: emit as-is
 
-Note: We must also handle the various markers from HTML comments.
+**`in_ltac_fence`:**
+- Closing fence (exactly N copies of the fence character):
+  emit fence-open + accumulated lines + fence-close; → `reading`
+- Otherwise: accumulate line
 
-### Algorithm
+**`in_html_ltac`:**
+- `<!-- end ltac -->`:
+  emit `<!-- ltac -->` + accumulated lines + `<!-- end ltac -->`; → `reading`
+- Otherwise: accumulate line
 
-```
-state: reading | in_ltac_fence | after_ltac | in_mermaid_fence
-```
+**`in_config`:**
+- `<!-- end ltac-config -->`:
+  emit `<!-- ltac-config -->` + accumulated lines + `<!-- end ltac-config -->`; → `reading`
+- Otherwise: accumulate line
 
-Process the markdown file as lines:
-1. When in `reading` state:
-   - If line matches `` ```ltac `` (3+ backticks + "ltac"):
-     record fence length N; save fence line; enter `in_ltac_fence` state.
-   - Otherwise: emit line as-is.
-2. When in `in_ltac_fence` state:
-   - If line is exactly N backticks: record fence end; save fence-end line;
-     enter `after_ltac` state; render mermaid from collected LTAC lines.
-   - Otherwise: accumulate LTAC content lines.
-3. When in `after_ltac` state:
-   - Emit the saved LTAC fence lines (start + content + end).
-   - Skip any blank lines between LTAC block and the following mermaid block
-     (emit them back but remember count).
-   - If next line matches `` ```mermaid `` (3+ backticks + "mermaid"):
-     enter `in_mermaid_fence` state (about to replace existing mermaid).
-   - Else if non-blank, non-mermaid line: insert new mermaid block before it,
-     then emit the line; return to `reading` state.
-4. When in `in_mermaid_fence` state:
-   - Consume lines until closing fence (same N backticks).
-   - Discard the old mermaid content.
-   - Emit the newly generated mermaid block instead.
-   - Return to `reading` state.
+**`in_selector_output`:**
+- `<!-- end ltac -->`:
+  emit saved `<!-- ltac SELECTOR -->` line, emit rendered SELECTOR output,
+  emit `<!-- end ltac -->`; → `reading`
+- Otherwise: discard line (old content being replaced)
 
-### In-place file rewriting
+### In-place rewriting (`--inline`)
 
-If `--inline` and filenames are given:
-- Read file to string.
-- Run inline processor.
-- If output differs, write back to same path (overwrite).
-- If no filenames given, process stdin → stdout.
+For each file:
+1. Run pass 1 across all files first (as above).
+2. Run pass 2 on the file to produce updated content.
+3. If the output differs from the original and no serious error occurred,
+   write the new content back to the same path.
+   If a serious error occurred, leave the file unchanged.
 
 ---
 
@@ -635,7 +652,7 @@ Not shown: We also need to generate `click` lines.
 2. **Read package before render**: parser builds full AST first; renderer then
    traverses. Required because Link nodes reference earlier-defined nodes.
 
-3. **Node registry**: `dict[str, Node]` populated during parse; consulted for
+3. **Node registry**: `Dict[str, Node]` populated during parse; consulted for
    Link resolution. Warn on unresolved Link, duplicate identifier.
 
 4. **Auto-identifiers**: if a node has no identifier, generate `_auto{N}`.
@@ -658,10 +675,9 @@ Not shown: We also need to generate `click` lines.
    (U+200A hair space), consistent with the convention in `docs/sacm-mermaid.md`.
    Using the entity form keeps the character visible in source.
 
-10. **ext_ref**: the external reference text `(scan.html)` is available on
-    Evidence/Context nodes but is not rendered into the mermaid label by
-    default (it would clutter the diagram). It may be used to generate
-    hyperlinks in a future enhancement, or via an option.
+10. **ext_ref**: the external reference text `(scan.html)` on Evidence/Context
+    nodes is used as the URL for the hyperlink on that node. It is not rendered
+    into the mermaid label itself (it would clutter the diagram).
 
 ---
 

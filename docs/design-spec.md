@@ -56,9 +56,11 @@ Meaning:
   an error and returns an error code as well as a warning on stderr.
   Without this flag only serious errors
   (such as regions with a start but no end) are considered errors.
-* `[--ltac|-l] FILENAME`: The given FILENAME with this argument
-   is read as a sequence of 1+ LTAC cases (packages),
-   separated by at least 1 blank line.
+* `[--ltac|-l] FILENAME`: The given FILENAME is read as a sequence of
+   one or more LTAC packages, separated by at least one blank line.
+   If `--ltac` is not given, the program tries to load `case.ltac` in
+   the current directory, then `docs/case.ltac`. If neither file exists,
+   the program exits with a helpful error message.
 * `[--select|-s SELECTOR]`: Print *just* the selected information identified
   by SELECTOR to stdout.
   SELECTOR must begin with a known display type,
@@ -115,26 +117,10 @@ result, since it may need to reorganize some nodes.
 
 ## Marked Regions
 
-The primary marked-region mechanism uses HTML comments (`<!-- ... -->`),
+Marked regions in documents use HTML comments (`<!-- ... -->`),
 which work identically in both HTML and Markdown files.
-Fenced code blocks (using ` or ~ delimiters) are a Markdown-specific
-alternative for LTAC input only.
-
-If a fenced code block is marked as `ltac` format, its contents are read
-as an LTAC argument (package).
-
-If there is an HTML comment on a line of its own saying
-`<!-- ltac -->`
-then the subsequent lines are treated as an LTAC argument (package) until
-a corresponding line
-`<!-- end ltac -->`.
-
-Any one LTAC argument (package)
-is expected to have one topmost Element
-(it should be a Claim). This block of LTAC is considered to be the
-package "Package ID" where ID is the ID of the topmost Element.
-The system must record a map from the "Package ID" to the
-parsed LTAC data, as it is likely to need it later.
+LTAC data is never embedded inline in documents — it always comes from a
+separate `.ltac` file loaded via `--ltac` (or the auto-detected default).
 
 Any line beginning with 1+ `#` followed by a space is a Markdown header
 (this detection applies to Markdown files; plain HTML files do not use
@@ -508,52 +494,23 @@ Both default (filter) mode and `--inline` mode process files using the same
 algorithm. The only difference is the output destination: default mode writes
 to stdout; `--inline` writes each file back in place.
 Input files may be Markdown or HTML; the `<!-- ... -->` comment mechanism
-works identically in both. Fenced code blocks are Markdown-specific.
+works identically in both.
 
-### Two-pass approach
+LTAC data is loaded before document processing begins (see `--ltac`).
+Documents are then processed in a single pass using the already-loaded registry.
 
-Because a `<!-- ltac SELECTOR -->` output region may reference LTAC packages
-defined later in the same file or in another file, processing is done in two
-passes over the full set of inputs:
-
-**Pass 1 — Load:** Read all inputs in order (first the `--ltac` file if given,
-then each listed file or stdin). Parse all LTAC packages and
-`<!-- ltac-config -->` blocks encountered, building the complete node registry.
-No output is generated in pass 1.
-
-**Pass 2 — Render:** Re-process each file line by line using the complete
-registry, emitting lines and replacing selector output regions.
-
-### State machine (pass 2)
+### State machine
 
 ```
-state: reading | in_ltac_fence | in_html_ltac | in_config | in_selector_output
+state: reading | in_selector_output
 ```
 
 **`reading`:**
-- Fenced block open (N ≥ 3 backticks or tildes immediately followed by `ltac`):
-  save fence-open line; record N and fence character; → `in_ltac_fence`
-- `<!-- ltac -->`: save line; → `in_html_ltac`
-- `<!-- ltac-config -->`: save line; → `in_config`
 - `<!-- ltac SELECTOR -->` (SELECTOR non-empty): save line and SELECTOR;
   render SELECTOR against current registry; → `in_selector_output`
-- Line matching `^#+ ` (Markdown header; not applicable in plain HTML): update current-element context; emit
+- Line matching `^#+ ` (Markdown header; not applicable in plain HTML):
+  update current-element context; emit
 - Anything else: emit as-is
-
-**`in_ltac_fence`:**
-- Closing fence (exactly N copies of the fence character):
-  emit fence-open + accumulated lines + fence-close; → `reading`
-- Otherwise: accumulate line
-
-**`in_html_ltac`:**
-- `<!-- end ltac -->`:
-  emit `<!-- ltac -->` + accumulated lines + `<!-- end ltac -->`; → `reading`
-- Otherwise: accumulate line
-
-**`in_config`:**
-- `<!-- end ltac-config -->`:
-  emit `<!-- ltac-config -->` + accumulated lines + `<!-- end ltac-config -->`; → `reading`
-- Otherwise: accumulate line
 
 **`in_selector_output`:**
 - `<!-- end ltac -->`:
@@ -564,10 +521,10 @@ state: reading | in_ltac_fence | in_html_ltac | in_config | in_selector_output
 ### In-place rewriting (`--inline`)
 
 For each file:
-1. Run pass 1 across all files first (as above).
-2. Run pass 2 on the file to produce updated content.
+1. LTAC data is already loaded before this step.
+2. Process the file to produce updated content.
 3. If the output differs from the original and no serious error occurred,
-   write the new content back to the same path.
+   write the new content back to the same path atomically (`os.replace`).
    If a serious error occurred, leave the file unchanged.
 
 ---
@@ -688,18 +645,17 @@ parse_options(raw: str) -> set
 parse_ltac_lines(lines: List[str]) -> Tuple[List[Node], Dict[str, Node]]
     # Returns (roots, registry)
 
+# LTAC file loader (merges into provided all_roots and registry)
+load_ltac_file(path: str, all_roots: List[Node], registry: Dict[str, Node]) -> None
+
 # Renderers (base_url from config; empty string if not set)
 render_sacm(roots: List[Node], base_url: str = '') -> str      # -> mermaid string (with fences)
 render_gsn(roots: List[Node], base_url: str = '') -> str       # -> mermaid string (with fences)
 render_markdown(roots: List[Node], base_url: str = '') -> str  # -> indented bullet list with hyperlinks
 
-# Inline processor
-process_inline_text(text: str, render_fn) -> str
-    # render_fn: List[Node] -> str
-
-# Top-level orchestration
-process_stream(stream, render_fn) -> str
-process_inline_file(path: str, render_fn) -> None
+# Document processor (single pass; LTAC already loaded)
+process_document_stream(f, out, registry: Dict[str, Node], all_roots: List[Node], config: dict) -> None
+process_inline_file(path: str, registry: Dict[str, Node], all_roots: List[Node], config: dict) -> None
 ```
 
 ---

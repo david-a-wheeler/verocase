@@ -141,7 +141,7 @@ Add the `Node` dataclass exactly as specified in `docs/design-spec.md`
 §Data Model. Include the `from dataclasses import dataclass, field` and
 `from typing import Dict, List, Optional, Set, Tuple` imports at the top.
 
-### 5c: LTAC parser and streaming block reader
+### 5c: LTAC parser
 
 Implement `LTACParser` and the module-level wrapper:
 
@@ -160,33 +160,22 @@ Follow the algorithm in `docs/design-spec.md` §LTAC Parser. Key points:
 - Link nodes get `link_target` resolved from registry (warn if missing).
 - Auto-identifiers `_auto{N}` for nodes with no identifier.
 
-Also implement the streaming block reader used by the document processor:
+### 5d: LTAC file loading
 
-```python
-def read_block_from_file(f, stop: str) -> Tuple[List[str], Optional[str]]:
-    """Read lines from open file f until a line matches stop (stripped) or EOF.
-
-    Returns (accumulated_lines, stopping_line).
-    The stopping line is NOT included in accumulated_lines.
-    stopping_line is None if EOF was reached without finding stop.
-    """
-```
-
-This lets the document processor handle LTAC blocks, config blocks, and old
-selector output regions one line at a time without reading the whole file into
-memory. The caller receives the stopping line (e.g., `<!-- end ltac -->`) and
-can emit it or discard it as appropriate.
-
-### 5d: `--ltac` flag processing
-
-In `main()`, after loading config:
-- If `args.ltac` is set, read the file.
-- Split content into chunks on blank lines (one or more consecutive blank lines
-  separate packages). Strip leading/trailing whitespace from each chunk.
+Write `load_ltac_file(path: str, all_roots: List[Node], registry: Dict[str, Node]) -> None`:
+- Read the file at `path` and split content into chunks on blank lines.
+  Strip leading/trailing whitespace from each chunk.
 - Skip empty chunks and chunks where every line starts with `#`.
 - Parse each non-empty chunk with `parse_ltac_lines()`.
-- Accumulate all roots and merge all registries into a global
-  `all_roots: List[Node]` and `registry: Dict[str, Node]`.
+- Merge the returned roots and registry entries into the provided
+  `all_roots` and `registry` (the function mutates them in place).
+
+In `main()`, after loading config, determine the LTAC source:
+- If `args.ltac` is set, use that path.
+- Otherwise try `case.ltac`, then `docs/case.ltac`.
+- If no file is found, exit with a helpful message:
+  `"ltacproc: no LTAC file found; use --ltac or create case.ltac"`.
+- Call `load_ltac_file(path, all_roots, registry)`.
 - Print a debug summary: number of packages and nodes parsed.
 
 ### 5e: Test fixture
@@ -320,30 +309,17 @@ to Step 9.
 Implement `process_document_stream(f, out, registry, all_roots, config)` where
 `f` is an open file-like line iterator and `out` is an output stream.
 
+LTAC data is already loaded; no LTAC parsing occurs here.
 Process one line at a time — non-special lines are written to `out`
-immediately, without buffering the whole file. For each line:
+immediately. For each line:
 
 - **Non-special line**: write to `out` immediately.
-- **Fenced LTAC block open** (N ≥ 3 backticks/tildes immediately followed by
-  `ltac`):
-  Write the opening line to `out`.
-  Call `read_block_from_file(f, closing_fence)` where `closing_fence` is the
-  same N-character fence. Parse returned lines with `parse_ltac_lines()`;
-  merge into `registry`/`all_roots`. Write accumulated lines and stopping line
-  to `out`.
-- **`<!-- ltac -->`**:
-  Write marker to `out`. Call `read_block_from_file(f, '<!-- end ltac -->')`.
-  Parse and merge. Write accumulated lines and stopping line to `out`.
-- **`<!-- ltac-config -->`**:
-  Write marker to `out`. Call `read_block_from_file(f, '<!-- end ltac-config -->')`.
-  Parse JSON; merge into `config`. Write accumulated lines and stopping line
-  to `out`.
 - **`<!-- ltac SELECTOR -->`** (SELECTOR non-empty):
-  Write marker to `out`.
-  Call `read_block_from_file(f, '<!-- end ltac -->')` to consume and discard
-  old content.
-  Render SELECTOR using current `registry`; write rendered output to `out`.
-  Write stopping line (`<!-- end ltac -->`) to `out`.
+  Write the marker to `out`.
+  Read and discard lines in a simple loop until the line (stripped) equals
+  `<!-- end ltac -->`.
+  Render SELECTOR using the loaded `registry`; write rendered output to `out`.
+  Write `<!-- end ltac -->` to `out`.
 - **Markdown header** (`^#+ `): update current-element context; write to `out`.
 
 ### 8b: Default mode in `main()`
@@ -351,8 +327,7 @@ immediately, without buffering the whole file. For each line:
 If no mode flag (`--validate`, `--select`, `--inline`) is given:
 - For each file in `args.files` (or stdin if none given), open it and call
   `process_document_stream(f, sys.stdout, registry, all_roots, config)`.
-- Files are processed in order; LTAC packages accumulate across files so
-  later files can reference packages defined in earlier ones.
+- The LTAC registry is already fully loaded before document processing begins.
 
 ### 8c: `statement`, `references`, and `info` selectors
 
@@ -379,15 +354,11 @@ Wire into SELECTOR dispatch.
 
 ### 8e: Test fixtures for default mode
 
-Create `tests/fixtures/doc-simple.md` (no `sacm/mermaid` regions yet):
+Create `tests/fixtures/doc-simple.md` (no `sacm/mermaid` regions yet).
+This file references elements from `tests/fixtures/simple.ltac`:
 
 ```markdown
 # Package C1
-
-<!-- ltac -->
-- Claim C1: The software is acceptably safe
-  - Evidence E1: Safety analysis (safety.pdf)
-<!-- end ltac -->
 
 ## Claim C1: The software is acceptably safe
 
@@ -405,12 +376,12 @@ Generate and commit `tests/fixtures/doc-simple.md.expected`.
 ### 8f: Tests for default mode
 
 Add to the test suite:
-- **Test 4**: `./ltacproc tests/fixtures/doc-simple.md` matches
-  `doc-simple.md.expected`.
-- **Test 5**: `./ltacproc --validate tests/fixtures/doc-simple.md` exits 0
-  and produces no stdout.
+- **Test 4**: `./ltacproc --ltac tests/fixtures/simple.ltac tests/fixtures/doc-simple.md`
+  matches `doc-simple.md.expected`.
+- **Test 5**: `./ltacproc --ltac tests/fixtures/simple.ltac --validate tests/fixtures/doc-simple.md`
+  exits 0 and produces no stdout.
 - **Test 6**: A fixture with a deliberate structural warning (e.g., Evidence
-  as parent of a Claim); `./ltacproc --error` on it exits non-zero.
+  as parent of a Claim); `./ltacproc --ltac ... --error` on it exits non-zero.
 
 **Verify:**
 ```

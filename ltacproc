@@ -602,10 +602,25 @@ def _sacm_collect_bfs(roots: List['Node']) -> List['Node']:
     return result
 
 
-def _sacm_edge_line(src_id: str, tgt_id: str, is_context: bool) -> str:
-    """Return one mermaid edge line using '--o' for context or '-->' for inference."""
-    arrow = '--o' if is_context else '-->'
+def _sacm_edge_line(src_id: str, tgt_id: str, is_context: bool,
+                    counter: bool = False, abstract: bool = False) -> str:
+    """Return a directed edge line (with arrowhead) from src to tgt.
+
+    is_context → circle head (--o); otherwise arrow head (-->).
+    counter    → adds |⊖| label on the edge.
+    abstract   → uses dashed line style (-.- prefix).
+    """
+    base = ('-.-o' if abstract else '--o') if is_context else ('-.->' if abstract else '-->')
+    arrow = f'{base}|⊖|' if counter else base
     return f'    {src_id} {arrow} {tgt_id}'
+
+
+def _sacm_source_edge(src_id: str, dot_id: str, abstract: bool = False) -> str:
+    """Return an undirected source edge (--- or -.-) from a node to a sacmDot.
+
+    abstract → dashed (-.-).  Counter is reflected on the Dot→target edge.
+    """
+    return f'    {src_id} {"-.-" if abstract else "---"} {dot_id}'
 
 
 def _sacm_collect_edges(
@@ -619,83 +634,119 @@ def _sacm_collect_edges(
     Edges are appended in DFS post-order (deepest leaves first, so the last
     edge written connects to the top-level root).
 
-    Inference group rule: a Strategy's non-Context children are absorbed into
-    the *grandparent's* inference group rather than forming their own group.
-    This means Strategy nodes call this function recursively for their children
-    but do not emit any inference edges themselves.
-
-    Relation and Link nodes are skipped (handled in later steps).
+    Special node-type rules:
+    - Connector: children connect to it with '---'; Connector is a source in
+      its parent's group.
+    - Strategy: children are absorbed into the *grandparent's* inference group;
+      no inference edges emitted at the Strategy level.
+    - Relation: children are absorbed into the *parent's* inference group with
+      Relation's counter/abstract options applied to their edges; Relation
+      produces no mermaid node declaration.
+    - Link: skipped entirely.
     """
     if node.node_type == 'Connector':
-        # A Connector's children connect to it with plain undirected '---' lines.
-        # The Connector itself is an inference source in its parent's group
-        # (handled when the parent is processed).
         for child in node.children:
-            if child.node_type not in ('Relation', 'Link'):
+            if child.node_type != 'Link':
                 _sacm_collect_edges(child, dot_counter, dot_decls, edge_lines)
         for child in node.children:
-            if child.node_type not in ('Relation', 'Link'):
+            if child.node_type != 'Link':
                 edge_lines.append(f'    {child.diagram_id} --- {node.diagram_id}')
         return
 
     if node.node_type == 'Strategy':
-        # A Strategy does not form its own inference group; its children are
-        # absorbed into the enclosing Claim's group.  Just recurse downward.
+        # Just recurse; the enclosing Claim handles edge emission for this group.
         for child in node.children:
-            if child.node_type not in ('Relation', 'Link'):
+            if child.node_type != 'Link':
                 _sacm_collect_edges(child, dot_counter, dot_decls, edge_lines)
         return
 
-    # --- Non-strategy, non-connector node: build this node's inference group ---
+    if node.node_type == 'Relation':
+        # Just recurse; the enclosing Claim handles edge emission for this group.
+        for child in node.children:
+            if child.node_type != 'Link':
+                _sacm_collect_edges(child, dot_counter, dot_decls, edge_lines)
+        return
 
-    context_children = []      # direct Context children → emit ctx --o node
-    strategy_children = []     # direct Strategy children
-    # strategy_ctx: strategy.diagram_id → list of that strategy's Context children
+    # --- Build this node's inference group ---
+    # Each entry is (node, counter:bool, abstract:bool).
+
+    # context_children: list of (ctx_node, counter, abstract)
+    context_children: list = []
+    # strategy_children: list of Strategy Node objects (for context-edge emission)
+    strategy_children: list = []
+    # strategy_ctx: strategy.diagram_id → [(ctx_node, counter, abstract)]
     strategy_ctx: Dict[str, list] = {}
-    inference_sources = []     # ordered sources for this node's sacmDot/edge
+    # inference_sources: list of (node, counter, abstract)
+    inference_sources: list = []
 
     for child in node.children:
         if child.node_type == 'Context':
-            context_children.append(child)
+            context_children.append((child, 'counter' in child.options, False))
+
         elif child.node_type == 'Strategy':
             strategy_children.append(child)
-            ctx_of_s = []
+            ctx_of_s: list = []
             for gc in child.children:
                 if gc.node_type == 'Context':
-                    ctx_of_s.append(gc)
+                    ctx_of_s.append((gc, 'counter' in gc.options, False))
+                elif gc.node_type == 'Relation':
+                    rc, ra = 'counter' in gc.options, 'abstract' in gc.options
+                    for ggc in gc.children:
+                        if ggc.node_type == 'Context':
+                            ctx_of_s.append((ggc, rc, ra))
+                        elif ggc.node_type not in ('Relation', 'Link'):
+                            inference_sources.append((ggc, rc, ra))
                 elif gc.node_type not in ('Relation', 'Link'):
-                    inference_sources.append(gc)   # grandchild absorbed into group
-            inference_sources.append(child)        # strategy itself is also a source
+                    inference_sources.append((gc, 'counter' in gc.options, False))
+            inference_sources.append((child, 'counter' in child.options, False))
             strategy_ctx[child.diagram_id] = ctx_of_s
-        elif child.node_type not in ('Relation', 'Link'):
-            inference_sources.append(child)
 
-    # Recurse into all children first (post-order: deepest edges come first).
+        elif child.node_type == 'Relation':
+            rc, ra = 'counter' in child.options, 'abstract' in child.options
+            for gc in child.children:
+                if gc.node_type == 'Context':
+                    context_children.append((gc, rc, ra))
+                elif gc.node_type not in ('Relation', 'Link'):
+                    inference_sources.append((gc, rc, ra))
+
+        elif child.node_type != 'Link':
+            inference_sources.append((child, 'counter' in child.options, False))
+
+    # Recurse into all non-Link children first (post-order: deepest edges first).
     for child in node.children:
-        if child.node_type not in ('Relation', 'Link'):
+        if child.node_type != 'Link':
             _sacm_collect_edges(child, dot_counter, dot_decls, edge_lines)
 
     # Emit inference edges for this node.
     if len(inference_sources) == 1:
+        src, is_counter, is_abstract = inference_sources[0]
         edge_lines.append(_sacm_edge_line(
-            inference_sources[0].diagram_id, node.diagram_id, False))
+            src.diagram_id, node.diagram_id, False, is_counter, is_abstract))
     elif len(inference_sources) >= 2:
         dot_id = f'Dot{dot_counter[0]}'
         dot_counter[0] += 1
+        any_counter = any(c for _, c, _ in inference_sources)
+        any_abstract = any(a for _, _, a in inference_sources)
         dot_decls.append(f'    {dot_id}(("{_HAIR_SPACE}")):::sacmDot')
-        for src in inference_sources:
-            edge_lines.append(f'    {src.diagram_id} --- {dot_id}')
-        edge_lines.append(f'    {dot_id} --> {node.diagram_id}')
+        for src, _, is_abstract in inference_sources:
+            edge_lines.append(_sacm_source_edge(src.diagram_id, dot_id, is_abstract))
+        dot_arrow = (
+            '-.->|⊖|' if (any_abstract and any_counter) else
+            '-.->'     if any_abstract else
+            '-->|⊖|'   if any_counter  else '-->'
+        )
+        edge_lines.append(f'    {dot_id} {dot_arrow} {node.diagram_id}')
 
-    # Emit context edges: direct Context children connect to this node.
-    for ctx in context_children:
-        edge_lines.append(_sacm_edge_line(ctx.diagram_id, node.diagram_id, True))
+    # Emit context edges: direct Context children → this node.
+    for ctx, is_counter, is_abstract in context_children:
+        edge_lines.append(
+            _sacm_edge_line(ctx.diagram_id, node.diagram_id, True, is_counter, is_abstract))
 
-    # Emit context edges: Context children of Strategy children connect to
-    # their own Strategy node (not to this node).
+    # Emit context edges: Context children of Strategy children → that Strategy.
     for s in strategy_children:
-        for ctx in strategy_ctx.get(s.diagram_id, []):
-            edge_lines.append(_sacm_edge_line(ctx.diagram_id, s.diagram_id, True))
+        for ctx, is_counter, is_abstract in strategy_ctx.get(s.diagram_id, []):
+            edge_lines.append(
+                _sacm_edge_line(ctx.diagram_id, s.diagram_id, True, is_counter, is_abstract))
 
 
 def render_sacm(roots: List['Node'], base_url: str = '') -> str:

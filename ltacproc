@@ -180,7 +180,7 @@ _LTAC_LINE_RE = re.compile(
     r'^(?P<indent>(?:  )*)'
     r'[-*] '
     r'(?P<nodetype>Claim|Strategy|Evidence|Justification'
-    r'|Context|Assumption|Relation|Link)'
+    r'|Context|Assumption|Relation|Link|Connector)'
     r'(?:\s+(?P<cited>\^)?(?:\[(?P<cited_pkg>[^\]]*)\])?(?P<identifier>[^:{\n(]*))?'
     r'(?::\s*(?P<text>[^({]*))?'
     r'(?:\s*\((?P<ref>[^)\n]*)\))?'
@@ -626,6 +626,18 @@ def _sacm_collect_edges(
 
     Relation and Link nodes are skipped (handled in later steps).
     """
+    if node.node_type == 'Connector':
+        # A Connector's children connect to it with plain undirected '---' lines.
+        # The Connector itself is an inference source in its parent's group
+        # (handled when the parent is processed).
+        for child in node.children:
+            if child.node_type not in ('Relation', 'Link'):
+                _sacm_collect_edges(child, dot_counter, dot_decls, edge_lines)
+        for child in node.children:
+            if child.node_type not in ('Relation', 'Link'):
+                edge_lines.append(f'    {child.diagram_id} --- {node.diagram_id}')
+        return
+
     if node.node_type == 'Strategy':
         # A Strategy does not form its own inference group; its children are
         # absorbed into the enclosing Claim's group.  Just recurse downward.
@@ -634,7 +646,7 @@ def _sacm_collect_edges(
                 _sacm_collect_edges(child, dot_counter, dot_decls, edge_lines)
         return
 
-    # --- Non-strategy node: build this node's inference group ---
+    # --- Non-strategy, non-connector node: build this node's inference group ---
 
     context_children = []      # direct Context children → emit ctx --o node
     strategy_children = []     # direct Strategy children

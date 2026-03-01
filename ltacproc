@@ -1,0 +1,42 @@
+#!/usr/bin/env python3
+"""ltacproc – process LTAC assurance-case files and inject rendered views.
+
+See docs/design-spec.md for the full specification.
+"""
+
+import sys
+
+_had_error = False # If true, we saw an error during processing
+_strict = False # If true, turn warnings into errors
+
+
+def warn(msg: str) -> None:
+    """Print a warning to stderr. Does not set the error flag."""
+    if _strict:
+        error(msg)
+    else:
+        print(f"ltacproc: warning: {msg}", file=sys.stderr)
+
+
+def error(msg: str) -> None:
+    """Print an error to stderr and set the error flag."""
+    global _had_error
+    print(f"ltacproc: error: {msg}", file=sys.stderr)
+    _had_error = True
+
+
+def panic(msg: str) -> None:
+    """Print a fatal error to stderr and exit immediately."""
+    print(f"ltacproc: fatal: {msg}", file=sys.stderr)
+    sys.exit(1)
+
+
+def main() -> None:
+    print("ltacproc: not yet implemented")
+
+    if _had_error:
+        sys.exit(1)
+
+
+if __name__ == '__main__':
+    main()

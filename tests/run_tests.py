@@ -64,5 +64,31 @@ class TestSelectMarkdown(unittest.TestCase):
         self.assertEqual(normalise(result.stdout), read_fixture('simple-star.md.expected'))
 
 
+class TestDefaultMode(unittest.TestCase):
+    def test_filter_mode_output(self):
+        """Default mode replaces stale ltac regions and passes other lines through."""
+        result = run('--ltac', fixture('simple.ltac'), fixture('doc-simple.md'))
+        self.assertEqual(result.returncode, 0)
+        self.assertEqual(normalise(result.stdout), read_fixture('doc-simple.md.expected'))
+
+    def test_validate_exits_zero_no_stdout(self):
+        """--validate produces no stdout and exits 0 for a well-formed document."""
+        result = run('--ltac', fixture('simple.ltac'), '--validate', fixture('doc-simple.md'))
+        self.assertEqual(result.returncode, 0)
+        self.assertEqual(result.stdout, '')
+
+    def test_structural_warning_with_error_flag(self):
+        """A structurally invalid LTAC file (Claim under Evidence) exits non-zero with --error."""
+        result = run('--ltac', fixture('warn.ltac'), '--select', 'ltac/markdown', '--error')
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('should not be a child of', result.stderr)
+
+    def test_header_coverage_warning(self):
+        """Elements without a matching Markdown header produce warnings; --error makes exit non-zero."""
+        result = run('--ltac', fixture('simple.ltac'), fixture('doc-simple.md'), '--error')
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('no corresponding header', result.stderr)
+
+
 if __name__ == '__main__':
     unittest.main()

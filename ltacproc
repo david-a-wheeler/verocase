@@ -5,6 +5,7 @@ See docs/design-spec.md for the full specification.
 """
 
 import argparse
+import io
 import json
 import os
 import re
@@ -167,6 +168,10 @@ class Node:
 # LTAC parser
 # ---------------------------------------------------------------------------
 
+# Node types that cannot act as inference parents for Claims or Strategies.
+# Used to warn about structurally invalid parent-child relationships.
+_NON_INFERENTIAL_TYPES = frozenset({'Evidence', 'Context', 'Assumption', 'Justification'})
+
 # This parses an LTAC line with a regex, and pulls out relevant pieces.
 # Compiled regexes perform well in Python.
 _LTAC_LINE_RE = re.compile(
@@ -274,6 +279,10 @@ class LTACParser:
 
         if self._stack:
             parent_node = self._stack[-1][1]
+            if (node.node_type in ('Claim', 'Strategy')
+                    and parent_node.node_type in _NON_INFERENTIAL_TYPES):
+                warn(f"line {lineno}: {node.node_type} should not be"
+                     f" a child of {parent_node.node_type}")
             node.parent = parent_node
             parent_node.children.append(node)
         else:
@@ -402,6 +411,82 @@ def render_markdown(roots: List[Node], base_url: str = '') -> str:
     return '\n'.join(lines)
 
 
+def render_statement(node: Node) -> str:
+    """Return a markdown 'Statement:' line for the node's text."""
+    return f"Statement: {node.text}"
+
+
+def _node_pkg(node: Node) -> Node:
+    """Walk up the parent chain and return the package root for this node."""
+    while node.parent is not None:
+        node = node.parent
+    return node
+
+
+def render_references(node: Node, all_roots: List[Node], config: dict) -> str:
+    """Return 'References: ' followed by markdown links to packages containing node.
+
+    Finds the package that directly contains node by walking up to its root,
+    then checks whether that root is one of the loaded packages.  Returns
+    'References: None' if the node's root is not in all_roots.
+    """
+    base_url = config.get('markdown_base_url', '')
+    pkg_root = _node_pkg(node)
+    if pkg_root not in all_roots:
+        return 'References: None'
+    if pkg_root.identifier:
+        heading = f"Package {pkg_root.identifier}"
+        url = base_url + '#' + to_github_fragment(heading)
+        link = f"[{heading}]({url})"
+    else:
+        link = 'Package'
+    return f"References: {link}"
+
+
+def _render_html_node(node: Node, indent: int, base_url: str, lines: list) -> None:
+    """Append HTML li element for node and recurse into its children.
+
+    Link nodes are silently skipped.
+    """
+    if node.node_type == 'Link':
+        return
+    url = _node_url(node, base_url)
+    if url and node.identifier:
+        id_part = f'<a href="{escape_html(url)}">{escape_html(node.identifier)}</a>'
+    elif node.identifier:
+        id_part = escape_html(node.identifier)
+    else:
+        id_part = ''
+    content = escape_html(node.node_type)
+    if id_part:
+        content += f' {id_part}'
+    if node.text:
+        content += f': {escape_html(node.text)}'
+    prefix = '  ' * indent
+    visible_children = [c for c in node.children if c.node_type != 'Link']
+    if visible_children:
+        lines.append(f'{prefix}<li>{content}')
+        lines.append(f'{prefix}<ul>')
+        for child in node.children:
+            _render_html_node(child, indent + 1, base_url, lines)
+        lines.append(f'{prefix}</ul>')
+        lines.append(f'{prefix}</li>')
+    else:
+        lines.append(f'{prefix}<li>{content}</li>')
+
+
+def render_html(roots: List[Node], base_url: str = '') -> str:
+    """Render a list of nodes as a nested HTML ul/li list with hyperlinks.
+
+    Link nodes are skipped. Identifiers are hyperlinked when a URL is available.
+    """
+    lines = ['<ul>']
+    for root in roots:
+        _render_html_node(root, 1, base_url, lines)
+    lines.append('</ul>')
+    return '\n'.join(lines)
+
+
 def resolve_element(
     element_id: Optional[str],
     registry: Dict[str, Node],
@@ -437,7 +522,7 @@ def render_all_packages(all_roots: List[Node], render_fn, base_url: str) -> str:
     return '\n\n'.join(blocks)
 
 
-_VALID_DISPLAY_TYPES = {'ltac/markdown'}
+_VALID_DISPLAY_TYPES = {'ltac/markdown', 'ltac/html', 'statement', 'references', 'info'}
 
 
 def parse_selector(selector: str) -> Tuple[str, Optional[str]]:
@@ -469,12 +554,120 @@ def render_selector(
     """
     display_type, element_id = parse_selector(selector)
     base_url = config.get('markdown_base_url', '')
+
     if display_type == 'ltac/markdown':
         if element_id == '*':
             return render_all_packages(all_roots, render_markdown, base_url)
         nodes = resolve_element(element_id, registry, all_roots, current_element)
         return render_markdown(nodes, base_url)
+
+    if display_type == 'ltac/html':
+        if element_id == '*':
+            return render_all_packages(all_roots, render_html, base_url)
+        nodes = resolve_element(element_id, registry, all_roots, current_element)
+        return render_html(nodes, base_url)
+
+    # statement, references, info operate on a single node
+    if element_id == '*':
+        error(f"'*' is not valid with the '{display_type}' selector")
+        return ''
+    nodes = resolve_element(element_id, registry, all_roots, current_element)
+    if not nodes:
+        return ''
+    node = nodes[0]
+    if display_type == 'statement':
+        return render_statement(node)
+    if display_type == 'references':
+        return render_references(node, all_roots, config)
+    if display_type == 'info':
+        return render_statement(node) + '\n\n' + render_references(node, all_roots, config)
+
     return ''
+
+
+# ---------------------------------------------------------------------------
+# Document processor
+# ---------------------------------------------------------------------------
+
+# Matches '<!-- ltac SELECTOR -->' lines (SELECTOR is captured in group 1).
+_LTAC_REGION_RE = re.compile(r'^<!--\s*ltac\s+(.+?)\s*-->\s*$')
+
+# Matches any Markdown header line; group 1 = hashes, group 2 = heading text.
+_HEADER_RE = re.compile(r'^(#+) (.+)')
+
+# Header first-word tokens that identify an LTAC element or package.
+_HEADER_ELEMENT_TYPES = frozenset({
+    'Package', 'Claim', 'Strategy', 'Evidence',
+    'Justification', 'Context', 'Assumption',
+})
+
+
+def _extract_header_element(header_text: str, registry: Dict[str, Node]) -> Optional[Node]:
+    """Return the Node referenced by a Markdown header, or None if not an LTAC element.
+
+    Recognises headers of the form 'Package ID' or 'Type ID: optional text'.
+    """
+    parts = header_text.split(None, 2)
+    if not parts or parts[0] not in _HEADER_ELEMENT_TYPES:
+        return None
+    if len(parts) < 2:
+        return None
+    raw_id = parts[1].rstrip(':')
+    return registry.get(raw_id)
+
+
+def _consume_region(line_iter, filename: str, start_lineno: int, selector: str) -> bool:
+    """Consume lines from line_iter until '<!-- end ltac -->', return True if found.
+
+    If EOF is reached before finding the end marker, calls error() and returns False.
+    """
+    for _, line in line_iter:
+        if line.strip() == '<!-- end ltac -->':
+            return True
+    error(f"{filename}:{start_lineno}: unclosed '<!-- ltac {selector} -->' region")
+    return False
+
+
+def process_document_stream(
+    f,
+    out,
+    registry: Dict[str, Node],
+    all_roots: List[Node],
+    config: dict,
+    seen_headers: set,
+) -> None:
+    """Process a document file line by line, replacing ltac selector regions.
+
+    Writes all output to `out`.  Updates `seen_headers` with identifiers of
+    LTAC elements encountered as Markdown headers.  Uses the already-loaded
+    registry and all_roots; performs no LTAC parsing.
+    """
+    current_element: Optional[Node] = None
+    filename = getattr(f, 'name', '<stream>')
+    line_iter = enumerate(f, 1)
+    for lineno, line in line_iter:
+        text = line.rstrip('\r\n')
+
+        m = _LTAC_REGION_RE.match(text)
+        if m:
+            selector = m.group(1)
+            found_end = _consume_region(line_iter, filename, lineno, selector)
+            rendered = render_selector(selector, registry, all_roots, config, current_element)
+            out.write(text + '\n')
+            if found_end:
+                if rendered:
+                    out.write(rendered + '\n')
+                out.write('<!-- end ltac -->\n')
+            continue
+
+        m = _HEADER_RE.match(text)
+        if m:
+            node = _extract_header_element(m.group(2).strip(), registry)
+            if node is not None:
+                current_element = node
+                seen_headers.add(node.identifier)
+
+        out.write(text + '\n')
 
 
 # ---------------------------------------------------------------------------
@@ -547,6 +740,33 @@ def check_cited_packages(all_roots: List[Node], registry: Dict[str, Node]) -> No
             warn(f"cited package {node.cited_pkg!r} not found in loaded LTAC")
 
 
+def _process_files(
+    files: List[str],
+    out,
+    registry: Dict[str, Node],
+    all_roots: List[Node],
+    config: dict,
+    seen_headers: set,
+) -> None:
+    """Open each file and call process_document_stream; fall back to stdin if none given."""
+    if files:
+        for path in files:
+            try:
+                with open(path) as f:
+                    process_document_stream(f, out, registry, all_roots, config, seen_headers)
+            except OSError as e:
+                error(f"cannot open {path!r}: {e}")
+    else:
+        process_document_stream(sys.stdin, out, registry, all_roots, config, seen_headers)
+
+
+def _check_header_coverage(registry: Dict[str, Node], seen_headers: set) -> None:
+    """Warn about every registry element with no corresponding Markdown header."""
+    for ident in registry:
+        if ident not in seen_headers:
+            warn(f"element {ident} has no corresponding header in any processed file")
+
+
 def main() -> None:
     """Entry point: parse arguments, load configuration and LTAC data, then dispatch."""
     global _strict
@@ -570,6 +790,14 @@ def main() -> None:
         result = render_selector(args.select, registry, all_roots, config)
         if result:
             print(result)
+    elif args.validate:
+        _process_files(args.files, io.StringIO(), registry, all_roots, config, set())
+    elif args.inline:
+        pass  # implemented in step 10
+    else:
+        seen_headers: set = set()
+        _process_files(args.files, sys.stdout, registry, all_roots, config, seen_headers)
+        _check_header_coverage(registry, seen_headers)
 
     if _had_error:
         sys.exit(1)

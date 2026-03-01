@@ -46,7 +46,7 @@ normal string into a GitHub id fragment.
 
 ```
 ltacproc [--help] [--config JSON] [--error] [--ltac|-l FILENAME]
- [--validate | (--select|-s) SELECTOR | (--inline|-i) ] [files]
+         [--validate | (--select|-s) SELECTOR | (--inline|-i)] [files]
 ```
 
 Meaning:
@@ -92,10 +92,13 @@ By default, this is a filter that reads files (or stdin if none given),
 which are presumably markdown and/or HTML.
 It will load data, perform replacements in marked regions
 (see the section below on marked regions), and print to standard out
-the result of those replacements without changing any source inputs.
+a concatentation of the files with those replacements performed.
+Note that by default it does not change any source input files.
 
+The `--validate` option lets you simply validate without printing anything
+other than warnings and errors.
 The `--select` option lets you specify something specific to print to
-standard out, and also does not does change any files.
+standard out; it also does not does change any files.
 The `--inline` option, instead of printing to
 standard out, reads each file in turn, updates regions as appropriate, and
 replaces the file with the updated information (or does no update if there
@@ -173,9 +176,15 @@ Valid display types are:
   `References: None`.
 * `info` - A `statement`, blank line, and `references`.
 
-## Generating hyperlinks
+## Generating hyperlinks (URLs)
 
 The mermaid output, and output markdown, will generally include hyperlinks.
+For example, the mermaid output will use `click` to render URLs for
+each element.
+
+If an `ext_ref` (external reference) is provided, it would be used
+as the URL for the hyperlink. Otherwise, the URL must be determined.
+
 The mermaid output will use the config value `base_url` as its base.
 The output for markdown and references
 will use `markdown_base_url` (default empty string) as its base.
@@ -201,15 +210,17 @@ where we may create connectors to limit the number of elements across.
 
 Below are some thoughts on how to organize it.
 
-1. **Shebang + imports + module docstring**
-2. **Node dataclass** – the AST node
-3. **Utility functions** – pure functions with no side effects
-4. **LTAC parser** – text → tree of Node objects
-5. **SACM renderer** – Node tree → mermaid string (default)
-6. **GSN renderer** – Node tree → mermaid string for GSN processing
+- **Shebang + imports + module docstring**
+- **Node dataclass** – the AST node
+- **Utility functions** – pure functions with no side effects
+- **LTAC parser** – text → tree of Node objects
+- **SACM renderer** – Node tree → mermaid string (default)
+- **GSN renderer** – Node tree → mermaid string for GSN processing
    when we get around to implementing it.
-7. **Inline processor** – markdown text → updated markdown text
-8. **main()** – CLI entry point
+- **Inline processor** – markdown text → updated markdown text
+- **Option processing** - read and process argument line for
+  easy future tasks.
+- **main()** – CLI entry point
 
 ---
 
@@ -621,7 +632,7 @@ Not shown: We also need to generate `click` lines.
 1. **Single file** `ltacproc`, Python 3.8+ (uses dataclasses,
    walrus operator avoided for 3.8 compat). Shebang: `#!/usr/bin/env python3`.
 
-2. **Read all before render**: parser builds full AST first; renderer then
+2. **Read package before render**: parser builds full AST first; renderer then
    traverses. Required because Link nodes reference earlier-defined nodes.
 
 3. **Node registry**: `dict[str, Node]` populated during parse; consulted for
@@ -681,10 +692,3 @@ process_inline_file(path: str, render_fn) -> None
 ```
 
 ---
-
-## Open Questions / Future Extensions
-
-- Should `ext_ref` be rendered as a hyperlink in the mermaid node?
-  (Currently omitted to keep labels concise.)
-- Should `click` hyperlinks be auto-generated from identifiers?
-  (Needs a base URL argument; not in initial scope.)

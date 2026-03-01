@@ -4,6 +4,7 @@
 See docs/design-spec.md for the full specification.
 """
 
+import argparse
 import sys
 
 _had_error = False # If true, we saw an error during processing
@@ -32,7 +33,25 @@ def panic(msg: str) -> None:
 
 
 def main() -> None:
-    print("ltacproc: not yet implemented")
+    global _strict
+
+    parser = argparse.ArgumentParser(prog='ltacproc')
+    parser.add_argument('--config', type=str, metavar='JSON')
+    parser.add_argument('--error', action='store_true')
+    parser.add_argument('--ltac', '-l', type=str, metavar='FILENAME')
+    parser.add_argument('files', nargs='*')
+
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument('--validate', action='store_true')
+    mode.add_argument('--select', '-s', type=str, metavar='SELECTOR')
+    mode.add_argument('--inline', '-i', action='store_true')
+
+    args = parser.parse_args()
+
+    if args.error:
+        _strict = True
+
+    print(repr(args))
 
     if _had_error:
         sys.exit(1)

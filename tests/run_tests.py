@@ -61,23 +61,22 @@ def normalise(s):
 
 
 def check(actual, fixture_name):
-    """Normalise *actual*, persist to results/ iff it differs from the fixture.
+    """Normalise *actual*, write it to results/, then remove if it matches.
 
-    If *actual* matches the expected fixture exactly, any pre-existing result
-    file for that fixture is removed so results/ stays clean.  Returns the
-    normalised actual string so callers can still pass it to assertEqual for
-    a readable failure message.
+    Always writes the result to disk first so a crash mid-suite leaves the
+    actual output on disk for inspection.  Removes the file afterwards if it
+    matches the fixture so results/ stays clean.  Returns the normalised
+    actual string so callers can still pass it to assertEqual for a readable
+    failure message.
     """
     actual_n = normalise(actual)
     expected = read_fixture(fixture_name)
     result_path = os.path.join(RESULTS, fixture_name)
+    os.makedirs(RESULTS, exist_ok=True)
+    with open(result_path, 'w', encoding='utf-8', newline='') as f:
+        f.write(actual_n)
     if actual_n == expected:
-        if os.path.exists(result_path):
-            os.unlink(result_path)
-    else:
-        os.makedirs(RESULTS, exist_ok=True)
-        with open(result_path, 'w', encoding='utf-8', newline='') as f:
-            f.write(actual_n)
+        os.unlink(result_path)
     return actual_n
 
 

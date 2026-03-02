@@ -150,6 +150,16 @@ class TestSelectSacm(unittest.TestCase):
         self.assertEqual(normalise(result.stderr), read_fixture('doc-simple.md.stderr'))
 
 
+class TestBadgeappDoc(unittest.TestCase):
+    def test_badgeapp_doc_filter_mode(self):
+        """Filter mode renders all three packages via sacm/mermaid * with correct
+        BottomPadding targets, click lines for evidence URLs, and context edges."""
+        result = run('--ltac', fixture('badgeapp-doc.ltac'), fixture('badgeapp-doc-input.md'))
+        self.assertEqual(result.returncode, 0)
+        self.assertEqual(normalise(result.stdout), read_fixture('badgeapp-doc-input.md.expected'))
+        self.assertEqual(normalise(result.stderr), read_fixture('badgeapp-doc-input.md.stderr'))
+
+
 class TestInlineMode(unittest.TestCase):
     def _tmp_copy(self, name):
         """Copy a fixture to a fresh temp file and return its path."""

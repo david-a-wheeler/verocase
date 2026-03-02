@@ -1,0 +1,18 @@
+ltacproc: warning: Requirements: cited (^) with no package name
+ltacproc: warning: Design: cited (^) with no package name
+ltacproc: warning: Implementation: cited (^) with no package name
+ltacproc: warning: Verification: cited (^) with no package name
+ltacproc: warning: Deployment: cited (^) with no package name
+ltacproc: warning: Maintenance: cited (^) with no package name
+ltacproc: warning: NonTechnical: cited (^) with no package name
+ltacproc: warning: Controls: cited (^) with no package name
+ltacproc: warning: element Processes has no corresponding header in any processed file
+ltacproc: warning: element Technical has no corresponding header in any processed file
+ltacproc: warning: element Requirements has no corresponding header in any processed file
+ltacproc: warning: element Design has no corresponding header in any processed file
+ltacproc: warning: element Implementation has no corresponding header in any processed file
+ltacproc: warning: element Verification has no corresponding header in any processed file
+ltacproc: warning: element Deployment has no corresponding header in any processed file
+ltacproc: warning: element Maintenance has no corresponding header in any processed file
+ltacproc: warning: element NonTechnical has no corresponding header in any processed file
+ltacproc: warning: element Controls has no corresponding header in any processed file

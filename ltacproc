@@ -51,6 +51,7 @@ DEFAULT_CONFIG = {
     'markdown_base_url': '',
     'pkg_header_prefix': '### ',
     'pkg_header_suffix': '\n',
+    'pkg_label': 'Package ',
 }
 
 
@@ -468,19 +469,19 @@ def load_ltac_file(path: str, all_roots: List[Node], registry: Dict[str, Node],
 # Renderers
 # ---------------------------------------------------------------------------
 
-def _node_url(node: Node, base_url: str) -> str:
+def _node_url(node: Node, base_url: str, pkg_label: str = DEFAULT_CONFIG['pkg_label']) -> str:
     """Return the hyperlink URL for a node, or '' if none can be determined.
 
     Uses ext_ref directly if set; otherwise constructs a URL from base_url
     and a GitHub-style fragment derived from the expected heading for this node:
-    'Package ID' for root nodes, 'Type ID: text' for all others.
+    '{pkg_label}ID' for root nodes, 'Type ID: text' for all others.
     """
     if node.ext_ref:
         return node.ext_ref
     if not (base_url and node.identifier):
         return ''
     if node.depth == 0:
-        heading = f"Package {node.identifier}"
+        heading = f"{pkg_label}{node.identifier}"
     else:
         heading = f"{node.node_type} {node.identifier}"
         if node.text:
@@ -488,14 +489,15 @@ def _node_url(node: Node, base_url: str) -> str:
     return base_url + '#' + to_github_fragment(heading)
 
 
-def _render_markdown_node(node: Node, indent: int, base_url: str, lines: list) -> None:
+def _render_markdown_node(node: Node, indent: int, base_url: str, lines: list,
+                          pkg_label: str = DEFAULT_CONFIG['pkg_label']) -> None:
     """Append a markdown bullet for node and recurse into its children.
 
     Link nodes are silently skipped (they are citations, not new bullets).
     """
     if node.node_type == 'Link':
         return
-    url = _node_url(node, base_url)
+    url = _node_url(node, base_url, pkg_label)
     if url and node.identifier:
         id_part = f'[{node.identifier}]({url})'
     elif node.identifier:
@@ -509,10 +511,11 @@ def _render_markdown_node(node: Node, indent: int, base_url: str, lines: list) -
         parts.append(f': {node.text}')
     lines.append(''.join(parts))
     for child in node.children:
-        _render_markdown_node(child, indent + 1, base_url, lines)
+        _render_markdown_node(child, indent + 1, base_url, lines, pkg_label)
 
 
-def render_markdown(roots: List[Node], base_url: str = '') -> str:
+def render_markdown(roots: List[Node], base_url: str = '',
+                    pkg_label: str = DEFAULT_CONFIG['pkg_label']) -> str:
     """Render a list of nodes as an indented markdown bullet list with hyperlinks.
 
     Each item is '- NodeType ID: text' where ID is a hyperlink when a URL
@@ -521,7 +524,7 @@ def render_markdown(roots: List[Node], base_url: str = '') -> str:
     """
     lines = []
     for root in roots:
-        _render_markdown_node(root, 0, base_url, lines)
+        _render_markdown_node(root, 0, base_url, lines, pkg_label)
     return '\n'.join(lines)
 
 
@@ -567,22 +570,24 @@ def render_references(node: Node, all_roots: List[Node], id_info: Dict[str, dict
     if not pkg_ids:
         return 'References: None'
 
+    pkg_label = config.get('pkg_label', 'Package ')
     links = []
     for pkg_id in pkg_ids:
-        heading = f"Package {pkg_id}"
+        heading = f"{pkg_label}{pkg_id}"
         url = base_url + '#' + to_github_fragment(heading)
         links.append(f"[{heading}]({url})")
     return 'References: ' + ', '.join(links)
 
 
-def _render_html_node(node: Node, indent: int, base_url: str, lines: list) -> None:
+def _render_html_node(node: Node, indent: int, base_url: str, lines: list,
+                      pkg_label: str = DEFAULT_CONFIG['pkg_label']) -> None:
     """Append HTML li element for node and recurse into its children.
 
     Link nodes are silently skipped.
     """
     if node.node_type == 'Link':
         return
-    url = _node_url(node, base_url)
+    url = _node_url(node, base_url, pkg_label)
     if url and node.identifier:
         id_part = f'<a href="{escape_html(url)}">{escape_html(node.identifier)}</a>'
     elif node.identifier:
@@ -600,21 +605,22 @@ def _render_html_node(node: Node, indent: int, base_url: str, lines: list) -> No
         lines.append(f'{prefix}<li>{content}')
         lines.append(f'{prefix}<ul>')
         for child in node.children:
-            _render_html_node(child, indent + 1, base_url, lines)
+            _render_html_node(child, indent + 1, base_url, lines, pkg_label)
         lines.append(f'{prefix}</ul>')
         lines.append(f'{prefix}</li>')
     else:
         lines.append(f'{prefix}<li>{content}</li>')
 
 
-def render_html(roots: List[Node], base_url: str = '') -> str:
+def render_html(roots: List[Node], base_url: str = '',
+                pkg_label: str = DEFAULT_CONFIG['pkg_label']) -> str:
     """Render a list of nodes as a nested HTML ul/li list with hyperlinks.
 
     Link nodes are skipped. Identifiers are hyperlinked when a URL is available.
     """
     lines = ['<ul>']
     for root in roots:
-        _render_html_node(root, 1, base_url, lines)
+        _render_html_node(root, 1, base_url, lines, pkg_label)
     lines.append('</ul>')
     return '\n'.join(lines)
 
@@ -920,7 +926,8 @@ def _sacm_leftmost_leaf(node: 'Node') -> 'Node':
     return node
 
 
-def render_sacm(roots: List['Node'], base_url: str = '') -> str:
+def render_sacm(roots: List['Node'], base_url: str = '',
+                pkg_label: str = DEFAULT_CONFIG['pkg_label']) -> str:
     """Render package roots as a complete SACM/mermaid code block.
 
     Returns the full mermaid fenced block (opening ```mermaid … closing ```).
@@ -938,7 +945,7 @@ def render_sacm(roots: List['Node'], base_url: str = '') -> str:
         if decl:
             node_decl_lines.append(decl)
         if node.node_type not in ('Relation', 'Link'):
-            url = _node_url(node, base_url)
+            url = _node_url(node, base_url, pkg_label)
             if url:
                 click_lines.append(f'    click {node.diagram_id} "{url}"')
 
@@ -994,14 +1001,16 @@ def render_all_packages(all_roots: List[Node], render_fn, base_url: str, config:
     """Render every package preceded by a configurable header.
 
     Package blocks are separated by a blank line.
-    Header format: {pkg_header_prefix}Package {id}{pkg_header_suffix}{content}
+    Header format: {pkg_header_prefix}{pkg_label}{id}{pkg_header_suffix}{content}
     """
     prefix = config.get('pkg_header_prefix', '### ')
     suffix = config.get('pkg_header_suffix', '\n')
+    pkg_label = config.get('pkg_label', 'Package ')
     blocks = []
     for root in all_roots:
-        header = f"{prefix}Package {root.identifier}" if root.identifier else f"{prefix}Package"
-        blocks.append(f"{header}{suffix}{render_fn([root], base_url)}")
+        label = f"{pkg_label}{root.identifier}" if root.identifier else pkg_label.rstrip()
+        header = f"{prefix}{label}"
+        blocks.append(f"{header}{suffix}{render_fn([root], base_url, pkg_label)}")
     return '\n\n'.join(blocks)
 
 
@@ -1033,10 +1042,11 @@ def _render_or_all(
     config: dict,
 ) -> str:
     """Resolve element_id and render, or render all packages if element_id is '*'."""
+    pkg_label = config.get('pkg_label', 'Package ')
     if element_id == '*':
         return render_all_packages(all_roots, render_fn, base_url, config)
     nodes = resolve_element(element_id, registry, all_roots, current_element)
-    return render_fn(nodes, base_url)
+    return render_fn(nodes, base_url, pkg_label)
 
 
 def render_selector(
@@ -1265,15 +1275,15 @@ def check_assertion_status(registry: Dict[str, Node]) -> None:
                   f"Axiomatic/Defeated/AsCited are mutually exclusive)")
 
 
-def check_id_info(id_info: Dict[str, dict], all_roots: List[Node]) -> None:
+def check_id_info(id_info: Dict[str, dict], all_roots: List[Node],
+                  pkg_label: str = DEFAULT_CONFIG['pkg_label']) -> None:
     """Validate identifier usage across the loaded LTAC.
 
     Uses the id_info table built during parsing (see LTACParser) to report:
     - IDs cited (^) but never declared (may indicate a missing package)
-    - Citations using bare ^ with no [PkgName] (incomplete citation)
     - Citations naming a package not found among the loaded roots
     """
-    pkg_names = {'Package ' + root.identifier for root in all_roots if root.identifier}
+    pkg_names = {pkg_label + root.identifier for root in all_roots if root.identifier}
     for ident, info in id_info.items():
         if info['citations'] > 0 and info['declarations'] == 0:
             warn(f"{ident}: cited but never declared")
@@ -1391,7 +1401,7 @@ def main() -> None:
     load_ltac_file(ltac_path, all_roots, registry, id_info)
 
     check_assertion_status(registry)
-    check_id_info(id_info, all_roots)
+    check_id_info(id_info, all_roots, config.get('pkg_label', 'Package '))
 
     if args.select:
         result = render_selector(args.select, registry, all_roots, config, id_info)

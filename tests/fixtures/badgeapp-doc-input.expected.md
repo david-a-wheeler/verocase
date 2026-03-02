@@ -130,7 +130,7 @@ This is the top-level claim for the entire assurance case.
 ### Claim Requirements: Security requirements are identified and met
 
 <!-- ltac references -->
-References: [Package Requirements](#package-requirements)
+References: [Package Requirements](#package-requirements), [Package Security](#package-security)
 <!-- end ltac -->
 
 The security requirements are documented and verified against the implementation.
@@ -138,7 +138,7 @@ The security requirements are documented and verified against the implementation
 ### Claim Design: The security design is documented and reviewed
 
 <!-- ltac references -->
-References: [Package Design](#package-design)
+References: [Package Design](#package-design), [Package Security](#package-security)
 <!-- end ltac -->
 
 The system design incorporates security from the ground up.

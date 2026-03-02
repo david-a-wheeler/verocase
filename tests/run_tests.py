@@ -73,21 +73,21 @@ class TestSelectMarkdown(unittest.TestCase):
         """ltac/markdown with no element id renders the full tree."""
         result = run('--ltac', fixture('simple.ltac'), '--select', 'ltac/markdown')
         self.assertEqual(result.returncode, 0)
-        self.assertEqual(normalise(result.stdout), read_fixture('simple.ltac.md.expected'))
+        self.assertEqual(normalise(result.stdout), read_fixture('simple.ltac.expected.md'))
         self.assertEqual(result.stderr, '')
 
     def test_subtree_c2(self):
         """ltac/markdown C2 renders only the subtree rooted at C2."""
         result = run('--ltac', fixture('simple.ltac'), '--select', 'ltac/markdown C2')
         self.assertEqual(result.returncode, 0)
-        self.assertEqual(normalise(result.stdout), read_fixture('simple-c2.md.expected'))
+        self.assertEqual(normalise(result.stdout), read_fixture('simple-c2.expected.md'))
         self.assertEqual(result.stderr, '')
 
     def test_all_packages(self):
         """ltac/markdown * renders all packages with ## Package headers."""
         result = run('--ltac', fixture('simple.ltac'), '--select', 'ltac/markdown *')
         self.assertEqual(result.returncode, 0)
-        self.assertEqual(normalise(result.stdout), read_fixture('simple-star.md.expected'))
+        self.assertEqual(normalise(result.stdout), read_fixture('simple-star.expected.md'))
         self.assertEqual(result.stderr, '')
 
 
@@ -96,8 +96,8 @@ class TestDefaultMode(unittest.TestCase):
         """Default mode replaces stale ltac regions and passes other lines through."""
         result = run('--ltac', fixture('simple.ltac'), fixture('doc-simple.md'))
         self.assertEqual(result.returncode, 0)
-        self.assertEqual(normalise(result.stdout), read_fixture('doc-simple.md.expected'))
-        self.assertEqual(normalise(result.stderr), read_fixture('doc-simple.md.stderr'))
+        self.assertEqual(normalise(result.stdout), read_fixture('doc-simple.expected.md'))
+        self.assertEqual(normalise(result.stderr), read_fixture('doc-simple.stderr.txt'))
 
     def test_validate_exits_zero_no_stdout(self):
         """--validate produces no stdout and exits 0 for a well-formed document."""
@@ -132,22 +132,22 @@ class TestSelectSacm(unittest.TestCase):
         """sacm/mermaid renders the full SACM mermaid diagram for simple.ltac."""
         result = run('--ltac', fixture('simple.ltac'), '--select', 'sacm/mermaid')
         self.assertEqual(result.returncode, 0)
-        self.assertEqual(normalise(result.stdout), read_fixture('simple.sacm.mermaid.expected'))
+        self.assertEqual(normalise(result.stdout), read_fixture('simple.sacm.mermaid.expected.md'))
         self.assertEqual(result.stderr, '')
 
     def test_badgeapp_top_sacm_mermaid(self):
         """sacm/mermaid renders the badgeapp top-level assurance case correctly."""
         result = run('--ltac', fixture('badgeapp-top.ltac'), '--select', 'sacm/mermaid')
         self.assertEqual(result.returncode, 0)
-        self.assertEqual(normalise(result.stdout), read_fixture('badgeapp-top.sacm.mermaid.expected'))
-        self.assertEqual(normalise(result.stderr), read_fixture('badgeapp-top.sacm.mermaid.stderr'))
+        self.assertEqual(normalise(result.stdout), read_fixture('badgeapp-top.sacm.mermaid.expected.md'))
+        self.assertEqual(normalise(result.stderr), read_fixture('badgeapp-top.sacm.mermaid.stderr.txt'))
 
     def test_filter_mode_with_sacm_region(self):
         """Default mode correctly replaces a sacm/mermaid region in doc-simple.md."""
         result = run('--ltac', fixture('simple.ltac'), fixture('doc-simple.md'))
         self.assertEqual(result.returncode, 0)
-        self.assertEqual(normalise(result.stdout), read_fixture('doc-simple.md.expected'))
-        self.assertEqual(normalise(result.stderr), read_fixture('doc-simple.md.stderr'))
+        self.assertEqual(normalise(result.stdout), read_fixture('doc-simple.expected.md'))
+        self.assertEqual(normalise(result.stderr), read_fixture('doc-simple.stderr.txt'))
 
 
 class TestBadgeappDoc(unittest.TestCase):
@@ -156,8 +156,8 @@ class TestBadgeappDoc(unittest.TestCase):
         BottomPadding targets, click lines for evidence URLs, and context edges."""
         result = run('--ltac', fixture('badgeapp-doc.ltac'), fixture('badgeapp-doc-input.md'))
         self.assertEqual(result.returncode, 0)
-        self.assertEqual(normalise(result.stdout), read_fixture('badgeapp-doc-input.md.expected'))
-        self.assertEqual(normalise(result.stderr), read_fixture('badgeapp-doc-input.md.stderr'))
+        self.assertEqual(normalise(result.stdout), read_fixture('badgeapp-doc-input.expected.md'))
+        self.assertEqual(normalise(result.stderr), read_fixture('badgeapp-doc-input.stderr.txt'))
 
 
 class TestInlineMode(unittest.TestCase):
@@ -175,7 +175,7 @@ class TestInlineMode(unittest.TestCase):
             result = run('--ltac', fixture('simple.ltac'), '--inline', tmp)
             self.assertEqual(result.returncode, 0)
             self.assertEqual(result.stdout, '')
-            self.assertEqual(normalise(result.stderr), read_fixture('inline-expected.stderr'))
+            self.assertEqual(normalise(result.stderr), read_fixture('inline-expected.stderr.txt'))
             self.assertEqual(read_file(tmp), read_fixture('inline-expected.md'))
         finally:
             os.unlink(tmp)
@@ -189,7 +189,7 @@ class TestInlineMode(unittest.TestCase):
             result = run('--ltac', fixture('simple.ltac'), '--inline', tmp)
             self.assertEqual(result.returncode, 0)
             self.assertEqual(result.stdout, '')
-            self.assertEqual(normalise(result.stderr), read_fixture('inline-expected.stderr'))
+            self.assertEqual(normalise(result.stderr), read_fixture('inline-expected.stderr.txt'))
             self.assertEqual(os.path.getmtime(tmp), mtime_after_first)
             self.assertEqual(read_file(tmp), read_fixture('inline-expected.md'))
         finally:

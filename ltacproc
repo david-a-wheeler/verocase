@@ -1255,6 +1255,13 @@ Additional checks when document files are provided:
     unknown ID (not in LTAC) and mismatched statement text are flagged
   - Every declared LTAC element should have a corresponding document header
 
+Configuration keys (--config FILE, JSON object):
+  base_url           base URL for hyperlinks in sacm/mermaid output (default: "")
+  markdown_base_url  base URL for hyperlinks in ltac/markdown and ltac/html output (default: "")
+  pkg_label          word used to identify packages in headers and output (default: "Package ")
+  pkg_header_prefix  string prepended to each package header when rendering * (default: "### ")
+  pkg_header_suffix  string appended after each package header when rendering * (default: newline)
+
 For full details see docs/design-spec.md.""",
     )
     parser.add_argument(

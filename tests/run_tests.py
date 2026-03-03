@@ -202,6 +202,70 @@ class TestBadgeappDoc(unittest.TestCase):
                          read_fixture('badgeapp-doc-input.stderr.txt'))
 
 
+class TestConfig(unittest.TestCase):
+    def test_config_file_overrides_default(self):
+        """--config FILE merges JSON object keys over defaults."""
+        cfg = {'pkg_label': 'Module '}
+        fd, path = tempfile.mkstemp(suffix='.json')
+        try:
+            with os.fdopen(fd, 'w', encoding='utf-8') as f:
+                import json
+                json.dump(cfg, f)
+            result = run('--ltac', fixture('simple.ltac'), '--config', path,
+                         '--select', 'ltac/markdown *')
+            self.assertEqual(result.returncode, 0)
+            self.assertIn('Module ', result.stdout)
+        finally:
+            os.unlink(path)
+
+    def test_config_file_not_found(self):
+        """--config with a nonexistent file exits non-zero with an error message."""
+        result = run('--ltac', fixture('simple.ltac'), '--config', '/no/such/file.json',
+                     '--select', 'ltac/markdown')
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('not found', result.stderr)
+
+    def test_config_file_not_json_object(self):
+        """--config file containing a JSON array (not object) exits non-zero."""
+        fd, path = tempfile.mkstemp(suffix='.json')
+        try:
+            with os.fdopen(fd, 'w', encoding='utf-8') as f:
+                f.write('[1, 2, 3]')
+            result = run('--ltac', fixture('simple.ltac'), '--config', path,
+                         '--select', 'ltac/markdown')
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn('JSON object', result.stderr)
+        finally:
+            os.unlink(path)
+
+    def test_config_file_invalid_json(self):
+        """--config file with invalid JSON exits non-zero."""
+        fd, path = tempfile.mkstemp(suffix='.json')
+        try:
+            with os.fdopen(fd, 'w', encoding='utf-8') as f:
+                f.write('{not valid json}')
+            result = run('--ltac', fixture('simple.ltac'), '--config', path,
+                         '--select', 'ltac/markdown')
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn('invalid JSON', result.stderr)
+        finally:
+            os.unlink(path)
+
+    def test_config_unknown_key_warns(self):
+        """--config file with an unknown key produces a warning but still exits 0."""
+        fd, path = tempfile.mkstemp(suffix='.json')
+        try:
+            with os.fdopen(fd, 'w', encoding='utf-8') as f:
+                import json
+                json.dump({'no_such_key': 'value'}, f)
+            result = run('--ltac', fixture('simple.ltac'), '--config', path,
+                         '--select', 'ltac/markdown')
+            self.assertEqual(result.returncode, 0)
+            self.assertIn('unknown config key', result.stderr)
+        finally:
+            os.unlink(path)
+
+
 class TestInlineMode(unittest.TestCase):
     def _tmp_copy(self, name):
         """Copy a fixture to a fresh temp file and return its path."""

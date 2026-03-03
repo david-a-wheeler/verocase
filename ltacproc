@@ -55,18 +55,25 @@ DEFAULT_CONFIG = {
 }
 
 
-def load_config(json_str: str) -> dict:
-    """Load and validate configuration from a JSON string.
+def load_config(config_path: str) -> dict:
+    """Load and validate configuration from a JSON file.
 
-    If json_str is None, return a copy of DEFAULT_CONFIG.
+    If config_path is None, return a copy of DEFAULT_CONFIG.
     Unknown keys produce a warning; known keys are merged over the defaults.
     """
-    if json_str is None:
+    if config_path is None:
         return dict(DEFAULT_CONFIG)
     try:
-        parsed = json.loads(json_str)
+        with open(config_path, encoding='utf-8') as f:
+            parsed = json.load(f)
+    except FileNotFoundError:
+        panic(f"--config file not found: {config_path!r}")
+    except PermissionError:
+        panic(f"--config file not readable: {config_path!r}")
     except json.JSONDecodeError as e:
-        panic(f"invalid JSON in --config: {e}")
+        panic(f"invalid JSON in --config file {config_path!r}: {e}")
+    if not isinstance(parsed, dict):
+        panic(f"--config file must contain a JSON object, not {type(parsed).__name__}")
     for key in parsed:
         if key not in DEFAULT_CONFIG:
             warn(f"unknown config key: {key!r}")
@@ -1251,8 +1258,8 @@ Additional checks when document files are provided:
 For full details see docs/design-spec.md.""",
     )
     parser.add_argument(
-        '--config', type=str, metavar='JSON',
-        help='configure the tool with a JSON object',
+        '--config', type=str, metavar='FILE',
+        help='path to a JSON file containing configuration key/value pairs',
     )
     parser.add_argument(
         '--error', action='store_true',

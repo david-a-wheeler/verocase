@@ -2,16 +2,16 @@
 
 ## Claim C1: The software is acceptably safe
 
-<!-- ltac statement C1 -->
+<!-- caseproc statement C1 -->
 STALE STATEMENT
-<!-- end ltac -->
+<!-- end caseproc -->
 
-<!-- ltac references C1 -->
+<!-- caseproc references C1 -->
 STALE REFERENCES
-<!-- end ltac -->
+<!-- end caseproc -->
 
-<!-- ltac sacm/mermaid C1 -->
+<!-- caseproc sacm/mermaid C1 -->
 ```mermaid
 stale diagram content
 ```
-<!-- end ltac -->
+<!-- end caseproc -->

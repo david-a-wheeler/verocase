@@ -1338,8 +1338,8 @@ def render_selector(
 # Document processor
 # ---------------------------------------------------------------------------
 
-# Matches '<!-- ltac SELECTOR -->' lines (SELECTOR is captured in group 1).
-_LTAC_REGION_RE = re.compile(r'^<!--\s*ltac\s+(.+?)\s*-->\s*$')
+# Matches '<!-- caseproc SELECTOR -->' lines (SELECTOR is captured in group 1).
+_CASEPROC_REGION_RE = re.compile(r'^<!--\s*caseproc\s+(.+?)\s*-->\s*$')
 
 # Matches any Markdown header line; group 1 = hashes, group 2 = heading text.
 _HEADER_RE = re.compile(r'^(#+) (.+)')
@@ -1380,14 +1380,14 @@ def _parse_header_text(
 
 
 def _consume_region(line_iter, filename: str, start_lineno: int, selector: str) -> bool:
-    """Consume lines from line_iter until '<!-- end ltac -->', return True if found.
+    """Consume lines from line_iter until '<!-- end caseproc -->', return True if found.
 
     If EOF is reached before finding the end marker, calls error() and returns False.
     """
     for _, line in line_iter:
-        if line.strip() == '<!-- end ltac -->':
+        if line.strip() == '<!-- end caseproc -->':
             return True
-    error(f"{filename}:{start_lineno}: unclosed '<!-- ltac {selector} -->' region")
+    error(f"{filename}:{start_lineno}: unclosed '<!-- caseproc {selector} -->' region")
     return False
 
 
@@ -1414,7 +1414,7 @@ def process_document_stream(
     for lineno, line in line_iter:
         text = line.rstrip('\r\n')
 
-        m = _LTAC_REGION_RE.match(text)
+        m = _CASEPROC_REGION_RE.match(text)
         if m:
             selector = m.group(1)
             found_end = _consume_region(line_iter, filename, lineno, selector)
@@ -1423,7 +1423,7 @@ def process_document_stream(
             if found_end:
                 if rendered:
                     out.write(rendered + '\n')
-                out.write('<!-- end ltac -->\n')
+                out.write('<!-- end caseproc -->\n')
             continue
 
         header_text = None
@@ -1490,7 +1490,7 @@ Selectors (--select TYPE [ID | *]):
   Omit ID to use the element set by the nearest preceding header (filter mode).
   Use * to render all packages (ltac/*, sacm/mermaid, and gsn/mermaid only).
 
-In documents, use <!-- ltac SELECTOR --> ... <!-- end ltac -->
+In documents, use <!-- caseproc SELECTOR --> ... <!-- end caseproc -->
 to surround where these go.
 
 Validations on the LTAC file (always):

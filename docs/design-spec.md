@@ -135,10 +135,10 @@ this syntax). If the header begins with "Package" or an Element type
 (e.g., "Claim"), it's remembered as the default "current element".
 
 Any line of the form
-`<!-- ltac SELECTOR -->`
+`<!-- caseproc SELECTOR -->`
 is copied back out, but the following lines are replaced with updated data
 until the corresponding line
-`<!-- end ltac -->`.
+`<!-- end caseproc -->`.
 Exactly what is replaced depends on SELECTOR.
 
 ## SELECTOR
@@ -545,16 +545,16 @@ state: reading | in_selector_output
 ```
 
 **`reading`:**
-- `<!-- ltac SELECTOR -->` (SELECTOR non-empty): save line and SELECTOR;
+- `<!-- caseproc SELECTOR -->` (SELECTOR non-empty): save line and SELECTOR;
   render SELECTOR against current registry; → `in_selector_output`
 - Line matching `^#+ ` (Markdown header; not applicable in plain HTML):
   update current-element context; emit
 - Anything else: emit as-is
 
 **`in_selector_output`:**
-- `<!-- end ltac -->`:
-  emit saved `<!-- ltac SELECTOR -->` line, emit rendered SELECTOR output,
-  emit `<!-- end ltac -->`; → `reading`
+- `<!-- end caseproc -->`:
+  emit saved `<!-- caseproc SELECTOR -->` line, emit rendered SELECTOR output,
+  emit `<!-- end caseproc -->`; → `reading`
 - Otherwise: discard line (old content being replaced)
 
 ### In-place rewriting (`--inline`)

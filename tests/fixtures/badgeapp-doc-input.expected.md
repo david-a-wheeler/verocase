@@ -5,7 +5,7 @@ arguing that it is adequately secure against moderate threats.
 
 ## Packages
 
-<!-- ltac sacm/mermaid * -->
+<!-- caseproc sacm/mermaid * -->
 ### Package Security
 ```mermaid
 ---
@@ -113,7 +113,7 @@ flowchart BT
     ThreatModel --- Dot1
     Dot1 --> Design
 ```
-<!-- end ltac -->
+<!-- end caseproc -->
 
 ## Context Details
 
@@ -121,64 +121,64 @@ Additional context and evidence packages supporting the argument.
 
 ### Claim Security: The system is adequately secure against moderate threats
 
-<!-- ltac references -->
+<!-- caseproc references -->
 References: [Package Security](#package-security)
-<!-- end ltac -->
+<!-- end caseproc -->
 
 This is the top-level claim for the entire assurance case.
 
 ### Claim Requirements: Security requirements are identified and met
 
-<!-- ltac references -->
+<!-- caseproc references -->
 References: [Package Requirements](#package-requirements), [Package Security](#package-security)
-<!-- end ltac -->
+<!-- end caseproc -->
 
 The security requirements are documented and verified against the implementation.
 
 ### Claim Design: The security design is documented and reviewed
 
-<!-- ltac references -->
+<!-- caseproc references -->
 References: [Package Design](#package-design), [Package Security](#package-security)
-<!-- end ltac -->
+<!-- end caseproc -->
 
 The system design incorporates security from the ground up.
 
 ### Evidence ReqSpec: Requirements specification
 
-<!-- ltac references -->
+<!-- caseproc references -->
 References: [Package Requirements](#package-requirements)
-<!-- end ltac -->
+<!-- end caseproc -->
 
 See the full requirements document for details.
 
 ### Evidence TestCoverage: Test coverage report
 
-<!-- ltac references -->
+<!-- caseproc references -->
 References: [Package Requirements](#package-requirements)
-<!-- end ltac -->
+<!-- end caseproc -->
 
 All security tests pass with full coverage of requirements.
 
 ### Evidence DesignDoc: Security architecture document
 
-<!-- ltac references -->
+<!-- caseproc references -->
 References: [Package Design](#package-design)
-<!-- end ltac -->
+<!-- end caseproc -->
 
 The architecture has been reviewed by the security team.
 
 ### Evidence ThreatModel: Threat model
 
-<!-- ltac references -->
+<!-- caseproc references -->
 References: [Package Design](#package-design)
-<!-- end ltac -->
+<!-- end caseproc -->
 
 Threats are systematically identified and mitigated.
 
 ### Context ReqScope: Applies to all user-facing features
 
-<!-- ltac references -->
+<!-- caseproc references -->
 References: [Package Requirements](#package-requirements)
-<!-- end ltac -->
+<!-- end caseproc -->
 
 Defines the scope of the requirements coverage.

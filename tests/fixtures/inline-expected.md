@@ -2,15 +2,15 @@
 
 ## Claim C1: The software is acceptably safe
 
-<!-- ltac statement C1 -->
+<!-- caseproc statement C1 -->
 Statement: The software is acceptably safe
-<!-- end ltac -->
+<!-- end caseproc -->
 
-<!-- ltac references C1 -->
+<!-- caseproc references C1 -->
 References: [Package C1](#package-c1)
-<!-- end ltac -->
+<!-- end caseproc -->
 
-<!-- ltac sacm/mermaid C1 -->
+<!-- caseproc sacm/mermaid C1 -->
 ```mermaid
 ---
 config:
@@ -47,4 +47,4 @@ flowchart BT
     Dot1 --> C1
     X1 --o C1
 ```
-<!-- end ltac -->
+<!-- end caseproc -->

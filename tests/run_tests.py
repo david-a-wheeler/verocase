@@ -126,7 +126,7 @@ class TestSelectMarkdown(unittest.TestCase):
 
 class TestDefaultMode(unittest.TestCase):
     def test_filter_mode_output(self):
-        """Default mode replaces stale ltac regions and passes other lines through."""
+        """Default mode replaces stale caseproc regions and passes other lines through."""
         result = run('--ltac', fixture('simple.ltac'), fixture('doc-simple.md'))
         self.assertEqual(result.returncode, 0)
         self.assertEqual(check(result.stdout, 'doc-simple.expected.md'),

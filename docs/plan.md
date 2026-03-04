@@ -438,13 +438,13 @@ Process one line at a time — non-special lines are written to `out`
 immediately. For each line:
 
 - **Non-special line**: write to `out` immediately.
-- **`<!-- ltac SELECTOR -->`** (SELECTOR non-empty):
+- **`<!-- caseproc SELECTOR -->`** (SELECTOR non-empty):
   Write the marker to `out`.
   Read and discard lines in a simple loop until the line (stripped) equals
-  `<!-- end ltac -->`. If EOF is reached first, call `error()` reporting the
+  `<!-- end caseproc -->`. If EOF is reached first, call `error()` reporting the
   unclosed region and the file/line where the marker appeared.
   Render SELECTOR using the loaded `registry`; write rendered output to `out`.
-  Write `<!-- end ltac -->` to `out`.
+  Write `<!-- end caseproc -->` to `out`.
 - **Markdown header** (`^#+ `): update current-element context; record the
   matched element identifier in a `seen_headers` set; write to `out`.
 
@@ -502,13 +502,13 @@ This file references elements from `tests/fixtures/simple.ltac`:
 
 ## Claim C1: The software is acceptably safe
 
-<!-- ltac statement C1 -->
+<!-- caseproc statement C1 -->
 Statement: The software is acceptably safe
-<!-- end ltac -->
+<!-- end caseproc -->
 
-<!-- ltac references C1 -->
+<!-- caseproc references C1 -->
 References: None
-<!-- end ltac -->
+<!-- end caseproc -->
 ```
 
 Generate and commit `tests/fixtures/doc-simple.md.expected`.
@@ -608,7 +608,7 @@ emit a `click ID href "URL"` line after all node declarations.
 ### 9h: Wire in, extend fixture, and test
 
 - Add `sacm/mermaid` to SELECTOR dispatch.
-- Add a `<!-- ltac sacm/mermaid C1 -->` region to `doc-simple.md` and
+- Add a `<!-- caseproc sacm/mermaid C1 -->` region to `doc-simple.md` and
   generate updated `doc-simple.md.expected`.
 - Add expected output file `tests/fixtures/simple.sacm.mermaid.expected`
   generated from `--select sacm/mermaid` on `simple.ltac`.

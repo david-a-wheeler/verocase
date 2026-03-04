@@ -2,7 +2,7 @@
 
 `caseproc` is a simple open source software tool
 that makes it *easy* and *efficient*
-to create and maintain a moderately-sized assurance case.
+to create and maintain a small or moderately-sized assurance case.
 It's a simple Python3 script that processes our
 extended version of the
 [Lightweight Text Assurance Case (LTAC) format](docs/ltac-extended.txt),
@@ -21,28 +21,34 @@ property, such as safety, security, privacy, or reliability."
 There are many notations for expressing and maintaining assurance cases,
 including SACM, GSN, and CAE.
 Large assurance cases are often maintained using specialized tools that
-manage databases of such information.
+manage a data structure containing the assurance case information.
+Examples include
+[Adalard ASCE](https://www.adelard.com/asce/) and
+[Argevide PREMIS](https://www.argevide.com/assurance-case/).
 These specialized tools allow people to edit
 diagrams that flexibly present the information graphically.
-For large assurance cases these tools are quite helpful!
-However, these sophisticated tools may not be necessary for
-handling smaller assurance cases.
+For large assurance cases these tools can be quite helpful.
+
+However, these sophisticated tools may seem excessive for
+smaller assurance cases. I was looking for an alternative.
 
 An obvious alternative to these sophisticated tools
-is to write an assurance entirely as a traditional document.
-This is possible, of course.
-However, traditional documents don't provide any support for the
+is to write an assurance case entirely as a traditional document.
+That's possible, and traditional document editing tools make it easy to
+edit a document.
+However, this approach doesn't provide *any* support for the
 structure of an assurance case.
-As a result, maintaining them requires a lot of extra work, it's easy
-to make mistakes, and the results
-often go slowly out of date. Such documents
-often don't provide any graphics to show the overview, since those are
-difficult to create and maintain, and if they're done at all
-they're often only done at a very high level.
+Maintaining an assurance case
+this way requires a lot of extra work to keep parts consistent.
+It's too easy to make mistakes, leading to inconsistencies,
+and the results often go slowly out of date.
+Such documents
+often don't provide many helpful graphics to show the overview, since those are
+difficult to create and maintain.
 
 ## Our approach
 
-This tool, `caseproc`, takes a different approach:
+This tool, `caseproc`, takes a completely different approach:
 
 * As input, it reads a simple text file written in our
   extended version of the Lightweight Text Assurance Case (LTAC) format.
@@ -78,25 +84,27 @@ If you *purely* do this in a document, the diagrams and document
 headings easily go out of sync, and there's no hint that there's a problem.
 One of the advantages of a database-based tool is that it can detect
 and warn of various problems.
-In addition, when a statement is changed, it's immediately updated everywhere
-in a database-based tool.
+In addition, when a statement is changed, in a datbase-based
+tool such changes are immediately updated everywhere.
 
-First, the tool does a lot of validations and warnings.
+This tool does a number of validations and produces various warnings.
 The `--help` provides a full list, but for example,
-each identifier must be declared (no ^ prefix) exactly once.
+each identifier must be declared (no ^ prefix) exactly once, and it
+will tell you if that rule is violated.
 We also warn every time a declared LTAC element fails to have a
 corresponding document header.
 
 We also have another trick to make editing easier.
-When a document header such as `## Claim C1: Old wording` has the same
+When a markdown
+document header such as `## Claim C1: Old wording` has the same
 label but its statement no longer
 matches the authoritative statement in the LTAC file,
 `caseproc` normally warns about the discrepancy.
 That warning is useful for catching accidental drift.
 But when you have *intentionally* updated the LTAC and simply want
 all the document headers to catch up automatically,
-use the `--update` flag (or matching configuration flag) will do exactly that:
-it rewrites every stale markdown header statement to match the LTAC,
+use the `--update` flag (or matching configuration flag) will do exactly that.
+It will rewrites every stale markdown header statement to match the LTAC,
 treating the LTAC as the authoritative source.
 A notification is printed to stderr for each header that's changed,
 so you always have a clear record of what was updated and why.
@@ -139,10 +147,11 @@ imposing various limits:
   limit your packages to smaller numbers of elements, but it's definitely
   a limitation.
 * This is not a database, it's a way to make it easier to manage documents.
-  If you want a database, this isn't it. So if you are managing a large
+  If you want a database, this tool
+  isn't it. So if you are managing a large
   assurance case, this approach is probably less appealing.
 
 ## Other information
 
-The specification of LTAC we implement is in file
+The specification of extended LTAC that we implement is in file
 [docs/ltac-extended.txt](docs/ltac-extended.txt).

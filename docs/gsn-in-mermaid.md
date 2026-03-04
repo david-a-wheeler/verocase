@@ -434,6 +434,23 @@ This applies to any element type (Goal, Strategy, Justification, etc.).
 G1["<b>G1</b><br>Safety-critical property<br>AXIOMATIC"]
 ```
 
+### MetaClaim (`{metaClaim}`)
+
+A metaClaim is a claim *about the argument itself* (its completeness,
+provenance, methodology, etc.) rather than about the system under
+consideration.
+GSN has no equivalent element type; this concept is foreign to GSN notation.
+
+We render it as a Goal (rectangle) with a `METACLAIM` text suffix.
+The Goal shape is used because a metaClaim is still a proposition that
+could be true or false — not a Context, Justification, or other GSN type.
+The `METACLAIM` suffix makes the non-standard nature explicit to GSN readers
+who would otherwise have no way to know this node has a different semantic role.
+
+```
+G1m["<b>G1m</b><br>This argument has been independently reviewed<br>METACLAIM"]
+```
+
 ### Abstract / Uninstantiated (`{abstract}`)
 
 Apply the `:::gsnUndev` class (dashed border).
@@ -476,6 +493,7 @@ See the General translation principle above for the overall approach.
 | `assumed` on a Claim | Renders as Assumption shape + InContextOf edge | Appends `ASSUMED` |
 | `assumed` on other types | Appends `ASSUMED` text suffix | Same |
 | `axiomatic` | Appends `AXIOMATIC` text suffix | Appends `━━━` |
+| `metaClaim` | Appends `METACLAIM` text suffix | Affects sacmDot grouping |
 | `abstract` on a node | Dashed border (`:::gsnUndev`) | `:::abstractClaim` |
 | `abstract` on a Relation | Dashed edge (`-.->` / `-.-o`) | Same |
 | `asCited` / `^` prefix | Double-bracket `[[ ]]` shape | Same |
@@ -486,7 +504,6 @@ See the General translation principle above for the overall approach.
 
 | Option | SACM/mermaid behaviour |
 |---|---|
-| `metaClaim` | Affects sacmDot grouping |
 | Assertion state options on `Relation` | Varies |
 
 ## Complete LTAC → GSN/mermaid example

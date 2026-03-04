@@ -477,47 +477,65 @@ def load_ltac_file(path: str, all_roots: List[Node], registry: Dict[str, Node],
 # Renderers
 # ---------------------------------------------------------------------------
 
+def _node_heading(node: Node, pkg_label: str) -> str:
+    """Return the expected document heading text for a node.
+
+    Root nodes (depth 0) use '{pkg_label}ID'; all others use 'Type ID: text'.
+    """
+    if node.depth == 0:
+        return f"{pkg_label}{node.identifier}"
+    heading = f"{node.node_type} {node.identifier}"
+    if node.text:
+        heading += f": {node.text}"
+    return heading
+
+
+def _node_anchor_url(node: Node, base_url: str, pkg_label: str) -> str:
+    """Return the anchor URL for a node: base_url + '#' + GitHub fragment.
+
+    Returns '' if the node has no identifier.  Works with base_url='' to
+    produce pure fragment links (e.g. '#claim-c1-the-software-is-acceptably-safe').
+    """
+    if not node.identifier:
+        return ''
+    return base_url + '#' + to_github_fragment(_node_heading(node, pkg_label))
+
+
 def _node_url(node: Node, base_url: str, pkg_label: str = DEFAULT_CONFIG['pkg_label']) -> str:
     """Return the hyperlink URL for a node, or '' if none can be determined.
 
     Uses ext_ref directly if set; otherwise constructs a URL from base_url
-    and a GitHub-style fragment derived from the expected heading for this node:
-    '{pkg_label}ID' for root nodes, 'Type ID: text' for all others.
+    and a GitHub-style fragment.  Returns '' when base_url is empty and no
+    ext_ref is present.
     """
     if node.ext_ref:
         return node.ext_ref
-    if not (base_url and node.identifier):
+    if not base_url:
         return ''
-    if node.depth == 0:
-        heading = f"{pkg_label}{node.identifier}"
-    else:
-        heading = f"{node.node_type} {node.identifier}"
-        if node.text:
-            heading += f": {node.text}"
-    return base_url + '#' + to_github_fragment(heading)
+    return _node_anchor_url(node, base_url, pkg_label)
 
 
 def _render_markdown_node(node: Node, indent: int, base_url: str, lines: list,
                           pkg_label: str = DEFAULT_CONFIG['pkg_label']) -> None:
     """Append a markdown bullet for node and recurse into its children.
 
+    The full 'Type ID: text' label links to its document anchor.  If the node
+    has an ext_ref, it is appended as a separate parenthetical link.
     Link nodes are silently skipped (they are citations, not new bullets).
     """
     if node.node_type == 'Link':
         return
-    url = _node_url(node, base_url, pkg_label)
-    if url and node.identifier:
-        id_part = f'[{node.identifier}]({url})'
-    elif node.identifier:
-        id_part = node.identifier
-    else:
-        id_part = ''
-    parts = ['  ' * indent + f'- {node.node_type}']
-    if id_part:
-        parts.append(f' {id_part}')
+    label = node.node_type
+    if node.identifier:
+        label += f' {node.identifier}'
     if node.text:
-        parts.append(f': {node.text}')
-    lines.append(''.join(parts))
+        label += f': {node.text}'
+    # Anchor always derived from the label itself, so the link target matches
+    # the document heading for this element regardless of depth.
+    anchor = (base_url + '#' + to_github_fragment(label)) if node.identifier else ''
+    main = f'[{label}]({anchor})' if anchor else label
+    ref_part = f' ([{node.ext_ref}]({node.ext_ref}))' if node.ext_ref else ''
+    lines.append('  ' * indent + f'- {main}{ref_part}')
     for child in node.children:
         _render_markdown_node(child, indent + 1, base_url, lines, pkg_label)
 

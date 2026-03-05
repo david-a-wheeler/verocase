@@ -35,7 +35,7 @@ Otherwise, use any specified in the config file (if any are).
 Otherwise, if files are unspecified, and not given in the config file,
 look for the file `case.md`, `case.html`, `docs/case.md`, and
 `docs/case.html` in that order; if found, use that file.
-If none are found, panic with error.
+If none are found, panic with an explanation.
 
 We want to make it easier for the program to rewrite LTAC files, but only
 when specifically told to do it.
@@ -87,24 +87,41 @@ are warned about, with a note saying
 "To update LTAC statements to match their declarations, use `--update`."
 or something like that.
 
-We should add
+We will add
 a --rename "OLD" "NEW" for renaming a label everywhere from OLD to NEW.
-Do validate first, just to make sure there are no weird problems, and
-to ensure OLD is used and NEW is not already used. Then fixes content docs.
+Do validate first before any rename or restate,
+just to make sure there are no weird problems.
+Before each rename operation, we must
+ensure that OLD is used and NEW is not already used at the
+time of the operation. This operation
+also fixes content docs (headers, anchor names, and marked regions).
 You can use multiple `--rename` options.
 If it fails (there is no OLD declared in the LTAC file
 or NEW is already declared in the LTAC file),
 then the entire command fails as a panic
-and the LTAC file is unchanged.
+and all files are unchanged.
+If all succeeds it will eventually update the LTAC file and content docs.
 
-A --restate "LABEL" "STATEMENT" for changing statement to STATEMENT.
-Then fixes content docs.
+We will add
+a --restate "LABEL" "STATEMENT" for changing statement to STATEMENT
+in the LTAC file.
 You can use multiple `--restate` options.
-If LABEL doesn't exist, then the entire command fails as a panic
-and the LTAC file is unchanged.
+If LABEL doesn't exist at the time of operation,
+then the entire command fails as a panic
+and the files are unchanged.
+If all succeeds it will eventually update the LTAC file and content docs.
+
+If there are restate or rename operations, then once
+all restate and rename operations have been successfully
+processed for the input LTAC,
+the tool will write out the proposed updated LTAC and
+update the batch of content docs with the same operations
+(headers, anchor names, and marked regions).
+Within each content doc, the restates and renames are applied in order to
+any header, to ensure that they end up with the correct result.
 
 NOTE: You can use *both* `--restate` and `--rename` in the same command,
-and multiples of either or both them. Thus, we must use Python's
+and multiples of either of them or both of them. Thus, we must use Python's
 argparse specially to implement ordered mixed options.
 Its action='append' won't do it, as that won't record the possibly
 interleaved order between them.
@@ -114,6 +131,8 @@ label, stmt)).
 It should be possible to swap label definitions by using an intermediary,
 e.g., `--rename FOO BAR_TOBE --rename BAR FOO --rename BAR_TOBE BAR`
 would swap FOO and BAR.
+The rename and restate operations are applied in order, each seeing
+the state produced by the previous one.
 Be careful on this implementation, and be sure to have a stress test
 to work it.
 
@@ -124,9 +143,20 @@ providing many of the benefits of a database-based approach without the hassle.
 In all cases the system processes all options, then validates the LTAC,
 and only *then* (once it passes validation) will it apply operations that
 modify the LTAC in place. That way, we aren't modifying corrupt files.
+After any LTAC-modifying process, do a re-validation of the LTAC
+internal data structures
+to make sure our data structures are okay before writing out our updated version
+to a temporary file
+(which will soon replace the original version).
+I currently expect that we'll regenerate the LTAC file by writing it out.
 When regenerating the LTAC, put a blank line between each package,
 and keep them in the same order as when they were originally specified.
-(Test to verify this.)
+Test to verify this.
+Once the LTAC is modified, the content files (Markdown and HTML)
+are updated. The generated graphics, LTAC, etc., all use the new LTAC data.
+The headers undergo the sequence of renames and restatements and use the
+defined statement for whatever their final label is - that way, the
+Markdown and HTML is kept consistent with the LTAC file.
 
 Whenever doing an in-place edit (LTAC, Markdown, HTML), generate the files
 first as temporary files.

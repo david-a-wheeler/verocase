@@ -47,11 +47,13 @@ def notify(msg: str) -> None:
 DEFAULT_CONFIG = {
     'base_url': '',
     'bottom_padding': True,
+    'content_files': [],
+    'ltac_file': '',
     'markdown_base_url': '',
     'pkg_header_prefix': '### ',
     'pkg_header_suffix': '\n',
     'pkg_label': 'Package ',
-    'update': False,
+    'update_headers': True,
 }
 
 
@@ -1512,7 +1514,7 @@ def process_document_stream(
     current_element: Optional[Node] = None
     filename = getattr(f, 'name', '<stream>')
     pkg_label = config.get('pkg_label', DEFAULT_CONFIG['pkg_label'])
-    do_update = config.get('update', False)
+    do_update = config.get('update_headers', True)
     line_iter = enumerate(f, 1)
     for lineno, line in line_iter:
         text = line.rstrip('\r\n')
@@ -1670,20 +1672,22 @@ For full details see docs/design-spec.md.""",
     return parser.parse_args()
 
 
-def find_ltac_file(ltac_arg: Optional[str]) -> str:
+def find_ltac_file(ltac_arg: Optional[str], config: dict) -> str:
     """Determine the path of the LTAC file to load.
 
-    If --ltac was given, use that path directly.
-    Otherwise try case.ltac in the current directory, then docs/case.ltac.
+    Priority: --ltac argument > ltac_file config key > case.ltac > docs/case.ltac.
     Calls panic() (and exits) if no file can be found.
     """
     if ltac_arg:
         return ltac_arg
+    ltac_from_config = config.get('ltac_file', '')
+    if ltac_from_config:
+        return ltac_from_config
     if os.path.exists('case.ltac'):
         return 'case.ltac'
     if os.path.exists('docs/case.ltac'):
         return 'docs/case.ltac'
-    panic("no LTAC file found; use --ltac or create case.ltac")
+    panic("no LTAC file found; use --ltac, set ltac_file in config, or create case.ltac")
 
 
 # SACM spec section 11 defines AssertionStatus as a mutually exclusive
@@ -1893,36 +1897,53 @@ def main() -> None:
     if args.error:
         _strict = True
 
-    config = load_config(args.config)
+    # Auto-discover config file if --config not given.
+    config_path = args.config
+    if config_path is None:
+        if os.path.exists('case.config'):
+            config_path = 'case.config'
+        elif os.path.exists('docs/case.config'):
+            config_path = 'docs/case.config'
+    config = load_config(config_path)
     if args.update:
-        config['update'] = True
+        config['update_headers'] = True
 
     all_roots: List[Node] = []
     registry: Dict[str, Node] = {}
     id_info: Dict[str, dict] = {}
 
-    ltac_path = find_ltac_file(args.ltac)
+    ltac_path = find_ltac_file(args.ltac, config)
     load_ltac_file(ltac_path, all_roots, registry, id_info)
 
     check_assertion_status(registry)
     check_id_info(id_info, all_roots, config.get('pkg_label', 'Package '))
     check_circularities(registry, all_roots)
 
+    # Resolve content files: CLI args > config > auto-discover (fallback to [] for now).
+    content_files = list(args.files)
+    if not content_files:
+        content_files = list(config.get('content_files', []))
+    if not content_files:
+        for candidate in ('case.md', 'case.html', 'docs/case.md', 'docs/case.html'):
+            if os.path.exists(candidate):
+                content_files = [candidate]
+                break
+
     if args.select:
         result = render_selector(args.select, registry, all_roots, config, id_info)
         if result:
             print(result)
     elif args.validate:
-        if args.files:
-            _process_files(args.files, io.StringIO(), registry, all_roots, config, id_info, set())
+        if content_files:
+            _process_files(content_files, io.StringIO(), registry, all_roots, config, id_info, set())
     elif args.inline:
         seen_headers: set = set()
-        for path in args.files:
+        for path in content_files:
             _inline_rewrite_file(path, registry, all_roots, config, id_info, seen_headers)
         _check_header_coverage(registry, seen_headers)
     else:
         seen_headers: set = set()
-        _process_files(args.files, sys.stdout, registry, all_roots, config, id_info, seen_headers)
+        _process_files(content_files, sys.stdout, registry, all_roots, config, id_info, seen_headers)
         _check_header_coverage(registry, seen_headers)
 
     if _had_error:

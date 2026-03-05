@@ -516,12 +516,14 @@ class TestUpdate(unittest.TestCase):
         self.assertIn('Wrong statement here', r.stderr)
         self.assertIn('acceptably safe', r.stderr)
 
-    def test_no_update_without_flag(self):
-        """Without --update, a stale header still produces a warning, not a rewrite."""
+    def test_update_header_default(self):
+        """update_headers defaults to True, so stale headers are rewritten even without --update."""
         r = run('--ltac', fixture('simple.ltac'), fixture('update-input.md'))
         self.assertEqual(r.returncode, 0)
-        self.assertIn('differs from LTAC', r.stderr)
-        self.assertIn('Wrong statement here', r.stdout)
+        actual = check(r.stdout, 'update-output.expected.md')
+        self.assertEqual(actual, read_fixture('update-output.expected.md'))
+        self.assertIn('updated Claim C1:', r.stderr)
+        self.assertNotIn('Wrong statement here', r.stdout)
 
 
 class TestCitationType(unittest.TestCase):

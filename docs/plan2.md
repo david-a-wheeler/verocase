@@ -44,7 +44,7 @@ This is technically a breaking change but no current users use it, and
 we've already updated the extended LTAC spec to reflect this change.
 
 A brief note: it's a design goal that the default operation of the
-tool idempotent.
+tool is idempotent.
 That is, running it twice with default settings should produce the same result.
 
 In the content files (Markdown/HTML) we already modify text within
@@ -80,25 +80,37 @@ That is, if a citation has a statement AND it's a
 different statement, it'll be updated to the current statement.
 Otherwise, statement discrepancies in the LTAC file
 are warned about, with a note saying
-"To update LTAC statement information automatically, use the option --update`
+"To update LTAC statements to match their declarations, use `--update`."
+or something like that.
 
 We should add
 a --rename "OLD" "NEW" for renaming a label everywhere from OLD to NEW.
 Do validate first, just to make sure there are no weird problems, and
 to ensure OLD is used and NEW is not already used. Then fixes content docs.
 You can use multiple `--rename` options.
+If it fails (there is no OLD at that point or NEW is already in use),
+then the entire command fails as a panic
+and the LTAC file is unchanged.
 
 A --restate "LABEL" "STATEMENT" for changing statement to STATEMENT.
 Then fixes content docs.
 You can use multiple `--restate` options.
+If LABEL doesn't exist, then the entire command fails as a panic
+and the LTAC file is unchanged.
 
 NOTE: You can use *both* `--restate` and `--rename` in the same command,
-and multiple of them. Thus, we must use Python's
-argparse with ordered mixed options via action='append' on
-a shared namespace, to ensure that they are done in the order on the
-command line. If they fail (e.g., there is no OLD at that point, or
-LABEL doesn't exist), then the whole operation fails as a panic
-and the LTAC file is unchanged.
+and multiples of either or both them. Thus, we must use Python's
+argparse specially to implement ordered mixed options.
+Its action='append' won't do it, as that won't record the possibly
+interleaved order between them.
+We'll need a custom action that appends
+tagged tuples to a single list (e.g., ('rename', old, new) or ('restate',
+label, stmt)).
+It should be possible to swap label definitions by using an intermediary,
+e.g., `--rename FOO BAR_TOBE --rename BAR FOO --rename BAR_TOBE BAR`
+would swap FOO and BAR.
+Be careful on this implementation, and be sure to have a stress test
+to work it.
 
 Most of the time the LTAC file is processed only as input.
 However, the `--update`, `--rename`, and `--restate` options
@@ -115,4 +127,6 @@ final filenames. That way, if the program
 crashes or something during processing before the update, nothing 
 bad happens to those files. If something really awful happens, we will
 still have a copy of the previous version.
+This only records *one* backup, but we expect people will use version
+control to record more.
 This functionality should be implemented by a few small simple functions.

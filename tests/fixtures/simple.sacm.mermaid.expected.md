@@ -22,7 +22,12 @@ flowchart BT
     C3["<b>C3</b><br>All hazards have been mitigated"]
     E1[("<b>E1</b>&nbsp;↗<br>Hazard analysis")]
     Dot1((" ")):::sacmDot
+    click C1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/simple.sacm.mermaid.expected.md#package-c1"
+    click AR1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/simple.sacm.mermaid.expected.md#strategy-ar1-argue-safety-by-hazard-category"
+    click A1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/simple.sacm.mermaid.expected.md#assumption-a1-threat-model-is-current"
     click X1 "release-notes.md"
+    click C2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/simple.sacm.mermaid.expected.md#claim-c2-all-hazards-have-been-identified"
+    click C3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/simple.sacm.mermaid.expected.md#claim-c3-all-hazards-have-been-mitigated"
     click E1 "hara.pdf"
 
     BottomPadding[ ]:::invisible ~~~ E1

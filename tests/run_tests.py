@@ -23,6 +23,16 @@ Fixture naming conventions (tests/fixtures/):
 Only input files carry "input" in their name; all expected files carry
 "expected".  Inline tests copy the input fixture to a temporary file
 before running --inline, so the fixture itself is never modified.
+
+Config file naming convention (tests/fixtures/):
+  <prefix>.config   JSON config file passed via --config to a test scenario.
+  The prefix matches the LTAC base name when one LTAC maps to one scenario
+  (e.g. badgeapp-top.config for badgeapp-top.ltac).  When a single LTAC
+  is used for multiple scenarios, the prefix matches the scenario's expected
+  output base name instead (e.g. simple.sacm.mermaid.config,
+  simple.gsn.mermaid.config, doc-simple.config all derive from simple.ltac).
+  Mermaid tests set base_url to the GitHub URL of their expected output file
+  so that diagram nodes link to the correct anchors on GitHub.
 """
 
 import os
@@ -166,7 +176,9 @@ class TestSpecialChars(unittest.TestCase):
 class TestDefaultMode(unittest.TestCase):
     def test_filter_mode_output(self):
         """Default mode replaces stale caseproc regions and passes other lines through."""
-        result = run('--ltac', fixture('simple.ltac'), fixture('doc-simple-input.md'))
+        result = run('--ltac', fixture('simple.ltac'),
+                     '--config', fixture('doc-simple.config'),
+                     fixture('doc-simple-input.md'))
         self.assertEqual(result.returncode, 0)
         self.assertEqual(check(result.stdout, 'doc-simple-output.expected.md'),
                          read_fixture('doc-simple-output.expected.md'))
@@ -309,7 +321,9 @@ class TestLTACValidation(unittest.TestCase):
 class TestSelectSacm(unittest.TestCase):
     def test_select_sacm_mermaid(self):
         """sacm/mermaid renders the full SACM mermaid diagram for simple.ltac."""
-        result = run('--ltac', fixture('simple.ltac'), '--select', 'sacm/mermaid')
+        result = run('--ltac', fixture('simple.ltac'),
+                     '--config', fixture('simple.sacm.mermaid.config'),
+                     '--select', 'sacm/mermaid')
         self.assertEqual(result.returncode, 0)
         self.assertEqual(check(result.stdout, 'simple.sacm.mermaid.expected.md'),
                          read_fixture('simple.sacm.mermaid.expected.md'))
@@ -317,7 +331,9 @@ class TestSelectSacm(unittest.TestCase):
 
     def test_badgeapp_top_sacm_mermaid(self):
         """sacm/mermaid renders the badgeapp top-level assurance case correctly."""
-        result = run('--ltac', fixture('badgeapp-top.ltac'), '--select', 'sacm/mermaid')
+        result = run('--ltac', fixture('badgeapp-top.ltac'),
+                     '--config', fixture('badgeapp-top.config'),
+                     '--select', 'sacm/mermaid')
         self.assertEqual(result.returncode, 0)
         self.assertEqual(check(result.stdout, 'badgeapp-top.sacm.mermaid.expected.md'),
                          read_fixture('badgeapp-top.sacm.mermaid.expected.md'))
@@ -326,7 +342,9 @@ class TestSelectSacm(unittest.TestCase):
 
     def test_filter_mode_with_sacm_region(self):
         """Default mode correctly replaces a sacm/mermaid region in doc-simple-input.md."""
-        result = run('--ltac', fixture('simple.ltac'), fixture('doc-simple-input.md'))
+        result = run('--ltac', fixture('simple.ltac'),
+                     '--config', fixture('doc-simple.config'),
+                     fixture('doc-simple-input.md'))
         self.assertEqual(result.returncode, 0)
         self.assertEqual(check(result.stdout, 'doc-simple-output.expected.md'),
                          read_fixture('doc-simple-output.expected.md'))
@@ -336,7 +354,9 @@ class TestSelectSacm(unittest.TestCase):
 
 class TestSelectGsn(unittest.TestCase):
     def test_select_gsn_mermaid(self):
-        r = run('--ltac', fixture('simple.ltac'), '--select', 'gsn/mermaid')
+        r = run('--ltac', fixture('simple.ltac'),
+                '--config', fixture('simple.gsn.mermaid.config'),
+                '--select', 'gsn/mermaid')
         self.assertEqual(r.returncode, 0)
         actual = check(r.stdout, 'simple.gsn.mermaid.expected.md')
         self.assertEqual(actual, read_fixture('simple.gsn.mermaid.expected.md'))
@@ -346,7 +366,9 @@ class TestBadgeappDoc(unittest.TestCase):
     def test_badgeapp_doc_filter_mode(self):
         """Filter mode renders all three packages via sacm/mermaid * with correct
         BottomPadding targets, click lines for evidence URLs, and context edges."""
-        result = run('--ltac', fixture('badgeapp-doc.ltac'), fixture('badgeapp-doc-input.md'))
+        result = run('--ltac', fixture('badgeapp-doc.ltac'),
+                     '--config', fixture('badgeapp-doc.config'),
+                     fixture('badgeapp-doc-input.md'))
         self.assertEqual(result.returncode, 0)
         self.assertEqual(check(result.stdout, 'badgeapp-doc-output.expected.md'),
                          read_fixture('badgeapp-doc-output.expected.md'))

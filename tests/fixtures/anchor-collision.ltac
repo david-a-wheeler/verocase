@@ -1,0 +1,2 @@
+- Claim Foo < 0: First claim
+  - Claim foo > 0: Second claim (HTML id collides with first)

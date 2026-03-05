@@ -583,6 +583,22 @@ class TestUpdate(unittest.TestCase):
         self.assertNotIn('Wrong statement here', r.stdout)
 
 
+class TestAnchorUniqueness(unittest.TestCase):
+    def test_collision_is_error(self):
+        """Two identifiers that produce the same HTML anchor id are reported as an error."""
+        r = run('--ltac', fixture('anchor-collision.ltac'), '--validate')
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn('anchor id collision', r.stderr)
+        self.assertIn('Foo < 0', r.stderr)
+        self.assertIn('foo > 0', r.stderr)
+
+    def test_no_collision_in_simple(self):
+        """simple.ltac has no anchor collisions."""
+        r = run('--ltac', fixture('simple.ltac'), '--validate')
+        self.assertEqual(r.returncode, 0)
+        self.assertNotIn('anchor id collision', r.stderr)
+
+
 class TestCitationType(unittest.TestCase):
     def test_type_mismatch_is_error(self):
         """Citing a Claim as a Strategy is always an error."""

@@ -1794,6 +1794,24 @@ def check_id_info(id_info: Dict[str, dict], all_roots: List[Node],
                      f" but declared in '{pkg_label}{info['decl_pkg_id']}'")
 
 
+def check_anchor_uniqueness(registry: Dict[str, Node]) -> None:
+    """Error if any two declared identifiers produce the same HTML anchor id.
+
+    GitHub-style anchors strip punctuation and collapse case, so LTAC
+    identifiers that differ only in punctuation or capitalisation can
+    collide (e.g. 'Claim Foo < 0' and 'Claim foo > 0' both become
+    'claim-foo--0'). Report all conflicting LTAC ids for each colliding anchor.
+    """
+    short_to_ltac: Dict[str, List[str]] = {}
+    for ident, node in registry.items():
+        label = f"{node.node_type} {ident}"
+        short = _component_anchor_id(node.node_type, ident)
+        if short in short_to_ltac:
+            error(f"anchor id collision on {short!r}: "
+                  + ", ".join(repr(x) for x in short_to_ltac[short] + [label]))
+        short_to_ltac.setdefault(short, []).append(label)
+
+
 def check_circularities(registry: Dict[str, Node], all_roots: List[Node]) -> None:
     """Panic if any circular dependency exists in the LTAC model.
 
@@ -2102,6 +2120,7 @@ def main() -> None:
 
     check_assertion_status(registry)
     check_id_info(id_info, all_roots, config.get('pkg_label', 'Package '))
+    check_anchor_uniqueness(registry)
     check_circularities(registry, all_roots)
 
     if args.update:
@@ -2122,6 +2141,7 @@ def main() -> None:
                 apply_restate(all_roots, registry, id_info, a, b)
         check_assertion_status(registry)
         check_id_info(id_info, all_roots, config.get('pkg_label', 'Package '))
+        check_anchor_uniqueness(registry)
         check_circularities(registry, all_roots)
         if _had_error:
             panic("LTAC validation failed after mutations; no files updated")

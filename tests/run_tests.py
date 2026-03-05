@@ -286,6 +286,34 @@ class TestLTACValidation(unittest.TestCase):
         self.assertNotEqual(r.returncode, 0)
         self.assertIn('unrecognized syntax', r.stderr)
 
+    def test_star_bullet_is_error(self):
+        """A line using * bullets (old syntax) is now unrecognized syntax."""
+        import tempfile, os
+        content = '* Claim C1: The software is safe\n'
+        fd, path = tempfile.mkstemp(suffix='.ltac')
+        try:
+            with os.fdopen(fd, 'w') as f:
+                f.write(content)
+            r = run('--ltac', path, '--select', 'ltac/markdown')
+            self.assertNotEqual(r.returncode, 0)
+            self.assertIn('unrecognized syntax', r.stderr)
+        finally:
+            os.unlink(path)
+
+    def test_comment_lines_are_error(self):
+        """Lines starting with // (old comment syntax) are now unrecognized syntax."""
+        import tempfile, os
+        content = '- Claim C1: The software is safe\n// this was a comment\n'
+        fd, path = tempfile.mkstemp(suffix='.ltac')
+        try:
+            with os.fdopen(fd, 'w') as f:
+                f.write(content)
+            r = run('--ltac', path, '--select', 'ltac/markdown')
+            self.assertNotEqual(r.returncode, 0)
+            self.assertIn('unrecognized syntax', r.stderr)
+        finally:
+            os.unlink(path)
+
     def test_star_invalid_with_statement_selector(self):
         """'*' is not valid with statement/references/info and always exits non-zero."""
         r = run('--ltac', fixture('simple.ltac'), '--select', 'statement *')

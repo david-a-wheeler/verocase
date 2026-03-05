@@ -282,7 +282,7 @@ _NON_INFERENTIAL_TYPES = frozenset({'Evidence', 'Context', 'Assumption', 'Justif
 # Compiled regexes perform well in Python.
 _LTAC_LINE_RE = re.compile(
     r'^(?P<indent>(?:  )*)'
-    r'[-*] '
+    r'[-] '
     r'(?P<nodetype>Claim|Strategy|Evidence|Justification'
     r'|Context|Assumption|Relation|Link|Connector)'
     r'(?:\s+(?P<cited>\^)?(?:\[(?P<cited_pkg>[^\]]*)\])?(?P<identifier>[^:{\n(]*))?'
@@ -337,7 +337,7 @@ class LTACParser:
     def _parse_line(self, lineno: int, line: str) -> None:
         """Process a single LTAC source line, updating parser state."""
         stripped = line.strip()
-        if not stripped or stripped.startswith('//'):
+        if not stripped:
             if self._stack or self._current_pkg:
                 self._finalize_package()
             return

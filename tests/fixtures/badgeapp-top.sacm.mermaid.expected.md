@@ -27,17 +27,17 @@ flowchart BT
     Maintenance[["<b>Maintenance</b><br>The maintenance process maintains security"]]
     Dot1((" ")):::sacmDot
     Dot2((" ")):::sacmDot
-    click Top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#package-top"
+    click Top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#claim-top-the-system-is-adequately-secure-against-moderate-threats"
     click Processes "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#strategy-processes-security-is-argued-by-examining-lifecycle-processes"
     click Technical "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#claim-technical-technical-lifecycle-processes-implement-security"
-    click NonTechnical "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#claim-nontechnical-non-technical-lifecycle-processes-implement-security"
-    click Controls "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#claim-controls-certifications-controls-provide-confidence-in-operating-results"
-    click Requirements "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#claim-requirements-security-requirements-are-identified-and-met-by-the-implementation"
-    click Design "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#claim-design-the-design-has-security-built-in"
-    click Implementation "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#claim-implementation-the-implementation-process-maintains-security"
-    click Verification "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#claim-verification-integration-verification-confirm-security"
-    click Deployment "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#claim-deployment-deployment-maintains-security"
-    click Maintenance "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#claim-maintenance-the-maintenance-process-maintains-security"
+    click NonTechnical "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#package-nontechnical"
+    click Controls "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#package-controls"
+    click Requirements "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#package-requirements"
+    click Design "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#package-design"
+    click Implementation "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#package-implementation"
+    click Verification "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#package-verification"
+    click Deployment "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#package-deployment"
+    click Maintenance "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#package-maintenance"
 
     BottomPadding[ ]:::invisible ~~~ Requirements
     Requirements --- Dot1

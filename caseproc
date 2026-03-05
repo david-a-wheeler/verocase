@@ -544,10 +544,21 @@ def _node_anchor_url(node: Node, base_url: str, pkg_label: str) -> str:
 
     Returns '' if the node has no identifier.  Works with base_url='' to
     produce pure fragment links (e.g. '#claim-c1-the-software-is-acceptably-safe').
+
+    Cited nodes (^ID) link to the cited package's section header
+    (e.g. '#package-requirements'), since they represent an external reference.
+    Declared nodes link to the element's own content heading
+    (e.g. '#claim-c1-the-software-is-acceptably-safe'), regardless of depth.
     """
     if not node.identifier:
         return ''
-    return base_url + '#' + to_github_fragment(_node_heading(node, pkg_label))
+    if node.is_cited:
+        heading = f"{pkg_label}{node.identifier}"
+    else:
+        heading = f"{node.node_type} {node.identifier}"
+        if node.text:
+            heading += f": {node.text}"
+    return base_url + '#' + to_github_fragment(heading)
 
 
 def _node_url(node: Node, base_url: str, pkg_label: str = DEFAULT_CONFIG['pkg_label']) -> str:

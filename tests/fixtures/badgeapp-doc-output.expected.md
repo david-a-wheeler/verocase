@@ -36,17 +36,17 @@ flowchart BT
     Maintenance[["<b>Maintenance</b><br>The maintenance process maintains security"]]
     Dot1((" ")):::sacmDot
     Dot2((" ")):::sacmDot
-    click Security "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#package-security"
+    click Security "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#claim-security-the-system-is-adequately-secure-against-moderate-threats"
     click Processes "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#strategy-processes-security-is-argued-by-examining-lifecycle-processes"
     click Technical "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#claim-technical-technical-lifecycle-processes-implement-security"
-    click NonTechnical "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#claim-nontechnical-non-technical-lifecycle-processes-implement-security"
-    click Controls "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#claim-controls-certifications-controls-provide-confidence-in-operating-results"
-    click Requirements "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#claim-requirements"
-    click Design "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#claim-design-the-security-design-is-documented-and-reviewed"
-    click Implementation "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#claim-implementation-the-implementation-process-maintains-security"
-    click Verification "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#claim-verification-integration-verification-confirm-security"
-    click Deployment "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#claim-deployment-deployment-maintains-security"
-    click Maintenance "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#claim-maintenance-the-maintenance-process-maintains-security"
+    click NonTechnical "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#package-nontechnical"
+    click Controls "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#package-controls"
+    click Requirements "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#package-requirements"
+    click Design "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#package-design"
+    click Implementation "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#package-implementation"
+    click Verification "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#package-verification"
+    click Deployment "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#package-deployment"
+    click Maintenance "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#package-maintenance"
 
     BottomPadding[ ]:::invisible ~~~ Requirements
     Requirements --- Dot1
@@ -85,7 +85,7 @@ flowchart BT
     TestCoverage[("<b>TestCoverage</b>&nbsp;↗<br>Test coverage report")]
     ReqScope[("<b>ReqScope</b>&nbsp;↗<br>Applies to all user-facing features")]
     Dot1((" ")):::sacmDot
-    click Requirements "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#package-requirements"
+    click Requirements "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#claim-requirements-security-requirements-are-identified-and-met"
     click ReqSpec "docs/requirements.md"
     click TestCoverage "reports/coverage.html"
     click ReqScope "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#context-reqscope-applies-to-all-user-facing-features"
@@ -118,7 +118,7 @@ flowchart BT
     DesignDoc[("<b>DesignDoc</b>&nbsp;↗<br>Security architecture document")]
     ThreatModel[("<b>ThreatModel</b>&nbsp;↗<br>Threat model")]
     Dot1((" ")):::sacmDot
-    click Design "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#package-design"
+    click Design "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#claim-design-the-security-design-is-documented-and-reviewed"
     click DesignDoc "docs/security-arch.pdf"
     click ThreatModel "docs/threat-model.md"
 

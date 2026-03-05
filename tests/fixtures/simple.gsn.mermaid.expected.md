@@ -19,7 +19,7 @@ flowchart TD
     C2["<b>C2</b><br>All hazards have been identified"]
     C3["<b>C3</b><br>All hazards have been mitigated"]
     E1(("<b>E1</b><br>Hazard analysis"))
-    click C1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/simple.gsn.mermaid.expected.md#package-c1"
+    click C1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/simple.gsn.mermaid.expected.md#claim-c1-the-software-is-acceptably-safe"
     click AR1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/simple.gsn.mermaid.expected.md#strategy-ar1-argue-safety-by-hazard-category"
     click A1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/simple.gsn.mermaid.expected.md#assumption-a1-threat-model-is-current"
     click X1 "release-notes.md"

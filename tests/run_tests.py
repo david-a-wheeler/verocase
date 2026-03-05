@@ -615,6 +615,107 @@ class TestCircularity(unittest.TestCase):
         self.assertNotIn('circularity', r.stderr)
 
 
+class TestMutations(unittest.TestCase):
+    def _ltac_copy(self, name='simple.ltac'):
+        """Copy an LTAC fixture to tests/results/ with a unique name and return its path."""
+        os.makedirs(RESULTS, exist_ok=True)
+        path = os.path.join(RESULTS, 'mut-' + name)
+        shutil.copy(fixture(name), path)
+        return path
+
+    def test_rename_single(self):
+        """--rename changes the identifier everywhere in the LTAC file."""
+        ltac = self._ltac_copy()
+        try:
+            r = run('--ltac', ltac, '--rename', 'C1', 'C99', '--validate')
+            self.assertEqual(r.returncode, 0)
+            content = read_file(ltac)
+            self.assertIn('Claim C99', content)
+            self.assertNotIn('Claim C1', content)
+        finally:
+            os.unlink(ltac)
+
+    def test_restate_single(self):
+        """--restate updates the statement text for an identifier everywhere."""
+        ltac = self._ltac_copy()
+        try:
+            r = run('--ltac', ltac, '--restate', 'C1', 'New safety claim', '--validate')
+            self.assertEqual(r.returncode, 0)
+            content = read_file(ltac)
+            self.assertIn('New safety claim', content)
+            self.assertNotIn('The software is acceptably safe', content)
+        finally:
+            os.unlink(ltac)
+
+    def test_rename_then_restate(self):
+        """Interleaved --rename then --restate applies in order."""
+        ltac = self._ltac_copy()
+        try:
+            r = run('--ltac', ltac,
+                    '--rename', 'C1', 'C99',
+                    '--restate', 'C99', 'Renamed and restated',
+                    '--validate')
+            self.assertEqual(r.returncode, 0)
+            content = read_file(ltac)
+            self.assertIn('C99', content)
+            self.assertIn('Renamed and restated', content)
+            self.assertNotIn('C1', content)
+        finally:
+            os.unlink(ltac)
+
+    def test_rename_swap(self):
+        """Two labels can be swapped using an intermediary rename."""
+        ltac = self._ltac_copy()
+        try:
+            r = run('--ltac', ltac,
+                    '--rename', 'C1', 'Ctmp',
+                    '--rename', 'C2', 'C1',
+                    '--rename', 'Ctmp', 'C2',
+                    '--validate')
+            self.assertEqual(r.returncode, 0)
+            content = read_file(ltac)
+            self.assertIn('Claim C2: The software is acceptably safe', content)
+            self.assertIn('Claim C1: All hazards have been identified', content)
+        finally:
+            os.unlink(ltac)
+
+    def test_rename_bad_old_leaves_files_unchanged(self):
+        """--rename with an unknown OLD panics without touching any file."""
+        ltac = self._ltac_copy()
+        try:
+            original = read_file(ltac)
+            r = run('--ltac', ltac, '--rename', 'NOSUCHID', 'X99', '--validate')
+            self.assertNotEqual(r.returncode, 0)
+            self.assertIn('NOSUCHID', r.stderr)
+            self.assertEqual(read_file(ltac), original)
+        finally:
+            os.unlink(ltac)
+
+    def test_rename_new_already_declared_panics(self):
+        """--rename with a NEW that is already declared panics without modifying files."""
+        ltac = self._ltac_copy()
+        try:
+            original = read_file(ltac)
+            r = run('--ltac', ltac, '--rename', 'C1', 'C2', '--validate')
+            self.assertNotEqual(r.returncode, 0)
+            self.assertIn('C2', r.stderr)
+            self.assertEqual(read_file(ltac), original)
+        finally:
+            os.unlink(ltac)
+
+    def test_restate_bad_label_panics(self):
+        """--restate with an unknown LABEL panics without modifying files."""
+        ltac = self._ltac_copy()
+        try:
+            original = read_file(ltac)
+            r = run('--ltac', ltac, '--restate', 'NOSUCHID', 'new text', '--validate')
+            self.assertNotEqual(r.returncode, 0)
+            self.assertIn('NOSUCHID', r.stderr)
+            self.assertEqual(read_file(ltac), original)
+        finally:
+            os.unlink(ltac)
+
+
 class TestWriteLTAC(unittest.TestCase):
     def test_roundtrip(self):
         """write_ltac round-trips a simple LTAC file without loss."""

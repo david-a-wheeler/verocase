@@ -490,15 +490,13 @@ def parse_ltac_lines(lines: List[str]) -> Tuple[List[Node], Dict[str, Node], Dic
     return roots, parser.registry, parser.id_info
 
 
-def _count_all_nodes(roots: List[Node]) -> int:
-    """Count all nodes in the forest by tree traversal."""
-    total = 0
+def _all_nodes(roots: List[Node]):
+    """Yield every node in the forest in depth-first order."""
     stack = list(roots)
     while stack:
         node = stack.pop()
-        total += 1
+        yield node
         stack.extend(node.children)
-    return total
 
 
 # ---------------------------------------------------------------------------
@@ -1611,6 +1609,15 @@ def process_document_stream(
 # CLI helpers
 # ---------------------------------------------------------------------------
 
+class _MutationAction(argparse.Action):
+    """Accumulate --rename and --restate operations as ordered tagged tuples."""
+    def __call__(self, parser, namespace, values, option_string=None):
+        mutations = getattr(namespace, self.dest, None) or []
+        op = 'rename' if option_string == '--rename' else 'restate'
+        mutations.append((op, values[0], values[1]))
+        setattr(namespace, self.dest, mutations)
+
+
 def parse_args() -> argparse.Namespace:
     """Build the argument parser, define all flags, and parse the command line."""
     parser = argparse.ArgumentParser(
@@ -1677,6 +1684,17 @@ For full details see docs/design-spec.md.""",
         '--update', action='store_true',
         help='update the LTAC file to synchronize citation statements with their declarations',
     )
+    parser.add_argument(
+        '--rename', nargs=2, metavar=('OLD', 'NEW'),
+        dest='mutations', action=_MutationAction,
+        help='rename identifier OLD to NEW in LTAC and content files',
+    )
+    parser.add_argument(
+        '--restate', nargs=2, metavar=('LABEL', 'STATEMENT'),
+        dest='mutations', action=_MutationAction,
+        help='update the statement for LABEL in LTAC and content files',
+    )
+    parser.set_defaults(mutations=[])
     parser.add_argument(
         '--ltac', '-l', type=str, metavar='FILENAME',
         help='LTAC file to load (default: case.ltac or docs/case.ltac)',
@@ -1928,6 +1946,43 @@ def commit_updates(pairs: List[Tuple[str, str]]) -> None:
             panic(f"cannot update {final!r}: {e}")
 
 
+def apply_rename(roots: List[Node], registry: Dict[str, Node],
+                 id_info: Dict[str, dict], old: str, new: str) -> None:
+    """Rename identifier old to new throughout the LTAC forest.
+
+    Panics if old is not declared or new is already declared.
+    Updates all node identifiers, the registry, id_info, and cross-references.
+    """
+    if old not in registry:
+        panic(f"--rename: {old!r} is not a declared identifier")
+    if new in registry:
+        panic(f"--rename: {new!r} is already declared")
+    for node in _all_nodes(roots):
+        if node.identifier == old:
+            node.identifier = new
+    registry[new] = registry.pop(old)
+    id_info[new] = id_info.pop(old)
+    for entry in id_info.values():
+        if entry.get('decl_pkg_id') == old:
+            entry['decl_pkg_id'] = new
+        entry['citing_pkg_ids'] = [new if x == old else x
+                                   for x in entry.get('citing_pkg_ids', [])]
+
+
+def apply_restate(roots: List[Node], registry: Dict[str, Node],
+                  id_info: Dict[str, dict], label: str, stmt: str) -> None:
+    """Update the statement text for label on all nodes and in id_info.
+
+    Panics if label is not declared.
+    """
+    if label not in registry:
+        panic(f"--restate: {label!r} is not a declared identifier")
+    for node in _all_nodes(roots):
+        if node.identifier == label:
+            node.text = stmt
+    id_info[label]['statement'] = stmt
+
+
 def _make_temp(path: str, content: str) -> Optional[str]:
     """Write content to a temp file in the same directory as path.
 
@@ -1959,13 +2014,8 @@ def apply_ltac_update(roots: List[Node], id_info: Dict[str, dict]) -> int:
     nodes changed.
     """
     count = 0
-    stack = list(roots)
-    while stack:
-        node = stack.pop()
-        stack.extend(node.children)
-        if not node.identifier:
-            continue
-        if not (node.is_cited or node.node_type == 'Link'):
+    for node in _all_nodes(roots):
+        if not node.identifier or not (node.is_cited or node.node_type == 'Link'):
             continue
         canonical = id_info.get(node.identifier, {}).get('statement')
         if node.text and canonical is not None and node.text != canonical:
@@ -2062,6 +2112,24 @@ def main() -> None:
                 panic("cannot write updated LTAC file")
             commit_updates([(tmp, ltac_path)])
 
+    # Apply ordered mutations (--rename / --restate).
+    ltac_pair: Optional[Tuple[str, str]] = None
+    if args.mutations:
+        for op, a, b in args.mutations:
+            if op == 'rename':
+                apply_rename(all_roots, registry, id_info, a, b)
+            else:
+                apply_restate(all_roots, registry, id_info, a, b)
+        check_assertion_status(registry)
+        check_id_info(id_info, all_roots, config.get('pkg_label', 'Package '))
+        check_circularities(registry, all_roots)
+        if _had_error:
+            panic("LTAC validation failed after mutations; no files updated")
+        tmp = _make_temp(ltac_path, write_ltac(all_roots))
+        if tmp is None:
+            panic("cannot write updated LTAC file")
+        ltac_pair = (tmp, ltac_path)
+
     # Resolve content files: CLI args > config > auto-discover (fallback to [] for now).
     content_files = list(args.files)
     if not content_files:
@@ -2081,28 +2149,35 @@ def main() -> None:
         result = render_selector(args.select, registry, all_roots, config, id_info)
         if result:
             print(result)
+        if ltac_pair:
+            commit_updates([ltac_pair])
     elif args.validate:
         if content_files:
             _process_files(content_files, io.StringIO(), registry, all_roots, config, id_info, set())
+        if ltac_pair:
+            commit_updates([ltac_pair])
     elif args.stdout:
         if not content_files:
             panic(_NO_FILES_MSG)
         seen_headers: set = set()
         _process_files(content_files, sys.stdout, registry, all_roots, config, id_info, seen_headers)
         _check_header_coverage(registry, seen_headers)
+        if ltac_pair:
+            commit_updates([ltac_pair])
     else:
         # Default mode: rewrite content files in place.
-        if not content_files:
+        if not content_files and not ltac_pair:
             panic(_NO_FILES_MSG)
         seen_headers: set = set()
-        pairs = []
+        pairs = ([ltac_pair] if ltac_pair else [])
         for path in content_files:
             pair = _inline_rewrite_file(path, registry, all_roots, config, id_info, seen_headers)
             if pair is not None:
                 pairs.append(pair)
         if pairs:
             commit_updates(pairs)
-        _check_header_coverage(registry, seen_headers)
+        if content_files:
+            _check_header_coverage(registry, seen_headers)
 
     if _had_error:
         sys.exit(1)

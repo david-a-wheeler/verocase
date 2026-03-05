@@ -1,5 +1,7 @@
+<a id="package-c1"></a>
 # Package C1
 
+<a id="claim-c1"></a>
 ## Claim C1: The software is acceptably safe
 
 <!-- caseproc statement C1 -->

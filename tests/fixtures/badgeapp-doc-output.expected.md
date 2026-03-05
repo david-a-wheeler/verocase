@@ -36,9 +36,9 @@ flowchart BT
     Maintenance[["<b>Maintenance</b><br>The maintenance process maintains security"]]
     Dot1((" ")):::sacmDot
     Dot2((" ")):::sacmDot
-    click Security "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#claim-security-the-system-is-adequately-secure-against-moderate-threats"
-    click Processes "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#strategy-processes-security-is-argued-by-examining-lifecycle-processes"
-    click Technical "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#claim-technical-technical-lifecycle-processes-implement-security"
+    click Security "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#claim-security"
+    click Processes "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#strategy-processes"
+    click Technical "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#claim-technical"
     click NonTechnical "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#package-nontechnical"
     click Controls "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#package-controls"
     click Requirements "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#package-requirements"
@@ -85,10 +85,10 @@ flowchart BT
     TestCoverage[("<b>TestCoverage</b>&nbsp;↗<br>Test coverage report")]
     ReqScope[("<b>ReqScope</b>&nbsp;↗<br>Applies to all user-facing features")]
     Dot1((" ")):::sacmDot
-    click Requirements "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#claim-requirements-security-requirements-are-identified-and-met"
+    click Requirements "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#claim-requirements"
     click ReqSpec "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/docs/requirements.md"
     click TestCoverage "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/reports/coverage.html"
-    click ReqScope "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#context-reqscope-applies-to-all-user-facing-features"
+    click ReqScope "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#context-reqscope"
 
     BottomPadding[ ]:::invisible ~~~ ReqSpec
     ReqSpec --- Dot1
@@ -118,7 +118,7 @@ flowchart BT
     DesignDoc[("<b>DesignDoc</b>&nbsp;↗<br>Security architecture document")]
     ThreatModel[("<b>ThreatModel</b>&nbsp;↗<br>Threat model")]
     Dot1((" ")):::sacmDot
-    click Design "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#claim-design-the-security-design-is-documented-and-reviewed"
+    click Design "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#claim-design"
     click DesignDoc "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/docs/security-arch.pdf"
     click ThreatModel "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/docs/threat-model.md"
 
@@ -133,6 +133,7 @@ flowchart BT
 
 Additional context and evidence packages supporting the argument.
 
+<a id="claim-security"></a>
 ### Claim Security: The system is adequately secure against moderate threats
 
 <!-- caseproc references -->
@@ -141,6 +142,7 @@ References: [Package Security](#package-security)
 
 This is the top-level claim for the entire assurance case.
 
+<a id="claim-requirements"></a>
 ### Claim Requirements: Security requirements are identified and met
 
 <!-- caseproc references -->
@@ -149,6 +151,7 @@ References: [Package Requirements](#package-requirements), [Package Security](#p
 
 The security requirements are documented and verified against the implementation.
 
+<a id="claim-design"></a>
 ### Claim Design: The security design is documented and reviewed
 
 <!-- caseproc references -->
@@ -157,6 +160,7 @@ References: [Package Design](#package-design), [Package Security](#package-secur
 
 The system design incorporates security from the ground up.
 
+<a id="evidence-reqspec"></a>
 ### Evidence ReqSpec: Requirements specification
 
 <!-- caseproc references -->
@@ -165,6 +169,7 @@ References: [Package Requirements](#package-requirements)
 
 See the full requirements document for details.
 
+<a id="evidence-testcoverage"></a>
 ### Evidence TestCoverage: Test coverage report
 
 <!-- caseproc references -->
@@ -173,6 +178,7 @@ References: [Package Requirements](#package-requirements)
 
 All security tests pass with full coverage of requirements.
 
+<a id="evidence-designdoc"></a>
 ### Evidence DesignDoc: Security architecture document
 
 <!-- caseproc references -->
@@ -181,6 +187,7 @@ References: [Package Design](#package-design)
 
 The architecture has been reviewed by the security team.
 
+<a id="evidence-threatmodel"></a>
 ### Evidence ThreatModel: Threat model
 
 <!-- caseproc references -->
@@ -189,6 +196,7 @@ References: [Package Design](#package-design)
 
 Threats are systematically identified and mitigated.
 
+<a id="context-reqscope"></a>
 ### Context ReqScope: Applies to all user-facing features
 
 <!-- caseproc references -->

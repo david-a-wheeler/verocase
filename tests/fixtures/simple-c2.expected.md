@@ -1,2 +1,2 @@
-- [Claim C2: All hazards have been identified](#claim-c2-all-hazards-have-been-identified)
-  - [Evidence E1: Hazard analysis](#evidence-e1-hazard-analysis) ([hara.pdf](hara.pdf))
+- [Claim C2: All hazards have been identified](#claim-c2)
+  - [Evidence E1: Hazard analysis](#evidence-e1) ([hara.pdf](hara.pdf))

@@ -27,9 +27,9 @@ flowchart BT
     Maintenance[["<b>Maintenance</b><br>The maintenance process maintains security"]]
     Dot1((" ")):::sacmDot
     Dot2((" ")):::sacmDot
-    click Top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#claim-top-the-system-is-adequately-secure-against-moderate-threats"
-    click Processes "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#strategy-processes-security-is-argued-by-examining-lifecycle-processes"
-    click Technical "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#claim-technical-technical-lifecycle-processes-implement-security"
+    click Top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#claim-top"
+    click Processes "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#strategy-processes"
+    click Technical "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#claim-technical"
     click NonTechnical "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#package-nontechnical"
     click Controls "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#package-controls"
     click Requirements "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#package-requirements"

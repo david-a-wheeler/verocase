@@ -1,5 +1,7 @@
+<a id="package-c1"></a>
 # Package C1
 
+<a id="claim-c1"></a>
 ## Claim C1: The software is acceptably safe
 
 <!-- caseproc statement C1 -->
@@ -35,12 +37,12 @@ flowchart BT
     C3["<b>C3</b><br>All hazards have been mitigated"]
     E1[("<b>E1</b>&nbsp;↗<br>Hazard analysis")]
     Dot1((" ")):::sacmDot
-    click C1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/doc-simple-output.expected.md#claim-c1-the-software-is-acceptably-safe"
-    click AR1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/doc-simple-output.expected.md#strategy-ar1-argue-safety-by-hazard-category"
-    click A1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/doc-simple-output.expected.md#assumption-a1-threat-model-is-current"
+    click C1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/doc-simple-output.expected.md#claim-c1"
+    click AR1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/doc-simple-output.expected.md#strategy-ar1"
+    click A1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/doc-simple-output.expected.md#assumption-a1"
     click X1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/release-notes.md"
-    click C2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/doc-simple-output.expected.md#claim-c2-all-hazards-have-been-identified"
-    click C3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/doc-simple-output.expected.md#claim-c3-all-hazards-have-been-mitigated"
+    click C2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/doc-simple-output.expected.md#claim-c2"
+    click C3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/doc-simple-output.expected.md#claim-c3"
     click E1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/hara.pdf"
 
     BottomPadding[ ]:::invisible ~~~ E1

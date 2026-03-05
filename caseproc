@@ -88,6 +88,20 @@ def load_config(config_path: str) -> dict:
 # Utility functions
 # ---------------------------------------------------------------------------
 
+def _component_anchor_id(type_str: str, ident: str) -> str:
+    """Return the stable GitHub anchor id for an assurance case component header.
+
+    Uses only type and identifier (no statement text) so links remain valid
+    even when the statement changes.
+
+    >>> _component_anchor_id("Claim", "C1")
+    'claim-c1'
+    >>> _component_anchor_id("Package", "REQ")
+    'package-req'
+    """
+    return to_github_fragment(f"{type_str} {ident}")
+
+
 def to_github_fragment(text: str) -> str:
     """Convert heading text to a GitHub anchor fragment id.
 
@@ -555,9 +569,8 @@ def _node_anchor_url(node: Node, base_url: str, pkg_label: str) -> str:
     if node.is_cited:
         heading = f"{pkg_label}{node.identifier}"
     else:
+        # No statement text: keeps links stable when statements change.
         heading = f"{node.node_type} {node.identifier}"
-        if node.text:
-            heading += f": {node.text}"
     return base_url + '#' + to_github_fragment(heading)
 
 
@@ -611,8 +624,8 @@ def _render_markdown_node(node: Node, indent: int, base_url: str, lines: list,
         label += f' {node.identifier}'
     if node.text:
         label += f': {node.text}'
-    # Anchor derived from the raw label; display label has Markdown specials escaped.
-    anchor = (base_url + '#' + to_github_fragment(label)) if node.identifier else ''
+    # Anchor uses type+ID only (no statement) for stability across statement changes.
+    anchor = (base_url + '#' + to_github_fragment(f"{node.node_type} {node.identifier}")) if node.identifier else ''
     display = escape_markdown(label)
     main = f'[{display}]({anchor})' if anchor else display
     ref_ext = node.ext_ref or ''
@@ -704,7 +717,8 @@ def _render_html_node(node: Node, indent: int, base_url: str, lines: list,
     if node.text:
         label += f': {node.text}'
     if node.identifier:
-        anchor = base_url + '#' + to_github_fragment(label)
+        # Anchor uses type+ID only (no statement) for stability across statement changes.
+        anchor = base_url + '#' + to_github_fragment(f"{node.node_type} {node.identifier}")
         main = f'<a href="{escape_html(anchor)}">{escape_html_content(label)}</a>'
     else:
         main = escape_html_content(label)
@@ -1515,9 +1529,21 @@ def process_document_stream(
     filename = getattr(f, 'name', '<stream>')
     pkg_label = config.get('pkg_label', DEFAULT_CONFIG['pkg_label'])
     do_update = config.get('update_headers', True)
+
+    # Regex to strip stale component anchor lines (re-inserted correctly below).
+    _pkg_frag = re.escape(to_github_fragment(pkg_label.rstrip()))
+    _anchor_strip_re = re.compile(
+        rf'^<a\s+id="(?:claim|strategy|evidence|justification|context|assumption|{_pkg_frag})-[^"]*"\s*></a>\s*$',
+        re.IGNORECASE,
+    )
+
     line_iter = enumerate(f, 1)
     for lineno, line in line_iter:
         text = line.rstrip('\r\n')
+
+        # Strip stale component anchor lines; they are re-inserted correctly below.
+        if _anchor_strip_re.match(text):
+            continue
 
         m = _CASEPROC_REGION_RE.match(text)
         if m:
@@ -1542,6 +1568,7 @@ def process_document_stream(
             if hm:
                 header_text = hm.group(2).strip()
 
+        emit_anchor = None
         if header_text is not None:
             parsed = _parse_header_text(header_text, pkg_label)
             if parsed is not None:
@@ -1554,6 +1581,7 @@ def process_document_stream(
                     warn(f"{filename}:{lineno}: header '{type_str} {ident}'"
                          f" not found in LTAC")
                 else:
+                    emit_anchor = _component_anchor_id(type_str, ident)
                     ltac_stmt = id_info[ident].get('statement') or ''
                     if stmt and ltac_stmt and stmt != ltac_stmt:
                         if do_update and node is not None:
@@ -1569,6 +1597,8 @@ def process_document_stream(
                             warn(f"{filename}:{lineno}: '{ident}': header statement"
                                  f" {stmt!r} differs from LTAC {ltac_stmt!r}")
 
+        if emit_anchor is not None:
+            out.write(f'<a id="{emit_anchor}"></a>\n')
         out.write(text + '\n')
 
 

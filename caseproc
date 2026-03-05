@@ -1701,7 +1701,7 @@ For full details see docs/design-spec.md.""",
     )
     parser.add_argument(
         'files', nargs='*',
-        help='Markdown/HTML files to update (default: stdin)',
+        help='Markdown/HTML files to update in place (default: auto-discover case.md etc.)',
     )
 
     mode = parser.add_mutually_exclusive_group()

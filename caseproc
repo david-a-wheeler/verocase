@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
-"""caseproc – process LTAC assurance-case files and inject rendered views.
-
-See docs/design-spec.md for the full specification.
+"""caseproc - process assurance case LTAC file and inject into Markdown/HTML
 """
 
 import argparse
@@ -1580,11 +1578,17 @@ def parse_args() -> argparse.Namespace:
     """Build the argument parser, define all flags, and parse the command line."""
     parser = argparse.ArgumentParser(
         prog='caseproc',
-        description='Process LTAC assurance-case files and inject rendered'
-                    ' views into Markdown/HTML documents.',
+        description='Process assurance case LTAC file and inject'
+                    'into Markdown/HTML',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""\
-Selectors (--select TYPE [ID | *]):
+This program normally modifies Markdown/HTML file(s), specifically
+headers involving assurance case elements or packages, their anchors, and
+the text regions inside <!-- caseproc SELECTOR --> ... <!-- end caseproc -->.
+You simply edit the LTAC file, run this program, and your documentation
+is updated with graphics, hyperlinks, and updated material.
+
+Selectors are of format `KIND [ID | *]`, where KIND is:
   ltac/markdown  ID|*   render as an indented Markdown bullet list
   ltac/html      ID|*   render as a nested HTML list
   sacm/mermaid   ID|*   render as a SACM Mermaid flowchart
@@ -1594,9 +1598,6 @@ Selectors (--select TYPE [ID | *]):
   info           ID     statement followed by references
   Omit ID to use the element set by the nearest preceding header (filter mode).
   Use * to render all packages (ltac/*, sacm/mermaid, and gsn/mermaid only).
-
-In documents, use <!-- caseproc SELECTOR --> ... <!-- end caseproc -->
-to surround where these go.
 
 Validations on the LTAC file (always):
   - There must be no circularities (this prevents circular reasoning)

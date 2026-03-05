@@ -1,7 +1,7 @@
 # Formatting rules for Extended Lightweight Text Assurance Case (LTAC) format
 v1.5.0 2026-03-04 (based on v1.1.2, 26.02.2026)
 Argevide and David A. Wheeler
-https://www.argevide.com/documents/ltac.txt
+Original: https://www.argevide.com/documents/ltac.txt
 
 NOTE: This "Extended LTAC" is based on LTAC v1.1.2, 26.02.2026 but
 has many extensions.
@@ -56,7 +56,7 @@ has many extensions.
       - Evidence Ev1: Hazard analysis (HARA report.pdf)
     - Claim G3: All hazards have been mitigated {defeated}
       - Link Ev1
-    - Claim ^[Package IV&V] Verification: Hazard mitigation verified
+    - Claim ^[Package IVV] Verification: Hazard mitigation verified
 ```
 
 # LTAC mapping to GSN (Goal Structuring Notation)
@@ -131,30 +131,22 @@ This specification extends LTAC as follows:
   Elements can refer to elements in other packages,
   equivalent to how SACM packages can refer to elements in other
   SACM packages. This added support for cross-links is critical for
-  non-trivial assurance cases.
+  non-trivial assurance cases. A case "component" is an element or package.
 - Adds mapping to SACM.
-- Adds a "Relation" so SACM relationships can be defined
+- Adds a "Relation" element type so SACM relationships can be defined
 - Allows {Options} for richer mapping
-- Allows "-" or "*" as bullets, not just "-"
-- Adds "//" line comments: a line whose content (after stripping leading
-  whitespace) begins with "//" is a comment and is treated as a blank line
-  (i.e., a package separator). Comments are ignored for parsing purposes.
 
 # EBNF grammar for LTAC:
 
-LTACfile        = { BlankLine | Comment | Package } ;
+LTACfile        = { BlankLine | Package } ;
 
 Package         = Element { Element } ;
 
 BlankLine       = Newline ;
 
-Comment         = "//" { Character } Newline ;   (* treated as a blank line *)
-
-Element         = Indent Bullet WS NodeType [WS Identifier] ":" WS Text [WS Reference] [WS Options] Newline
+Element         = Indent "-" WS NodeType [WS Identifier] ":" WS Text [WS Reference] [WS Options] Newline
                   [ ElementList ] 
-                | Indent Bullet WS "Link" WS Identifier [WS Options] Newline ;
-
-Bullet = "-" | "*" ;
+                | Indent "-" WS "Link" WS Identifier [WS Options] Newline ;
 
 NodeType        = "Claim" | "Strategy" | "Evidence" | "Justification" | "Context" | "Assumption" | "Relation" ;
 

@@ -47,7 +47,7 @@ def notify(msg: str) -> None:
 DEFAULT_CONFIG = {
     'base_url': '',
     'bottom_padding': True,
-    'content_files': [],
+    'document_files': [],
     'ltac_file': '',
     'markdown_base_url': '',
     'pkg_header_prefix': '### ',
@@ -1625,15 +1625,16 @@ def parse_args() -> argparse.Namespace:
         description='Process assurance case LTAC file and update Markdown/HTML',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""\
-This program normally updates (modifies) document file(s) in Markdown/HTML
-to update headers involving assurance case elements or packages,
-their HTML anchors, and all text regions inside the markers
-!-- caseproc SELECTOR --> ... <!-- end caseproc -->.
+This program normally reads an LTAC file and then updates (modifies)
+document file(s) in Markdown/HTML to update them: their headers that involve
+assurance case elements or packages, their HTML anchors, and all text regions
+inside the markers <!-- caseproc SELECTOR --> ... <!-- end caseproc -->.
+
 The intended use is that you simply edit the LTAC file for the high-level
-argument and the document files (Markdown/HTML) for all details
-("content" in SACM parlance). Then run this program to validate the structure
-and update your Markdown/HTML documentation files with graphics, hyperlinks,
-and other material.
+argument and the document file(s) in Markdown/HTML for all details
+(the "content" in SACM parlance). Then run this program to validate the
+tructure and update your document files in Markdown/HTML with graphics,
+hyperlinks, and other material.
 
 Selectors are of format `KIND [ID | *]`, where KIND is:
   ltac/markdown  ID|*   render as an indented Markdown bullet list
@@ -1692,12 +1693,12 @@ For full details see docs/design-spec.md.""",
     parser.add_argument(
         '--rename', nargs=2, metavar=('OLD', 'NEW'),
         dest='mutations', action=_MutationAction,
-        help='rename identifier OLD to NEW in LTAC and content files',
+        help='rename identifier OLD to NEW in LTAC and document files',
     )
     parser.add_argument(
         '--restate', nargs=2, metavar=('LABEL', 'STATEMENT'),
         dest='mutations', action=_MutationAction,
-        help='update the statement for LABEL in LTAC and content files',
+        help='update the statement for LABEL in LTAC and document files',
     )
     parser.set_defaults(mutations=[])
     parser.add_argument(
@@ -1720,7 +1721,7 @@ For full details see docs/design-spec.md.""",
     )
     mode.add_argument(
         '--stdout', action='store_true',
-        help='process content files and write concatenated result to stdout',
+        help='process document files and write concatenated result to stdout',
     )
     mode.add_argument(
         '--selftest', action='store_true',
@@ -2055,7 +2056,7 @@ def _inline_rewrite_file(
     id_info: Dict[str, dict],
     seen_headers: set,
 ) -> Optional[Tuple[str, str]]:
-    """Process a single content file, writing updated content to a temp file.
+    """Process a single document file, writing updated content to a temp file.
 
     Returns a (tmp_path, final_path) pair if the file needs updating, or None
     if the content is unchanged or an error occurred.
@@ -2155,18 +2156,18 @@ def main() -> None:
             panic("cannot write updated LTAC file")
         ltac_pair = (tmp, ltac_path)
 
-    # Resolve content files: CLI args > config > auto-discover (fallback to [] for now).
-    content_files = list(args.files)
-    if not content_files:
-        content_files = list(config.get('content_files', []))
-    if not content_files:
+    # Resolve document files: CLI args > config > auto-discover (fallback to [] for now).
+    document_files = list(args.files)
+    if not document_files:
+        document_files = list(config.get('document_files', []))
+    if not document_files:
         for candidate in ('case.md', 'case.html', 'docs/case.md', 'docs/case.html'):
             if os.path.exists(candidate):
-                content_files = [candidate]
+                document_files = [candidate]
                 break
 
     _NO_FILES_MSG = (
-        "no content files found; specify files on the command line, set content_files "
+        "no document files found; specify files on the command line, set document_files "
         "in config, or create one of: case.md, case.html, docs/case.md, docs/case.html"
     )
 
@@ -2177,31 +2178,31 @@ def main() -> None:
         if ltac_pair:
             commit_updates([ltac_pair])
     elif args.validate:
-        if content_files:
-            _process_files(content_files, io.StringIO(), registry, all_roots, config, id_info, set())
+        if document_files:
+            _process_files(document_files, io.StringIO(), registry, all_roots, config, id_info, set())
         if ltac_pair:
             commit_updates([ltac_pair])
     elif args.stdout:
-        if not content_files:
+        if not document_files:
             panic(_NO_FILES_MSG)
         seen_headers: set = set()
-        _process_files(content_files, sys.stdout, registry, all_roots, config, id_info, seen_headers)
+        _process_files(document_files, sys.stdout, registry, all_roots, config, id_info, seen_headers)
         _check_header_coverage(registry, seen_headers)
         if ltac_pair:
             commit_updates([ltac_pair])
     else:
-        # Default mode: rewrite content files in place.
-        if not content_files and not ltac_pair:
+        # Default mode: rewrite document files in place.
+        if not document_files and not ltac_pair:
             panic(_NO_FILES_MSG)
         seen_headers: set = set()
         pairs = ([ltac_pair] if ltac_pair else [])
-        for path in content_files:
+        for path in document_files:
             pair = _inline_rewrite_file(path, registry, all_roots, config, id_info, seen_headers)
             if pair is not None:
                 pairs.append(pair)
         if pairs:
             commit_updates(pairs)
-        if content_files:
+        if document_files:
             _check_header_coverage(registry, seen_headers)
 
     if _had_error:

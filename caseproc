@@ -1740,7 +1740,7 @@ def find_ltac_file(ltac_arg: Optional[str], config: dict) -> str:
         return 'case.ltac'
     if os.path.exists('docs/case.ltac'):
         return 'docs/case.ltac'
-    panic("no LTAC file found; use --ltac, set ltac_file in config, or create case.ltac")
+    panic("no LTAC file found; use --ltac, set ltac_file in config, or create case.ltac. See --help")
 
 
 # SACM spec section 11 defines AssertionStatus as a mutually exclusive

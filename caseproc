@@ -1856,6 +1856,73 @@ def _check_header_coverage(registry: Dict[str, Node], seen_headers: set) -> None
             warn(f"element {ident} has no corresponding header in any processed file")
 
 
+def _write_ltac_node(node: 'Node', lines: list) -> None:
+    """Append LTAC lines for *node* and all its descendants to *lines*."""
+    indent = '  ' * node.depth
+    line = f'{indent}- {node.node_type}'
+    if node.identifier or node.is_cited or node.cited_pkg:
+        line += ' '
+        if node.is_cited:
+            line += '^'
+        if node.cited_pkg:
+            line += f'[{node.cited_pkg}]'
+        line += node.identifier
+    if node.text:
+        line += f': {node.text}'
+    if node.ext_ref:
+        line += f' ({node.ext_ref})'
+    if node.options:
+        line += ' {' + ', '.join(sorted(node.options)) + '}'
+    lines.append(line)
+    for child in node.children:
+        _write_ltac_node(child, lines)
+
+
+def write_ltac(roots: List['Node']) -> str:
+    """Serialize a Node forest back to LTAC text.
+
+    Packages are separated by blank lines; the result ends with a newline.
+
+    >>> p = LTACParser()
+    >>> roots = p.parse(['- Claim C1: The software is safe',
+    ...                  '  - Evidence E1: Test results (tests.pdf)'])
+    >>> write_ltac(roots)
+    '- Claim C1: The software is safe\\n  - Evidence E1: Test results (tests.pdf)\\n'
+    """
+    lines: List[str] = []
+    for i, root in enumerate(roots):
+        if i > 0:
+            lines.append('')
+        _write_ltac_node(root, lines)
+    if lines:
+        lines.append('')
+    return '\n'.join(lines)
+
+
+def commit_updates(pairs: List[Tuple[str, str]]) -> None:
+    """Atomically update files by backing up originals and moving in new versions.
+
+    *pairs* is a list of (tmp_path, final_path).  Originals are moved to a
+    per-directory .backup/ subdirectory, then the temp files are moved to
+    their final locations.  This minimises the window when files are absent.
+    """
+    notify("Updating " + " ".join(os.path.basename(fp) for _, fp in pairs))
+    for _, final in pairs:
+        dir_ = os.path.dirname(os.path.abspath(final))
+        backup_dir = os.path.join(dir_, '.backup')
+        os.makedirs(backup_dir, exist_ok=True)
+        backup_path = os.path.join(backup_dir, os.path.basename(final))
+        try:
+            os.replace(final, backup_path)
+        except OSError as e:
+            panic(f"cannot back up {final!r}: {e}")
+    for tmp, final in pairs:
+        try:
+            os.replace(tmp, final)
+        except OSError as e:
+            panic(f"cannot update {final!r}: {e}")
+
+
 def _inline_rewrite_file(
     path: str,
     registry: Dict[str, Node],
@@ -1863,11 +1930,11 @@ def _inline_rewrite_file(
     config: dict,
     id_info: Dict[str, dict],
     seen_headers: set,
-) -> None:
-    """Process a single file in --inline mode, rewriting it atomically if content changed.
+) -> Optional[Tuple[str, str]]:
+    """Process a single content file, writing updated content to a temp file.
 
-    Reads the file, renders all ltac regions, and writes back only if the content
-    differs.  Leaves the file unchanged if any processing errors occur.
+    Returns a (tmp_path, final_path) pair if the file needs updating, or None
+    if the content is unchanged or an error occurred.
     """
     global _had_error
     error_before = _had_error
@@ -1876,23 +1943,22 @@ def _inline_rewrite_file(
             original = f.read()
     except OSError as e:
         error(f"cannot open {path!r}: {e}")
-        return
+        return None
     buf = io.StringIO()
     with io.StringIO(original) as src:
         process_document_stream(src, buf, registry, all_roots, config, id_info, seen_headers)
     if _had_error and not error_before:
         # Errors occurred while processing this file; leave it untouched.
-        return
+        return None
     new_content = buf.getvalue()
     if new_content == original:
-        return  # No change; skip the write.
+        return None  # No change needed.
     dir_ = os.path.dirname(os.path.abspath(path))
     try:
         fd, tmp = tempfile.mkstemp(dir=dir_)
         try:
             with os.fdopen(fd, 'w') as tf:
                 tf.write(new_content)
-            os.replace(tmp, path)
         except Exception:
             try:
                 os.unlink(tmp)
@@ -1900,7 +1966,9 @@ def _inline_rewrite_file(
                 pass
             raise
     except OSError as e:
-        error(f"cannot write {path!r}: {e}")
+        error(f"cannot write temp file for {path!r}: {e}")
+        return None
+    return (tmp, path)
 
 
 def run_selftests() -> None:
@@ -1982,8 +2050,13 @@ def main() -> None:
         if not content_files:
             panic(_NO_FILES_MSG)
         seen_headers: set = set()
+        pairs = []
         for path in content_files:
-            _inline_rewrite_file(path, registry, all_roots, config, id_info, seen_headers)
+            pair = _inline_rewrite_file(path, registry, all_roots, config, id_info, seen_headers)
+            if pair is not None:
+                pairs.append(pair)
+        if pairs:
+            commit_updates(pairs)
         _check_header_coverage(registry, seen_headers)
 
     if _had_error:

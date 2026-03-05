@@ -419,43 +419,21 @@ In SACM, model node elements like Claim have possibly 3 related values:
   So a claim "statement" is simply the claim's description
   (it's not a different field).
 
-Mermaid diagrams need *short* names to identify nodes.
-It's *possible* to use long names, but it'd be painful.
-These short names, more useful when defining nodes with connections,
-are roughly analogous to the `gid` of SACM.
-SACM does not require that the displayed `name` include the `gid` anywhere.
-However, in practice it's helpful to display a unique short name for reference.
-It would also be more difficult to edit diagrams if the displayed name
-didn't include the short names we'd use to identify the nodes in a diagram.
-
-We can resolve this by having a naming convention.
-By convention, the name we use for a node (aka its "full name")
-will normally have the following structure, in order:
-
-1. short name (generally starting with a capital letter), an
-   identifier that is unique across the entire assurance case
-2. colon-space (: ), and
-3. long name (typically 1-3 words).
-
-In some cases the short name can serve as the full name.
-In this case, only part 1 (the short name) is used as the name.
-Note that all displayed names are unique, since they always include
-a unique short name.
-
-When displayed, the name (aka full name) will be bolded, following
-the example of
-[Selviandro et al.], followed by a line break &lt;br/&gt;, followed
-by the description of the node.
-As a special case, ArtifactRefence (e.g., for evidence) will have
-a non-breaking space and an unbolded northeast arrow (↗) after the full name
-just before this line break; this attempts to emulate its appearance
+Each LTAC element has an **id** (e.g. `C1`, `Hazard Analysis`) that is
+unique across the assurance case.
+The id maps to SACM `gid` and also serves as SACM `name`;
+the statement maps to SACM `description` (which in some cases is also
+called a statement).
+In a mermaid diagram node we display the id bolded, following
+the example of [Selviandro et al.], followed by a line break `<br>`,
+followed by the statement (description).
+As a special case, ArtifactReference (e.g., for evidence) will have
+a non-breaking space and an unbolded northeast arrow (↗) after the id
+just before the line break; this attempts to emulate its appearance
 in SACM and remind readers that we're referencing external materials.
 
-When used in an assurance case, we expect that bolded name
-would be turned into a hyperlink (using `click`).
-That link would go to the corresponding heading (if present) with
-the same name that would provide more detail.
-This makes it easy to learn more detail.
+The bolded id is turned into a hyperlink (using `click`) pointing to the
+document section for that element, making it easy to navigate to detail.
 
 We *could* left-align the name, and center the description, as this is the
 SACM convention.
@@ -463,8 +441,11 @@ However, this would require a lot of extra ceremony in each
 node, making each node harder to edit.
 It also risks getting stripped out by GitHub.
 So we'll just use bold text instead to clearly differentiate
-the name. This is still clear, using bold is common anyway,
+the SACM name (LTAC id). This is still clear, using bold is common anyway,
 and this is much easier to read and edit later.
+
+When we generate mermaid diagrams, we'll convert this id into a
+"mermaid id" (which handles spaces, for example).
 
 ### SACM Packages
 
@@ -495,31 +476,23 @@ in an iframe, so relative fragment URLs
 like `#name` won't work; you must use the absolute URL (`https:...`).
 This means you'll always refer to a specific branch (normally the main branch,
 not the current branch).
-So after every node with a header that can jumped to, add:
+So after every node with a header that can be jumped to, add:
 
 ```
-click ID "ABSOLUTE_URL#NAME_AS_FRAGMENT"
+click MERMAID_ID "ABSOLUTE_URL#STABLE_ANCHOR"
 ```
 
-In each node, after the mermaid assurance diagram if there is one, add this:
+In each element's detail section, after the mermaid assurance diagram
+if there is one, add this:
 
 ```
-Referenced by: [Package NAME](#NAME_AS_FRAGMENT)
+Referenced by: [Package NAME](#stable-anchor-of-package)
 ```
 
-In the "Referenced by" don't include NAME itself; if there's more than one,
+In the "Referenced by" don't include the element itself; if there's more than one,
 use a comma-separated list. While it's unfortunate these have to be
 created and maintained by hand, it's not that hard, and it means readers
 can easily move around the document.
-
-The `NAME_AS_FRAGMENT` is simply the header converted into a fragment id
-using GitHub's usual algorithm:
-
-1. Convert all characters to lowercase.
-2. Remove everything except Unicode alphanumerics, hyphens, and spaces.
-3. Convert spaces to hyphens.
-4. Collapse multiple adjacent hyphens into one hyphen.
-4. Remove leading and trailing hyphens.
 
 ## Mapping SACM diagram symbols to mermaid
 
@@ -559,7 +532,7 @@ Since annex C says "statement" here, we will too.
 This normal, fully-supported state. Plain rectangle:
 
 ```
-C1["<b>C1: Claim long name</b><br>statement"]
+C1["<b>C1</b><br>statement"]
 ```
 
 Rendered:
@@ -576,7 +549,7 @@ config:
     padding: 15
 ---
 flowchart BT
-    C1["<b>C1: Claim long name</b><br>statement"]
+    C1["<b>C1</b><br>statement"]
 ```
 
 #### Assumed
@@ -588,7 +561,7 @@ So we instead add the word `ASSUMED`, which is at least clear.
 **Approach** — a required `ASSUMED` suffix on its own line:
 
 ```
-C1["<b>C1: Claim long name</b><br>Assumed statement<br>ASSUMED"]
+C1["<b>C1</b><br>Assumed statement<br>ASSUMED"]
 ```
 
 Rendered:
@@ -605,7 +578,7 @@ config:
     padding: 15
 ---
 flowchart BT
-    C1["<b>C1: Claim long name</b><br>statement<br>ASSUMED"]
+    C1["<b>C1</b><br>statement<br>ASSUMED"]
 ```
 
 **Alternative** — we originally had
@@ -626,7 +599,7 @@ Mermaid cannot render the spec's dots as part of bottom rectangle line,
 but what is *can* show is close enough.
 
 ```
-C1["<b>C1: Claim long name</b><br>Statement needing support<br>..."]
+C1["<b>C1</b><br>Statement needing support<br>..."]
 ```
 
 Rendered:
@@ -643,7 +616,7 @@ config:
     padding: 15
 ---
 flowchart BT
-    C1["<b>C1: Claim long name</b><br>Statement needing support<br>..."]
+    C1["<b>C1</b><br>Statement needing support<br>..."]
 ```
 
 We could use the Unicode character suffix `⋯`
@@ -662,7 +635,7 @@ by adding a text suffix on its own line of three "━" characters
 (U+2501, Box Drawings Heavy Horizontal).
 
 ```
-C1["<b>C1: Long claim name</b><br>Axiomatic statement<br>━━━"]
+C1["<b>C1</b><br>Axiomatic statement<br>━━━"]
 ```
 
 Rendered:
@@ -679,7 +652,7 @@ config:
     padding: 15
 ---
 flowchart BT
-    C1["<b>C1: Long claim name</b><br>Axiomatic statement<br>━━━"]
+    C1["<b>C1</b><br>Axiomatic statement<br>━━━"]
 ```
 
 #### Defeated
@@ -690,7 +663,7 @@ distinctive appearance of this symbol makes it clear
 this is something special and not simply part of the statement text):
 
 ```
-C1["<b>C1: Long claim name</b><br>Defeated statement<br>✗"]
+C1["<b>C1</b><br>Defeated statement<br>✗"]
 ```
 
 Rendered:
@@ -707,7 +680,7 @@ config:
     padding: 15
 ---
 flowchart BT
-    C1["<b>C1: Long claim name</b><br>Defeated statement<br>✗"]
+    C1["<b>C1</b><br>Defeated statement<br>✗"]
 ```
 
 #### AsCited
@@ -750,7 +723,7 @@ If space is tight, the statement may be omitted. The statement would be
 provided in the claim's full definition elsewhere.
 
 ```
-C1[["<b>C1: Long claim name</b><br>Cited statement"]]
+C1[["<b>C1</b><br>Cited statement"]]
 ```
 
 Rendered:
@@ -767,7 +740,7 @@ config:
     padding: 15
 ---
 flowchart BT
-    C1[["<b>C1: Long claim name</b><br>Cited statement"]]
+    C1[["<b>C1</b><br>Cited statement"]]
 ```
 
 #### Abstract
@@ -778,7 +751,7 @@ The spec uses a dashed rectangle for abstract claims,
 and this notation is directly available in Mermaid through styles.
 
 ```
-    C1["<b>C1: Long claim name</b><br>Abstract statement"]:::abstractClaim
+    C1["<b>C1</b><br>Abstract statement"]:::abstractClaim
 
 ```
 
@@ -797,7 +770,7 @@ config:
 ---
 flowchart BT
     classDef abstractClaim stroke-width:2px,stroke-dasharray: 5 5;
-    C1["<b>C1: Long claim name</b><br>Abstract statement"]:::abstractClaim
+    C1["<b>C1</b><br>Abstract statement"]:::abstractClaim
 ```
 
 ### ArgumentReasoning (C.7)
@@ -1485,7 +1458,7 @@ that both a name and a description are supported.
 ```
 flowchart BT
     E1[("<b>E1: Long evidence name</b>&amp;nbsp;↗<br>Evidence artifact description")]
-    G4["<b>G4: Long claim name</b><br>Claim statement"]
+    G4["<b>G4</b><br>Claim statement"]
 
     E1 --> G4
 ```
@@ -1505,7 +1478,7 @@ config:
 ---
 flowchart BT
     E1[("<b>E1: Long evidence name</b>&nbsp;↗<br>Evidence artifact description")]
-    G4["<b>G4: Long claim name</b><br>Claim statement"]
+    G4["<b>G4</b><br>Claim statement"]
 
     E1 --> G4
 ```

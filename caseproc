@@ -436,8 +436,9 @@ class LTACParser:
                 if info['statement'] is None:
                     info['statement'] = node.text
                 elif node.text != info['statement']:
+                    hint = "; use --update to sync" if node.is_cited else ""
                     warn(f"line {lineno}: {node.identifier!r}: statement {node.text!r}"
-                         f" differs from earlier statement {info['statement']!r}")
+                         f" differs from earlier statement {info['statement']!r}{hint}")
 
         # Pop stack until top's depth < current depth
         while self._stack and self._stack[-1][0] >= node.depth:
@@ -467,6 +468,10 @@ class LTACParser:
         target_id = node.identifier
         if target_id in self.registry:
             node.link_target = self.registry[target_id]
+            canonical = self.id_info.get(target_id, {}).get('statement')
+            if node.text and canonical is not None and node.text != canonical:
+                warn(f"line {lineno}: Link {target_id!r}: statement {node.text!r}"
+                     f" differs from declaration; use --update to sync")
         else:
             warn(f"line {lineno}: Link target {target_id!r} not found")
 
@@ -1923,6 +1928,52 @@ def commit_updates(pairs: List[Tuple[str, str]]) -> None:
             panic(f"cannot update {final!r}: {e}")
 
 
+def _make_temp(path: str, content: str) -> Optional[str]:
+    """Write content to a temp file in the same directory as path.
+
+    Returns the temp file path, or None if writing failed (error already reported).
+    """
+    dir_ = os.path.dirname(os.path.abspath(path))
+    try:
+        fd, tmp = tempfile.mkstemp(dir=dir_)
+        try:
+            with os.fdopen(fd, 'w') as f:
+                f.write(content)
+        except Exception:
+            try:
+                os.unlink(tmp)
+            except OSError:
+                pass
+            raise
+        return tmp
+    except OSError as e:
+        error(f"cannot write temp file for {path!r}: {e}")
+        return None
+
+
+def apply_ltac_update(roots: List[Node], id_info: Dict[str, dict]) -> int:
+    """Update cited/Link node text to match the canonical declaration statement.
+
+    Walks all nodes; for any cited or Link node whose text differs from the
+    canonical statement in id_info, replaces the text.  Returns the count of
+    nodes changed.
+    """
+    count = 0
+    stack = list(roots)
+    while stack:
+        node = stack.pop()
+        stack.extend(node.children)
+        if not node.identifier:
+            continue
+        if not (node.is_cited or node.node_type == 'Link'):
+            continue
+        canonical = id_info.get(node.identifier, {}).get('statement')
+        if node.text and canonical is not None and node.text != canonical:
+            node.text = canonical
+            count += 1
+    return count
+
+
 def _inline_rewrite_file(
     path: str,
     registry: Dict[str, Node],
@@ -1953,20 +2004,8 @@ def _inline_rewrite_file(
     new_content = buf.getvalue()
     if new_content == original:
         return None  # No change needed.
-    dir_ = os.path.dirname(os.path.abspath(path))
-    try:
-        fd, tmp = tempfile.mkstemp(dir=dir_)
-        try:
-            with os.fdopen(fd, 'w') as tf:
-                tf.write(new_content)
-        except Exception:
-            try:
-                os.unlink(tmp)
-            except OSError:
-                pass
-            raise
-    except OSError as e:
-        error(f"cannot write temp file for {path!r}: {e}")
+    tmp = _make_temp(path, new_content)
+    if tmp is None:
         return None
     return (tmp, path)
 
@@ -2003,8 +2042,6 @@ def main() -> None:
         elif os.path.exists('docs/case.config'):
             config_path = 'docs/case.config'
     config = load_config(config_path)
-    if args.update:
-        notify("--update: LTAC synchronization not yet implemented")
 
     all_roots: List[Node] = []
     registry: Dict[str, Node] = {}
@@ -2016,6 +2053,14 @@ def main() -> None:
     check_assertion_status(registry)
     check_id_info(id_info, all_roots, config.get('pkg_label', 'Package '))
     check_circularities(registry, all_roots)
+
+    if args.update:
+        changed = apply_ltac_update(all_roots, id_info)
+        if changed:
+            tmp = _make_temp(ltac_path, write_ltac(all_roots))
+            if tmp is None:
+                panic("cannot write updated LTAC file")
+            commit_updates([(tmp, ltac_path)])
 
     # Resolve content files: CLI args > config > auto-discover (fallback to [] for now).
     content_files = list(args.files)

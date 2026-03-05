@@ -539,15 +539,39 @@ class TestIntroduction(unittest.TestCase):
 
 
 class TestUpdate(unittest.TestCase):
-    def test_update_ltac_stub(self):
-        """--update prints a stub notification (LTAC synchronization not yet implemented)."""
+    def test_update_no_changes(self):
+        """--update with no citation mismatches leaves the LTAC untouched and processes content."""
         r = run('--ltac', fixture('simple.ltac'), '--update',
                 '--stdout', fixture('update-input.md'))
         self.assertEqual(r.returncode, 0)
         # Header still updates by default (update_headers=True).
         actual = check(r.stdout, 'update-output.expected.md')
         self.assertEqual(actual, read_fixture('update-output.expected.md'))
-        self.assertIn('not yet implemented', r.stderr)
+        self.assertNotIn('not yet implemented', r.stderr)
+        self.assertNotIn('Updating', r.stderr)
+
+    def test_update_warns_mismatch_without_flag(self):
+        """Without --update, a citation with the wrong statement produces a warning with a hint."""
+        r = run('--ltac', fixture('update-citations.ltac'), '--select', 'ltac/markdown')
+        self.assertEqual(r.returncode, 0)
+        self.assertIn('Wrong statement here', r.stderr)
+        self.assertIn('--update', r.stderr)
+
+    def test_update_fixes_citation(self):
+        """--update rewrites the LTAC file so citation statements match the declaration."""
+        import shutil as _shutil
+        os.makedirs(RESULTS, exist_ok=True)
+        tmp_ltac = os.path.join(RESULTS, 'update-citations.ltac')
+        _shutil.copy(fixture('update-citations.ltac'), tmp_ltac)
+        try:
+            r = run('--ltac', tmp_ltac, '--update', '--validate')
+            self.assertEqual(r.returncode, 0)
+            self.assertIn('Updating', r.stderr)
+            updated = read_file(tmp_ltac)
+            self.assertNotIn('Wrong statement here', updated)
+            self.assertIn('The software is acceptably safe', updated)
+        finally:
+            os.unlink(tmp_ltac)
 
     def test_update_header_default(self):
         """update_headers defaults to True, so stale headers are rewritten even without --update."""

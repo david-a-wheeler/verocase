@@ -86,8 +86,8 @@ flowchart BT
     ReqScope[("<b>ReqScope</b>&nbsp;↗<br>Applies to all user-facing features")]
     Dot1((" ")):::sacmDot
     click Requirements "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#claim-requirements-security-requirements-are-identified-and-met"
-    click ReqSpec "docs/requirements.md"
-    click TestCoverage "reports/coverage.html"
+    click ReqSpec "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/docs/requirements.md"
+    click TestCoverage "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/reports/coverage.html"
     click ReqScope "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#context-reqscope-applies-to-all-user-facing-features"
 
     BottomPadding[ ]:::invisible ~~~ ReqSpec
@@ -119,8 +119,8 @@ flowchart BT
     ThreatModel[("<b>ThreatModel</b>&nbsp;↗<br>Threat model")]
     Dot1((" ")):::sacmDot
     click Design "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#claim-design-the-security-design-is-documented-and-reviewed"
-    click DesignDoc "docs/security-arch.pdf"
-    click ThreatModel "docs/threat-model.md"
+    click DesignDoc "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/docs/security-arch.pdf"
+    click ThreatModel "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/docs/threat-model.md"
 
     BottomPadding[ ]:::invisible ~~~ DesignDoc
     DesignDoc --- Dot1

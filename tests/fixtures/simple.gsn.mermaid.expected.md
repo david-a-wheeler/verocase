@@ -22,10 +22,10 @@ flowchart TD
     click C1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/simple.gsn.mermaid.expected.md#claim-c1-the-software-is-acceptably-safe"
     click AR1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/simple.gsn.mermaid.expected.md#strategy-ar1-argue-safety-by-hazard-category"
     click A1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/simple.gsn.mermaid.expected.md#assumption-a1-threat-model-is-current"
-    click X1 "release-notes.md"
+    click X1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/release-notes.md"
     click C2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/simple.gsn.mermaid.expected.md#claim-c2-all-hazards-have-been-identified"
     click C3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/simple.gsn.mermaid.expected.md#claim-c3-all-hazards-have-been-mitigated"
-    click E1 "hara.pdf"
+    click E1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/hara.pdf"
 
     E1 ~~~ BottomPadding[ ]:::invisible
     A1 ~~~ BottomPadding

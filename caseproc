@@ -561,15 +561,36 @@ def _node_anchor_url(node: Node, base_url: str, pkg_label: str) -> str:
     return base_url + '#' + to_github_fragment(heading)
 
 
+def _resolve_ext_ref(ext_ref: str, base_url: str) -> str:
+    """Resolve an ext_ref to its click-target URL.
+
+    Absolute references (http://, https://, file:///, or a leading /) are
+    returned unchanged.  A relative reference is resolved against the
+    directory portion of base_url when base_url is non-empty, so that
+    'hara.pdf' becomes the full URL to that file alongside the document.
+    When base_url is empty the relative reference is returned unchanged.
+    """
+    if (ext_ref.startswith('http://')
+            or ext_ref.startswith('https://')
+            or ext_ref.startswith('file:///')
+            or ext_ref.startswith('/')):
+        return ext_ref
+    if base_url:
+        base_dir = base_url.rsplit('/', 1)[0]
+        return base_dir + '/' + ext_ref
+    return ext_ref
+
+
 def _node_url(node: Node, base_url: str, pkg_label: str = DEFAULT_CONFIG['pkg_label']) -> str:
     """Return the hyperlink URL for a node, or '' if none can be determined.
 
-    Uses ext_ref directly if set; otherwise constructs a URL from base_url
-    and a GitHub-style fragment.  Returns '' when base_url is empty and no
-    ext_ref is present.
+    If the node has an ext_ref, it is resolved via _resolve_ext_ref (relative
+    refs are joined with the directory of base_url when base_url is set).
+    Otherwise a URL is constructed from base_url and a GitHub-style fragment.
+    Returns '' when base_url is empty and no ext_ref is present.
     """
     if node.ext_ref:
-        return node.ext_ref
+        return _resolve_ext_ref(node.ext_ref, base_url)
     if not base_url:
         return ''
     return _node_anchor_url(node, base_url, pkg_label)

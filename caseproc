@@ -440,7 +440,7 @@ class LTACParser:
                 if info['statement'] is None:
                     info['statement'] = node.text
                 elif node.text != info['statement']:
-                    hint = "; use --update to sync" if node.is_cited else ""
+                    hint = "; use --update to sync" if (node.is_cited or info['citations'] > 0) else ""
                     warn(f"line {lineno}: {node.identifier!r}: statement {node.text!r}"
                          f" differs from earlier statement {info['statement']!r}{hint}")
 
@@ -1887,6 +1887,43 @@ def check_circularities(registry: Dict[str, Node], all_roots: List[Node]) -> Non
             dfs(node)
 
 
+def check_reachability(all_roots: List[Node], registry: Dict[str, Node]) -> None:
+    """Error for any package whose root is unreachable from the first element.
+
+    Skipped when there is only one package (everything is trivially reachable).
+    Uses iterative DFS following structural children, citation declarations, and
+    Link targets.  Because all structural children of a reachable node are also
+    reachable, an unreachable package root implies the whole package is
+    unreachable; reporting just the root is sufficient.
+    """
+    if len(all_roots) < 2:
+        return
+
+    reachable: Set[int] = set()
+    stack = [all_roots[0]]
+    while stack:
+        node = stack.pop()
+        if id(node) in reachable:
+            continue
+        reachable.add(id(node))
+        for child in node.children:
+            if child.is_cited:
+                target = registry.get(child.identifier)
+                if target is not None:
+                    stack.append(target)
+            elif child.node_type == 'Link':
+                if child.link_target is not None:
+                    stack.append(child.link_target)
+            else:
+                stack.append(child)
+
+    for root in all_roots[1:]:
+        if id(root) not in reachable:
+            label = f"{root.node_type} {root.identifier}" if root.identifier else root.node_type
+            error(f"{label}: package root is unreachable from {all_roots[0].node_type}"
+                  f" {all_roots[0].identifier}")
+
+
 def _process_files(
     files: List[str],
     out,
@@ -2042,18 +2079,20 @@ def _make_temp(path: str, content: str) -> Optional[str]:
         return None
 
 
-def apply_ltac_update(roots: List[Node], id_info: Dict[str, dict]) -> int:
-    """Update cited/Link node text to match the canonical declaration statement.
+def apply_ltac_update(roots: List[Node], registry: Dict[str, Node]) -> int:
+    """Update cited/Link node text to match the declaration's statement text.
 
     Walks all nodes; for any cited or Link node whose text differs from the
-    canonical statement in id_info, replaces the text.  Returns the count of
-    nodes changed.
+    declaration node's text in registry, replaces it.  Returns the count of
+    nodes changed.  Uses the declaration node (registry) rather than id_info
+    so the authoritative text is always the declaration regardless of parse order.
     """
     count = 0
     for node in _all_nodes(roots):
         if not node.identifier or not (node.is_cited or node.node_type == 'Link'):
             continue
-        canonical = id_info.get(node.identifier, {}).get('statement')
+        decl = registry.get(node.identifier)
+        canonical = decl.text if decl is not None else None
         if node.text and canonical is not None and node.text != canonical:
             node.text = canonical
             count += 1
@@ -2140,9 +2179,10 @@ def main() -> None:
     check_id_info(id_info, all_roots, config.get('pkg_label', 'Package '))
     check_anchor_uniqueness(registry)
     check_circularities(registry, all_roots)
+    check_reachability(all_roots, registry)
 
     if args.update:
-        changed = apply_ltac_update(all_roots, id_info)
+        changed = apply_ltac_update(all_roots, registry)
         if changed:
             tmp = _make_temp(ltac_path, write_ltac(all_roots))
             if tmp is None:
@@ -2161,6 +2201,7 @@ def main() -> None:
         check_id_info(id_info, all_roots, config.get('pkg_label', 'Package '))
         check_anchor_uniqueness(registry)
         check_circularities(registry, all_roots)
+        check_reachability(all_roots, registry)
         if _had_error:
             panic("LTAC validation failed after mutations; no files updated")
         tmp = _make_temp(ltac_path, write_ltac(all_roots))

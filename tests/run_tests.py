@@ -596,7 +596,7 @@ class TestUpdate(unittest.TestCase):
             self.assertIn('Updating', r.stderr)
             updated = read_file(tmp_ltac)
             self.assertNotIn('Wrong statement here', updated)
-            self.assertIn('The software is acceptably safe', updated)
+            self.assertIn('Argue safety by hazard category', updated)
         finally:
             os.unlink(tmp_ltac)
 
@@ -608,6 +608,36 @@ class TestUpdate(unittest.TestCase):
         self.assertEqual(actual, read_fixture('update-output.expected.md'))
         self.assertIn('updated Claim C1:', r.stderr)
         self.assertNotIn('Wrong statement here', r.stdout)
+
+
+class TestReachability(unittest.TestCase):
+    def test_unreachable_package_is_error(self):
+        """A package whose root is never cited or linked is reported as unreachable."""
+        r = run('--ltac', fixture('update-citations.ltac'), '--validate')
+        # update-citations.ltac has AR1 reachable via citation from C1; no error expected.
+        self.assertEqual(r.returncode, 0)
+        self.assertNotIn('unreachable', r.stderr)
+
+    def test_single_package_no_check(self):
+        """Reachability check is skipped for single-package LTAC files."""
+        r = run('--ltac', fixture('simple.ltac'), '--validate')
+        self.assertEqual(r.returncode, 0)
+        self.assertNotIn('unreachable', r.stderr)
+
+    def test_unreachable_detected(self):
+        """An isolated package with no citation path from the root is an error."""
+        import tempfile as _tf
+        os.makedirs(RESULTS, exist_ok=True)
+        ltac = os.path.join(RESULTS, 'unreachable-test.ltac')
+        with open(ltac, 'w') as f:
+            f.write('- Claim C1: Root\n\n- Strategy AR1: Unreachable package\n')
+        try:
+            r = run('--ltac', ltac, '--validate')
+            self.assertNotEqual(r.returncode, 0)
+            self.assertIn('unreachable', r.stderr)
+            self.assertIn('AR1', r.stderr)
+        finally:
+            os.unlink(ltac)
 
 
 class TestAnchorUniqueness(unittest.TestCase):

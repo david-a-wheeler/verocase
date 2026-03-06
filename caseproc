@@ -1661,6 +1661,7 @@ Use * to render all packages (ltac/*, sacm/mermaid, and gsn/mermaid only).
 
 Validations on the LTAC file (always):
   - There must be no circularities (this prevents circular reasoning)
+  - All elements must be reachable from the first node of the first package
   - Claim/Strategy must not appear under Evidence, Context, or Assumption
   - Each identifier must be declared (no ^ prefix) exactly once
   - Citing identifiers (^ID) must have a matching declaration
@@ -1668,17 +1669,17 @@ Validations on the LTAC file (always):
   - Element type must be consistent across all uses of the same identifier
   - Statement text must be consistent across all uses of the same identifier
     (use --update to make LTAC statements consistent with their declaration)
-  - Each element may carry at most one assertion status option
-    (needsSupport, axiomatic, defeated, assumed); more than one is an error
-    (see SACM specification section 11)
-  - All generated anchor names (e.g., "claim-x-is-secure") are unique
+  - Each element must carry at *most* one assertion status option
+    (needsSupport, axiomatic, defeated, assumed); see SACM spec section 11
+  - All generated anchor names (e.g., "claim-x-is-secure") must be unique
 
 Additional checks when document files are provided:
-  - Headers matching "TYPE ID" or "TYPE ID: statement" are cross-checked:
-    unknown ID (not in LTAC) is flagged. Mismatched statement text are
-    flagged (if "update" is false) or updated (if "update" is true).
+  - Headers matching "TYPE ID" or "TYPE ID: statement" are cross-checked, and
+    they must not have an unknown ID (one not in the LTAC).
+    By default headers' statements are updated, but if update_headers is false,
+    each statement much match its LTAC definition's statement.
   - Every declared LTAC element must have a corresponding document header
-    (else they are flagged)
+    (as this is where the additional information about it can be placed).
 
 Configuration keys (--config FILE, JSON object):
   base_url           base URL for hyperlinks in sacm/mermaid and gsn/mermaid output (default: "")

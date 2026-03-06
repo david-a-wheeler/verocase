@@ -68,8 +68,8 @@ and AI can make the same mistakes.
 
 This tool, `caseproc`, takes a completely different approach:
 
-* As input, it reads a simple text file (default file `[docs/]case.ltac`)
-  written in our
+* As input, it reads a simple text file (default file `case.ltac`
+  in `./` or `docs/`). This file is written in our
   extended version of the Lightweight Text Assurance Case (LTAC) format.
   This simple format is easily understood and used, and makes it
   easy to express simple hierarchy of structure and high-level statements.
@@ -78,7 +78,7 @@ This tool, `caseproc`, takes a completely different approach:
   unreachable elements, and so on).
 * As output, it updates a set of 1+ documents (in markdown or HTML),
   including fixing headers and inserting/updating graphics
-  (default file `[docs/]case.[md,html]`).
+  (default file `case.[md,html]` in `./` or `docs/`).
   Note that it *automatically* generates graphical notation in SACM or
   GSN notation - you don't need to fiddle with the graphics at all.
   It also automatically generates a number of hypertext links, making it
@@ -88,6 +88,9 @@ This tool, `caseproc`, takes a completely different approach:
   In contrast, `caseproc` updates the document to
   keep all information easily in sync.
 
+Just run `caseproc` and the output documents will be updated based on the
+input LTAC file.
+
 Currently the tool can generate both SACM and GSN notation in mermaid format.
 It can also generate a markdown indented bullet list that looks like LTAC
 format but adds hyperlinks, making it easy to go from a high-level
@@ -96,55 +99,47 @@ It might someday support CAE notation as well.
 The tool can also insert various cross-references and update heading names
 as appropriate.
 
-As a result,
-you can simply run the process with a sequence of markdown filenames,
-and it will update the documents directly.
-
 The result is *much* easier to integrate into version control systems like git,
 since all information is kept in simple text files.
-Both AI and humans find this really easy to follow
-(AI systems already know how to handle indented structures thanks to
-Python, YAML, and so on).
-It's remarkably easy to edit, too - no fussing over moving objects in
-a graphical display.
+Both AI and humans find this information really easy to follow.
+AI systems love markdown and HTML, and they
+also know how to handle indented structures like LTAC.
+It's remarkably easy to edit, too - just use tools you already know how to use.
 
 ## Handling evolution
 
-Assurance cases evolve. This tool is designed to easily handle that.
+Assurance cases evolve.
+If you *purely* edit an assurance case
+in a document various errors can creep in, the diagrams and document
+headings can easily go out of sync,
+and there's no hint that there's a problem.
+This tool is designed to easily handle assurance case evolution
+better than a simple document can.
 
-This tool does a number of validations and produces various warnings.
-The `--help` provides a full list, but for example,
-each identifier must be declared (no ^ prefix) exactly once, and it
-will tell you if that rule is violated.
-We also warn every time a declared LTAC element fails to have a
-corresponding document header.
-If the statement in LTAC is changed, the documents will be updated to
-match (if the id is the unchanged).
+This tool does a number of validation checks;
+see `--help` for the full list.
+If it validates, the tool automatically updates the documents to match
+the LTAC input, e.g., it updates the graphics and the headings.
 
-Claims get refined, strategies get renamed,
-and statement wording gets clarified.
-If you *purely* do this in a document, the diagrams and document
-headings easily go out of sync, and there's no hint that there's a problem.
-One of the advantages of a database-based tool is that it can detect
-and warn of various problems.
-In addition, when a statement is changed, in a database-based
-tool, such changes are immediately updated everywhere.
+Database-based tools can make it easy to make specific changes "everywhere".
 However, database-based tools are complex and requiring using that
-tool for many tasks.
+specialized tool for almost all assurance case tasks.
 Our goal is to get many of those benefits using a different and
 simpler approach.
 
-Our solution is a few special options.
-Normally we only *read* the LTAC file, but a few options will *update* it.
-The `--update` option updates the LTAC file so all elements that cite the
-*real* element will have their statements updated to match.
+We achieve similar capabilities using a few simple options.
+Normally the tool will only *read* the LTAC file, not modify it.
+However, a few options will *update* the LTAC file.
+The `--update` option updates the LTAC file so that all elements that cite an
+element will have their statements updated to match the definition.
 The option `--rename OLD NEW` let you rename IDs in
 the LTAC and document files, while
 `--restate LABEL STATEMENT` lets you change the statment of a given label
 in the LTAC and document files.
-This has the advantage of database-based approaches
+This gives us many of the advantages of database-based approaches
 (you can do one operation to change
-certain values "everywhere") while staying with the full transparency
+certain values "everywhere"), while providing better transparency,
+greater simplicity, and easier integration with AI and version control
 of a text-based approach.
 
 ## Pros and Cons
@@ -171,19 +166,22 @@ imposing various limits:
 
 * The hierarchical representation of LTAC forces a hierarchy that GSN and SACM
   don't natively require. Instead, we require that an assurance case
-  be grouped into multiple packages (modules),
-  each one have a single top claim, and that they be hierarchical from there.
-  We name the package after that top claim.
-  We also require that any claim only be defined in one package.
+  be grouped into multiple packages (modules).
+  Each package must have
+  a single top claim and it must be hierarchically decomposed.
+  We name the package after that top claim, and we also
+  require that any claim only be defined in one package.
   However, a claim may be *referenced* in many packages, and "Links" allow
   references to an element already in use.
-  We believe this restriction isn't a serious problem in practice.
+  These abilities mean that these restrictions aren't
+  a serious problem in practice.
 * We generate graphics automatically, and we currently
   use `mermaid` because it's
   directly support by GitHub's built-in markdown processor.
   Mermaid is quite limited in what it can do. This isn't too bad if you
   limit your packages to smaller numbers of elements, but it's definitely
-  a limitation.
+  a limitation. You can have as many packages as you want; we suggest
+  limiting package size. That's easier for humans to follow, too.
 * This is not a database, it's a way to make it easier to manage documents.
   If you want a database, this tool
   isn't it. So if you are managing a large

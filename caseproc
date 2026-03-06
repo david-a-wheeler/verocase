@@ -1635,9 +1635,9 @@ assurance case elements or packages, their HTML anchors, and all text regions
 inside the markers <!-- caseproc SELECTOR --> ... <!-- end caseproc -->.
 
 The intended normal use is that you simply edit the LTAC file for the
-igh-level argument and the document file(s) in Markdown/HTML for all details
+high-level argument and the document file(s) in Markdown/HTML for all details
 (the "content" in SACM parlance). Then run this program to validate the
-tructure and update your document files in Markdown/HTML with graphics,
+structure and update your document files in Markdown/HTML with graphics,
 hyperlinks, and other material.
 
 By default the program treats the LTAC file strictly as an input and

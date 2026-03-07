@@ -29,6 +29,7 @@ Let's begin by first making a few smaller changes:
 
 After we've done that, let's focus on our main improvement.
 
+
 ## Main improvement
 
 Currently our process for handling headers is convoluted and
@@ -46,17 +47,21 @@ when we are processing a markdown document (where `ELEMENT_TYPE`, etc.,
 are placeholders):
 
 ~~~~markdown
-<a id="ELEMENT_TYPE-ID"></a>
+<a id="COMPONENT_ANCHOR_ID"></a>
 ### ELEMENT_TYPE ID: ELEMENT_STATEMENT
 
 ~~~~
+
+Where `COMPONENT_ANCHOR_ID` is determined by `_component_anchor_id`
+from the element type (such as `claim`) and the LTAC ID.
+E.g., for a Claim with ID `Foo Bar` this becomes `claim-foo-bar`.
+IDs are already required to have unique GitHub IDs, so this will be unique.
 
 The same selector would generate at least the following
 when we are processing an HTML document:
 
 ~~~~html
-<a id="ELEMENT_TYPE-ID"></a>
-<h3 id="ELEMENT_TYPE-ID-ELEMENT_STATEMENT"
+<h3 id="COMPONENT_ANCHOR_ID"
 >ELEMENT_TYPE ID: ELEMENT_STATEMENT</h3>
 
 ~~~~
@@ -72,9 +77,15 @@ In --stdout mode, the input determines the output type.
 The heading level (number of `#` in markdown) is determined by
 the config value `element_level`, which defaults to 3.
 
-Note that `element` sets the "current id" value to that ID
-(we previously called this the "current element").
-We don't allow `*` instead of ID, that wouldn't make sense.
+In the past we tracked the "current element". Let's make that the
+"current ID"; using either of these new "element" or "package" selectors
+*sets* the current ID. In the case of package `*`,
+the system loops through each package, setting the "current ID" each time.
+that way, when it calls other selectors to generate the package contents,
+they'll have the correct one. After `*` ends, the "current ID" would be
+the last package presented I guess.
+We don't allow `*` instead of ID, that wouldn't make sense, though
+we will continue to do this for `package`.
 
 I said the selector element generates at least, because what it generates
 after that would depend on the config value `element_selections`.
@@ -90,7 +101,8 @@ Here is the markdown version of each of those selections:
 `referenced_by` (for markdown):
 ~~~~
 Referenced by: (hyperlinked list of packages containing it, starting with
-  the one it's defined in, comma-separated)
+  the package that defines it, followed by all packages that cite it,
+  in LTAC file order, comma-separated)
 
 ~~~~
 
@@ -102,7 +114,9 @@ Supported by: (hyperlinked list of children elements of definition)
 
 `supports`:
 ~~~~
-Supports: (hyperlinked list of parents of the definition and all citations)
+Supports: (hyperlinked list. First it's the parent of this element's
+  definition, followed by the list of all parents of citations of this
+  element in LTAC file order)
 
 ~~~~
 
@@ -113,18 +127,31 @@ is easily controlled in one place.
 Similarly, the selector `package ID|*` generates in markdown at least:
 
 ~~~~markdown
-### Package ID
+<a id="COMPONENT_ANCHOR_ID"></a>
+### Package ID: Statement
 
 ~~~~
 
-In markdown we don't need to add `<a id="package-ID"></a>`;
-that's done by the markdown processor, and we always just show the ID
-(we don't show a separate statement).
+The "Component" type in this case is "Package", so the component anchor
+for package `foo bar` would be `package-foo-bar`.
+The statement would be statement of the topmost element.
+If there's no statement, don't show the ": " either; that'll generate
+the same id twice, but I'm not sure that really matters.
+We already require all ID to have unique GitHub ID representations,
+so this shouldn't be a problem.
 
 The config value `package_level` controls level of the heading,
 which starts at 3.
 
-Note that every time `package` generates a header it
+In HTML it would generate at least:
+~~~~markdown
+<h3 id="COMPONENT_ANCHOR_ID">Package ID: ELEMENT_STATEMENT</h3>
+
+~~~~
+
+Where `COMPONENT_ANCHOR_ID` uses the type `package`.
+
+Note that every time this `package` selector generates a header it
 sets the "current id" value to that ID
 (we previously called this the "current element").
 
@@ -139,13 +166,16 @@ By default `package_selections` will have the value
 The `representation` selector, whenever used,
 applies whatever selection is stored in
 the config value `default_representation`, which defaults to `sacm`.
-That way, users can change just the config value
+That way, users can easily change just the config value
 `default_representation` to `gsn` and they'll get gsn for every package.
+Users don't *have* to change it, then they'll just get the default.
 
 Let's add new selectors sacm, gsn, and ltac. Each of them select
 the `/markdown` or `/html` variations of them depending on whether or not
 the containing document is markdown or html.
 E.g., `sacm` is interpreted as `sacm/markdown` when generating markdown.
+We'll keep the selectors with the specific variation names, in case
+we need to force the use of one.
 
 The `pkg_root` selector shows the word `Root: ` followed by a single
 "TYPE ID" that has a hyperlink to its header (`#TYPE-ID`)
@@ -184,6 +214,11 @@ everywhere. When it's in a generated segment, let's suppress the very last
 blank line at the end of what's generated, so we don't have lots of
 useless blank lines.
 
+Note that `package *` is the expected use, and this single directive
+can generate a *lot* of text (multiple headers, each with graphics, links,
+etc.) That is *expected* behavior - we will get a lot of results with
+a simple directive.
+
 Currently, per reference.md, --validate
 "cross-checks their headers against the LTAC."
 Instead of cross-checking *headers*, it now cross-checks against the
@@ -204,31 +239,74 @@ so we can convert our test suite efficiently.
 
 Let's make it possible to modify a config value dynamically.
 That'll be especially useful, for example, for the heading levels.
-Use this:
+
+To do this, we'll create a special selector `config` with this syntax:
 
 `<!-- caseproc config KEY = VALUE... -->`
-Note that there's no reason to end it. This sets config KEY to VALUE,
+
+Note that there's no reason to end it, so in this case we won't look for
+`<!-- end caseproc -->`. This is a selector, so we only expect this
+to exist outside the marked regions of other selectors (it would be ignored
+and replaced if it was inside).
+
+This special selector first checks if KEY is allowed to be changed, and
+that it's allowed to be changed to VALUE.
+If not, it prints an error message and continues.
+If it is, this special selector immediately sets config KEY to VALUE,
 which will last until changed again.
 
-In the past we tracked the "current element". Let's make that the
-"current ID"; using either of these new "element" or "package" selectors
-*sets* the current ID. In the case of package `*`,
-the system loops through each package, setting the "current ID" each time.
-that way, when it calls other selectors to generate the package contents,
-they'll have the correct one. After `*` ends, the "current ID" would be
-the last package presented I guess.
+We'll check if it's "allowed to change" by first seeing if it *has*
+a default config value - if not, we don't know about it, reject.
+If it does, consult a dictionary `allowed_values` which maps keys to
+a regular expression of allowed values.
+For now we'll just allow setting of `element_level` and `package_level`,
+in both cases `^[1-6]\Z`.
+We can allow more later.
+
+The directive is itself preserved in the output.
+It takes effect immediately, and persists.
+It is even applied during `--validate`.
 
 We'll need to update tests, `--help`, and `docs/reference.md` among other
 places.
 
 ## Option to add missing elements to documents
 
-Add markers to LTAC, identify leaf nodes (including these)
-with no info other than blank lines.
+Let's add a new option `--missing`. This will simplify handling
+missing element information.
+
+When `--missing` is run, it will still update the document as usual.
+It will also notice when an element appears to have no content,
+by noticing cases where its
+`<!-- caseproc element ID -->...<!-- end caseproc -->`
+has nothing other than blank lines and `<!-- caseproc ... -->`
+before another `<!-- caseproc element` or `<!-- caseproc package`.
+
+Once it reaches the `</body>` of
+the last doc if it's HTML, or the end of the last doc no matter what,
+it will insert region markers for every element ID that has
+not been in any document. That is, it will add:
+
+~~~~
+<!-- caseproc element ID -->
+(contents of caseproc element ID as usual)
+<!-- end caseproc -->
+
+~~~~
+
+It will then go through each element that was missing and appears
+to have no content.
+Every element that
+(1) has no other assertionDeclaration (the default is considered `asserted`),
+and (2) is a leaf element in its definition,
+will have the option `needsSupport` added.
+The LTAC is then written back.
+
+Basically, by running `--missing`, we add all markers missing in the document,
+and we ensure that the user can see the elements that probably most
+need information.
 
 ## Discussion
 
-* Should we remove some existing selectors? Which ones should we remove?
-  Some selectors are useful for debugging, or for special uses.
-  Please list the existing selectors, and suggest which should stay
-  and which should go (and why).
+Let's remove the selectors references info - they're getting superceded.
+The `statement` selector might be useful, let's keep it.

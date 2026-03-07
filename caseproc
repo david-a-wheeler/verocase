@@ -2123,6 +2123,11 @@ For full details see docs/design-spec.md.""",
         '--selftest', action='store_true',
         help='run the built-in doctest suite and exit (0 = all pass, 1 = any fail)',
     )
+    mode.add_argument(
+        '--missing', action='store_true',
+        help='insert element selectors for missing elements and flag leaf elements '
+             'with needsSupport; rewrites document files in place',
+    )
 
     return parser.parse_args()
 
@@ -2319,6 +2324,85 @@ def _process_files(
     else:
         process_document_stream(sys.stdin, out, registry, all_roots, config, id_info,
                                 seen_element_ids, 'markdown')
+
+
+def _has_user_content(doc_text: str, element_id: str) -> bool:
+    """Return True if the document has non-caseproc content after the element region.
+
+    Returns False if the element region is absent, or if the text between
+    the end of the element region and the next element/package region consists
+    only of blank lines and caseproc directives.
+    """
+    start_marker = f'<!-- caseproc element {element_id} -->'
+    end_marker = '<!-- end caseproc -->'
+    next_element_re = re.compile(r'<!--\s*caseproc\s+(?:element|package)\s')
+    pos = doc_text.find(start_marker)
+    if pos == -1:
+        return False
+    pos = doc_text.find(end_marker, pos)
+    if pos == -1:
+        return False
+    pos += len(end_marker)
+    for line in doc_text[pos:].splitlines():
+        stripped = line.strip()
+        if not stripped:
+            continue
+        if next_element_re.match(stripped):
+            return False
+        if stripped.startswith('<!-- caseproc') or stripped.startswith('<!--caseproc'):
+            continue
+        return True
+    return False
+
+
+def _add_missing_elements(doc_text: str, missing_ids: List[str],
+                          registry: Dict[str, Node], id_info: Dict[str, dict],
+                          config: dict, doc_format: str) -> str:
+    """Append element regions for each missing_ids entry to doc_text."""
+    state = DocState(doc_format=doc_format)
+    insertions = []
+    for ident in missing_ids:
+        state.current_id = ident
+        rendered = render_element_selector(ident, registry, [], id_info, config, state)
+        block = (f'<!-- caseproc element {ident} -->\n'
+                 f'{rendered}\n'
+                 f'<!-- end caseproc -->\n')
+        insertions.append(block)
+    addition = '\n'.join(insertions)
+    if doc_format == 'html':
+        idx = doc_text.lower().rfind('</body>')
+        if idx != -1:
+            return doc_text[:idx] + addition + '\n' + doc_text[idx:]
+    return doc_text + '\n' + addition
+
+
+_ASSERTION_STATUSES = frozenset({'needssupport', 'assumed', 'axiomatic', 'defeated', 'ascited'})
+
+
+def _mark_needs_support(candidate_ids: List[str],
+                        registry: Dict[str, Node]) -> int:
+    """Add 'needssupport' option to leaf elements with no existing assertion status.
+
+    Only modifies registry nodes that are leaves (no non-Link children) and have
+    no existing assertion status.  Assumption nodes implicitly carry 'assumed' and
+    are skipped.  Returns count of elements modified.
+    """
+    count = 0
+    for ident in candidate_ids:
+        node = registry.get(ident)
+        if node is None:
+            continue
+        real_children = [c for c in node.children if c.node_type != 'Link']
+        if real_children:
+            continue
+        # Assumption nodes implicitly carry 'assumed'; don't add a conflicting status.
+        if node.node_type == 'Assumption':
+            continue
+        if node.options & _ASSERTION_STATUSES:
+            continue
+        node.options.add('needssupport')
+        count += 1
+    return count
 
 
 def _check_element_coverage(registry: Dict[str, Node], seen_element_ids: set) -> None:
@@ -2631,6 +2715,54 @@ def main() -> None:
         _check_element_coverage(registry, seen_element_ids)
         if ltac_pair:
             commit_updates([ltac_pair])
+    elif args.missing:
+        if not document_files:
+            panic(_NO_FILES_MSG)
+        seen_element_ids: set = set()
+        # Cache document text for user-content detection.
+        doc_text_cache: Dict[str, str] = {}
+        for path in document_files:
+            try:
+                with open(path, newline='') as f:
+                    doc_text_cache[path] = f.read().replace('\r\n', '\n')
+            except OSError as e:
+                error(f"cannot open {path!r}: {e}")
+                continue
+            with io.StringIO(doc_text_cache[path]) as src:
+                process_document_stream(src, io.StringIO(), registry, all_roots,
+                                        config, id_info, seen_element_ids,
+                                        detect_doc_format(path))
+        # Collect missing IDs (in LTAC order).
+        all_ids_in_order = [n.identifier for n in _all_nodes(all_roots)
+                            if not n.is_cited and n.identifier]
+        missing_ids = [i for i in all_ids_in_order if i not in seen_element_ids]
+        # Collect seen IDs with no user content.
+        empty_ids = [i for i in seen_element_ids
+                     if not any(_has_user_content(doc_text_cache.get(p, ''), i)
+                                for p in document_files)]
+        # Append missing elements to the last document.
+        if missing_ids and document_files:
+            last_path = document_files[-1]
+            doc_text = doc_text_cache.get(last_path, '')
+            doc_format = detect_doc_format(last_path)
+            new_text = _add_missing_elements(doc_text, missing_ids,
+                                             registry, id_info, config, doc_format)
+            line_ending = detect_line_ending(doc_text)
+            tmp = _make_temp(last_path, new_text, line_ending)
+            if tmp is not None:
+                pairs = ([ltac_pair] if ltac_pair else [])
+                pairs.append((tmp, last_path))
+                commit_updates(pairs)
+                ltac_pair = None
+        # Mark needsSupport on leaf elements that are missing or empty.
+        candidates = missing_ids + [i for i in empty_ids if i not in missing_ids]
+        changed = _mark_needs_support(candidates, registry)
+        if changed:
+            tmp = _make_temp(ltac_path, write_ltac(all_roots), ltac_line_ending)
+            if tmp is not None:
+                if ltac_pair:
+                    commit_updates([ltac_pair])
+                commit_updates([(tmp, ltac_path)])
     else:
         # Default mode: rewrite document files in place.
         if not document_files and not ltac_pair:

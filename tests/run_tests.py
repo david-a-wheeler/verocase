@@ -940,6 +940,95 @@ class TestCommitUpdates(unittest.TestCase):
             _shutil.rmtree(tmpdir)
 
 
+class TestMissingOption(unittest.TestCase):
+    def _tmp_copy(self, name):
+        os.makedirs(RESULTS, exist_ok=True)
+        path = os.path.join(RESULTS, name)
+        shutil.copy(fixture(name), path)
+        return path
+
+    def test_missing_adds_element_regions(self):
+        """--missing appends element regions for elements not yet in the document."""
+        tmp_doc = self._tmp_copy('element-selector-input.md')
+        tmp_ltac = self._tmp_copy('simple.ltac')
+        try:
+            r = run('--ltac', tmp_ltac, '--missing', tmp_doc)
+            self.assertEqual(r.returncode, 0)
+            content = read_file(tmp_doc)
+            # AR1, C2, E1, C3, A1, X1 were not in the document; they should be added.
+            self.assertIn('<!-- caseproc element AR1 -->', content)
+            self.assertIn('<!-- caseproc element C2 -->', content)
+            self.assertIn('<!-- caseproc element C1 -->', content)  # was already there
+        finally:
+            os.unlink(tmp_doc)
+            os.unlink(tmp_ltac)
+
+    def test_missing_adds_needs_support_to_leaf(self):
+        """--missing adds {needssupport} to leaf elements in the LTAC."""
+        import tempfile
+        # Create a minimal LTAC with a leaf claim (no children).
+        ltac = '- Claim Root: Root claim\n  - Claim Leaf: A leaf with no children\n'
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.ltac', delete=False) as f:
+            f.write(ltac)
+            ltac_path = f.name
+        # Create a doc with no element selectors so Leaf is "missing".
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.md', delete=False) as f:
+            f.write('# Assurance Case\n')
+            doc_path = f.name
+        try:
+            r = run('--ltac', ltac_path, '--missing', doc_path)
+            self.assertEqual(r.returncode, 0)
+            ltac_content = read_file(ltac_path)
+            self.assertIn('needssupport', ltac_content)
+        finally:
+            os.unlink(ltac_path)
+            os.unlink(doc_path)
+
+    def test_missing_does_not_add_needs_support_to_non_leaf(self):
+        """--missing does not add {needssupport} to non-leaf elements."""
+        import tempfile
+        ltac = '- Claim Root: Root claim\n  - Claim Child: A child\n    - Evidence E1: evidence\n'
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.ltac', delete=False) as f:
+            f.write(ltac)
+            ltac_path = f.name
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.md', delete=False) as f:
+            f.write('# Test\n')
+            doc_path = f.name
+        try:
+            r = run('--ltac', ltac_path, '--missing', doc_path)
+            self.assertEqual(r.returncode, 0)
+            ltac_content = read_file(ltac_path)
+            lines = ltac_content.splitlines()
+            # Root and Child have children; only E1 (leaf) gets needssupport.
+            root_line = [l for l in lines if 'Root' in l][0]
+            child_line = [l for l in lines if 'Child' in l][0]
+            self.assertNotIn('needssupport', root_line)
+            self.assertNotIn('needssupport', child_line)
+        finally:
+            os.unlink(ltac_path)
+            os.unlink(doc_path)
+
+    def test_missing_does_not_add_needs_support_if_already_has_status(self):
+        """--missing does not add {needssupport} if element already has an assertion status."""
+        import tempfile
+        ltac = '- Claim Root: Root claim\n  - Claim Leaf: leaf {assumed}\n'
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.ltac', delete=False) as f:
+            f.write(ltac)
+            ltac_path = f.name
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.md', delete=False) as f:
+            f.write('# Test\n')
+            doc_path = f.name
+        try:
+            r = run('--ltac', ltac_path, '--missing', doc_path)
+            self.assertEqual(r.returncode, 0)
+            ltac_content = read_file(ltac_path)
+            # The {assumed} element should NOT get {needssupport} added.
+            self.assertNotIn('needssupport', ltac_content)
+        finally:
+            os.unlink(ltac_path)
+            os.unlink(doc_path)
+
+
 class TestCaseprocConfig(unittest.TestCase):
     def test_config_directive_changes_level(self):
         """<!-- caseproc-config element_level = 2 --> changes heading level for element regions."""

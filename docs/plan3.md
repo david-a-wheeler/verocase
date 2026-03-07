@@ -27,6 +27,13 @@ Let's begin by first making a few smaller changes:
   file, we use its current convention. We do this for each file (they might
   differ).
 
+Let's create a short routine that creates a hyperlink from `content`
+to `URL` given `format`, where format is `markdown` or `html`.
+For markdown it generates `[escaped content](link)`, while for html
+it generates `<a href="link">escaped content</a>`.
+It escapes content as necessary for that format.
+We'll use this routine often in the work to follow.
+
 After we've done that, let's focus on our main improvement.
 
 
@@ -83,7 +90,7 @@ In the past we tracked the "current element". Let's make that the
 the system loops through each package, setting the "current ID" each time.
 that way, when it calls other selectors to generate the package contents,
 they'll have the correct one. After `*` ends, the "current ID" would be
-the last package presented I guess.
+the last package presented.
 We don't allow `*` instead of ID, that wouldn't make sense, though
 we will continue to do this for `package`.
 
@@ -108,7 +115,9 @@ Referenced by: (hyperlinked list of packages containing it, starting with
 
 `supported_by`:
 ~~~~
-Supported by: (hyperlinked list of children elements of definition)
+Supported by: (starting with this element's definition, a
+hyperlinked list of all its children elements, including cited and link
+elements, comma-separated)
 
 ~~~~
 
@@ -119,6 +128,10 @@ Supports: (hyperlinked list. First it's the parent of this element's
   element in LTAC file order)
 
 ~~~~
+
+If we're generating HTML, all of these generate the HTML version of the same
+thing as the markdown, e.g., `<a href="LINK">CONTENT</a>` instead of
+`[CONTENT](LINK)`.
 
 As a result, a single `element` selector can generate a header
 and a lot of infomration, and exactly what information is generated
@@ -132,11 +145,18 @@ Similarly, the selector `package ID|*` generates in markdown at least:
 
 ~~~~
 
+The leading `<a id...` is technically HTML, but markdown doesn't have
+a standard way to force HTML ids, so we'll do it this way.
+
 The "Component" type in this case is "Package", so the component anchor
 for package `foo bar` would be `package-foo-bar`.
 The statement would be statement of the topmost element.
-If there's no statement, don't show the ": " either; that'll generate
-the same id twice, but I'm not sure that really matters.
+If there's no statement, don't show the ": " either.
+GitHub's markdown processor inserts hypertext IDs, and many others do too,
+but not all; by forcibly including the anchor, we *know* it will be there.
+If the markdown processor generates anchors, *and* the top-level element
+of a package has no statement, we'll end up with 2 HTML ids in basically
+the same place; that's unfortunate, but acceptable as it ensures it will work.
 We already require all ID to have unique GitHub ID representations,
 so this shouldn't be a problem.
 
@@ -161,7 +181,7 @@ This is a comma-separated list of 0+ selection names, which will be applied
 in order after this header for each header. They'll each use the "current id".
 
 By default `package_selections` will have the value
-`representation,pkg_root,pkg_defines,pkg_citing,pkg_cited`.
+`representation,pkg_defines,pkg_citing,pkg_cited`.
 
 The `representation` selector, whenever used,
 applies whatever selection is stored in
@@ -177,18 +197,14 @@ E.g., `sacm` is interpreted as `sacm/markdown` when generating markdown.
 We'll keep the selectors with the specific variation names, in case
 we need to force the use of one.
 
-The `pkg_root` selector shows the word `Root: ` followed by a single
-"TYPE ID" that has a hyperlink to its header (`#TYPE-ID`)
-followed by a blank line. The TYPE would usually be Claim, but we won't
-enforce that here. This links us rapidly to the top element,
-which is often important for understanding the package as a whole.
-
 The `pkg_defines` selector shows the word `Defines: `,
 followed by a comma-separated list of "TYPE ID" (e.g., "Claim Foo")
 that has a hyperlink to its header (`#TYPE-ID`),
 followed by a blank line. These are all of the elements that are
 *defined* in this package (don't use `^`), starting with the top element
-(which is normally a claim). Thus, we can easily jump from here
+(which is normally a claim). Bold the top element, to emphasize
+its special status. Markdown bolds with `**..**`, HTML with `<b>...</b>`.
+Thus, we can easily jump from here
 to the details of any element defined in this package from the
 representation *or* this list.
 
@@ -243,6 +259,8 @@ That'll be especially useful, for example, for the heading levels.
 To do this, we'll create a special selector `config` with this syntax:
 
 `<!-- caseproc config KEY = VALUE... -->`
+
+Note that VALUE is everything up to the first `-->` - it can contain spaces.
 
 Note that there's no reason to end it, so in this case we won't look for
 `<!-- end caseproc -->`. This is a selector, so we only expect this
@@ -301,6 +319,7 @@ Every element that
 and (2) is a leaf element in its definition,
 will have the option `needsSupport` added.
 The LTAC is then written back.
+As with all changes of files, this will use the safe backup mechanism.
 
 Basically, by running `--missing`, we add all markers missing in the document,
 and we ensure that the user can see the elements that probably most
@@ -309,4 +328,6 @@ need information.
 ## Discussion
 
 Let's remove the selectors references info - they're getting superceded.
-The `statement` selector might be useful, let's keep it.
+The `statement` selector might be useful, let's keep it. It supports an
+optional ID - if ID is omitted, current component (most recently invoked)
+is used.

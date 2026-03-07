@@ -8916,10 +8916,6 @@ Referenced by: **[Package G1](#package-g1)**
 Supported by: **[Context Xscope](#context-xscope)**, [Assumption Asys](#assumption-asys), [Evidence Esys1](#evidence-esys1), [Strategy Sdecomp](#strategy-sdecomp), [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references G1 -->
-References: [Package G1](#package-g1)
-<!-- end caseproc -->
-
 Stub for Claim G1.
 
 <!-- caseproc element Xscope -->
@@ -8929,10 +8925,6 @@ Stub for Claim G1.
 Referenced by: **[Package G1](#package-g1)**
 
 Supports: **[Claim G1](#claim-g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references Xscope -->
-References: [Package G1](#package-g1)
 <!-- end caseproc -->
 
 Stub for Context Xscope.
@@ -8946,10 +8938,6 @@ Referenced by: **[Package G1](#package-g1)**
 Supports: **[Claim G1](#claim-g1)**
 <!-- end caseproc -->
 
-<!-- caseproc references Asys -->
-References: [Package G1](#package-g1)
-<!-- end caseproc -->
-
 Stub for Assumption Asys.
 
 <!-- caseproc element Esys1 -->
@@ -8959,10 +8947,6 @@ Stub for Assumption Asys.
 Referenced by: **[Package G1](#package-g1)**
 
 Supports: **[Claim G1](#claim-g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references Esys1 -->
-References: [Package G1](#package-g1)
 <!-- end caseproc -->
 
 Stub for Evidence Esys1.
@@ -8978,10 +8962,6 @@ Supported by: **[Claim L1top](#claim-l1top)**, [Claim L2top](#claim-l2top), [Cla
 Supports: **[Claim G1](#claim-g1)**
 <!-- end caseproc -->
 
-<!-- caseproc references Sdecomp -->
-References: [Package G1](#package-g1)
-<!-- end caseproc -->
-
 Stub for Strategy Sdecomp.
 
 <!-- caseproc element Scomps -->
@@ -8993,10 +8973,6 @@ Referenced by: **[Package G1](#package-g1)**
 Supported by: **[Claim C01top](#claim-c01top)**, [Claim C02top](#claim-c02top), [Claim C03top](#claim-c03top), [Claim C04top](#claim-c04top), [Claim C05top](#claim-c05top), [Claim C06top](#claim-c06top), [Claim C07top](#claim-c07top), [Claim C08top](#claim-c08top), [Claim C09top](#claim-c09top), [Claim C10top](#claim-c10top), [Claim C11top](#claim-c11top), [Claim C12top](#claim-c12top), [Claim C13top](#claim-c13top), [Claim C14top](#claim-c14top), [Claim C15top](#claim-c15top), [Claim C16top](#claim-c16top), [Claim C17top](#claim-c17top), [Claim C18top](#claim-c18top), [Claim C19top](#claim-c19top), [Claim C20top](#claim-c20top), [Claim C21top](#claim-c21top), [Claim C22top](#claim-c22top), [Claim C23top](#claim-c23top), [Claim C24top](#claim-c24top), [Claim C25top](#claim-c25top), [Claim C26top](#claim-c26top), [Claim C27top](#claim-c27top), [Claim C28top](#claim-c28top), [Claim C29top](#claim-c29top), [Claim C30top](#claim-c30top), [Claim C31top](#claim-c31top), [Claim C32top](#claim-c32top), [Claim C33top](#claim-c33top), [Claim C34top](#claim-c34top), [Claim C35top](#claim-c35top), [Claim C36top](#claim-c36top), [Claim C37top](#claim-c37top), [Claim C38top](#claim-c38top), [Claim C39top](#claim-c39top), [Claim C40top](#claim-c40top), [Claim C41top](#claim-c41top), [Claim C42top](#claim-c42top), [Claim C43top](#claim-c43top), [Claim C44top](#claim-c44top), [Claim C45top](#claim-c45top)
 
 Supports: **[Claim G1](#claim-g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references Scomps -->
-References: [Package G1](#package-g1)
 <!-- end caseproc -->
 
 Stub for Strategy Scomps.
@@ -9012,10 +8988,6 @@ Supported by: **[Context L1Xctx](#context-l1xctx)**, [Evidence L1Esh1](#evidence
 Supports: [Strategy Sdecomp](#strategy-sdecomp)
 <!-- end caseproc -->
 
-<!-- caseproc references L1top -->
-References: [Package L1top](#package-l1top), [Package G1](#package-g1)
-<!-- end caseproc -->
-
 Stub for Claim L1top.
 
 <!-- caseproc element L1Xctx -->
@@ -9025,10 +8997,6 @@ Stub for Claim L1top.
 Referenced by: **[Package L1top](#package-l1top)**
 
 Supports: **[Claim L1top](#claim-l1top)**
-<!-- end caseproc -->
-
-<!-- caseproc references L1Xctx -->
-References: [Package L1top](#package-l1top)
 <!-- end caseproc -->
 
 Stub for Context L1Xctx.
@@ -9042,10 +9010,6 @@ Referenced by: **[Package L1top](#package-l1top)**
 Supports: **[Claim L1top](#claim-l1top)**
 <!-- end caseproc -->
 
-<!-- caseproc references L1Esh1 -->
-References: [Package L1top](#package-l1top)
-<!-- end caseproc -->
-
 Stub for Evidence L1Esh1.
 
 <!-- caseproc element L1Esh2 -->
@@ -9055,10 +9019,6 @@ Stub for Evidence L1Esh1.
 Referenced by: **[Package L1top](#package-l1top)**
 
 Supports: **[Claim L1top](#claim-l1top)**
-<!-- end caseproc -->
-
-<!-- caseproc references L1Esh2 -->
-References: [Package L1top](#package-l1top)
 <!-- end caseproc -->
 
 Stub for Evidence L1Esh2.
@@ -9074,10 +9034,6 @@ Supported by: **[Claim L1G2](#claim-l1g2)**, [Claim C08top](#claim-c08top), [Cla
 Supports: **[Claim L1top](#claim-l1top)**
 <!-- end caseproc -->
 
-<!-- caseproc references L1Smain -->
-References: [Package L1top](#package-l1top)
-<!-- end caseproc -->
-
 Stub for Strategy L1Smain.
 
 <!-- caseproc element L1G2 -->
@@ -9089,10 +9045,6 @@ Referenced by: **[Package L1top](#package-l1top)**
 Supported by: **[Strategy L1S2](#strategy-l1s2)**, [Claim L1G2b](#claim-l1g2b)
 
 Supports: **[Strategy L1Smain](#strategy-l1smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L1G2 -->
-References: [Package L1top](#package-l1top)
 <!-- end caseproc -->
 
 Stub for Claim L1G2.
@@ -9108,10 +9060,6 @@ Supported by: **[Claim L1G3](#claim-l1g3)**, [Claim L1G3c](#claim-l1g3c)
 Supports: **[Claim L1G2](#claim-l1g2)**
 <!-- end caseproc -->
 
-<!-- caseproc references L1S2 -->
-References: [Package L1top](#package-l1top)
-<!-- end caseproc -->
-
 Stub for Strategy L1S2.
 
 <!-- caseproc element L1G3 -->
@@ -9123,10 +9071,6 @@ Referenced by: **[Package L1top](#package-l1top)**
 Supported by: **[Strategy L1S3](#strategy-l1s3)**, [Claim L1G3b](#claim-l1g3b)
 
 Supports: **[Strategy L1S2](#strategy-l1s2)**
-<!-- end caseproc -->
-
-<!-- caseproc references L1G3 -->
-References: [Package L1top](#package-l1top)
 <!-- end caseproc -->
 
 Stub for Claim L1G3.
@@ -9142,10 +9086,6 @@ Supported by: **[Claim L1G4](#claim-l1g4)**, [Claim L1G4b](#claim-l1g4b)
 Supports: **[Claim L1G3](#claim-l1g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references L1S3 -->
-References: [Package L1top](#package-l1top)
-<!-- end caseproc -->
-
 Stub for Strategy L1S3.
 
 <!-- caseproc element L1G4 -->
@@ -9159,10 +9099,6 @@ Supported by: **[Evidence L1Edeep](#evidence-l1edeep)**, [Evidence L1Esh1](#evid
 Supports: **[Strategy L1S3](#strategy-l1s3)**
 <!-- end caseproc -->
 
-<!-- caseproc references L1G4 -->
-References: [Package L1top](#package-l1top)
-<!-- end caseproc -->
-
 Stub for Claim L1G4.
 
 <!-- caseproc element L1Edeep -->
@@ -9172,10 +9108,6 @@ Stub for Claim L1G4.
 Referenced by: **[Package L1top](#package-l1top)**
 
 Supports: **[Claim L1G4](#claim-l1g4)**
-<!-- end caseproc -->
-
-<!-- caseproc references L1Edeep -->
-References: [Package L1top](#package-l1top)
 <!-- end caseproc -->
 
 Stub for Evidence L1Edeep.
@@ -9191,10 +9123,6 @@ Supported by: **[Evidence L1Esh2](#evidence-l1esh2)**, [Evidence L1Esh1](#eviden
 Supports: **[Strategy L1S3](#strategy-l1s3)**
 <!-- end caseproc -->
 
-<!-- caseproc references L1G4b -->
-References: [Package L1top](#package-l1top)
-<!-- end caseproc -->
-
 Stub for Claim L1G4b.
 
 <!-- caseproc element L1G3b -->
@@ -9206,10 +9134,6 @@ Referenced by: **[Package L1top](#package-l1top)**
 Supported by: **[Evidence L1Esh1](#evidence-l1esh1)**
 
 Supports: **[Claim L1G3](#claim-l1g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references L1G3b -->
-References: [Package L1top](#package-l1top)
 <!-- end caseproc -->
 
 Stub for Claim L1G3b.
@@ -9225,10 +9149,6 @@ Supported by: **[Justification L1J1](#justification-l1j1)**, [Evidence L1Esh2](#
 Supports: **[Strategy L1S2](#strategy-l1s2)**
 <!-- end caseproc -->
 
-<!-- caseproc references L1G3c -->
-References: [Package L1top](#package-l1top)
-<!-- end caseproc -->
-
 Stub for Claim L1G3c.
 
 <!-- caseproc element L1J1 -->
@@ -9238,10 +9158,6 @@ Stub for Claim L1G3c.
 Referenced by: **[Package L1top](#package-l1top)**
 
 Supports: **[Claim L1G3c](#claim-l1g3c)**
-<!-- end caseproc -->
-
-<!-- caseproc references L1J1 -->
-References: [Package L1top](#package-l1top)
 <!-- end caseproc -->
 
 Stub for Justification L1J1.
@@ -9257,10 +9173,6 @@ Supported by: **[Strategy L1S2b](#strategy-l1s2b)**
 Supports: **[Claim L1G2](#claim-l1g2)**
 <!-- end caseproc -->
 
-<!-- caseproc references L1G2b -->
-References: [Package L1top](#package-l1top)
-<!-- end caseproc -->
-
 Stub for Claim L1G2b.
 
 <!-- caseproc element L1S2b -->
@@ -9272,10 +9184,6 @@ Referenced by: **[Package L1top](#package-l1top)**
 Supported by: **[Claim L1G3d](#claim-l1g3d)**, [Claim L1G3e](#claim-l1g3e)
 
 Supports: **[Claim L1G2b](#claim-l1g2b)**
-<!-- end caseproc -->
-
-<!-- caseproc references L1S2b -->
-References: [Package L1top](#package-l1top)
 <!-- end caseproc -->
 
 Stub for Strategy L1S2b.
@@ -9291,10 +9199,6 @@ Supported by: **[Evidence L1Esh1](#evidence-l1esh1)**, [Evidence L1Esh2](#eviden
 Supports: **[Strategy L1S2b](#strategy-l1s2b)**
 <!-- end caseproc -->
 
-<!-- caseproc references L1G3d -->
-References: [Package L1top](#package-l1top)
-<!-- end caseproc -->
-
 Stub for Claim L1G3d.
 
 <!-- caseproc element L1G3e -->
@@ -9308,10 +9212,6 @@ Supported by: **[Evidence L1E2](#evidence-l1e2)**
 Supports: **[Strategy L1S2b](#strategy-l1s2b)**
 <!-- end caseproc -->
 
-<!-- caseproc references L1G3e -->
-References: [Package L1top](#package-l1top)
-<!-- end caseproc -->
-
 Stub for Claim L1G3e.
 
 <!-- caseproc element L1E2 -->
@@ -9321,10 +9221,6 @@ Stub for Claim L1G3e.
 Referenced by: **[Package L1top](#package-l1top)**
 
 Supports: **[Claim L1G3e](#claim-l1g3e)**
-<!-- end caseproc -->
-
-<!-- caseproc references L1E2 -->
-References: [Package L1top](#package-l1top)
 <!-- end caseproc -->
 
 Stub for Evidence L1E2.
@@ -9340,10 +9236,6 @@ Supported by: **[Claim L1Gbr1a](#claim-l1gbr1a)**, [Claim L1Gbr1b](#claim-l1gbr1
 Supports: **[Strategy L1Smain](#strategy-l1smain)**
 <!-- end caseproc -->
 
-<!-- caseproc references L1Gbr1 -->
-References: [Package L1top](#package-l1top)
-<!-- end caseproc -->
-
 Stub for Claim L1Gbr1.
 
 <!-- caseproc element L1Gbr1a -->
@@ -9357,10 +9249,6 @@ Supported by: **[Evidence L1Ebr1](#evidence-l1ebr1)**, [Evidence L1Esh1](#eviden
 Supports: **[Claim L1Gbr1](#claim-l1gbr1)**
 <!-- end caseproc -->
 
-<!-- caseproc references L1Gbr1a -->
-References: [Package L1top](#package-l1top)
-<!-- end caseproc -->
-
 Stub for Claim L1Gbr1a.
 
 <!-- caseproc element L1Ebr1 -->
@@ -9370,10 +9258,6 @@ Stub for Claim L1Gbr1a.
 Referenced by: **[Package L1top](#package-l1top)**
 
 Supports: **[Claim L1Gbr1a](#claim-l1gbr1a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L1Ebr1 -->
-References: [Package L1top](#package-l1top)
 <!-- end caseproc -->
 
 Stub for Evidence L1Ebr1.
@@ -9389,10 +9273,6 @@ Supported by: **[Evidence L1Esh2](#evidence-l1esh2)**
 Supports: **[Claim L1Gbr1](#claim-l1gbr1)**
 <!-- end caseproc -->
 
-<!-- caseproc references L1Gbr1b -->
-References: [Package L1top](#package-l1top)
-<!-- end caseproc -->
-
 Stub for Claim L1Gbr1b.
 
 <!-- caseproc element L1Gbr2 -->
@@ -9404,10 +9284,6 @@ Referenced by: **[Package L1top](#package-l1top)**
 Supported by: **[Claim L1Gbr2a](#claim-l1gbr2a)**, [Claim L1Gbr2b](#claim-l1gbr2b)
 
 Supports: **[Strategy L1Smain](#strategy-l1smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L1Gbr2 -->
-References: [Package L1top](#package-l1top)
 <!-- end caseproc -->
 
 Stub for Claim L1Gbr2.
@@ -9423,10 +9299,6 @@ Supported by: **[Evidence L1Ebr2](#evidence-l1ebr2)**, [Evidence L1Esh1](#eviden
 Supports: **[Claim L1Gbr2](#claim-l1gbr2)**
 <!-- end caseproc -->
 
-<!-- caseproc references L1Gbr2a -->
-References: [Package L1top](#package-l1top)
-<!-- end caseproc -->
-
 Stub for Claim L1Gbr2a.
 
 <!-- caseproc element L1Ebr2 -->
@@ -9436,10 +9308,6 @@ Stub for Claim L1Gbr2a.
 Referenced by: **[Package L1top](#package-l1top)**
 
 Supports: **[Claim L1Gbr2a](#claim-l1gbr2a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L1Ebr2 -->
-References: [Package L1top](#package-l1top)
 <!-- end caseproc -->
 
 Stub for Evidence L1Ebr2.
@@ -9455,10 +9323,6 @@ Supported by: **[Evidence L1Esh2](#evidence-l1esh2)**
 Supports: **[Claim L1Gbr2](#claim-l1gbr2)**
 <!-- end caseproc -->
 
-<!-- caseproc references L1Gbr2b -->
-References: [Package L1top](#package-l1top)
-<!-- end caseproc -->
-
 Stub for Claim L1Gbr2b.
 
 <!-- caseproc element L1Gbr3 -->
@@ -9470,10 +9334,6 @@ Referenced by: **[Package L1top](#package-l1top)**
 Supported by: **[Claim L1Gbr3a](#claim-l1gbr3a)**, [Claim L1Gbr3b](#claim-l1gbr3b)
 
 Supports: **[Strategy L1Smain](#strategy-l1smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L1Gbr3 -->
-References: [Package L1top](#package-l1top)
 <!-- end caseproc -->
 
 Stub for Claim L1Gbr3.
@@ -9489,10 +9349,6 @@ Supported by: **[Evidence L1Ebr3](#evidence-l1ebr3)**, [Evidence L1Esh1](#eviden
 Supports: **[Claim L1Gbr3](#claim-l1gbr3)**
 <!-- end caseproc -->
 
-<!-- caseproc references L1Gbr3a -->
-References: [Package L1top](#package-l1top)
-<!-- end caseproc -->
-
 Stub for Claim L1Gbr3a.
 
 <!-- caseproc element L1Ebr3 -->
@@ -9502,10 +9358,6 @@ Stub for Claim L1Gbr3a.
 Referenced by: **[Package L1top](#package-l1top)**
 
 Supports: **[Claim L1Gbr3a](#claim-l1gbr3a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L1Ebr3 -->
-References: [Package L1top](#package-l1top)
 <!-- end caseproc -->
 
 Stub for Evidence L1Ebr3.
@@ -9521,10 +9373,6 @@ Supported by: **[Evidence L1Esh2](#evidence-l1esh2)**
 Supports: **[Claim L1Gbr3](#claim-l1gbr3)**
 <!-- end caseproc -->
 
-<!-- caseproc references L1Gbr3b -->
-References: [Package L1top](#package-l1top)
-<!-- end caseproc -->
-
 Stub for Claim L1Gbr3b.
 
 <!-- caseproc element L1Gbr4 -->
@@ -9536,10 +9384,6 @@ Referenced by: **[Package L1top](#package-l1top)**
 Supported by: **[Claim L1Gbr4a](#claim-l1gbr4a)**, [Claim L1Gbr4b](#claim-l1gbr4b)
 
 Supports: **[Strategy L1Smain](#strategy-l1smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L1Gbr4 -->
-References: [Package L1top](#package-l1top)
 <!-- end caseproc -->
 
 Stub for Claim L1Gbr4.
@@ -9555,10 +9399,6 @@ Supported by: **[Evidence L1Ebr4](#evidence-l1ebr4)**, [Evidence L1Esh1](#eviden
 Supports: **[Claim L1Gbr4](#claim-l1gbr4)**
 <!-- end caseproc -->
 
-<!-- caseproc references L1Gbr4a -->
-References: [Package L1top](#package-l1top)
-<!-- end caseproc -->
-
 Stub for Claim L1Gbr4a.
 
 <!-- caseproc element L1Ebr4 -->
@@ -9568,10 +9408,6 @@ Stub for Claim L1Gbr4a.
 Referenced by: **[Package L1top](#package-l1top)**
 
 Supports: **[Claim L1Gbr4a](#claim-l1gbr4a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L1Ebr4 -->
-References: [Package L1top](#package-l1top)
 <!-- end caseproc -->
 
 Stub for Evidence L1Ebr4.
@@ -9587,10 +9423,6 @@ Supported by: **[Evidence L1Esh2](#evidence-l1esh2)**
 Supports: **[Claim L1Gbr4](#claim-l1gbr4)**
 <!-- end caseproc -->
 
-<!-- caseproc references L1Gbr4b -->
-References: [Package L1top](#package-l1top)
-<!-- end caseproc -->
-
 Stub for Claim L1Gbr4b.
 
 <!-- caseproc element L1Gbr5 -->
@@ -9602,10 +9434,6 @@ Referenced by: **[Package L1top](#package-l1top)**
 Supported by: **[Claim L1Gbr5a](#claim-l1gbr5a)**, [Claim L1Gbr5b](#claim-l1gbr5b)
 
 Supports: **[Strategy L1Smain](#strategy-l1smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L1Gbr5 -->
-References: [Package L1top](#package-l1top)
 <!-- end caseproc -->
 
 Stub for Claim L1Gbr5.
@@ -9621,10 +9449,6 @@ Supported by: **[Evidence L1Ebr5](#evidence-l1ebr5)**, [Evidence L1Esh1](#eviden
 Supports: **[Claim L1Gbr5](#claim-l1gbr5)**
 <!-- end caseproc -->
 
-<!-- caseproc references L1Gbr5a -->
-References: [Package L1top](#package-l1top)
-<!-- end caseproc -->
-
 Stub for Claim L1Gbr5a.
 
 <!-- caseproc element L1Ebr5 -->
@@ -9634,10 +9458,6 @@ Stub for Claim L1Gbr5a.
 Referenced by: **[Package L1top](#package-l1top)**
 
 Supports: **[Claim L1Gbr5a](#claim-l1gbr5a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L1Ebr5 -->
-References: [Package L1top](#package-l1top)
 <!-- end caseproc -->
 
 Stub for Evidence L1Ebr5.
@@ -9653,10 +9473,6 @@ Supported by: **[Evidence L1Esh2](#evidence-l1esh2)**
 Supports: **[Claim L1Gbr5](#claim-l1gbr5)**
 <!-- end caseproc -->
 
-<!-- caseproc references L1Gbr5b -->
-References: [Package L1top](#package-l1top)
-<!-- end caseproc -->
-
 Stub for Claim L1Gbr5b.
 
 <!-- caseproc element L1Gbr6 -->
@@ -9668,10 +9484,6 @@ Referenced by: **[Package L1top](#package-l1top)**
 Supported by: **[Claim L1Gbr6a](#claim-l1gbr6a)**, [Claim L1Gbr6b](#claim-l1gbr6b)
 
 Supports: **[Strategy L1Smain](#strategy-l1smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L1Gbr6 -->
-References: [Package L1top](#package-l1top)
 <!-- end caseproc -->
 
 Stub for Claim L1Gbr6.
@@ -9687,10 +9499,6 @@ Supported by: **[Evidence L1Ebr6](#evidence-l1ebr6)**, [Evidence L1Esh1](#eviden
 Supports: **[Claim L1Gbr6](#claim-l1gbr6)**
 <!-- end caseproc -->
 
-<!-- caseproc references L1Gbr6a -->
-References: [Package L1top](#package-l1top)
-<!-- end caseproc -->
-
 Stub for Claim L1Gbr6a.
 
 <!-- caseproc element L1Ebr6 -->
@@ -9700,10 +9508,6 @@ Stub for Claim L1Gbr6a.
 Referenced by: **[Package L1top](#package-l1top)**
 
 Supports: **[Claim L1Gbr6a](#claim-l1gbr6a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L1Ebr6 -->
-References: [Package L1top](#package-l1top)
 <!-- end caseproc -->
 
 Stub for Evidence L1Ebr6.
@@ -9719,10 +9523,6 @@ Supported by: **[Evidence L1Esh2](#evidence-l1esh2)**
 Supports: **[Claim L1Gbr6](#claim-l1gbr6)**
 <!-- end caseproc -->
 
-<!-- caseproc references L1Gbr6b -->
-References: [Package L1top](#package-l1top)
-<!-- end caseproc -->
-
 Stub for Claim L1Gbr6b.
 
 <!-- caseproc element L1Gbr7 -->
@@ -9734,10 +9534,6 @@ Referenced by: **[Package L1top](#package-l1top)**
 Supported by: **[Claim L1Gbr7a](#claim-l1gbr7a)**, [Claim L1Gbr7b](#claim-l1gbr7b)
 
 Supports: **[Strategy L1Smain](#strategy-l1smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L1Gbr7 -->
-References: [Package L1top](#package-l1top)
 <!-- end caseproc -->
 
 Stub for Claim L1Gbr7.
@@ -9753,10 +9549,6 @@ Supported by: **[Evidence L1Ebr7](#evidence-l1ebr7)**, [Evidence L1Esh1](#eviden
 Supports: **[Claim L1Gbr7](#claim-l1gbr7)**
 <!-- end caseproc -->
 
-<!-- caseproc references L1Gbr7a -->
-References: [Package L1top](#package-l1top)
-<!-- end caseproc -->
-
 Stub for Claim L1Gbr7a.
 
 <!-- caseproc element L1Ebr7 -->
@@ -9766,10 +9558,6 @@ Stub for Claim L1Gbr7a.
 Referenced by: **[Package L1top](#package-l1top)**
 
 Supports: **[Claim L1Gbr7a](#claim-l1gbr7a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L1Ebr7 -->
-References: [Package L1top](#package-l1top)
 <!-- end caseproc -->
 
 Stub for Evidence L1Ebr7.
@@ -9785,10 +9573,6 @@ Supported by: **[Evidence L1Esh2](#evidence-l1esh2)**
 Supports: **[Claim L1Gbr7](#claim-l1gbr7)**
 <!-- end caseproc -->
 
-<!-- caseproc references L1Gbr7b -->
-References: [Package L1top](#package-l1top)
-<!-- end caseproc -->
-
 Stub for Claim L1Gbr7b.
 
 <!-- caseproc element L1Gbr8 -->
@@ -9800,10 +9584,6 @@ Referenced by: **[Package L1top](#package-l1top)**
 Supported by: **[Claim L1Gbr8a](#claim-l1gbr8a)**, [Claim L1Gbr8b](#claim-l1gbr8b)
 
 Supports: **[Strategy L1Smain](#strategy-l1smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L1Gbr8 -->
-References: [Package L1top](#package-l1top)
 <!-- end caseproc -->
 
 Stub for Claim L1Gbr8.
@@ -9819,10 +9599,6 @@ Supported by: **[Evidence L1Ebr8](#evidence-l1ebr8)**, [Evidence L1Esh1](#eviden
 Supports: **[Claim L1Gbr8](#claim-l1gbr8)**
 <!-- end caseproc -->
 
-<!-- caseproc references L1Gbr8a -->
-References: [Package L1top](#package-l1top)
-<!-- end caseproc -->
-
 Stub for Claim L1Gbr8a.
 
 <!-- caseproc element L1Ebr8 -->
@@ -9832,10 +9608,6 @@ Stub for Claim L1Gbr8a.
 Referenced by: **[Package L1top](#package-l1top)**
 
 Supports: **[Claim L1Gbr8a](#claim-l1gbr8a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L1Ebr8 -->
-References: [Package L1top](#package-l1top)
 <!-- end caseproc -->
 
 Stub for Evidence L1Ebr8.
@@ -9851,10 +9623,6 @@ Supported by: **[Evidence L1Esh2](#evidence-l1esh2)**
 Supports: **[Claim L1Gbr8](#claim-l1gbr8)**
 <!-- end caseproc -->
 
-<!-- caseproc references L1Gbr8b -->
-References: [Package L1top](#package-l1top)
-<!-- end caseproc -->
-
 Stub for Claim L1Gbr8b.
 
 <!-- caseproc element L2top -->
@@ -9868,10 +9636,6 @@ Supported by: **[Context L2Xctx](#context-l2xctx)**, [Evidence L2Esh1](#evidence
 Supports: [Strategy Sdecomp](#strategy-sdecomp)
 <!-- end caseproc -->
 
-<!-- caseproc references L2top -->
-References: [Package L2top](#package-l2top), [Package G1](#package-g1)
-<!-- end caseproc -->
-
 Stub for Claim L2top.
 
 <!-- caseproc element L2Xctx -->
@@ -9881,10 +9645,6 @@ Stub for Claim L2top.
 Referenced by: **[Package L2top](#package-l2top)**
 
 Supports: **[Claim L2top](#claim-l2top)**
-<!-- end caseproc -->
-
-<!-- caseproc references L2Xctx -->
-References: [Package L2top](#package-l2top)
 <!-- end caseproc -->
 
 Stub for Context L2Xctx.
@@ -9898,10 +9658,6 @@ Referenced by: **[Package L2top](#package-l2top)**
 Supports: **[Claim L2top](#claim-l2top)**
 <!-- end caseproc -->
 
-<!-- caseproc references L2Esh1 -->
-References: [Package L2top](#package-l2top)
-<!-- end caseproc -->
-
 Stub for Evidence L2Esh1.
 
 <!-- caseproc element L2Esh2 -->
@@ -9911,10 +9667,6 @@ Stub for Evidence L2Esh1.
 Referenced by: **[Package L2top](#package-l2top)**
 
 Supports: **[Claim L2top](#claim-l2top)**
-<!-- end caseproc -->
-
-<!-- caseproc references L2Esh2 -->
-References: [Package L2top](#package-l2top)
 <!-- end caseproc -->
 
 Stub for Evidence L2Esh2.
@@ -9930,10 +9682,6 @@ Supported by: **[Claim L2G2](#claim-l2g2)**, [Claim C15top](#claim-c15top), [Cla
 Supports: **[Claim L2top](#claim-l2top)**
 <!-- end caseproc -->
 
-<!-- caseproc references L2Smain -->
-References: [Package L2top](#package-l2top)
-<!-- end caseproc -->
-
 Stub for Strategy L2Smain.
 
 <!-- caseproc element L2G2 -->
@@ -9945,10 +9693,6 @@ Referenced by: **[Package L2top](#package-l2top)**
 Supported by: **[Strategy L2S2](#strategy-l2s2)**, [Claim L2G2b](#claim-l2g2b)
 
 Supports: **[Strategy L2Smain](#strategy-l2smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L2G2 -->
-References: [Package L2top](#package-l2top)
 <!-- end caseproc -->
 
 Stub for Claim L2G2.
@@ -9964,10 +9708,6 @@ Supported by: **[Claim L2G3](#claim-l2g3)**, [Claim L2G3c](#claim-l2g3c)
 Supports: **[Claim L2G2](#claim-l2g2)**
 <!-- end caseproc -->
 
-<!-- caseproc references L2S2 -->
-References: [Package L2top](#package-l2top)
-<!-- end caseproc -->
-
 Stub for Strategy L2S2.
 
 <!-- caseproc element L2G3 -->
@@ -9979,10 +9719,6 @@ Referenced by: **[Package L2top](#package-l2top)**
 Supported by: **[Strategy L2S3](#strategy-l2s3)**, [Claim L2G3b](#claim-l2g3b)
 
 Supports: **[Strategy L2S2](#strategy-l2s2)**
-<!-- end caseproc -->
-
-<!-- caseproc references L2G3 -->
-References: [Package L2top](#package-l2top)
 <!-- end caseproc -->
 
 Stub for Claim L2G3.
@@ -9998,10 +9734,6 @@ Supported by: **[Claim L2G4](#claim-l2g4)**, [Claim L2G4b](#claim-l2g4b)
 Supports: **[Claim L2G3](#claim-l2g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references L2S3 -->
-References: [Package L2top](#package-l2top)
-<!-- end caseproc -->
-
 Stub for Strategy L2S3.
 
 <!-- caseproc element L2G4 -->
@@ -10015,10 +9747,6 @@ Supported by: **[Evidence L2Edeep](#evidence-l2edeep)**, [Evidence L2Esh1](#evid
 Supports: **[Strategy L2S3](#strategy-l2s3)**
 <!-- end caseproc -->
 
-<!-- caseproc references L2G4 -->
-References: [Package L2top](#package-l2top)
-<!-- end caseproc -->
-
 Stub for Claim L2G4.
 
 <!-- caseproc element L2Edeep -->
@@ -10028,10 +9756,6 @@ Stub for Claim L2G4.
 Referenced by: **[Package L2top](#package-l2top)**
 
 Supports: **[Claim L2G4](#claim-l2g4)**
-<!-- end caseproc -->
-
-<!-- caseproc references L2Edeep -->
-References: [Package L2top](#package-l2top)
 <!-- end caseproc -->
 
 Stub for Evidence L2Edeep.
@@ -10047,10 +9771,6 @@ Supported by: **[Evidence L2Esh2](#evidence-l2esh2)**, [Evidence L2Esh1](#eviden
 Supports: **[Strategy L2S3](#strategy-l2s3)**
 <!-- end caseproc -->
 
-<!-- caseproc references L2G4b -->
-References: [Package L2top](#package-l2top)
-<!-- end caseproc -->
-
 Stub for Claim L2G4b.
 
 <!-- caseproc element L2G3b -->
@@ -10062,10 +9782,6 @@ Referenced by: **[Package L2top](#package-l2top)**
 Supported by: **[Evidence L2Esh1](#evidence-l2esh1)**
 
 Supports: **[Claim L2G3](#claim-l2g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references L2G3b -->
-References: [Package L2top](#package-l2top)
 <!-- end caseproc -->
 
 Stub for Claim L2G3b.
@@ -10081,10 +9797,6 @@ Supported by: **[Justification L2J1](#justification-l2j1)**, [Evidence L2Esh2](#
 Supports: **[Strategy L2S2](#strategy-l2s2)**
 <!-- end caseproc -->
 
-<!-- caseproc references L2G3c -->
-References: [Package L2top](#package-l2top)
-<!-- end caseproc -->
-
 Stub for Claim L2G3c.
 
 <!-- caseproc element L2J1 -->
@@ -10094,10 +9806,6 @@ Stub for Claim L2G3c.
 Referenced by: **[Package L2top](#package-l2top)**
 
 Supports: **[Claim L2G3c](#claim-l2g3c)**
-<!-- end caseproc -->
-
-<!-- caseproc references L2J1 -->
-References: [Package L2top](#package-l2top)
 <!-- end caseproc -->
 
 Stub for Justification L2J1.
@@ -10113,10 +9821,6 @@ Supported by: **[Strategy L2S2b](#strategy-l2s2b)**
 Supports: **[Claim L2G2](#claim-l2g2)**
 <!-- end caseproc -->
 
-<!-- caseproc references L2G2b -->
-References: [Package L2top](#package-l2top)
-<!-- end caseproc -->
-
 Stub for Claim L2G2b.
 
 <!-- caseproc element L2S2b -->
@@ -10128,10 +9832,6 @@ Referenced by: **[Package L2top](#package-l2top)**
 Supported by: **[Claim L2G3d](#claim-l2g3d)**, [Claim L2G3e](#claim-l2g3e)
 
 Supports: **[Claim L2G2b](#claim-l2g2b)**
-<!-- end caseproc -->
-
-<!-- caseproc references L2S2b -->
-References: [Package L2top](#package-l2top)
 <!-- end caseproc -->
 
 Stub for Strategy L2S2b.
@@ -10147,10 +9847,6 @@ Supported by: **[Evidence L2Esh1](#evidence-l2esh1)**, [Evidence L2Esh2](#eviden
 Supports: **[Strategy L2S2b](#strategy-l2s2b)**
 <!-- end caseproc -->
 
-<!-- caseproc references L2G3d -->
-References: [Package L2top](#package-l2top)
-<!-- end caseproc -->
-
 Stub for Claim L2G3d.
 
 <!-- caseproc element L2G3e -->
@@ -10164,10 +9860,6 @@ Supported by: **[Evidence L2E2](#evidence-l2e2)**
 Supports: **[Strategy L2S2b](#strategy-l2s2b)**
 <!-- end caseproc -->
 
-<!-- caseproc references L2G3e -->
-References: [Package L2top](#package-l2top)
-<!-- end caseproc -->
-
 Stub for Claim L2G3e.
 
 <!-- caseproc element L2E2 -->
@@ -10177,10 +9869,6 @@ Stub for Claim L2G3e.
 Referenced by: **[Package L2top](#package-l2top)**
 
 Supports: **[Claim L2G3e](#claim-l2g3e)**
-<!-- end caseproc -->
-
-<!-- caseproc references L2E2 -->
-References: [Package L2top](#package-l2top)
 <!-- end caseproc -->
 
 Stub for Evidence L2E2.
@@ -10196,10 +9884,6 @@ Supported by: **[Claim L2Gbr1a](#claim-l2gbr1a)**, [Claim L2Gbr1b](#claim-l2gbr1
 Supports: **[Strategy L2Smain](#strategy-l2smain)**
 <!-- end caseproc -->
 
-<!-- caseproc references L2Gbr1 -->
-References: [Package L2top](#package-l2top)
-<!-- end caseproc -->
-
 Stub for Claim L2Gbr1.
 
 <!-- caseproc element L2Gbr1a -->
@@ -10213,10 +9897,6 @@ Supported by: **[Evidence L2Ebr1](#evidence-l2ebr1)**, [Evidence L2Esh1](#eviden
 Supports: **[Claim L2Gbr1](#claim-l2gbr1)**
 <!-- end caseproc -->
 
-<!-- caseproc references L2Gbr1a -->
-References: [Package L2top](#package-l2top)
-<!-- end caseproc -->
-
 Stub for Claim L2Gbr1a.
 
 <!-- caseproc element L2Ebr1 -->
@@ -10226,10 +9906,6 @@ Stub for Claim L2Gbr1a.
 Referenced by: **[Package L2top](#package-l2top)**
 
 Supports: **[Claim L2Gbr1a](#claim-l2gbr1a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L2Ebr1 -->
-References: [Package L2top](#package-l2top)
 <!-- end caseproc -->
 
 Stub for Evidence L2Ebr1.
@@ -10245,10 +9921,6 @@ Supported by: **[Evidence L2Esh2](#evidence-l2esh2)**
 Supports: **[Claim L2Gbr1](#claim-l2gbr1)**
 <!-- end caseproc -->
 
-<!-- caseproc references L2Gbr1b -->
-References: [Package L2top](#package-l2top)
-<!-- end caseproc -->
-
 Stub for Claim L2Gbr1b.
 
 <!-- caseproc element L2Gbr2 -->
@@ -10260,10 +9932,6 @@ Referenced by: **[Package L2top](#package-l2top)**
 Supported by: **[Claim L2Gbr2a](#claim-l2gbr2a)**, [Claim L2Gbr2b](#claim-l2gbr2b)
 
 Supports: **[Strategy L2Smain](#strategy-l2smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L2Gbr2 -->
-References: [Package L2top](#package-l2top)
 <!-- end caseproc -->
 
 Stub for Claim L2Gbr2.
@@ -10279,10 +9947,6 @@ Supported by: **[Evidence L2Ebr2](#evidence-l2ebr2)**, [Evidence L2Esh1](#eviden
 Supports: **[Claim L2Gbr2](#claim-l2gbr2)**
 <!-- end caseproc -->
 
-<!-- caseproc references L2Gbr2a -->
-References: [Package L2top](#package-l2top)
-<!-- end caseproc -->
-
 Stub for Claim L2Gbr2a.
 
 <!-- caseproc element L2Ebr2 -->
@@ -10292,10 +9956,6 @@ Stub for Claim L2Gbr2a.
 Referenced by: **[Package L2top](#package-l2top)**
 
 Supports: **[Claim L2Gbr2a](#claim-l2gbr2a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L2Ebr2 -->
-References: [Package L2top](#package-l2top)
 <!-- end caseproc -->
 
 Stub for Evidence L2Ebr2.
@@ -10311,10 +9971,6 @@ Supported by: **[Evidence L2Esh2](#evidence-l2esh2)**
 Supports: **[Claim L2Gbr2](#claim-l2gbr2)**
 <!-- end caseproc -->
 
-<!-- caseproc references L2Gbr2b -->
-References: [Package L2top](#package-l2top)
-<!-- end caseproc -->
-
 Stub for Claim L2Gbr2b.
 
 <!-- caseproc element L2Gbr3 -->
@@ -10326,10 +9982,6 @@ Referenced by: **[Package L2top](#package-l2top)**
 Supported by: **[Claim L2Gbr3a](#claim-l2gbr3a)**, [Claim L2Gbr3b](#claim-l2gbr3b)
 
 Supports: **[Strategy L2Smain](#strategy-l2smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L2Gbr3 -->
-References: [Package L2top](#package-l2top)
 <!-- end caseproc -->
 
 Stub for Claim L2Gbr3.
@@ -10345,10 +9997,6 @@ Supported by: **[Evidence L2Ebr3](#evidence-l2ebr3)**, [Evidence L2Esh1](#eviden
 Supports: **[Claim L2Gbr3](#claim-l2gbr3)**
 <!-- end caseproc -->
 
-<!-- caseproc references L2Gbr3a -->
-References: [Package L2top](#package-l2top)
-<!-- end caseproc -->
-
 Stub for Claim L2Gbr3a.
 
 <!-- caseproc element L2Ebr3 -->
@@ -10358,10 +10006,6 @@ Stub for Claim L2Gbr3a.
 Referenced by: **[Package L2top](#package-l2top)**
 
 Supports: **[Claim L2Gbr3a](#claim-l2gbr3a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L2Ebr3 -->
-References: [Package L2top](#package-l2top)
 <!-- end caseproc -->
 
 Stub for Evidence L2Ebr3.
@@ -10377,10 +10021,6 @@ Supported by: **[Evidence L2Esh2](#evidence-l2esh2)**
 Supports: **[Claim L2Gbr3](#claim-l2gbr3)**
 <!-- end caseproc -->
 
-<!-- caseproc references L2Gbr3b -->
-References: [Package L2top](#package-l2top)
-<!-- end caseproc -->
-
 Stub for Claim L2Gbr3b.
 
 <!-- caseproc element L2Gbr4 -->
@@ -10392,10 +10032,6 @@ Referenced by: **[Package L2top](#package-l2top)**
 Supported by: **[Claim L2Gbr4a](#claim-l2gbr4a)**, [Claim L2Gbr4b](#claim-l2gbr4b)
 
 Supports: **[Strategy L2Smain](#strategy-l2smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L2Gbr4 -->
-References: [Package L2top](#package-l2top)
 <!-- end caseproc -->
 
 Stub for Claim L2Gbr4.
@@ -10411,10 +10047,6 @@ Supported by: **[Evidence L2Ebr4](#evidence-l2ebr4)**, [Evidence L2Esh1](#eviden
 Supports: **[Claim L2Gbr4](#claim-l2gbr4)**
 <!-- end caseproc -->
 
-<!-- caseproc references L2Gbr4a -->
-References: [Package L2top](#package-l2top)
-<!-- end caseproc -->
-
 Stub for Claim L2Gbr4a.
 
 <!-- caseproc element L2Ebr4 -->
@@ -10424,10 +10056,6 @@ Stub for Claim L2Gbr4a.
 Referenced by: **[Package L2top](#package-l2top)**
 
 Supports: **[Claim L2Gbr4a](#claim-l2gbr4a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L2Ebr4 -->
-References: [Package L2top](#package-l2top)
 <!-- end caseproc -->
 
 Stub for Evidence L2Ebr4.
@@ -10443,10 +10071,6 @@ Supported by: **[Evidence L2Esh2](#evidence-l2esh2)**
 Supports: **[Claim L2Gbr4](#claim-l2gbr4)**
 <!-- end caseproc -->
 
-<!-- caseproc references L2Gbr4b -->
-References: [Package L2top](#package-l2top)
-<!-- end caseproc -->
-
 Stub for Claim L2Gbr4b.
 
 <!-- caseproc element L2Gbr5 -->
@@ -10458,10 +10082,6 @@ Referenced by: **[Package L2top](#package-l2top)**
 Supported by: **[Claim L2Gbr5a](#claim-l2gbr5a)**, [Claim L2Gbr5b](#claim-l2gbr5b)
 
 Supports: **[Strategy L2Smain](#strategy-l2smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L2Gbr5 -->
-References: [Package L2top](#package-l2top)
 <!-- end caseproc -->
 
 Stub for Claim L2Gbr5.
@@ -10477,10 +10097,6 @@ Supported by: **[Evidence L2Ebr5](#evidence-l2ebr5)**, [Evidence L2Esh1](#eviden
 Supports: **[Claim L2Gbr5](#claim-l2gbr5)**
 <!-- end caseproc -->
 
-<!-- caseproc references L2Gbr5a -->
-References: [Package L2top](#package-l2top)
-<!-- end caseproc -->
-
 Stub for Claim L2Gbr5a.
 
 <!-- caseproc element L2Ebr5 -->
@@ -10490,10 +10106,6 @@ Stub for Claim L2Gbr5a.
 Referenced by: **[Package L2top](#package-l2top)**
 
 Supports: **[Claim L2Gbr5a](#claim-l2gbr5a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L2Ebr5 -->
-References: [Package L2top](#package-l2top)
 <!-- end caseproc -->
 
 Stub for Evidence L2Ebr5.
@@ -10509,10 +10121,6 @@ Supported by: **[Evidence L2Esh2](#evidence-l2esh2)**
 Supports: **[Claim L2Gbr5](#claim-l2gbr5)**
 <!-- end caseproc -->
 
-<!-- caseproc references L2Gbr5b -->
-References: [Package L2top](#package-l2top)
-<!-- end caseproc -->
-
 Stub for Claim L2Gbr5b.
 
 <!-- caseproc element L2Gbr6 -->
@@ -10524,10 +10132,6 @@ Referenced by: **[Package L2top](#package-l2top)**
 Supported by: **[Claim L2Gbr6a](#claim-l2gbr6a)**, [Claim L2Gbr6b](#claim-l2gbr6b)
 
 Supports: **[Strategy L2Smain](#strategy-l2smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L2Gbr6 -->
-References: [Package L2top](#package-l2top)
 <!-- end caseproc -->
 
 Stub for Claim L2Gbr6.
@@ -10543,10 +10147,6 @@ Supported by: **[Evidence L2Ebr6](#evidence-l2ebr6)**, [Evidence L2Esh1](#eviden
 Supports: **[Claim L2Gbr6](#claim-l2gbr6)**
 <!-- end caseproc -->
 
-<!-- caseproc references L2Gbr6a -->
-References: [Package L2top](#package-l2top)
-<!-- end caseproc -->
-
 Stub for Claim L2Gbr6a.
 
 <!-- caseproc element L2Ebr6 -->
@@ -10556,10 +10156,6 @@ Stub for Claim L2Gbr6a.
 Referenced by: **[Package L2top](#package-l2top)**
 
 Supports: **[Claim L2Gbr6a](#claim-l2gbr6a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L2Ebr6 -->
-References: [Package L2top](#package-l2top)
 <!-- end caseproc -->
 
 Stub for Evidence L2Ebr6.
@@ -10575,10 +10171,6 @@ Supported by: **[Evidence L2Esh2](#evidence-l2esh2)**
 Supports: **[Claim L2Gbr6](#claim-l2gbr6)**
 <!-- end caseproc -->
 
-<!-- caseproc references L2Gbr6b -->
-References: [Package L2top](#package-l2top)
-<!-- end caseproc -->
-
 Stub for Claim L2Gbr6b.
 
 <!-- caseproc element L2Gbr7 -->
@@ -10590,10 +10182,6 @@ Referenced by: **[Package L2top](#package-l2top)**
 Supported by: **[Claim L2Gbr7a](#claim-l2gbr7a)**, [Claim L2Gbr7b](#claim-l2gbr7b)
 
 Supports: **[Strategy L2Smain](#strategy-l2smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L2Gbr7 -->
-References: [Package L2top](#package-l2top)
 <!-- end caseproc -->
 
 Stub for Claim L2Gbr7.
@@ -10609,10 +10197,6 @@ Supported by: **[Evidence L2Ebr7](#evidence-l2ebr7)**, [Evidence L2Esh1](#eviden
 Supports: **[Claim L2Gbr7](#claim-l2gbr7)**
 <!-- end caseproc -->
 
-<!-- caseproc references L2Gbr7a -->
-References: [Package L2top](#package-l2top)
-<!-- end caseproc -->
-
 Stub for Claim L2Gbr7a.
 
 <!-- caseproc element L2Ebr7 -->
@@ -10622,10 +10206,6 @@ Stub for Claim L2Gbr7a.
 Referenced by: **[Package L2top](#package-l2top)**
 
 Supports: **[Claim L2Gbr7a](#claim-l2gbr7a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L2Ebr7 -->
-References: [Package L2top](#package-l2top)
 <!-- end caseproc -->
 
 Stub for Evidence L2Ebr7.
@@ -10641,10 +10221,6 @@ Supported by: **[Evidence L2Esh2](#evidence-l2esh2)**
 Supports: **[Claim L2Gbr7](#claim-l2gbr7)**
 <!-- end caseproc -->
 
-<!-- caseproc references L2Gbr7b -->
-References: [Package L2top](#package-l2top)
-<!-- end caseproc -->
-
 Stub for Claim L2Gbr7b.
 
 <!-- caseproc element L2Gbr8 -->
@@ -10656,10 +10232,6 @@ Referenced by: **[Package L2top](#package-l2top)**
 Supported by: **[Claim L2Gbr8a](#claim-l2gbr8a)**, [Claim L2Gbr8b](#claim-l2gbr8b)
 
 Supports: **[Strategy L2Smain](#strategy-l2smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L2Gbr8 -->
-References: [Package L2top](#package-l2top)
 <!-- end caseproc -->
 
 Stub for Claim L2Gbr8.
@@ -10675,10 +10247,6 @@ Supported by: **[Evidence L2Ebr8](#evidence-l2ebr8)**, [Evidence L2Esh1](#eviden
 Supports: **[Claim L2Gbr8](#claim-l2gbr8)**
 <!-- end caseproc -->
 
-<!-- caseproc references L2Gbr8a -->
-References: [Package L2top](#package-l2top)
-<!-- end caseproc -->
-
 Stub for Claim L2Gbr8a.
 
 <!-- caseproc element L2Ebr8 -->
@@ -10688,10 +10256,6 @@ Stub for Claim L2Gbr8a.
 Referenced by: **[Package L2top](#package-l2top)**
 
 Supports: **[Claim L2Gbr8a](#claim-l2gbr8a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L2Ebr8 -->
-References: [Package L2top](#package-l2top)
 <!-- end caseproc -->
 
 Stub for Evidence L2Ebr8.
@@ -10707,10 +10271,6 @@ Supported by: **[Evidence L2Esh2](#evidence-l2esh2)**
 Supports: **[Claim L2Gbr8](#claim-l2gbr8)**
 <!-- end caseproc -->
 
-<!-- caseproc references L2Gbr8b -->
-References: [Package L2top](#package-l2top)
-<!-- end caseproc -->
-
 Stub for Claim L2Gbr8b.
 
 <!-- caseproc element L3top -->
@@ -10724,10 +10284,6 @@ Supported by: **[Context L3Xctx](#context-l3xctx)**, [Evidence L3Esh1](#evidence
 Supports: [Strategy Sdecomp](#strategy-sdecomp)
 <!-- end caseproc -->
 
-<!-- caseproc references L3top -->
-References: [Package L3top](#package-l3top), [Package G1](#package-g1)
-<!-- end caseproc -->
-
 Stub for Claim L3top.
 
 <!-- caseproc element L3Xctx -->
@@ -10737,10 +10293,6 @@ Stub for Claim L3top.
 Referenced by: **[Package L3top](#package-l3top)**
 
 Supports: **[Claim L3top](#claim-l3top)**
-<!-- end caseproc -->
-
-<!-- caseproc references L3Xctx -->
-References: [Package L3top](#package-l3top)
 <!-- end caseproc -->
 
 Stub for Context L3Xctx.
@@ -10754,10 +10306,6 @@ Referenced by: **[Package L3top](#package-l3top)**
 Supports: **[Claim L3top](#claim-l3top)**
 <!-- end caseproc -->
 
-<!-- caseproc references L3Esh1 -->
-References: [Package L3top](#package-l3top)
-<!-- end caseproc -->
-
 Stub for Evidence L3Esh1.
 
 <!-- caseproc element L3Esh2 -->
@@ -10767,10 +10315,6 @@ Stub for Evidence L3Esh1.
 Referenced by: **[Package L3top](#package-l3top)**
 
 Supports: **[Claim L3top](#claim-l3top)**
-<!-- end caseproc -->
-
-<!-- caseproc references L3Esh2 -->
-References: [Package L3top](#package-l3top)
 <!-- end caseproc -->
 
 Stub for Evidence L3Esh2.
@@ -10786,10 +10330,6 @@ Supported by: **[Claim L3G2](#claim-l3g2)**, [Claim C22top](#claim-c22top), [Cla
 Supports: **[Claim L3top](#claim-l3top)**
 <!-- end caseproc -->
 
-<!-- caseproc references L3Smain -->
-References: [Package L3top](#package-l3top)
-<!-- end caseproc -->
-
 Stub for Strategy L3Smain.
 
 <!-- caseproc element L3G2 -->
@@ -10801,10 +10341,6 @@ Referenced by: **[Package L3top](#package-l3top)**
 Supported by: **[Strategy L3S2](#strategy-l3s2)**, [Claim L3G2b](#claim-l3g2b)
 
 Supports: **[Strategy L3Smain](#strategy-l3smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L3G2 -->
-References: [Package L3top](#package-l3top)
 <!-- end caseproc -->
 
 Stub for Claim L3G2.
@@ -10820,10 +10356,6 @@ Supported by: **[Claim L3G3](#claim-l3g3)**, [Claim L3G3c](#claim-l3g3c)
 Supports: **[Claim L3G2](#claim-l3g2)**
 <!-- end caseproc -->
 
-<!-- caseproc references L3S2 -->
-References: [Package L3top](#package-l3top)
-<!-- end caseproc -->
-
 Stub for Strategy L3S2.
 
 <!-- caseproc element L3G3 -->
@@ -10835,10 +10367,6 @@ Referenced by: **[Package L3top](#package-l3top)**
 Supported by: **[Strategy L3S3](#strategy-l3s3)**, [Claim L3G3b](#claim-l3g3b)
 
 Supports: **[Strategy L3S2](#strategy-l3s2)**
-<!-- end caseproc -->
-
-<!-- caseproc references L3G3 -->
-References: [Package L3top](#package-l3top)
 <!-- end caseproc -->
 
 Stub for Claim L3G3.
@@ -10854,10 +10382,6 @@ Supported by: **[Claim L3G4](#claim-l3g4)**, [Claim L3G4b](#claim-l3g4b)
 Supports: **[Claim L3G3](#claim-l3g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references L3S3 -->
-References: [Package L3top](#package-l3top)
-<!-- end caseproc -->
-
 Stub for Strategy L3S3.
 
 <!-- caseproc element L3G4 -->
@@ -10871,10 +10395,6 @@ Supported by: **[Evidence L3Edeep](#evidence-l3edeep)**, [Evidence L3Esh1](#evid
 Supports: **[Strategy L3S3](#strategy-l3s3)**
 <!-- end caseproc -->
 
-<!-- caseproc references L3G4 -->
-References: [Package L3top](#package-l3top)
-<!-- end caseproc -->
-
 Stub for Claim L3G4.
 
 <!-- caseproc element L3Edeep -->
@@ -10884,10 +10404,6 @@ Stub for Claim L3G4.
 Referenced by: **[Package L3top](#package-l3top)**
 
 Supports: **[Claim L3G4](#claim-l3g4)**
-<!-- end caseproc -->
-
-<!-- caseproc references L3Edeep -->
-References: [Package L3top](#package-l3top)
 <!-- end caseproc -->
 
 Stub for Evidence L3Edeep.
@@ -10903,10 +10419,6 @@ Supported by: **[Evidence L3Esh2](#evidence-l3esh2)**, [Evidence L3Esh1](#eviden
 Supports: **[Strategy L3S3](#strategy-l3s3)**
 <!-- end caseproc -->
 
-<!-- caseproc references L3G4b -->
-References: [Package L3top](#package-l3top)
-<!-- end caseproc -->
-
 Stub for Claim L3G4b.
 
 <!-- caseproc element L3G3b -->
@@ -10918,10 +10430,6 @@ Referenced by: **[Package L3top](#package-l3top)**
 Supported by: **[Evidence L3Esh1](#evidence-l3esh1)**
 
 Supports: **[Claim L3G3](#claim-l3g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references L3G3b -->
-References: [Package L3top](#package-l3top)
 <!-- end caseproc -->
 
 Stub for Claim L3G3b.
@@ -10937,10 +10445,6 @@ Supported by: **[Justification L3J1](#justification-l3j1)**, [Evidence L3Esh2](#
 Supports: **[Strategy L3S2](#strategy-l3s2)**
 <!-- end caseproc -->
 
-<!-- caseproc references L3G3c -->
-References: [Package L3top](#package-l3top)
-<!-- end caseproc -->
-
 Stub for Claim L3G3c.
 
 <!-- caseproc element L3J1 -->
@@ -10950,10 +10454,6 @@ Stub for Claim L3G3c.
 Referenced by: **[Package L3top](#package-l3top)**
 
 Supports: **[Claim L3G3c](#claim-l3g3c)**
-<!-- end caseproc -->
-
-<!-- caseproc references L3J1 -->
-References: [Package L3top](#package-l3top)
 <!-- end caseproc -->
 
 Stub for Justification L3J1.
@@ -10969,10 +10469,6 @@ Supported by: **[Strategy L3S2b](#strategy-l3s2b)**
 Supports: **[Claim L3G2](#claim-l3g2)**
 <!-- end caseproc -->
 
-<!-- caseproc references L3G2b -->
-References: [Package L3top](#package-l3top)
-<!-- end caseproc -->
-
 Stub for Claim L3G2b.
 
 <!-- caseproc element L3S2b -->
@@ -10984,10 +10480,6 @@ Referenced by: **[Package L3top](#package-l3top)**
 Supported by: **[Claim L3G3d](#claim-l3g3d)**, [Claim L3G3e](#claim-l3g3e)
 
 Supports: **[Claim L3G2b](#claim-l3g2b)**
-<!-- end caseproc -->
-
-<!-- caseproc references L3S2b -->
-References: [Package L3top](#package-l3top)
 <!-- end caseproc -->
 
 Stub for Strategy L3S2b.
@@ -11003,10 +10495,6 @@ Supported by: **[Evidence L3Esh1](#evidence-l3esh1)**, [Evidence L3Esh2](#eviden
 Supports: **[Strategy L3S2b](#strategy-l3s2b)**
 <!-- end caseproc -->
 
-<!-- caseproc references L3G3d -->
-References: [Package L3top](#package-l3top)
-<!-- end caseproc -->
-
 Stub for Claim L3G3d.
 
 <!-- caseproc element L3G3e -->
@@ -11020,10 +10508,6 @@ Supported by: **[Evidence L3E2](#evidence-l3e2)**
 Supports: **[Strategy L3S2b](#strategy-l3s2b)**
 <!-- end caseproc -->
 
-<!-- caseproc references L3G3e -->
-References: [Package L3top](#package-l3top)
-<!-- end caseproc -->
-
 Stub for Claim L3G3e.
 
 <!-- caseproc element L3E2 -->
@@ -11033,10 +10517,6 @@ Stub for Claim L3G3e.
 Referenced by: **[Package L3top](#package-l3top)**
 
 Supports: **[Claim L3G3e](#claim-l3g3e)**
-<!-- end caseproc -->
-
-<!-- caseproc references L3E2 -->
-References: [Package L3top](#package-l3top)
 <!-- end caseproc -->
 
 Stub for Evidence L3E2.
@@ -11052,10 +10532,6 @@ Supported by: **[Claim L3Gbr1a](#claim-l3gbr1a)**, [Claim L3Gbr1b](#claim-l3gbr1
 Supports: **[Strategy L3Smain](#strategy-l3smain)**
 <!-- end caseproc -->
 
-<!-- caseproc references L3Gbr1 -->
-References: [Package L3top](#package-l3top)
-<!-- end caseproc -->
-
 Stub for Claim L3Gbr1.
 
 <!-- caseproc element L3Gbr1a -->
@@ -11069,10 +10545,6 @@ Supported by: **[Evidence L3Ebr1](#evidence-l3ebr1)**, [Evidence L3Esh1](#eviden
 Supports: **[Claim L3Gbr1](#claim-l3gbr1)**
 <!-- end caseproc -->
 
-<!-- caseproc references L3Gbr1a -->
-References: [Package L3top](#package-l3top)
-<!-- end caseproc -->
-
 Stub for Claim L3Gbr1a.
 
 <!-- caseproc element L3Ebr1 -->
@@ -11082,10 +10554,6 @@ Stub for Claim L3Gbr1a.
 Referenced by: **[Package L3top](#package-l3top)**
 
 Supports: **[Claim L3Gbr1a](#claim-l3gbr1a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L3Ebr1 -->
-References: [Package L3top](#package-l3top)
 <!-- end caseproc -->
 
 Stub for Evidence L3Ebr1.
@@ -11101,10 +10569,6 @@ Supported by: **[Evidence L3Esh2](#evidence-l3esh2)**
 Supports: **[Claim L3Gbr1](#claim-l3gbr1)**
 <!-- end caseproc -->
 
-<!-- caseproc references L3Gbr1b -->
-References: [Package L3top](#package-l3top)
-<!-- end caseproc -->
-
 Stub for Claim L3Gbr1b.
 
 <!-- caseproc element L3Gbr2 -->
@@ -11116,10 +10580,6 @@ Referenced by: **[Package L3top](#package-l3top)**
 Supported by: **[Claim L3Gbr2a](#claim-l3gbr2a)**, [Claim L3Gbr2b](#claim-l3gbr2b)
 
 Supports: **[Strategy L3Smain](#strategy-l3smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L3Gbr2 -->
-References: [Package L3top](#package-l3top)
 <!-- end caseproc -->
 
 Stub for Claim L3Gbr2.
@@ -11135,10 +10595,6 @@ Supported by: **[Evidence L3Ebr2](#evidence-l3ebr2)**, [Evidence L3Esh1](#eviden
 Supports: **[Claim L3Gbr2](#claim-l3gbr2)**
 <!-- end caseproc -->
 
-<!-- caseproc references L3Gbr2a -->
-References: [Package L3top](#package-l3top)
-<!-- end caseproc -->
-
 Stub for Claim L3Gbr2a.
 
 <!-- caseproc element L3Ebr2 -->
@@ -11148,10 +10604,6 @@ Stub for Claim L3Gbr2a.
 Referenced by: **[Package L3top](#package-l3top)**
 
 Supports: **[Claim L3Gbr2a](#claim-l3gbr2a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L3Ebr2 -->
-References: [Package L3top](#package-l3top)
 <!-- end caseproc -->
 
 Stub for Evidence L3Ebr2.
@@ -11167,10 +10619,6 @@ Supported by: **[Evidence L3Esh2](#evidence-l3esh2)**
 Supports: **[Claim L3Gbr2](#claim-l3gbr2)**
 <!-- end caseproc -->
 
-<!-- caseproc references L3Gbr2b -->
-References: [Package L3top](#package-l3top)
-<!-- end caseproc -->
-
 Stub for Claim L3Gbr2b.
 
 <!-- caseproc element L3Gbr3 -->
@@ -11182,10 +10630,6 @@ Referenced by: **[Package L3top](#package-l3top)**
 Supported by: **[Claim L3Gbr3a](#claim-l3gbr3a)**, [Claim L3Gbr3b](#claim-l3gbr3b)
 
 Supports: **[Strategy L3Smain](#strategy-l3smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L3Gbr3 -->
-References: [Package L3top](#package-l3top)
 <!-- end caseproc -->
 
 Stub for Claim L3Gbr3.
@@ -11201,10 +10645,6 @@ Supported by: **[Evidence L3Ebr3](#evidence-l3ebr3)**, [Evidence L3Esh1](#eviden
 Supports: **[Claim L3Gbr3](#claim-l3gbr3)**
 <!-- end caseproc -->
 
-<!-- caseproc references L3Gbr3a -->
-References: [Package L3top](#package-l3top)
-<!-- end caseproc -->
-
 Stub for Claim L3Gbr3a.
 
 <!-- caseproc element L3Ebr3 -->
@@ -11214,10 +10654,6 @@ Stub for Claim L3Gbr3a.
 Referenced by: **[Package L3top](#package-l3top)**
 
 Supports: **[Claim L3Gbr3a](#claim-l3gbr3a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L3Ebr3 -->
-References: [Package L3top](#package-l3top)
 <!-- end caseproc -->
 
 Stub for Evidence L3Ebr3.
@@ -11233,10 +10669,6 @@ Supported by: **[Evidence L3Esh2](#evidence-l3esh2)**
 Supports: **[Claim L3Gbr3](#claim-l3gbr3)**
 <!-- end caseproc -->
 
-<!-- caseproc references L3Gbr3b -->
-References: [Package L3top](#package-l3top)
-<!-- end caseproc -->
-
 Stub for Claim L3Gbr3b.
 
 <!-- caseproc element L3Gbr4 -->
@@ -11248,10 +10680,6 @@ Referenced by: **[Package L3top](#package-l3top)**
 Supported by: **[Claim L3Gbr4a](#claim-l3gbr4a)**, [Claim L3Gbr4b](#claim-l3gbr4b)
 
 Supports: **[Strategy L3Smain](#strategy-l3smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L3Gbr4 -->
-References: [Package L3top](#package-l3top)
 <!-- end caseproc -->
 
 Stub for Claim L3Gbr4.
@@ -11267,10 +10695,6 @@ Supported by: **[Evidence L3Ebr4](#evidence-l3ebr4)**, [Evidence L3Esh1](#eviden
 Supports: **[Claim L3Gbr4](#claim-l3gbr4)**
 <!-- end caseproc -->
 
-<!-- caseproc references L3Gbr4a -->
-References: [Package L3top](#package-l3top)
-<!-- end caseproc -->
-
 Stub for Claim L3Gbr4a.
 
 <!-- caseproc element L3Ebr4 -->
@@ -11280,10 +10704,6 @@ Stub for Claim L3Gbr4a.
 Referenced by: **[Package L3top](#package-l3top)**
 
 Supports: **[Claim L3Gbr4a](#claim-l3gbr4a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L3Ebr4 -->
-References: [Package L3top](#package-l3top)
 <!-- end caseproc -->
 
 Stub for Evidence L3Ebr4.
@@ -11299,10 +10719,6 @@ Supported by: **[Evidence L3Esh2](#evidence-l3esh2)**
 Supports: **[Claim L3Gbr4](#claim-l3gbr4)**
 <!-- end caseproc -->
 
-<!-- caseproc references L3Gbr4b -->
-References: [Package L3top](#package-l3top)
-<!-- end caseproc -->
-
 Stub for Claim L3Gbr4b.
 
 <!-- caseproc element L3Gbr5 -->
@@ -11314,10 +10730,6 @@ Referenced by: **[Package L3top](#package-l3top)**
 Supported by: **[Claim L3Gbr5a](#claim-l3gbr5a)**, [Claim L3Gbr5b](#claim-l3gbr5b)
 
 Supports: **[Strategy L3Smain](#strategy-l3smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L3Gbr5 -->
-References: [Package L3top](#package-l3top)
 <!-- end caseproc -->
 
 Stub for Claim L3Gbr5.
@@ -11333,10 +10745,6 @@ Supported by: **[Evidence L3Ebr5](#evidence-l3ebr5)**, [Evidence L3Esh1](#eviden
 Supports: **[Claim L3Gbr5](#claim-l3gbr5)**
 <!-- end caseproc -->
 
-<!-- caseproc references L3Gbr5a -->
-References: [Package L3top](#package-l3top)
-<!-- end caseproc -->
-
 Stub for Claim L3Gbr5a.
 
 <!-- caseproc element L3Ebr5 -->
@@ -11346,10 +10754,6 @@ Stub for Claim L3Gbr5a.
 Referenced by: **[Package L3top](#package-l3top)**
 
 Supports: **[Claim L3Gbr5a](#claim-l3gbr5a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L3Ebr5 -->
-References: [Package L3top](#package-l3top)
 <!-- end caseproc -->
 
 Stub for Evidence L3Ebr5.
@@ -11365,10 +10769,6 @@ Supported by: **[Evidence L3Esh2](#evidence-l3esh2)**
 Supports: **[Claim L3Gbr5](#claim-l3gbr5)**
 <!-- end caseproc -->
 
-<!-- caseproc references L3Gbr5b -->
-References: [Package L3top](#package-l3top)
-<!-- end caseproc -->
-
 Stub for Claim L3Gbr5b.
 
 <!-- caseproc element L3Gbr6 -->
@@ -11380,10 +10780,6 @@ Referenced by: **[Package L3top](#package-l3top)**
 Supported by: **[Claim L3Gbr6a](#claim-l3gbr6a)**, [Claim L3Gbr6b](#claim-l3gbr6b)
 
 Supports: **[Strategy L3Smain](#strategy-l3smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L3Gbr6 -->
-References: [Package L3top](#package-l3top)
 <!-- end caseproc -->
 
 Stub for Claim L3Gbr6.
@@ -11399,10 +10795,6 @@ Supported by: **[Evidence L3Ebr6](#evidence-l3ebr6)**, [Evidence L3Esh1](#eviden
 Supports: **[Claim L3Gbr6](#claim-l3gbr6)**
 <!-- end caseproc -->
 
-<!-- caseproc references L3Gbr6a -->
-References: [Package L3top](#package-l3top)
-<!-- end caseproc -->
-
 Stub for Claim L3Gbr6a.
 
 <!-- caseproc element L3Ebr6 -->
@@ -11412,10 +10804,6 @@ Stub for Claim L3Gbr6a.
 Referenced by: **[Package L3top](#package-l3top)**
 
 Supports: **[Claim L3Gbr6a](#claim-l3gbr6a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L3Ebr6 -->
-References: [Package L3top](#package-l3top)
 <!-- end caseproc -->
 
 Stub for Evidence L3Ebr6.
@@ -11431,10 +10819,6 @@ Supported by: **[Evidence L3Esh2](#evidence-l3esh2)**
 Supports: **[Claim L3Gbr6](#claim-l3gbr6)**
 <!-- end caseproc -->
 
-<!-- caseproc references L3Gbr6b -->
-References: [Package L3top](#package-l3top)
-<!-- end caseproc -->
-
 Stub for Claim L3Gbr6b.
 
 <!-- caseproc element L3Gbr7 -->
@@ -11446,10 +10830,6 @@ Referenced by: **[Package L3top](#package-l3top)**
 Supported by: **[Claim L3Gbr7a](#claim-l3gbr7a)**, [Claim L3Gbr7b](#claim-l3gbr7b)
 
 Supports: **[Strategy L3Smain](#strategy-l3smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L3Gbr7 -->
-References: [Package L3top](#package-l3top)
 <!-- end caseproc -->
 
 Stub for Claim L3Gbr7.
@@ -11465,10 +10845,6 @@ Supported by: **[Evidence L3Ebr7](#evidence-l3ebr7)**, [Evidence L3Esh1](#eviden
 Supports: **[Claim L3Gbr7](#claim-l3gbr7)**
 <!-- end caseproc -->
 
-<!-- caseproc references L3Gbr7a -->
-References: [Package L3top](#package-l3top)
-<!-- end caseproc -->
-
 Stub for Claim L3Gbr7a.
 
 <!-- caseproc element L3Ebr7 -->
@@ -11478,10 +10854,6 @@ Stub for Claim L3Gbr7a.
 Referenced by: **[Package L3top](#package-l3top)**
 
 Supports: **[Claim L3Gbr7a](#claim-l3gbr7a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L3Ebr7 -->
-References: [Package L3top](#package-l3top)
 <!-- end caseproc -->
 
 Stub for Evidence L3Ebr7.
@@ -11497,10 +10869,6 @@ Supported by: **[Evidence L3Esh2](#evidence-l3esh2)**
 Supports: **[Claim L3Gbr7](#claim-l3gbr7)**
 <!-- end caseproc -->
 
-<!-- caseproc references L3Gbr7b -->
-References: [Package L3top](#package-l3top)
-<!-- end caseproc -->
-
 Stub for Claim L3Gbr7b.
 
 <!-- caseproc element L3Gbr8 -->
@@ -11512,10 +10880,6 @@ Referenced by: **[Package L3top](#package-l3top)**
 Supported by: **[Claim L3Gbr8a](#claim-l3gbr8a)**, [Claim L3Gbr8b](#claim-l3gbr8b)
 
 Supports: **[Strategy L3Smain](#strategy-l3smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L3Gbr8 -->
-References: [Package L3top](#package-l3top)
 <!-- end caseproc -->
 
 Stub for Claim L3Gbr8.
@@ -11531,10 +10895,6 @@ Supported by: **[Evidence L3Ebr8](#evidence-l3ebr8)**, [Evidence L3Esh1](#eviden
 Supports: **[Claim L3Gbr8](#claim-l3gbr8)**
 <!-- end caseproc -->
 
-<!-- caseproc references L3Gbr8a -->
-References: [Package L3top](#package-l3top)
-<!-- end caseproc -->
-
 Stub for Claim L3Gbr8a.
 
 <!-- caseproc element L3Ebr8 -->
@@ -11544,10 +10904,6 @@ Stub for Claim L3Gbr8a.
 Referenced by: **[Package L3top](#package-l3top)**
 
 Supports: **[Claim L3Gbr8a](#claim-l3gbr8a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L3Ebr8 -->
-References: [Package L3top](#package-l3top)
 <!-- end caseproc -->
 
 Stub for Evidence L3Ebr8.
@@ -11563,10 +10919,6 @@ Supported by: **[Evidence L3Esh2](#evidence-l3esh2)**
 Supports: **[Claim L3Gbr8](#claim-l3gbr8)**
 <!-- end caseproc -->
 
-<!-- caseproc references L3Gbr8b -->
-References: [Package L3top](#package-l3top)
-<!-- end caseproc -->
-
 Stub for Claim L3Gbr8b.
 
 <!-- caseproc element L4top -->
@@ -11580,10 +10932,6 @@ Supported by: **[Context L4Xctx](#context-l4xctx)**, [Evidence L4Esh1](#evidence
 Supports: [Strategy Sdecomp](#strategy-sdecomp)
 <!-- end caseproc -->
 
-<!-- caseproc references L4top -->
-References: [Package L4top](#package-l4top), [Package G1](#package-g1)
-<!-- end caseproc -->
-
 Stub for Claim L4top.
 
 <!-- caseproc element L4Xctx -->
@@ -11593,10 +10941,6 @@ Stub for Claim L4top.
 Referenced by: **[Package L4top](#package-l4top)**
 
 Supports: **[Claim L4top](#claim-l4top)**
-<!-- end caseproc -->
-
-<!-- caseproc references L4Xctx -->
-References: [Package L4top](#package-l4top)
 <!-- end caseproc -->
 
 Stub for Context L4Xctx.
@@ -11610,10 +10954,6 @@ Referenced by: **[Package L4top](#package-l4top)**
 Supports: **[Claim L4top](#claim-l4top)**
 <!-- end caseproc -->
 
-<!-- caseproc references L4Esh1 -->
-References: [Package L4top](#package-l4top)
-<!-- end caseproc -->
-
 Stub for Evidence L4Esh1.
 
 <!-- caseproc element L4Esh2 -->
@@ -11623,10 +10963,6 @@ Stub for Evidence L4Esh1.
 Referenced by: **[Package L4top](#package-l4top)**
 
 Supports: **[Claim L4top](#claim-l4top)**
-<!-- end caseproc -->
-
-<!-- caseproc references L4Esh2 -->
-References: [Package L4top](#package-l4top)
 <!-- end caseproc -->
 
 Stub for Evidence L4Esh2.
@@ -11642,10 +10978,6 @@ Supported by: **[Claim L4G2](#claim-l4g2)**, [Claim C29top](#claim-c29top), [Cla
 Supports: **[Claim L4top](#claim-l4top)**
 <!-- end caseproc -->
 
-<!-- caseproc references L4Smain -->
-References: [Package L4top](#package-l4top)
-<!-- end caseproc -->
-
 Stub for Strategy L4Smain.
 
 <!-- caseproc element L4G2 -->
@@ -11657,10 +10989,6 @@ Referenced by: **[Package L4top](#package-l4top)**
 Supported by: **[Strategy L4S2](#strategy-l4s2)**, [Claim L4G2b](#claim-l4g2b)
 
 Supports: **[Strategy L4Smain](#strategy-l4smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L4G2 -->
-References: [Package L4top](#package-l4top)
 <!-- end caseproc -->
 
 Stub for Claim L4G2.
@@ -11676,10 +11004,6 @@ Supported by: **[Claim L4G3](#claim-l4g3)**, [Claim L4G3c](#claim-l4g3c)
 Supports: **[Claim L4G2](#claim-l4g2)**
 <!-- end caseproc -->
 
-<!-- caseproc references L4S2 -->
-References: [Package L4top](#package-l4top)
-<!-- end caseproc -->
-
 Stub for Strategy L4S2.
 
 <!-- caseproc element L4G3 -->
@@ -11691,10 +11015,6 @@ Referenced by: **[Package L4top](#package-l4top)**
 Supported by: **[Strategy L4S3](#strategy-l4s3)**, [Claim L4G3b](#claim-l4g3b)
 
 Supports: **[Strategy L4S2](#strategy-l4s2)**
-<!-- end caseproc -->
-
-<!-- caseproc references L4G3 -->
-References: [Package L4top](#package-l4top)
 <!-- end caseproc -->
 
 Stub for Claim L4G3.
@@ -11710,10 +11030,6 @@ Supported by: **[Claim L4G4](#claim-l4g4)**, [Claim L4G4b](#claim-l4g4b)
 Supports: **[Claim L4G3](#claim-l4g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references L4S3 -->
-References: [Package L4top](#package-l4top)
-<!-- end caseproc -->
-
 Stub for Strategy L4S3.
 
 <!-- caseproc element L4G4 -->
@@ -11727,10 +11043,6 @@ Supported by: **[Evidence L4Edeep](#evidence-l4edeep)**, [Evidence L4Esh1](#evid
 Supports: **[Strategy L4S3](#strategy-l4s3)**
 <!-- end caseproc -->
 
-<!-- caseproc references L4G4 -->
-References: [Package L4top](#package-l4top)
-<!-- end caseproc -->
-
 Stub for Claim L4G4.
 
 <!-- caseproc element L4Edeep -->
@@ -11740,10 +11052,6 @@ Stub for Claim L4G4.
 Referenced by: **[Package L4top](#package-l4top)**
 
 Supports: **[Claim L4G4](#claim-l4g4)**
-<!-- end caseproc -->
-
-<!-- caseproc references L4Edeep -->
-References: [Package L4top](#package-l4top)
 <!-- end caseproc -->
 
 Stub for Evidence L4Edeep.
@@ -11759,10 +11067,6 @@ Supported by: **[Evidence L4Esh2](#evidence-l4esh2)**, [Evidence L4Esh1](#eviden
 Supports: **[Strategy L4S3](#strategy-l4s3)**
 <!-- end caseproc -->
 
-<!-- caseproc references L4G4b -->
-References: [Package L4top](#package-l4top)
-<!-- end caseproc -->
-
 Stub for Claim L4G4b.
 
 <!-- caseproc element L4G3b -->
@@ -11774,10 +11078,6 @@ Referenced by: **[Package L4top](#package-l4top)**
 Supported by: **[Evidence L4Esh1](#evidence-l4esh1)**
 
 Supports: **[Claim L4G3](#claim-l4g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references L4G3b -->
-References: [Package L4top](#package-l4top)
 <!-- end caseproc -->
 
 Stub for Claim L4G3b.
@@ -11793,10 +11093,6 @@ Supported by: **[Justification L4J1](#justification-l4j1)**, [Evidence L4Esh2](#
 Supports: **[Strategy L4S2](#strategy-l4s2)**
 <!-- end caseproc -->
 
-<!-- caseproc references L4G3c -->
-References: [Package L4top](#package-l4top)
-<!-- end caseproc -->
-
 Stub for Claim L4G3c.
 
 <!-- caseproc element L4J1 -->
@@ -11806,10 +11102,6 @@ Stub for Claim L4G3c.
 Referenced by: **[Package L4top](#package-l4top)**
 
 Supports: **[Claim L4G3c](#claim-l4g3c)**
-<!-- end caseproc -->
-
-<!-- caseproc references L4J1 -->
-References: [Package L4top](#package-l4top)
 <!-- end caseproc -->
 
 Stub for Justification L4J1.
@@ -11825,10 +11117,6 @@ Supported by: **[Strategy L4S2b](#strategy-l4s2b)**
 Supports: **[Claim L4G2](#claim-l4g2)**
 <!-- end caseproc -->
 
-<!-- caseproc references L4G2b -->
-References: [Package L4top](#package-l4top)
-<!-- end caseproc -->
-
 Stub for Claim L4G2b.
 
 <!-- caseproc element L4S2b -->
@@ -11840,10 +11128,6 @@ Referenced by: **[Package L4top](#package-l4top)**
 Supported by: **[Claim L4G3d](#claim-l4g3d)**, [Claim L4G3e](#claim-l4g3e)
 
 Supports: **[Claim L4G2b](#claim-l4g2b)**
-<!-- end caseproc -->
-
-<!-- caseproc references L4S2b -->
-References: [Package L4top](#package-l4top)
 <!-- end caseproc -->
 
 Stub for Strategy L4S2b.
@@ -11859,10 +11143,6 @@ Supported by: **[Evidence L4Esh1](#evidence-l4esh1)**, [Evidence L4Esh2](#eviden
 Supports: **[Strategy L4S2b](#strategy-l4s2b)**
 <!-- end caseproc -->
 
-<!-- caseproc references L4G3d -->
-References: [Package L4top](#package-l4top)
-<!-- end caseproc -->
-
 Stub for Claim L4G3d.
 
 <!-- caseproc element L4G3e -->
@@ -11876,10 +11156,6 @@ Supported by: **[Evidence L4E2](#evidence-l4e2)**
 Supports: **[Strategy L4S2b](#strategy-l4s2b)**
 <!-- end caseproc -->
 
-<!-- caseproc references L4G3e -->
-References: [Package L4top](#package-l4top)
-<!-- end caseproc -->
-
 Stub for Claim L4G3e.
 
 <!-- caseproc element L4E2 -->
@@ -11889,10 +11165,6 @@ Stub for Claim L4G3e.
 Referenced by: **[Package L4top](#package-l4top)**
 
 Supports: **[Claim L4G3e](#claim-l4g3e)**
-<!-- end caseproc -->
-
-<!-- caseproc references L4E2 -->
-References: [Package L4top](#package-l4top)
 <!-- end caseproc -->
 
 Stub for Evidence L4E2.
@@ -11908,10 +11180,6 @@ Supported by: **[Claim L4Gbr1a](#claim-l4gbr1a)**, [Claim L4Gbr1b](#claim-l4gbr1
 Supports: **[Strategy L4Smain](#strategy-l4smain)**
 <!-- end caseproc -->
 
-<!-- caseproc references L4Gbr1 -->
-References: [Package L4top](#package-l4top)
-<!-- end caseproc -->
-
 Stub for Claim L4Gbr1.
 
 <!-- caseproc element L4Gbr1a -->
@@ -11925,10 +11193,6 @@ Supported by: **[Evidence L4Ebr1](#evidence-l4ebr1)**, [Evidence L4Esh1](#eviden
 Supports: **[Claim L4Gbr1](#claim-l4gbr1)**
 <!-- end caseproc -->
 
-<!-- caseproc references L4Gbr1a -->
-References: [Package L4top](#package-l4top)
-<!-- end caseproc -->
-
 Stub for Claim L4Gbr1a.
 
 <!-- caseproc element L4Ebr1 -->
@@ -11938,10 +11202,6 @@ Stub for Claim L4Gbr1a.
 Referenced by: **[Package L4top](#package-l4top)**
 
 Supports: **[Claim L4Gbr1a](#claim-l4gbr1a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L4Ebr1 -->
-References: [Package L4top](#package-l4top)
 <!-- end caseproc -->
 
 Stub for Evidence L4Ebr1.
@@ -11957,10 +11217,6 @@ Supported by: **[Evidence L4Esh2](#evidence-l4esh2)**
 Supports: **[Claim L4Gbr1](#claim-l4gbr1)**
 <!-- end caseproc -->
 
-<!-- caseproc references L4Gbr1b -->
-References: [Package L4top](#package-l4top)
-<!-- end caseproc -->
-
 Stub for Claim L4Gbr1b.
 
 <!-- caseproc element L4Gbr2 -->
@@ -11972,10 +11228,6 @@ Referenced by: **[Package L4top](#package-l4top)**
 Supported by: **[Claim L4Gbr2a](#claim-l4gbr2a)**, [Claim L4Gbr2b](#claim-l4gbr2b)
 
 Supports: **[Strategy L4Smain](#strategy-l4smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L4Gbr2 -->
-References: [Package L4top](#package-l4top)
 <!-- end caseproc -->
 
 Stub for Claim L4Gbr2.
@@ -11991,10 +11243,6 @@ Supported by: **[Evidence L4Ebr2](#evidence-l4ebr2)**, [Evidence L4Esh1](#eviden
 Supports: **[Claim L4Gbr2](#claim-l4gbr2)**
 <!-- end caseproc -->
 
-<!-- caseproc references L4Gbr2a -->
-References: [Package L4top](#package-l4top)
-<!-- end caseproc -->
-
 Stub for Claim L4Gbr2a.
 
 <!-- caseproc element L4Ebr2 -->
@@ -12004,10 +11252,6 @@ Stub for Claim L4Gbr2a.
 Referenced by: **[Package L4top](#package-l4top)**
 
 Supports: **[Claim L4Gbr2a](#claim-l4gbr2a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L4Ebr2 -->
-References: [Package L4top](#package-l4top)
 <!-- end caseproc -->
 
 Stub for Evidence L4Ebr2.
@@ -12023,10 +11267,6 @@ Supported by: **[Evidence L4Esh2](#evidence-l4esh2)**
 Supports: **[Claim L4Gbr2](#claim-l4gbr2)**
 <!-- end caseproc -->
 
-<!-- caseproc references L4Gbr2b -->
-References: [Package L4top](#package-l4top)
-<!-- end caseproc -->
-
 Stub for Claim L4Gbr2b.
 
 <!-- caseproc element L4Gbr3 -->
@@ -12038,10 +11278,6 @@ Referenced by: **[Package L4top](#package-l4top)**
 Supported by: **[Claim L4Gbr3a](#claim-l4gbr3a)**, [Claim L4Gbr3b](#claim-l4gbr3b)
 
 Supports: **[Strategy L4Smain](#strategy-l4smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L4Gbr3 -->
-References: [Package L4top](#package-l4top)
 <!-- end caseproc -->
 
 Stub for Claim L4Gbr3.
@@ -12057,10 +11293,6 @@ Supported by: **[Evidence L4Ebr3](#evidence-l4ebr3)**, [Evidence L4Esh1](#eviden
 Supports: **[Claim L4Gbr3](#claim-l4gbr3)**
 <!-- end caseproc -->
 
-<!-- caseproc references L4Gbr3a -->
-References: [Package L4top](#package-l4top)
-<!-- end caseproc -->
-
 Stub for Claim L4Gbr3a.
 
 <!-- caseproc element L4Ebr3 -->
@@ -12070,10 +11302,6 @@ Stub for Claim L4Gbr3a.
 Referenced by: **[Package L4top](#package-l4top)**
 
 Supports: **[Claim L4Gbr3a](#claim-l4gbr3a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L4Ebr3 -->
-References: [Package L4top](#package-l4top)
 <!-- end caseproc -->
 
 Stub for Evidence L4Ebr3.
@@ -12089,10 +11317,6 @@ Supported by: **[Evidence L4Esh2](#evidence-l4esh2)**
 Supports: **[Claim L4Gbr3](#claim-l4gbr3)**
 <!-- end caseproc -->
 
-<!-- caseproc references L4Gbr3b -->
-References: [Package L4top](#package-l4top)
-<!-- end caseproc -->
-
 Stub for Claim L4Gbr3b.
 
 <!-- caseproc element L4Gbr4 -->
@@ -12104,10 +11328,6 @@ Referenced by: **[Package L4top](#package-l4top)**
 Supported by: **[Claim L4Gbr4a](#claim-l4gbr4a)**, [Claim L4Gbr4b](#claim-l4gbr4b)
 
 Supports: **[Strategy L4Smain](#strategy-l4smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L4Gbr4 -->
-References: [Package L4top](#package-l4top)
 <!-- end caseproc -->
 
 Stub for Claim L4Gbr4.
@@ -12123,10 +11343,6 @@ Supported by: **[Evidence L4Ebr4](#evidence-l4ebr4)**, [Evidence L4Esh1](#eviden
 Supports: **[Claim L4Gbr4](#claim-l4gbr4)**
 <!-- end caseproc -->
 
-<!-- caseproc references L4Gbr4a -->
-References: [Package L4top](#package-l4top)
-<!-- end caseproc -->
-
 Stub for Claim L4Gbr4a.
 
 <!-- caseproc element L4Ebr4 -->
@@ -12136,10 +11352,6 @@ Stub for Claim L4Gbr4a.
 Referenced by: **[Package L4top](#package-l4top)**
 
 Supports: **[Claim L4Gbr4a](#claim-l4gbr4a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L4Ebr4 -->
-References: [Package L4top](#package-l4top)
 <!-- end caseproc -->
 
 Stub for Evidence L4Ebr4.
@@ -12155,10 +11367,6 @@ Supported by: **[Evidence L4Esh2](#evidence-l4esh2)**
 Supports: **[Claim L4Gbr4](#claim-l4gbr4)**
 <!-- end caseproc -->
 
-<!-- caseproc references L4Gbr4b -->
-References: [Package L4top](#package-l4top)
-<!-- end caseproc -->
-
 Stub for Claim L4Gbr4b.
 
 <!-- caseproc element L4Gbr5 -->
@@ -12170,10 +11378,6 @@ Referenced by: **[Package L4top](#package-l4top)**
 Supported by: **[Claim L4Gbr5a](#claim-l4gbr5a)**, [Claim L4Gbr5b](#claim-l4gbr5b)
 
 Supports: **[Strategy L4Smain](#strategy-l4smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L4Gbr5 -->
-References: [Package L4top](#package-l4top)
 <!-- end caseproc -->
 
 Stub for Claim L4Gbr5.
@@ -12189,10 +11393,6 @@ Supported by: **[Evidence L4Ebr5](#evidence-l4ebr5)**, [Evidence L4Esh1](#eviden
 Supports: **[Claim L4Gbr5](#claim-l4gbr5)**
 <!-- end caseproc -->
 
-<!-- caseproc references L4Gbr5a -->
-References: [Package L4top](#package-l4top)
-<!-- end caseproc -->
-
 Stub for Claim L4Gbr5a.
 
 <!-- caseproc element L4Ebr5 -->
@@ -12202,10 +11402,6 @@ Stub for Claim L4Gbr5a.
 Referenced by: **[Package L4top](#package-l4top)**
 
 Supports: **[Claim L4Gbr5a](#claim-l4gbr5a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L4Ebr5 -->
-References: [Package L4top](#package-l4top)
 <!-- end caseproc -->
 
 Stub for Evidence L4Ebr5.
@@ -12221,10 +11417,6 @@ Supported by: **[Evidence L4Esh2](#evidence-l4esh2)**
 Supports: **[Claim L4Gbr5](#claim-l4gbr5)**
 <!-- end caseproc -->
 
-<!-- caseproc references L4Gbr5b -->
-References: [Package L4top](#package-l4top)
-<!-- end caseproc -->
-
 Stub for Claim L4Gbr5b.
 
 <!-- caseproc element L4Gbr6 -->
@@ -12236,10 +11428,6 @@ Referenced by: **[Package L4top](#package-l4top)**
 Supported by: **[Claim L4Gbr6a](#claim-l4gbr6a)**, [Claim L4Gbr6b](#claim-l4gbr6b)
 
 Supports: **[Strategy L4Smain](#strategy-l4smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L4Gbr6 -->
-References: [Package L4top](#package-l4top)
 <!-- end caseproc -->
 
 Stub for Claim L4Gbr6.
@@ -12255,10 +11443,6 @@ Supported by: **[Evidence L4Ebr6](#evidence-l4ebr6)**, [Evidence L4Esh1](#eviden
 Supports: **[Claim L4Gbr6](#claim-l4gbr6)**
 <!-- end caseproc -->
 
-<!-- caseproc references L4Gbr6a -->
-References: [Package L4top](#package-l4top)
-<!-- end caseproc -->
-
 Stub for Claim L4Gbr6a.
 
 <!-- caseproc element L4Ebr6 -->
@@ -12268,10 +11452,6 @@ Stub for Claim L4Gbr6a.
 Referenced by: **[Package L4top](#package-l4top)**
 
 Supports: **[Claim L4Gbr6a](#claim-l4gbr6a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L4Ebr6 -->
-References: [Package L4top](#package-l4top)
 <!-- end caseproc -->
 
 Stub for Evidence L4Ebr6.
@@ -12287,10 +11467,6 @@ Supported by: **[Evidence L4Esh2](#evidence-l4esh2)**
 Supports: **[Claim L4Gbr6](#claim-l4gbr6)**
 <!-- end caseproc -->
 
-<!-- caseproc references L4Gbr6b -->
-References: [Package L4top](#package-l4top)
-<!-- end caseproc -->
-
 Stub for Claim L4Gbr6b.
 
 <!-- caseproc element L4Gbr7 -->
@@ -12302,10 +11478,6 @@ Referenced by: **[Package L4top](#package-l4top)**
 Supported by: **[Claim L4Gbr7a](#claim-l4gbr7a)**, [Claim L4Gbr7b](#claim-l4gbr7b)
 
 Supports: **[Strategy L4Smain](#strategy-l4smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L4Gbr7 -->
-References: [Package L4top](#package-l4top)
 <!-- end caseproc -->
 
 Stub for Claim L4Gbr7.
@@ -12321,10 +11493,6 @@ Supported by: **[Evidence L4Ebr7](#evidence-l4ebr7)**, [Evidence L4Esh1](#eviden
 Supports: **[Claim L4Gbr7](#claim-l4gbr7)**
 <!-- end caseproc -->
 
-<!-- caseproc references L4Gbr7a -->
-References: [Package L4top](#package-l4top)
-<!-- end caseproc -->
-
 Stub for Claim L4Gbr7a.
 
 <!-- caseproc element L4Ebr7 -->
@@ -12334,10 +11502,6 @@ Stub for Claim L4Gbr7a.
 Referenced by: **[Package L4top](#package-l4top)**
 
 Supports: **[Claim L4Gbr7a](#claim-l4gbr7a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L4Ebr7 -->
-References: [Package L4top](#package-l4top)
 <!-- end caseproc -->
 
 Stub for Evidence L4Ebr7.
@@ -12353,10 +11517,6 @@ Supported by: **[Evidence L4Esh2](#evidence-l4esh2)**
 Supports: **[Claim L4Gbr7](#claim-l4gbr7)**
 <!-- end caseproc -->
 
-<!-- caseproc references L4Gbr7b -->
-References: [Package L4top](#package-l4top)
-<!-- end caseproc -->
-
 Stub for Claim L4Gbr7b.
 
 <!-- caseproc element L4Gbr8 -->
@@ -12368,10 +11528,6 @@ Referenced by: **[Package L4top](#package-l4top)**
 Supported by: **[Claim L4Gbr8a](#claim-l4gbr8a)**, [Claim L4Gbr8b](#claim-l4gbr8b)
 
 Supports: **[Strategy L4Smain](#strategy-l4smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L4Gbr8 -->
-References: [Package L4top](#package-l4top)
 <!-- end caseproc -->
 
 Stub for Claim L4Gbr8.
@@ -12387,10 +11543,6 @@ Supported by: **[Evidence L4Ebr8](#evidence-l4ebr8)**, [Evidence L4Esh1](#eviden
 Supports: **[Claim L4Gbr8](#claim-l4gbr8)**
 <!-- end caseproc -->
 
-<!-- caseproc references L4Gbr8a -->
-References: [Package L4top](#package-l4top)
-<!-- end caseproc -->
-
 Stub for Claim L4Gbr8a.
 
 <!-- caseproc element L4Ebr8 -->
@@ -12400,10 +11552,6 @@ Stub for Claim L4Gbr8a.
 Referenced by: **[Package L4top](#package-l4top)**
 
 Supports: **[Claim L4Gbr8a](#claim-l4gbr8a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L4Ebr8 -->
-References: [Package L4top](#package-l4top)
 <!-- end caseproc -->
 
 Stub for Evidence L4Ebr8.
@@ -12419,10 +11567,6 @@ Supported by: **[Evidence L4Esh2](#evidence-l4esh2)**
 Supports: **[Claim L4Gbr8](#claim-l4gbr8)**
 <!-- end caseproc -->
 
-<!-- caseproc references L4Gbr8b -->
-References: [Package L4top](#package-l4top)
-<!-- end caseproc -->
-
 Stub for Claim L4Gbr8b.
 
 <!-- caseproc element L5top -->
@@ -12436,10 +11580,6 @@ Supported by: **[Context L5Xctx](#context-l5xctx)**, [Evidence L5Esh1](#evidence
 Supports: [Strategy Sdecomp](#strategy-sdecomp)
 <!-- end caseproc -->
 
-<!-- caseproc references L5top -->
-References: [Package L5top](#package-l5top), [Package G1](#package-g1)
-<!-- end caseproc -->
-
 Stub for Claim L5top.
 
 <!-- caseproc element L5Xctx -->
@@ -12449,10 +11589,6 @@ Stub for Claim L5top.
 Referenced by: **[Package L5top](#package-l5top)**
 
 Supports: **[Claim L5top](#claim-l5top)**
-<!-- end caseproc -->
-
-<!-- caseproc references L5Xctx -->
-References: [Package L5top](#package-l5top)
 <!-- end caseproc -->
 
 Stub for Context L5Xctx.
@@ -12466,10 +11602,6 @@ Referenced by: **[Package L5top](#package-l5top)**
 Supports: **[Claim L5top](#claim-l5top)**
 <!-- end caseproc -->
 
-<!-- caseproc references L5Esh1 -->
-References: [Package L5top](#package-l5top)
-<!-- end caseproc -->
-
 Stub for Evidence L5Esh1.
 
 <!-- caseproc element L5Esh2 -->
@@ -12479,10 +11611,6 @@ Stub for Evidence L5Esh1.
 Referenced by: **[Package L5top](#package-l5top)**
 
 Supports: **[Claim L5top](#claim-l5top)**
-<!-- end caseproc -->
-
-<!-- caseproc references L5Esh2 -->
-References: [Package L5top](#package-l5top)
 <!-- end caseproc -->
 
 Stub for Evidence L5Esh2.
@@ -12498,10 +11626,6 @@ Supported by: **[Claim L5G2](#claim-l5g2)**, [Claim C36top](#claim-c36top), [Cla
 Supports: **[Claim L5top](#claim-l5top)**
 <!-- end caseproc -->
 
-<!-- caseproc references L5Smain -->
-References: [Package L5top](#package-l5top)
-<!-- end caseproc -->
-
 Stub for Strategy L5Smain.
 
 <!-- caseproc element L5G2 -->
@@ -12513,10 +11637,6 @@ Referenced by: **[Package L5top](#package-l5top)**
 Supported by: **[Strategy L5S2](#strategy-l5s2)**, [Claim L5G2b](#claim-l5g2b)
 
 Supports: **[Strategy L5Smain](#strategy-l5smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L5G2 -->
-References: [Package L5top](#package-l5top)
 <!-- end caseproc -->
 
 Stub for Claim L5G2.
@@ -12532,10 +11652,6 @@ Supported by: **[Claim L5G3](#claim-l5g3)**, [Claim L5G3c](#claim-l5g3c)
 Supports: **[Claim L5G2](#claim-l5g2)**
 <!-- end caseproc -->
 
-<!-- caseproc references L5S2 -->
-References: [Package L5top](#package-l5top)
-<!-- end caseproc -->
-
 Stub for Strategy L5S2.
 
 <!-- caseproc element L5G3 -->
@@ -12547,10 +11663,6 @@ Referenced by: **[Package L5top](#package-l5top)**
 Supported by: **[Strategy L5S3](#strategy-l5s3)**, [Claim L5G3b](#claim-l5g3b)
 
 Supports: **[Strategy L5S2](#strategy-l5s2)**
-<!-- end caseproc -->
-
-<!-- caseproc references L5G3 -->
-References: [Package L5top](#package-l5top)
 <!-- end caseproc -->
 
 Stub for Claim L5G3.
@@ -12566,10 +11678,6 @@ Supported by: **[Claim L5G4](#claim-l5g4)**, [Claim L5G4b](#claim-l5g4b)
 Supports: **[Claim L5G3](#claim-l5g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references L5S3 -->
-References: [Package L5top](#package-l5top)
-<!-- end caseproc -->
-
 Stub for Strategy L5S3.
 
 <!-- caseproc element L5G4 -->
@@ -12583,10 +11691,6 @@ Supported by: **[Evidence L5Edeep](#evidence-l5edeep)**, [Evidence L5Esh1](#evid
 Supports: **[Strategy L5S3](#strategy-l5s3)**
 <!-- end caseproc -->
 
-<!-- caseproc references L5G4 -->
-References: [Package L5top](#package-l5top)
-<!-- end caseproc -->
-
 Stub for Claim L5G4.
 
 <!-- caseproc element L5Edeep -->
@@ -12596,10 +11700,6 @@ Stub for Claim L5G4.
 Referenced by: **[Package L5top](#package-l5top)**
 
 Supports: **[Claim L5G4](#claim-l5g4)**
-<!-- end caseproc -->
-
-<!-- caseproc references L5Edeep -->
-References: [Package L5top](#package-l5top)
 <!-- end caseproc -->
 
 Stub for Evidence L5Edeep.
@@ -12615,10 +11715,6 @@ Supported by: **[Evidence L5Esh2](#evidence-l5esh2)**, [Evidence L5Esh1](#eviden
 Supports: **[Strategy L5S3](#strategy-l5s3)**
 <!-- end caseproc -->
 
-<!-- caseproc references L5G4b -->
-References: [Package L5top](#package-l5top)
-<!-- end caseproc -->
-
 Stub for Claim L5G4b.
 
 <!-- caseproc element L5G3b -->
@@ -12630,10 +11726,6 @@ Referenced by: **[Package L5top](#package-l5top)**
 Supported by: **[Evidence L5Esh1](#evidence-l5esh1)**
 
 Supports: **[Claim L5G3](#claim-l5g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references L5G3b -->
-References: [Package L5top](#package-l5top)
 <!-- end caseproc -->
 
 Stub for Claim L5G3b.
@@ -12649,10 +11741,6 @@ Supported by: **[Justification L5J1](#justification-l5j1)**, [Evidence L5Esh2](#
 Supports: **[Strategy L5S2](#strategy-l5s2)**
 <!-- end caseproc -->
 
-<!-- caseproc references L5G3c -->
-References: [Package L5top](#package-l5top)
-<!-- end caseproc -->
-
 Stub for Claim L5G3c.
 
 <!-- caseproc element L5J1 -->
@@ -12662,10 +11750,6 @@ Stub for Claim L5G3c.
 Referenced by: **[Package L5top](#package-l5top)**
 
 Supports: **[Claim L5G3c](#claim-l5g3c)**
-<!-- end caseproc -->
-
-<!-- caseproc references L5J1 -->
-References: [Package L5top](#package-l5top)
 <!-- end caseproc -->
 
 Stub for Justification L5J1.
@@ -12681,10 +11765,6 @@ Supported by: **[Strategy L5S2b](#strategy-l5s2b)**
 Supports: **[Claim L5G2](#claim-l5g2)**
 <!-- end caseproc -->
 
-<!-- caseproc references L5G2b -->
-References: [Package L5top](#package-l5top)
-<!-- end caseproc -->
-
 Stub for Claim L5G2b.
 
 <!-- caseproc element L5S2b -->
@@ -12696,10 +11776,6 @@ Referenced by: **[Package L5top](#package-l5top)**
 Supported by: **[Claim L5G3d](#claim-l5g3d)**, [Claim L5G3e](#claim-l5g3e)
 
 Supports: **[Claim L5G2b](#claim-l5g2b)**
-<!-- end caseproc -->
-
-<!-- caseproc references L5S2b -->
-References: [Package L5top](#package-l5top)
 <!-- end caseproc -->
 
 Stub for Strategy L5S2b.
@@ -12715,10 +11791,6 @@ Supported by: **[Evidence L5Esh1](#evidence-l5esh1)**, [Evidence L5Esh2](#eviden
 Supports: **[Strategy L5S2b](#strategy-l5s2b)**
 <!-- end caseproc -->
 
-<!-- caseproc references L5G3d -->
-References: [Package L5top](#package-l5top)
-<!-- end caseproc -->
-
 Stub for Claim L5G3d.
 
 <!-- caseproc element L5G3e -->
@@ -12732,10 +11804,6 @@ Supported by: **[Evidence L5E2](#evidence-l5e2)**
 Supports: **[Strategy L5S2b](#strategy-l5s2b)**
 <!-- end caseproc -->
 
-<!-- caseproc references L5G3e -->
-References: [Package L5top](#package-l5top)
-<!-- end caseproc -->
-
 Stub for Claim L5G3e.
 
 <!-- caseproc element L5E2 -->
@@ -12745,10 +11813,6 @@ Stub for Claim L5G3e.
 Referenced by: **[Package L5top](#package-l5top)**
 
 Supports: **[Claim L5G3e](#claim-l5g3e)**
-<!-- end caseproc -->
-
-<!-- caseproc references L5E2 -->
-References: [Package L5top](#package-l5top)
 <!-- end caseproc -->
 
 Stub for Evidence L5E2.
@@ -12764,10 +11828,6 @@ Supported by: **[Claim L5Gbr1a](#claim-l5gbr1a)**, [Claim L5Gbr1b](#claim-l5gbr1
 Supports: **[Strategy L5Smain](#strategy-l5smain)**
 <!-- end caseproc -->
 
-<!-- caseproc references L5Gbr1 -->
-References: [Package L5top](#package-l5top)
-<!-- end caseproc -->
-
 Stub for Claim L5Gbr1.
 
 <!-- caseproc element L5Gbr1a -->
@@ -12781,10 +11841,6 @@ Supported by: **[Evidence L5Ebr1](#evidence-l5ebr1)**, [Evidence L5Esh1](#eviden
 Supports: **[Claim L5Gbr1](#claim-l5gbr1)**
 <!-- end caseproc -->
 
-<!-- caseproc references L5Gbr1a -->
-References: [Package L5top](#package-l5top)
-<!-- end caseproc -->
-
 Stub for Claim L5Gbr1a.
 
 <!-- caseproc element L5Ebr1 -->
@@ -12794,10 +11850,6 @@ Stub for Claim L5Gbr1a.
 Referenced by: **[Package L5top](#package-l5top)**
 
 Supports: **[Claim L5Gbr1a](#claim-l5gbr1a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L5Ebr1 -->
-References: [Package L5top](#package-l5top)
 <!-- end caseproc -->
 
 Stub for Evidence L5Ebr1.
@@ -12813,10 +11865,6 @@ Supported by: **[Evidence L5Esh2](#evidence-l5esh2)**
 Supports: **[Claim L5Gbr1](#claim-l5gbr1)**
 <!-- end caseproc -->
 
-<!-- caseproc references L5Gbr1b -->
-References: [Package L5top](#package-l5top)
-<!-- end caseproc -->
-
 Stub for Claim L5Gbr1b.
 
 <!-- caseproc element L5Gbr2 -->
@@ -12828,10 +11876,6 @@ Referenced by: **[Package L5top](#package-l5top)**
 Supported by: **[Claim L5Gbr2a](#claim-l5gbr2a)**, [Claim L5Gbr2b](#claim-l5gbr2b)
 
 Supports: **[Strategy L5Smain](#strategy-l5smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L5Gbr2 -->
-References: [Package L5top](#package-l5top)
 <!-- end caseproc -->
 
 Stub for Claim L5Gbr2.
@@ -12847,10 +11891,6 @@ Supported by: **[Evidence L5Ebr2](#evidence-l5ebr2)**, [Evidence L5Esh1](#eviden
 Supports: **[Claim L5Gbr2](#claim-l5gbr2)**
 <!-- end caseproc -->
 
-<!-- caseproc references L5Gbr2a -->
-References: [Package L5top](#package-l5top)
-<!-- end caseproc -->
-
 Stub for Claim L5Gbr2a.
 
 <!-- caseproc element L5Ebr2 -->
@@ -12860,10 +11900,6 @@ Stub for Claim L5Gbr2a.
 Referenced by: **[Package L5top](#package-l5top)**
 
 Supports: **[Claim L5Gbr2a](#claim-l5gbr2a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L5Ebr2 -->
-References: [Package L5top](#package-l5top)
 <!-- end caseproc -->
 
 Stub for Evidence L5Ebr2.
@@ -12879,10 +11915,6 @@ Supported by: **[Evidence L5Esh2](#evidence-l5esh2)**
 Supports: **[Claim L5Gbr2](#claim-l5gbr2)**
 <!-- end caseproc -->
 
-<!-- caseproc references L5Gbr2b -->
-References: [Package L5top](#package-l5top)
-<!-- end caseproc -->
-
 Stub for Claim L5Gbr2b.
 
 <!-- caseproc element L5Gbr3 -->
@@ -12894,10 +11926,6 @@ Referenced by: **[Package L5top](#package-l5top)**
 Supported by: **[Claim L5Gbr3a](#claim-l5gbr3a)**, [Claim L5Gbr3b](#claim-l5gbr3b)
 
 Supports: **[Strategy L5Smain](#strategy-l5smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L5Gbr3 -->
-References: [Package L5top](#package-l5top)
 <!-- end caseproc -->
 
 Stub for Claim L5Gbr3.
@@ -12913,10 +11941,6 @@ Supported by: **[Evidence L5Ebr3](#evidence-l5ebr3)**, [Evidence L5Esh1](#eviden
 Supports: **[Claim L5Gbr3](#claim-l5gbr3)**
 <!-- end caseproc -->
 
-<!-- caseproc references L5Gbr3a -->
-References: [Package L5top](#package-l5top)
-<!-- end caseproc -->
-
 Stub for Claim L5Gbr3a.
 
 <!-- caseproc element L5Ebr3 -->
@@ -12926,10 +11950,6 @@ Stub for Claim L5Gbr3a.
 Referenced by: **[Package L5top](#package-l5top)**
 
 Supports: **[Claim L5Gbr3a](#claim-l5gbr3a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L5Ebr3 -->
-References: [Package L5top](#package-l5top)
 <!-- end caseproc -->
 
 Stub for Evidence L5Ebr3.
@@ -12945,10 +11965,6 @@ Supported by: **[Evidence L5Esh2](#evidence-l5esh2)**
 Supports: **[Claim L5Gbr3](#claim-l5gbr3)**
 <!-- end caseproc -->
 
-<!-- caseproc references L5Gbr3b -->
-References: [Package L5top](#package-l5top)
-<!-- end caseproc -->
-
 Stub for Claim L5Gbr3b.
 
 <!-- caseproc element L5Gbr4 -->
@@ -12960,10 +11976,6 @@ Referenced by: **[Package L5top](#package-l5top)**
 Supported by: **[Claim L5Gbr4a](#claim-l5gbr4a)**, [Claim L5Gbr4b](#claim-l5gbr4b)
 
 Supports: **[Strategy L5Smain](#strategy-l5smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L5Gbr4 -->
-References: [Package L5top](#package-l5top)
 <!-- end caseproc -->
 
 Stub for Claim L5Gbr4.
@@ -12979,10 +11991,6 @@ Supported by: **[Evidence L5Ebr4](#evidence-l5ebr4)**, [Evidence L5Esh1](#eviden
 Supports: **[Claim L5Gbr4](#claim-l5gbr4)**
 <!-- end caseproc -->
 
-<!-- caseproc references L5Gbr4a -->
-References: [Package L5top](#package-l5top)
-<!-- end caseproc -->
-
 Stub for Claim L5Gbr4a.
 
 <!-- caseproc element L5Ebr4 -->
@@ -12992,10 +12000,6 @@ Stub for Claim L5Gbr4a.
 Referenced by: **[Package L5top](#package-l5top)**
 
 Supports: **[Claim L5Gbr4a](#claim-l5gbr4a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L5Ebr4 -->
-References: [Package L5top](#package-l5top)
 <!-- end caseproc -->
 
 Stub for Evidence L5Ebr4.
@@ -13011,10 +12015,6 @@ Supported by: **[Evidence L5Esh2](#evidence-l5esh2)**
 Supports: **[Claim L5Gbr4](#claim-l5gbr4)**
 <!-- end caseproc -->
 
-<!-- caseproc references L5Gbr4b -->
-References: [Package L5top](#package-l5top)
-<!-- end caseproc -->
-
 Stub for Claim L5Gbr4b.
 
 <!-- caseproc element L5Gbr5 -->
@@ -13026,10 +12026,6 @@ Referenced by: **[Package L5top](#package-l5top)**
 Supported by: **[Claim L5Gbr5a](#claim-l5gbr5a)**, [Claim L5Gbr5b](#claim-l5gbr5b)
 
 Supports: **[Strategy L5Smain](#strategy-l5smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L5Gbr5 -->
-References: [Package L5top](#package-l5top)
 <!-- end caseproc -->
 
 Stub for Claim L5Gbr5.
@@ -13045,10 +12041,6 @@ Supported by: **[Evidence L5Ebr5](#evidence-l5ebr5)**, [Evidence L5Esh1](#eviden
 Supports: **[Claim L5Gbr5](#claim-l5gbr5)**
 <!-- end caseproc -->
 
-<!-- caseproc references L5Gbr5a -->
-References: [Package L5top](#package-l5top)
-<!-- end caseproc -->
-
 Stub for Claim L5Gbr5a.
 
 <!-- caseproc element L5Ebr5 -->
@@ -13058,10 +12050,6 @@ Stub for Claim L5Gbr5a.
 Referenced by: **[Package L5top](#package-l5top)**
 
 Supports: **[Claim L5Gbr5a](#claim-l5gbr5a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L5Ebr5 -->
-References: [Package L5top](#package-l5top)
 <!-- end caseproc -->
 
 Stub for Evidence L5Ebr5.
@@ -13077,10 +12065,6 @@ Supported by: **[Evidence L5Esh2](#evidence-l5esh2)**
 Supports: **[Claim L5Gbr5](#claim-l5gbr5)**
 <!-- end caseproc -->
 
-<!-- caseproc references L5Gbr5b -->
-References: [Package L5top](#package-l5top)
-<!-- end caseproc -->
-
 Stub for Claim L5Gbr5b.
 
 <!-- caseproc element L5Gbr6 -->
@@ -13092,10 +12076,6 @@ Referenced by: **[Package L5top](#package-l5top)**
 Supported by: **[Claim L5Gbr6a](#claim-l5gbr6a)**, [Claim L5Gbr6b](#claim-l5gbr6b)
 
 Supports: **[Strategy L5Smain](#strategy-l5smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L5Gbr6 -->
-References: [Package L5top](#package-l5top)
 <!-- end caseproc -->
 
 Stub for Claim L5Gbr6.
@@ -13111,10 +12091,6 @@ Supported by: **[Evidence L5Ebr6](#evidence-l5ebr6)**, [Evidence L5Esh1](#eviden
 Supports: **[Claim L5Gbr6](#claim-l5gbr6)**
 <!-- end caseproc -->
 
-<!-- caseproc references L5Gbr6a -->
-References: [Package L5top](#package-l5top)
-<!-- end caseproc -->
-
 Stub for Claim L5Gbr6a.
 
 <!-- caseproc element L5Ebr6 -->
@@ -13124,10 +12100,6 @@ Stub for Claim L5Gbr6a.
 Referenced by: **[Package L5top](#package-l5top)**
 
 Supports: **[Claim L5Gbr6a](#claim-l5gbr6a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L5Ebr6 -->
-References: [Package L5top](#package-l5top)
 <!-- end caseproc -->
 
 Stub for Evidence L5Ebr6.
@@ -13143,10 +12115,6 @@ Supported by: **[Evidence L5Esh2](#evidence-l5esh2)**
 Supports: **[Claim L5Gbr6](#claim-l5gbr6)**
 <!-- end caseproc -->
 
-<!-- caseproc references L5Gbr6b -->
-References: [Package L5top](#package-l5top)
-<!-- end caseproc -->
-
 Stub for Claim L5Gbr6b.
 
 <!-- caseproc element L5Gbr7 -->
@@ -13158,10 +12126,6 @@ Referenced by: **[Package L5top](#package-l5top)**
 Supported by: **[Claim L5Gbr7a](#claim-l5gbr7a)**, [Claim L5Gbr7b](#claim-l5gbr7b)
 
 Supports: **[Strategy L5Smain](#strategy-l5smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L5Gbr7 -->
-References: [Package L5top](#package-l5top)
 <!-- end caseproc -->
 
 Stub for Claim L5Gbr7.
@@ -13177,10 +12141,6 @@ Supported by: **[Evidence L5Ebr7](#evidence-l5ebr7)**, [Evidence L5Esh1](#eviden
 Supports: **[Claim L5Gbr7](#claim-l5gbr7)**
 <!-- end caseproc -->
 
-<!-- caseproc references L5Gbr7a -->
-References: [Package L5top](#package-l5top)
-<!-- end caseproc -->
-
 Stub for Claim L5Gbr7a.
 
 <!-- caseproc element L5Ebr7 -->
@@ -13190,10 +12150,6 @@ Stub for Claim L5Gbr7a.
 Referenced by: **[Package L5top](#package-l5top)**
 
 Supports: **[Claim L5Gbr7a](#claim-l5gbr7a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L5Ebr7 -->
-References: [Package L5top](#package-l5top)
 <!-- end caseproc -->
 
 Stub for Evidence L5Ebr7.
@@ -13209,10 +12165,6 @@ Supported by: **[Evidence L5Esh2](#evidence-l5esh2)**
 Supports: **[Claim L5Gbr7](#claim-l5gbr7)**
 <!-- end caseproc -->
 
-<!-- caseproc references L5Gbr7b -->
-References: [Package L5top](#package-l5top)
-<!-- end caseproc -->
-
 Stub for Claim L5Gbr7b.
 
 <!-- caseproc element L5Gbr8 -->
@@ -13224,10 +12176,6 @@ Referenced by: **[Package L5top](#package-l5top)**
 Supported by: **[Claim L5Gbr8a](#claim-l5gbr8a)**, [Claim L5Gbr8b](#claim-l5gbr8b)
 
 Supports: **[Strategy L5Smain](#strategy-l5smain)**
-<!-- end caseproc -->
-
-<!-- caseproc references L5Gbr8 -->
-References: [Package L5top](#package-l5top)
 <!-- end caseproc -->
 
 Stub for Claim L5Gbr8.
@@ -13243,10 +12191,6 @@ Supported by: **[Evidence L5Ebr8](#evidence-l5ebr8)**, [Evidence L5Esh1](#eviden
 Supports: **[Claim L5Gbr8](#claim-l5gbr8)**
 <!-- end caseproc -->
 
-<!-- caseproc references L5Gbr8a -->
-References: [Package L5top](#package-l5top)
-<!-- end caseproc -->
-
 Stub for Claim L5Gbr8a.
 
 <!-- caseproc element L5Ebr8 -->
@@ -13256,10 +12200,6 @@ Stub for Claim L5Gbr8a.
 Referenced by: **[Package L5top](#package-l5top)**
 
 Supports: **[Claim L5Gbr8a](#claim-l5gbr8a)**
-<!-- end caseproc -->
-
-<!-- caseproc references L5Ebr8 -->
-References: [Package L5top](#package-l5top)
 <!-- end caseproc -->
 
 Stub for Evidence L5Ebr8.
@@ -13275,10 +12215,6 @@ Supported by: **[Evidence L5Esh2](#evidence-l5esh2)**
 Supports: **[Claim L5Gbr8](#claim-l5gbr8)**
 <!-- end caseproc -->
 
-<!-- caseproc references L5Gbr8b -->
-References: [Package L5top](#package-l5top)
-<!-- end caseproc -->
-
 Stub for Claim L5Gbr8b.
 
 <!-- caseproc element C01top -->
@@ -13292,10 +12228,6 @@ Supported by: **[Claim C02top](#claim-c02top)**, [Context C01Xctx](#context-c01x
 Supports: [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C01top -->
-References: [Package C01top](#package-c01top), [Package G1](#package-g1)
-<!-- end caseproc -->
-
 Stub for Claim C01top.
 
 <!-- caseproc element C01Xctx -->
@@ -13307,10 +12239,6 @@ Referenced by: **[Package C01top](#package-c01top)**
 Supports: **[Claim C01top](#claim-c01top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C01Xctx -->
-References: [Package C01top](#package-c01top)
-<!-- end caseproc -->
-
 Stub for Context C01Xctx.
 
 <!-- caseproc element C01Esh -->
@@ -13320,10 +12248,6 @@ Stub for Context C01Xctx.
 Referenced by: **[Package C01top](#package-c01top)**
 
 Supports: **[Claim C01top](#claim-c01top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C01Esh -->
-References: [Package C01top](#package-c01top)
 <!-- end caseproc -->
 
 Stub for Evidence C01Esh.
@@ -13339,10 +12263,6 @@ Supported by: **[Claim C01G1](#claim-c01g1)**, [Claim C01G2](#claim-c01g2), [Cla
 Supports: **[Claim C01top](#claim-c01top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C01Sass -->
-References: [Package C01top](#package-c01top)
-<!-- end caseproc -->
-
 Stub for Strategy C01Sass.
 
 <!-- caseproc element C01G1 -->
@@ -13356,10 +12276,6 @@ Supported by: **[Evidence C01E1](#evidence-c01e1)**, [Context C01Xctx](#context-
 Supports: **[Strategy C01Sass](#strategy-c01sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C01G1 -->
-References: [Package C01top](#package-c01top)
-<!-- end caseproc -->
-
 Stub for Claim C01G1.
 
 <!-- caseproc element C01E1 -->
@@ -13369,10 +12285,6 @@ Stub for Claim C01G1.
 Referenced by: **[Package C01top](#package-c01top)**
 
 Supports: **[Claim C01G1](#claim-c01g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C01E1 -->
-References: [Package C01top](#package-c01top)
 <!-- end caseproc -->
 
 Stub for Evidence C01E1.
@@ -13388,10 +12300,6 @@ Supported by: **[Justification C01J1](#justification-c01j1)**, [Evidence C01Esh]
 Supports: **[Strategy C01Sass](#strategy-c01sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C01G2 -->
-References: [Package C01top](#package-c01top)
-<!-- end caseproc -->
-
 Stub for Claim C01G2.
 
 <!-- caseproc element C01J1 -->
@@ -13401,10 +12309,6 @@ Stub for Claim C01G2.
 Referenced by: **[Package C01top](#package-c01top)**
 
 Supports: **[Claim C01G2](#claim-c01g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C01J1 -->
-References: [Package C01top](#package-c01top)
 <!-- end caseproc -->
 
 Stub for Justification C01J1.
@@ -13420,10 +12324,6 @@ Supported by: **[Assumption C01A1](#assumption-c01a1)**, [Evidence C01E2](#evide
 Supports: **[Strategy C01Sass](#strategy-c01sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C01G3 -->
-References: [Package C01top](#package-c01top)
-<!-- end caseproc -->
-
 Stub for Claim C01G3.
 
 <!-- caseproc element C01A1 -->
@@ -13435,10 +12335,6 @@ Referenced by: **[Package C01top](#package-c01top)**
 Supports: **[Claim C01G3](#claim-c01g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C01A1 -->
-References: [Package C01top](#package-c01top)
-<!-- end caseproc -->
-
 Stub for Assumption C01A1.
 
 <!-- caseproc element C01E2 -->
@@ -13448,10 +12344,6 @@ Stub for Assumption C01A1.
 Referenced by: **[Package C01top](#package-c01top)**
 
 Supports: **[Claim C01G3](#claim-c01g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C01E2 -->
-References: [Package C01top](#package-c01top)
 <!-- end caseproc -->
 
 Stub for Evidence C01E2.
@@ -13467,10 +12359,6 @@ Supported by: **[Claim C03top](#claim-c03top)**, [Context C02Xctx](#context-c02x
 Supports: [Claim C01top](#claim-c01top), [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C02top -->
-References: [Package C02top](#package-c02top), [Package G1](#package-g1), [Package C01top](#package-c01top)
-<!-- end caseproc -->
-
 Stub for Claim C02top.
 
 <!-- caseproc element C02Xctx -->
@@ -13482,10 +12370,6 @@ Referenced by: **[Package C02top](#package-c02top)**
 Supports: **[Claim C02top](#claim-c02top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C02Xctx -->
-References: [Package C02top](#package-c02top)
-<!-- end caseproc -->
-
 Stub for Context C02Xctx.
 
 <!-- caseproc element C02Esh -->
@@ -13495,10 +12379,6 @@ Stub for Context C02Xctx.
 Referenced by: **[Package C02top](#package-c02top)**
 
 Supports: **[Claim C02top](#claim-c02top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C02Esh -->
-References: [Package C02top](#package-c02top)
 <!-- end caseproc -->
 
 Stub for Evidence C02Esh.
@@ -13514,10 +12394,6 @@ Supported by: **[Claim C02G1](#claim-c02g1)**, [Claim C02G2](#claim-c02g2), [Cla
 Supports: **[Claim C02top](#claim-c02top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C02Sass -->
-References: [Package C02top](#package-c02top)
-<!-- end caseproc -->
-
 Stub for Strategy C02Sass.
 
 <!-- caseproc element C02G1 -->
@@ -13531,10 +12407,6 @@ Supported by: **[Evidence C02E1](#evidence-c02e1)**, [Context C02Xctx](#context-
 Supports: **[Strategy C02Sass](#strategy-c02sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C02G1 -->
-References: [Package C02top](#package-c02top)
-<!-- end caseproc -->
-
 Stub for Claim C02G1.
 
 <!-- caseproc element C02E1 -->
@@ -13544,10 +12416,6 @@ Stub for Claim C02G1.
 Referenced by: **[Package C02top](#package-c02top)**
 
 Supports: **[Claim C02G1](#claim-c02g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C02E1 -->
-References: [Package C02top](#package-c02top)
 <!-- end caseproc -->
 
 Stub for Evidence C02E1.
@@ -13563,10 +12431,6 @@ Supported by: **[Justification C02J1](#justification-c02j1)**, [Evidence C02Esh]
 Supports: **[Strategy C02Sass](#strategy-c02sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C02G2 -->
-References: [Package C02top](#package-c02top)
-<!-- end caseproc -->
-
 Stub for Claim C02G2.
 
 <!-- caseproc element C02J1 -->
@@ -13576,10 +12440,6 @@ Stub for Claim C02G2.
 Referenced by: **[Package C02top](#package-c02top)**
 
 Supports: **[Claim C02G2](#claim-c02g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C02J1 -->
-References: [Package C02top](#package-c02top)
 <!-- end caseproc -->
 
 Stub for Justification C02J1.
@@ -13595,10 +12455,6 @@ Supported by: **[Assumption C02A1](#assumption-c02a1)**, [Evidence C02E2](#evide
 Supports: **[Strategy C02Sass](#strategy-c02sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C02G3 -->
-References: [Package C02top](#package-c02top)
-<!-- end caseproc -->
-
 Stub for Claim C02G3.
 
 <!-- caseproc element C02A1 -->
@@ -13610,10 +12466,6 @@ Referenced by: **[Package C02top](#package-c02top)**
 Supports: **[Claim C02G3](#claim-c02g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C02A1 -->
-References: [Package C02top](#package-c02top)
-<!-- end caseproc -->
-
 Stub for Assumption C02A1.
 
 <!-- caseproc element C02E2 -->
@@ -13623,10 +12475,6 @@ Stub for Assumption C02A1.
 Referenced by: **[Package C02top](#package-c02top)**
 
 Supports: **[Claim C02G3](#claim-c02g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C02E2 -->
-References: [Package C02top](#package-c02top)
 <!-- end caseproc -->
 
 Stub for Evidence C02E2.
@@ -13642,10 +12490,6 @@ Supported by: **[Claim C04top](#claim-c04top)**, [Context C03Xctx](#context-c03x
 Supports: [Claim C02top](#claim-c02top), [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C03top -->
-References: [Package C03top](#package-c03top), [Package G1](#package-g1), [Package C02top](#package-c02top)
-<!-- end caseproc -->
-
 Stub for Claim C03top.
 
 <!-- caseproc element C03Xctx -->
@@ -13657,10 +12501,6 @@ Referenced by: **[Package C03top](#package-c03top)**
 Supports: **[Claim C03top](#claim-c03top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C03Xctx -->
-References: [Package C03top](#package-c03top)
-<!-- end caseproc -->
-
 Stub for Context C03Xctx.
 
 <!-- caseproc element C03Esh -->
@@ -13670,10 +12510,6 @@ Stub for Context C03Xctx.
 Referenced by: **[Package C03top](#package-c03top)**
 
 Supports: **[Claim C03top](#claim-c03top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C03Esh -->
-References: [Package C03top](#package-c03top)
 <!-- end caseproc -->
 
 Stub for Evidence C03Esh.
@@ -13689,10 +12525,6 @@ Supported by: **[Claim C03G1](#claim-c03g1)**, [Claim C03G2](#claim-c03g2), [Cla
 Supports: **[Claim C03top](#claim-c03top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C03Sass -->
-References: [Package C03top](#package-c03top)
-<!-- end caseproc -->
-
 Stub for Strategy C03Sass.
 
 <!-- caseproc element C03G1 -->
@@ -13706,10 +12538,6 @@ Supported by: **[Evidence C03E1](#evidence-c03e1)**, [Context C03Xctx](#context-
 Supports: **[Strategy C03Sass](#strategy-c03sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C03G1 -->
-References: [Package C03top](#package-c03top)
-<!-- end caseproc -->
-
 Stub for Claim C03G1.
 
 <!-- caseproc element C03E1 -->
@@ -13719,10 +12547,6 @@ Stub for Claim C03G1.
 Referenced by: **[Package C03top](#package-c03top)**
 
 Supports: **[Claim C03G1](#claim-c03g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C03E1 -->
-References: [Package C03top](#package-c03top)
 <!-- end caseproc -->
 
 Stub for Evidence C03E1.
@@ -13738,10 +12562,6 @@ Supported by: **[Justification C03J1](#justification-c03j1)**, [Evidence C03Esh]
 Supports: **[Strategy C03Sass](#strategy-c03sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C03G2 -->
-References: [Package C03top](#package-c03top)
-<!-- end caseproc -->
-
 Stub for Claim C03G2.
 
 <!-- caseproc element C03J1 -->
@@ -13751,10 +12571,6 @@ Stub for Claim C03G2.
 Referenced by: **[Package C03top](#package-c03top)**
 
 Supports: **[Claim C03G2](#claim-c03g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C03J1 -->
-References: [Package C03top](#package-c03top)
 <!-- end caseproc -->
 
 Stub for Justification C03J1.
@@ -13770,10 +12586,6 @@ Supported by: **[Assumption C03A1](#assumption-c03a1)**, [Evidence C03E2](#evide
 Supports: **[Strategy C03Sass](#strategy-c03sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C03G3 -->
-References: [Package C03top](#package-c03top)
-<!-- end caseproc -->
-
 Stub for Claim C03G3.
 
 <!-- caseproc element C03A1 -->
@@ -13785,10 +12597,6 @@ Referenced by: **[Package C03top](#package-c03top)**
 Supports: **[Claim C03G3](#claim-c03g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C03A1 -->
-References: [Package C03top](#package-c03top)
-<!-- end caseproc -->
-
 Stub for Assumption C03A1.
 
 <!-- caseproc element C03E2 -->
@@ -13798,10 +12606,6 @@ Stub for Assumption C03A1.
 Referenced by: **[Package C03top](#package-c03top)**
 
 Supports: **[Claim C03G3](#claim-c03g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C03E2 -->
-References: [Package C03top](#package-c03top)
 <!-- end caseproc -->
 
 Stub for Evidence C03E2.
@@ -13817,10 +12621,6 @@ Supported by: **[Claim C05top](#claim-c05top)**, [Context C04Xctx](#context-c04x
 Supports: [Claim C03top](#claim-c03top), [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C04top -->
-References: [Package C04top](#package-c04top), [Package G1](#package-g1), [Package C03top](#package-c03top)
-<!-- end caseproc -->
-
 Stub for Claim C04top.
 
 <!-- caseproc element C04Xctx -->
@@ -13832,10 +12632,6 @@ Referenced by: **[Package C04top](#package-c04top)**
 Supports: **[Claim C04top](#claim-c04top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C04Xctx -->
-References: [Package C04top](#package-c04top)
-<!-- end caseproc -->
-
 Stub for Context C04Xctx.
 
 <!-- caseproc element C04Esh -->
@@ -13845,10 +12641,6 @@ Stub for Context C04Xctx.
 Referenced by: **[Package C04top](#package-c04top)**
 
 Supports: **[Claim C04top](#claim-c04top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C04Esh -->
-References: [Package C04top](#package-c04top)
 <!-- end caseproc -->
 
 Stub for Evidence C04Esh.
@@ -13864,10 +12656,6 @@ Supported by: **[Claim C04G1](#claim-c04g1)**, [Claim C04G2](#claim-c04g2), [Cla
 Supports: **[Claim C04top](#claim-c04top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C04Sass -->
-References: [Package C04top](#package-c04top)
-<!-- end caseproc -->
-
 Stub for Strategy C04Sass.
 
 <!-- caseproc element C04G1 -->
@@ -13881,10 +12669,6 @@ Supported by: **[Evidence C04E1](#evidence-c04e1)**, [Context C04Xctx](#context-
 Supports: **[Strategy C04Sass](#strategy-c04sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C04G1 -->
-References: [Package C04top](#package-c04top)
-<!-- end caseproc -->
-
 Stub for Claim C04G1.
 
 <!-- caseproc element C04E1 -->
@@ -13894,10 +12678,6 @@ Stub for Claim C04G1.
 Referenced by: **[Package C04top](#package-c04top)**
 
 Supports: **[Claim C04G1](#claim-c04g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C04E1 -->
-References: [Package C04top](#package-c04top)
 <!-- end caseproc -->
 
 Stub for Evidence C04E1.
@@ -13913,10 +12693,6 @@ Supported by: **[Justification C04J1](#justification-c04j1)**, [Evidence C04Esh]
 Supports: **[Strategy C04Sass](#strategy-c04sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C04G2 -->
-References: [Package C04top](#package-c04top)
-<!-- end caseproc -->
-
 Stub for Claim C04G2.
 
 <!-- caseproc element C04J1 -->
@@ -13926,10 +12702,6 @@ Stub for Claim C04G2.
 Referenced by: **[Package C04top](#package-c04top)**
 
 Supports: **[Claim C04G2](#claim-c04g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C04J1 -->
-References: [Package C04top](#package-c04top)
 <!-- end caseproc -->
 
 Stub for Justification C04J1.
@@ -13945,10 +12717,6 @@ Supported by: **[Assumption C04A1](#assumption-c04a1)**, [Evidence C04E2](#evide
 Supports: **[Strategy C04Sass](#strategy-c04sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C04G3 -->
-References: [Package C04top](#package-c04top)
-<!-- end caseproc -->
-
 Stub for Claim C04G3.
 
 <!-- caseproc element C04A1 -->
@@ -13960,10 +12728,6 @@ Referenced by: **[Package C04top](#package-c04top)**
 Supports: **[Claim C04G3](#claim-c04g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C04A1 -->
-References: [Package C04top](#package-c04top)
-<!-- end caseproc -->
-
 Stub for Assumption C04A1.
 
 <!-- caseproc element C04E2 -->
@@ -13973,10 +12737,6 @@ Stub for Assumption C04A1.
 Referenced by: **[Package C04top](#package-c04top)**
 
 Supports: **[Claim C04G3](#claim-c04g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C04E2 -->
-References: [Package C04top](#package-c04top)
 <!-- end caseproc -->
 
 Stub for Evidence C04E2.
@@ -13992,10 +12752,6 @@ Supported by: **[Claim C06top](#claim-c06top)**, [Context C05Xctx](#context-c05x
 Supports: [Claim C04top](#claim-c04top), [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C05top -->
-References: [Package C05top](#package-c05top), [Package G1](#package-g1), [Package C04top](#package-c04top)
-<!-- end caseproc -->
-
 Stub for Claim C05top.
 
 <!-- caseproc element C05Xctx -->
@@ -14007,10 +12763,6 @@ Referenced by: **[Package C05top](#package-c05top)**
 Supports: **[Claim C05top](#claim-c05top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C05Xctx -->
-References: [Package C05top](#package-c05top)
-<!-- end caseproc -->
-
 Stub for Context C05Xctx.
 
 <!-- caseproc element C05Esh -->
@@ -14020,10 +12772,6 @@ Stub for Context C05Xctx.
 Referenced by: **[Package C05top](#package-c05top)**
 
 Supports: **[Claim C05top](#claim-c05top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C05Esh -->
-References: [Package C05top](#package-c05top)
 <!-- end caseproc -->
 
 Stub for Evidence C05Esh.
@@ -14039,10 +12787,6 @@ Supported by: **[Claim C05G1](#claim-c05g1)**, [Claim C05G2](#claim-c05g2), [Cla
 Supports: **[Claim C05top](#claim-c05top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C05Sass -->
-References: [Package C05top](#package-c05top)
-<!-- end caseproc -->
-
 Stub for Strategy C05Sass.
 
 <!-- caseproc element C05G1 -->
@@ -14056,10 +12800,6 @@ Supported by: **[Evidence C05E1](#evidence-c05e1)**, [Context C05Xctx](#context-
 Supports: **[Strategy C05Sass](#strategy-c05sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C05G1 -->
-References: [Package C05top](#package-c05top)
-<!-- end caseproc -->
-
 Stub for Claim C05G1.
 
 <!-- caseproc element C05E1 -->
@@ -14069,10 +12809,6 @@ Stub for Claim C05G1.
 Referenced by: **[Package C05top](#package-c05top)**
 
 Supports: **[Claim C05G1](#claim-c05g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C05E1 -->
-References: [Package C05top](#package-c05top)
 <!-- end caseproc -->
 
 Stub for Evidence C05E1.
@@ -14088,10 +12824,6 @@ Supported by: **[Justification C05J1](#justification-c05j1)**, [Evidence C05Esh]
 Supports: **[Strategy C05Sass](#strategy-c05sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C05G2 -->
-References: [Package C05top](#package-c05top)
-<!-- end caseproc -->
-
 Stub for Claim C05G2.
 
 <!-- caseproc element C05J1 -->
@@ -14101,10 +12833,6 @@ Stub for Claim C05G2.
 Referenced by: **[Package C05top](#package-c05top)**
 
 Supports: **[Claim C05G2](#claim-c05g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C05J1 -->
-References: [Package C05top](#package-c05top)
 <!-- end caseproc -->
 
 Stub for Justification C05J1.
@@ -14120,10 +12848,6 @@ Supported by: **[Assumption C05A1](#assumption-c05a1)**, [Evidence C05E2](#evide
 Supports: **[Strategy C05Sass](#strategy-c05sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C05G3 -->
-References: [Package C05top](#package-c05top)
-<!-- end caseproc -->
-
 Stub for Claim C05G3.
 
 <!-- caseproc element C05A1 -->
@@ -14135,10 +12859,6 @@ Referenced by: **[Package C05top](#package-c05top)**
 Supports: **[Claim C05G3](#claim-c05g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C05A1 -->
-References: [Package C05top](#package-c05top)
-<!-- end caseproc -->
-
 Stub for Assumption C05A1.
 
 <!-- caseproc element C05E2 -->
@@ -14148,10 +12868,6 @@ Stub for Assumption C05A1.
 Referenced by: **[Package C05top](#package-c05top)**
 
 Supports: **[Claim C05G3](#claim-c05g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C05E2 -->
-References: [Package C05top](#package-c05top)
 <!-- end caseproc -->
 
 Stub for Evidence C05E2.
@@ -14167,10 +12883,6 @@ Supported by: **[Claim C07top](#claim-c07top)**, [Context C06Xctx](#context-c06x
 Supports: [Claim C05top](#claim-c05top), [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C06top -->
-References: [Package C06top](#package-c06top), [Package G1](#package-g1), [Package C05top](#package-c05top)
-<!-- end caseproc -->
-
 Stub for Claim C06top.
 
 <!-- caseproc element C06Xctx -->
@@ -14182,10 +12894,6 @@ Referenced by: **[Package C06top](#package-c06top)**
 Supports: **[Claim C06top](#claim-c06top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C06Xctx -->
-References: [Package C06top](#package-c06top)
-<!-- end caseproc -->
-
 Stub for Context C06Xctx.
 
 <!-- caseproc element C06Esh -->
@@ -14195,10 +12903,6 @@ Stub for Context C06Xctx.
 Referenced by: **[Package C06top](#package-c06top)**
 
 Supports: **[Claim C06top](#claim-c06top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C06Esh -->
-References: [Package C06top](#package-c06top)
 <!-- end caseproc -->
 
 Stub for Evidence C06Esh.
@@ -14214,10 +12918,6 @@ Supported by: **[Claim C06G1](#claim-c06g1)**, [Claim C06G2](#claim-c06g2), [Cla
 Supports: **[Claim C06top](#claim-c06top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C06Sass -->
-References: [Package C06top](#package-c06top)
-<!-- end caseproc -->
-
 Stub for Strategy C06Sass.
 
 <!-- caseproc element C06G1 -->
@@ -14231,10 +12931,6 @@ Supported by: **[Evidence C06E1](#evidence-c06e1)**, [Context C06Xctx](#context-
 Supports: **[Strategy C06Sass](#strategy-c06sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C06G1 -->
-References: [Package C06top](#package-c06top)
-<!-- end caseproc -->
-
 Stub for Claim C06G1.
 
 <!-- caseproc element C06E1 -->
@@ -14244,10 +12940,6 @@ Stub for Claim C06G1.
 Referenced by: **[Package C06top](#package-c06top)**
 
 Supports: **[Claim C06G1](#claim-c06g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C06E1 -->
-References: [Package C06top](#package-c06top)
 <!-- end caseproc -->
 
 Stub for Evidence C06E1.
@@ -14263,10 +12955,6 @@ Supported by: **[Justification C06J1](#justification-c06j1)**, [Evidence C06Esh]
 Supports: **[Strategy C06Sass](#strategy-c06sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C06G2 -->
-References: [Package C06top](#package-c06top)
-<!-- end caseproc -->
-
 Stub for Claim C06G2.
 
 <!-- caseproc element C06J1 -->
@@ -14276,10 +12964,6 @@ Stub for Claim C06G2.
 Referenced by: **[Package C06top](#package-c06top)**
 
 Supports: **[Claim C06G2](#claim-c06g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C06J1 -->
-References: [Package C06top](#package-c06top)
 <!-- end caseproc -->
 
 Stub for Justification C06J1.
@@ -14295,10 +12979,6 @@ Supported by: **[Assumption C06A1](#assumption-c06a1)**, [Evidence C06E2](#evide
 Supports: **[Strategy C06Sass](#strategy-c06sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C06G3 -->
-References: [Package C06top](#package-c06top)
-<!-- end caseproc -->
-
 Stub for Claim C06G3.
 
 <!-- caseproc element C06A1 -->
@@ -14310,10 +12990,6 @@ Referenced by: **[Package C06top](#package-c06top)**
 Supports: **[Claim C06G3](#claim-c06g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C06A1 -->
-References: [Package C06top](#package-c06top)
-<!-- end caseproc -->
-
 Stub for Assumption C06A1.
 
 <!-- caseproc element C06E2 -->
@@ -14323,10 +12999,6 @@ Stub for Assumption C06A1.
 Referenced by: **[Package C06top](#package-c06top)**
 
 Supports: **[Claim C06G3](#claim-c06g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C06E2 -->
-References: [Package C06top](#package-c06top)
 <!-- end caseproc -->
 
 Stub for Evidence C06E2.
@@ -14342,10 +13014,6 @@ Supported by: **[Claim C08top](#claim-c08top)**, [Context C07Xctx](#context-c07x
 Supports: [Claim C06top](#claim-c06top), [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C07top -->
-References: [Package C07top](#package-c07top), [Package G1](#package-g1), [Package C06top](#package-c06top)
-<!-- end caseproc -->
-
 Stub for Claim C07top.
 
 <!-- caseproc element C07Xctx -->
@@ -14357,10 +13025,6 @@ Referenced by: **[Package C07top](#package-c07top)**
 Supports: **[Claim C07top](#claim-c07top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C07Xctx -->
-References: [Package C07top](#package-c07top)
-<!-- end caseproc -->
-
 Stub for Context C07Xctx.
 
 <!-- caseproc element C07Esh -->
@@ -14370,10 +13034,6 @@ Stub for Context C07Xctx.
 Referenced by: **[Package C07top](#package-c07top)**
 
 Supports: **[Claim C07top](#claim-c07top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C07Esh -->
-References: [Package C07top](#package-c07top)
 <!-- end caseproc -->
 
 Stub for Evidence C07Esh.
@@ -14389,10 +13049,6 @@ Supported by: **[Claim C07G1](#claim-c07g1)**, [Claim C07G2](#claim-c07g2), [Cla
 Supports: **[Claim C07top](#claim-c07top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C07Sass -->
-References: [Package C07top](#package-c07top)
-<!-- end caseproc -->
-
 Stub for Strategy C07Sass.
 
 <!-- caseproc element C07G1 -->
@@ -14406,10 +13062,6 @@ Supported by: **[Evidence C07E1](#evidence-c07e1)**, [Context C07Xctx](#context-
 Supports: **[Strategy C07Sass](#strategy-c07sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C07G1 -->
-References: [Package C07top](#package-c07top)
-<!-- end caseproc -->
-
 Stub for Claim C07G1.
 
 <!-- caseproc element C07E1 -->
@@ -14419,10 +13071,6 @@ Stub for Claim C07G1.
 Referenced by: **[Package C07top](#package-c07top)**
 
 Supports: **[Claim C07G1](#claim-c07g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C07E1 -->
-References: [Package C07top](#package-c07top)
 <!-- end caseproc -->
 
 Stub for Evidence C07E1.
@@ -14438,10 +13086,6 @@ Supported by: **[Justification C07J1](#justification-c07j1)**, [Evidence C07Esh]
 Supports: **[Strategy C07Sass](#strategy-c07sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C07G2 -->
-References: [Package C07top](#package-c07top)
-<!-- end caseproc -->
-
 Stub for Claim C07G2.
 
 <!-- caseproc element C07J1 -->
@@ -14451,10 +13095,6 @@ Stub for Claim C07G2.
 Referenced by: **[Package C07top](#package-c07top)**
 
 Supports: **[Claim C07G2](#claim-c07g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C07J1 -->
-References: [Package C07top](#package-c07top)
 <!-- end caseproc -->
 
 Stub for Justification C07J1.
@@ -14470,10 +13110,6 @@ Supported by: **[Assumption C07A1](#assumption-c07a1)**, [Evidence C07E2](#evide
 Supports: **[Strategy C07Sass](#strategy-c07sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C07G3 -->
-References: [Package C07top](#package-c07top)
-<!-- end caseproc -->
-
 Stub for Claim C07G3.
 
 <!-- caseproc element C07A1 -->
@@ -14485,10 +13121,6 @@ Referenced by: **[Package C07top](#package-c07top)**
 Supports: **[Claim C07G3](#claim-c07g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C07A1 -->
-References: [Package C07top](#package-c07top)
-<!-- end caseproc -->
-
 Stub for Assumption C07A1.
 
 <!-- caseproc element C07E2 -->
@@ -14498,10 +13130,6 @@ Stub for Assumption C07A1.
 Referenced by: **[Package C07top](#package-c07top)**
 
 Supports: **[Claim C07G3](#claim-c07g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C07E2 -->
-References: [Package C07top](#package-c07top)
 <!-- end caseproc -->
 
 Stub for Evidence C07E2.
@@ -14517,10 +13145,6 @@ Supported by: **[Claim C09top](#claim-c09top)**, [Context C08Xctx](#context-c08x
 Supports: [Claim C07top](#claim-c07top), [Strategy L1Smain](#strategy-l1smain), [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C08top -->
-References: [Package C08top](#package-c08top), [Package G1](#package-g1), [Package L1top](#package-l1top), [Package C07top](#package-c07top)
-<!-- end caseproc -->
-
 Stub for Claim C08top.
 
 <!-- caseproc element C08Xctx -->
@@ -14532,10 +13156,6 @@ Referenced by: **[Package C08top](#package-c08top)**
 Supports: **[Claim C08top](#claim-c08top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C08Xctx -->
-References: [Package C08top](#package-c08top)
-<!-- end caseproc -->
-
 Stub for Context C08Xctx.
 
 <!-- caseproc element C08Esh -->
@@ -14545,10 +13165,6 @@ Stub for Context C08Xctx.
 Referenced by: **[Package C08top](#package-c08top)**
 
 Supports: **[Claim C08top](#claim-c08top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C08Esh -->
-References: [Package C08top](#package-c08top)
 <!-- end caseproc -->
 
 Stub for Evidence C08Esh.
@@ -14564,10 +13180,6 @@ Supported by: **[Claim C08G1](#claim-c08g1)**, [Claim C08G2](#claim-c08g2), [Cla
 Supports: **[Claim C08top](#claim-c08top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C08Sass -->
-References: [Package C08top](#package-c08top)
-<!-- end caseproc -->
-
 Stub for Strategy C08Sass.
 
 <!-- caseproc element C08G1 -->
@@ -14581,10 +13193,6 @@ Supported by: **[Evidence C08E1](#evidence-c08e1)**, [Context C08Xctx](#context-
 Supports: **[Strategy C08Sass](#strategy-c08sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C08G1 -->
-References: [Package C08top](#package-c08top)
-<!-- end caseproc -->
-
 Stub for Claim C08G1.
 
 <!-- caseproc element C08E1 -->
@@ -14594,10 +13202,6 @@ Stub for Claim C08G1.
 Referenced by: **[Package C08top](#package-c08top)**
 
 Supports: **[Claim C08G1](#claim-c08g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C08E1 -->
-References: [Package C08top](#package-c08top)
 <!-- end caseproc -->
 
 Stub for Evidence C08E1.
@@ -14613,10 +13217,6 @@ Supported by: **[Justification C08J1](#justification-c08j1)**, [Evidence C08Esh]
 Supports: **[Strategy C08Sass](#strategy-c08sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C08G2 -->
-References: [Package C08top](#package-c08top)
-<!-- end caseproc -->
-
 Stub for Claim C08G2.
 
 <!-- caseproc element C08J1 -->
@@ -14626,10 +13226,6 @@ Stub for Claim C08G2.
 Referenced by: **[Package C08top](#package-c08top)**
 
 Supports: **[Claim C08G2](#claim-c08g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C08J1 -->
-References: [Package C08top](#package-c08top)
 <!-- end caseproc -->
 
 Stub for Justification C08J1.
@@ -14645,10 +13241,6 @@ Supported by: **[Assumption C08A1](#assumption-c08a1)**, [Evidence C08E2](#evide
 Supports: **[Strategy C08Sass](#strategy-c08sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C08G3 -->
-References: [Package C08top](#package-c08top)
-<!-- end caseproc -->
-
 Stub for Claim C08G3.
 
 <!-- caseproc element C08A1 -->
@@ -14660,10 +13252,6 @@ Referenced by: **[Package C08top](#package-c08top)**
 Supports: **[Claim C08G3](#claim-c08g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C08A1 -->
-References: [Package C08top](#package-c08top)
-<!-- end caseproc -->
-
 Stub for Assumption C08A1.
 
 <!-- caseproc element C08E2 -->
@@ -14673,10 +13261,6 @@ Stub for Assumption C08A1.
 Referenced by: **[Package C08top](#package-c08top)**
 
 Supports: **[Claim C08G3](#claim-c08g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C08E2 -->
-References: [Package C08top](#package-c08top)
 <!-- end caseproc -->
 
 Stub for Evidence C08E2.
@@ -14692,10 +13276,6 @@ Supported by: **[Claim C10top](#claim-c10top)**, [Context C09Xctx](#context-c09x
 Supports: [Claim C08top](#claim-c08top), [Strategy L1Smain](#strategy-l1smain), [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C09top -->
-References: [Package C09top](#package-c09top), [Package G1](#package-g1), [Package L1top](#package-l1top), [Package C08top](#package-c08top)
-<!-- end caseproc -->
-
 Stub for Claim C09top.
 
 <!-- caseproc element C09Xctx -->
@@ -14707,10 +13287,6 @@ Referenced by: **[Package C09top](#package-c09top)**
 Supports: **[Claim C09top](#claim-c09top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C09Xctx -->
-References: [Package C09top](#package-c09top)
-<!-- end caseproc -->
-
 Stub for Context C09Xctx.
 
 <!-- caseproc element C09Esh -->
@@ -14720,10 +13296,6 @@ Stub for Context C09Xctx.
 Referenced by: **[Package C09top](#package-c09top)**
 
 Supports: **[Claim C09top](#claim-c09top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C09Esh -->
-References: [Package C09top](#package-c09top)
 <!-- end caseproc -->
 
 Stub for Evidence C09Esh.
@@ -14739,10 +13311,6 @@ Supported by: **[Claim C09G1](#claim-c09g1)**, [Claim C09G2](#claim-c09g2), [Cla
 Supports: **[Claim C09top](#claim-c09top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C09Sass -->
-References: [Package C09top](#package-c09top)
-<!-- end caseproc -->
-
 Stub for Strategy C09Sass.
 
 <!-- caseproc element C09G1 -->
@@ -14756,10 +13324,6 @@ Supported by: **[Evidence C09E1](#evidence-c09e1)**, [Context C09Xctx](#context-
 Supports: **[Strategy C09Sass](#strategy-c09sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C09G1 -->
-References: [Package C09top](#package-c09top)
-<!-- end caseproc -->
-
 Stub for Claim C09G1.
 
 <!-- caseproc element C09E1 -->
@@ -14769,10 +13333,6 @@ Stub for Claim C09G1.
 Referenced by: **[Package C09top](#package-c09top)**
 
 Supports: **[Claim C09G1](#claim-c09g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C09E1 -->
-References: [Package C09top](#package-c09top)
 <!-- end caseproc -->
 
 Stub for Evidence C09E1.
@@ -14788,10 +13348,6 @@ Supported by: **[Justification C09J1](#justification-c09j1)**, [Evidence C09Esh]
 Supports: **[Strategy C09Sass](#strategy-c09sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C09G2 -->
-References: [Package C09top](#package-c09top)
-<!-- end caseproc -->
-
 Stub for Claim C09G2.
 
 <!-- caseproc element C09J1 -->
@@ -14801,10 +13357,6 @@ Stub for Claim C09G2.
 Referenced by: **[Package C09top](#package-c09top)**
 
 Supports: **[Claim C09G2](#claim-c09g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C09J1 -->
-References: [Package C09top](#package-c09top)
 <!-- end caseproc -->
 
 Stub for Justification C09J1.
@@ -14820,10 +13372,6 @@ Supported by: **[Assumption C09A1](#assumption-c09a1)**, [Evidence C09E2](#evide
 Supports: **[Strategy C09Sass](#strategy-c09sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C09G3 -->
-References: [Package C09top](#package-c09top)
-<!-- end caseproc -->
-
 Stub for Claim C09G3.
 
 <!-- caseproc element C09A1 -->
@@ -14835,10 +13383,6 @@ Referenced by: **[Package C09top](#package-c09top)**
 Supports: **[Claim C09G3](#claim-c09g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C09A1 -->
-References: [Package C09top](#package-c09top)
-<!-- end caseproc -->
-
 Stub for Assumption C09A1.
 
 <!-- caseproc element C09E2 -->
@@ -14848,10 +13392,6 @@ Stub for Assumption C09A1.
 Referenced by: **[Package C09top](#package-c09top)**
 
 Supports: **[Claim C09G3](#claim-c09g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C09E2 -->
-References: [Package C09top](#package-c09top)
 <!-- end caseproc -->
 
 Stub for Evidence C09E2.
@@ -14867,10 +13407,6 @@ Supported by: **[Claim C11top](#claim-c11top)**, [Context C10Xctx](#context-c10x
 Supports: [Claim C09top](#claim-c09top), [Strategy L1Smain](#strategy-l1smain), [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C10top -->
-References: [Package C10top](#package-c10top), [Package G1](#package-g1), [Package L1top](#package-l1top), [Package C09top](#package-c09top)
-<!-- end caseproc -->
-
 Stub for Claim C10top.
 
 <!-- caseproc element C10Xctx -->
@@ -14882,10 +13418,6 @@ Referenced by: **[Package C10top](#package-c10top)**
 Supports: **[Claim C10top](#claim-c10top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C10Xctx -->
-References: [Package C10top](#package-c10top)
-<!-- end caseproc -->
-
 Stub for Context C10Xctx.
 
 <!-- caseproc element C10Esh -->
@@ -14895,10 +13427,6 @@ Stub for Context C10Xctx.
 Referenced by: **[Package C10top](#package-c10top)**
 
 Supports: **[Claim C10top](#claim-c10top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C10Esh -->
-References: [Package C10top](#package-c10top)
 <!-- end caseproc -->
 
 Stub for Evidence C10Esh.
@@ -14914,10 +13442,6 @@ Supported by: **[Claim C10G1](#claim-c10g1)**, [Claim C10G2](#claim-c10g2), [Cla
 Supports: **[Claim C10top](#claim-c10top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C10Sass -->
-References: [Package C10top](#package-c10top)
-<!-- end caseproc -->
-
 Stub for Strategy C10Sass.
 
 <!-- caseproc element C10G1 -->
@@ -14931,10 +13455,6 @@ Supported by: **[Evidence C10E1](#evidence-c10e1)**, [Context C10Xctx](#context-
 Supports: **[Strategy C10Sass](#strategy-c10sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C10G1 -->
-References: [Package C10top](#package-c10top)
-<!-- end caseproc -->
-
 Stub for Claim C10G1.
 
 <!-- caseproc element C10E1 -->
@@ -14944,10 +13464,6 @@ Stub for Claim C10G1.
 Referenced by: **[Package C10top](#package-c10top)**
 
 Supports: **[Claim C10G1](#claim-c10g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C10E1 -->
-References: [Package C10top](#package-c10top)
 <!-- end caseproc -->
 
 Stub for Evidence C10E1.
@@ -14963,10 +13479,6 @@ Supported by: **[Justification C10J1](#justification-c10j1)**, [Evidence C10Esh]
 Supports: **[Strategy C10Sass](#strategy-c10sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C10G2 -->
-References: [Package C10top](#package-c10top)
-<!-- end caseproc -->
-
 Stub for Claim C10G2.
 
 <!-- caseproc element C10J1 -->
@@ -14976,10 +13488,6 @@ Stub for Claim C10G2.
 Referenced by: **[Package C10top](#package-c10top)**
 
 Supports: **[Claim C10G2](#claim-c10g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C10J1 -->
-References: [Package C10top](#package-c10top)
 <!-- end caseproc -->
 
 Stub for Justification C10J1.
@@ -14995,10 +13503,6 @@ Supported by: **[Assumption C10A1](#assumption-c10a1)**, [Evidence C10E2](#evide
 Supports: **[Strategy C10Sass](#strategy-c10sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C10G3 -->
-References: [Package C10top](#package-c10top)
-<!-- end caseproc -->
-
 Stub for Claim C10G3.
 
 <!-- caseproc element C10A1 -->
@@ -15010,10 +13514,6 @@ Referenced by: **[Package C10top](#package-c10top)**
 Supports: **[Claim C10G3](#claim-c10g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C10A1 -->
-References: [Package C10top](#package-c10top)
-<!-- end caseproc -->
-
 Stub for Assumption C10A1.
 
 <!-- caseproc element C10E2 -->
@@ -15023,10 +13523,6 @@ Stub for Assumption C10A1.
 Referenced by: **[Package C10top](#package-c10top)**
 
 Supports: **[Claim C10G3](#claim-c10g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C10E2 -->
-References: [Package C10top](#package-c10top)
 <!-- end caseproc -->
 
 Stub for Evidence C10E2.
@@ -15042,10 +13538,6 @@ Supported by: **[Context C11Xctx](#context-c11xctx)**, [Evidence C11Esh](#eviden
 Supports: [Claim C10top](#claim-c10top), [Strategy L1Smain](#strategy-l1smain), [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C11top -->
-References: [Package C11top](#package-c11top), [Package G1](#package-g1), [Package L1top](#package-l1top), [Package C10top](#package-c10top)
-<!-- end caseproc -->
-
 Stub for Claim C11top.
 
 <!-- caseproc element C11Xctx -->
@@ -15057,10 +13549,6 @@ Referenced by: **[Package C11top](#package-c11top)**
 Supports: **[Claim C11top](#claim-c11top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C11Xctx -->
-References: [Package C11top](#package-c11top)
-<!-- end caseproc -->
-
 Stub for Context C11Xctx.
 
 <!-- caseproc element C11Esh -->
@@ -15070,10 +13558,6 @@ Stub for Context C11Xctx.
 Referenced by: **[Package C11top](#package-c11top)**
 
 Supports: **[Claim C11top](#claim-c11top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C11Esh -->
-References: [Package C11top](#package-c11top)
 <!-- end caseproc -->
 
 Stub for Evidence C11Esh.
@@ -15089,10 +13573,6 @@ Supported by: **[Claim C11G1](#claim-c11g1)**, [Claim C11G2](#claim-c11g2), [Cla
 Supports: **[Claim C11top](#claim-c11top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C11Sass -->
-References: [Package C11top](#package-c11top)
-<!-- end caseproc -->
-
 Stub for Strategy C11Sass.
 
 <!-- caseproc element C11G1 -->
@@ -15106,10 +13586,6 @@ Supported by: **[Evidence C11E1](#evidence-c11e1)**, [Context C11Xctx](#context-
 Supports: **[Strategy C11Sass](#strategy-c11sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C11G1 -->
-References: [Package C11top](#package-c11top)
-<!-- end caseproc -->
-
 Stub for Claim C11G1.
 
 <!-- caseproc element C11E1 -->
@@ -15119,10 +13595,6 @@ Stub for Claim C11G1.
 Referenced by: **[Package C11top](#package-c11top)**
 
 Supports: **[Claim C11G1](#claim-c11g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C11E1 -->
-References: [Package C11top](#package-c11top)
 <!-- end caseproc -->
 
 Stub for Evidence C11E1.
@@ -15138,10 +13610,6 @@ Supported by: **[Justification C11J1](#justification-c11j1)**, [Evidence C11Esh]
 Supports: **[Strategy C11Sass](#strategy-c11sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C11G2 -->
-References: [Package C11top](#package-c11top)
-<!-- end caseproc -->
-
 Stub for Claim C11G2.
 
 <!-- caseproc element C11J1 -->
@@ -15151,10 +13619,6 @@ Stub for Claim C11G2.
 Referenced by: **[Package C11top](#package-c11top)**
 
 Supports: **[Claim C11G2](#claim-c11g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C11J1 -->
-References: [Package C11top](#package-c11top)
 <!-- end caseproc -->
 
 Stub for Justification C11J1.
@@ -15170,10 +13634,6 @@ Supported by: **[Assumption C11A1](#assumption-c11a1)**, [Evidence C11E2](#evide
 Supports: **[Strategy C11Sass](#strategy-c11sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C11G3 -->
-References: [Package C11top](#package-c11top)
-<!-- end caseproc -->
-
 Stub for Claim C11G3.
 
 <!-- caseproc element C11A1 -->
@@ -15185,10 +13645,6 @@ Referenced by: **[Package C11top](#package-c11top)**
 Supports: **[Claim C11G3](#claim-c11g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C11A1 -->
-References: [Package C11top](#package-c11top)
-<!-- end caseproc -->
-
 Stub for Assumption C11A1.
 
 <!-- caseproc element C11E2 -->
@@ -15198,10 +13654,6 @@ Stub for Assumption C11A1.
 Referenced by: **[Package C11top](#package-c11top)**
 
 Supports: **[Claim C11G3](#claim-c11g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C11E2 -->
-References: [Package C11top](#package-c11top)
 <!-- end caseproc -->
 
 Stub for Evidence C11E2.
@@ -15217,10 +13669,6 @@ Supported by: **[Context C12Xctx](#context-c12xctx)**, [Evidence C12Esh](#eviden
 Supports: [Strategy L1Smain](#strategy-l1smain), [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C12top -->
-References: [Package C12top](#package-c12top), [Package G1](#package-g1), [Package L1top](#package-l1top)
-<!-- end caseproc -->
-
 Stub for Claim C12top.
 
 <!-- caseproc element C12Xctx -->
@@ -15232,10 +13680,6 @@ Referenced by: **[Package C12top](#package-c12top)**
 Supports: **[Claim C12top](#claim-c12top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C12Xctx -->
-References: [Package C12top](#package-c12top)
-<!-- end caseproc -->
-
 Stub for Context C12Xctx.
 
 <!-- caseproc element C12Esh -->
@@ -15245,10 +13689,6 @@ Stub for Context C12Xctx.
 Referenced by: **[Package C12top](#package-c12top)**
 
 Supports: **[Claim C12top](#claim-c12top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C12Esh -->
-References: [Package C12top](#package-c12top)
 <!-- end caseproc -->
 
 Stub for Evidence C12Esh.
@@ -15264,10 +13704,6 @@ Supported by: **[Claim C12G1](#claim-c12g1)**, [Claim C12G2](#claim-c12g2), [Cla
 Supports: **[Claim C12top](#claim-c12top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C12Sass -->
-References: [Package C12top](#package-c12top)
-<!-- end caseproc -->
-
 Stub for Strategy C12Sass.
 
 <!-- caseproc element C12G1 -->
@@ -15281,10 +13717,6 @@ Supported by: **[Evidence C12E1](#evidence-c12e1)**, [Context C12Xctx](#context-
 Supports: **[Strategy C12Sass](#strategy-c12sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C12G1 -->
-References: [Package C12top](#package-c12top)
-<!-- end caseproc -->
-
 Stub for Claim C12G1.
 
 <!-- caseproc element C12E1 -->
@@ -15294,10 +13726,6 @@ Stub for Claim C12G1.
 Referenced by: **[Package C12top](#package-c12top)**
 
 Supports: **[Claim C12G1](#claim-c12g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C12E1 -->
-References: [Package C12top](#package-c12top)
 <!-- end caseproc -->
 
 Stub for Evidence C12E1.
@@ -15313,10 +13741,6 @@ Supported by: **[Justification C12J1](#justification-c12j1)**, [Evidence C12Esh]
 Supports: **[Strategy C12Sass](#strategy-c12sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C12G2 -->
-References: [Package C12top](#package-c12top)
-<!-- end caseproc -->
-
 Stub for Claim C12G2.
 
 <!-- caseproc element C12J1 -->
@@ -15326,10 +13750,6 @@ Stub for Claim C12G2.
 Referenced by: **[Package C12top](#package-c12top)**
 
 Supports: **[Claim C12G2](#claim-c12g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C12J1 -->
-References: [Package C12top](#package-c12top)
 <!-- end caseproc -->
 
 Stub for Justification C12J1.
@@ -15345,10 +13765,6 @@ Supported by: **[Assumption C12A1](#assumption-c12a1)**, [Evidence C12E2](#evide
 Supports: **[Strategy C12Sass](#strategy-c12sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C12G3 -->
-References: [Package C12top](#package-c12top)
-<!-- end caseproc -->
-
 Stub for Claim C12G3.
 
 <!-- caseproc element C12A1 -->
@@ -15360,10 +13776,6 @@ Referenced by: **[Package C12top](#package-c12top)**
 Supports: **[Claim C12G3](#claim-c12g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C12A1 -->
-References: [Package C12top](#package-c12top)
-<!-- end caseproc -->
-
 Stub for Assumption C12A1.
 
 <!-- caseproc element C12E2 -->
@@ -15373,10 +13785,6 @@ Stub for Assumption C12A1.
 Referenced by: **[Package C12top](#package-c12top)**
 
 Supports: **[Claim C12G3](#claim-c12g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C12E2 -->
-References: [Package C12top](#package-c12top)
 <!-- end caseproc -->
 
 Stub for Evidence C12E2.
@@ -15392,10 +13800,6 @@ Supported by: **[Context C13Xctx](#context-c13xctx)**, [Evidence C13Esh](#eviden
 Supports: [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C13top -->
-References: [Package C13top](#package-c13top), [Package G1](#package-g1)
-<!-- end caseproc -->
-
 Stub for Claim C13top.
 
 <!-- caseproc element C13Xctx -->
@@ -15407,10 +13811,6 @@ Referenced by: **[Package C13top](#package-c13top)**
 Supports: **[Claim C13top](#claim-c13top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C13Xctx -->
-References: [Package C13top](#package-c13top)
-<!-- end caseproc -->
-
 Stub for Context C13Xctx.
 
 <!-- caseproc element C13Esh -->
@@ -15420,10 +13820,6 @@ Stub for Context C13Xctx.
 Referenced by: **[Package C13top](#package-c13top)**
 
 Supports: **[Claim C13top](#claim-c13top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C13Esh -->
-References: [Package C13top](#package-c13top)
 <!-- end caseproc -->
 
 Stub for Evidence C13Esh.
@@ -15439,10 +13835,6 @@ Supported by: **[Claim C13G1](#claim-c13g1)**, [Claim C13G2](#claim-c13g2), [Cla
 Supports: **[Claim C13top](#claim-c13top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C13Sass -->
-References: [Package C13top](#package-c13top)
-<!-- end caseproc -->
-
 Stub for Strategy C13Sass.
 
 <!-- caseproc element C13G1 -->
@@ -15456,10 +13848,6 @@ Supported by: **[Evidence C13E1](#evidence-c13e1)**, [Context C13Xctx](#context-
 Supports: **[Strategy C13Sass](#strategy-c13sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C13G1 -->
-References: [Package C13top](#package-c13top)
-<!-- end caseproc -->
-
 Stub for Claim C13G1.
 
 <!-- caseproc element C13E1 -->
@@ -15469,10 +13857,6 @@ Stub for Claim C13G1.
 Referenced by: **[Package C13top](#package-c13top)**
 
 Supports: **[Claim C13G1](#claim-c13g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C13E1 -->
-References: [Package C13top](#package-c13top)
 <!-- end caseproc -->
 
 Stub for Evidence C13E1.
@@ -15488,10 +13872,6 @@ Supported by: **[Justification C13J1](#justification-c13j1)**, [Evidence C13Esh]
 Supports: **[Strategy C13Sass](#strategy-c13sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C13G2 -->
-References: [Package C13top](#package-c13top)
-<!-- end caseproc -->
-
 Stub for Claim C13G2.
 
 <!-- caseproc element C13J1 -->
@@ -15501,10 +13881,6 @@ Stub for Claim C13G2.
 Referenced by: **[Package C13top](#package-c13top)**
 
 Supports: **[Claim C13G2](#claim-c13g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C13J1 -->
-References: [Package C13top](#package-c13top)
 <!-- end caseproc -->
 
 Stub for Justification C13J1.
@@ -15520,10 +13896,6 @@ Supported by: **[Assumption C13A1](#assumption-c13a1)**, [Evidence C13E2](#evide
 Supports: **[Strategy C13Sass](#strategy-c13sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C13G3 -->
-References: [Package C13top](#package-c13top)
-<!-- end caseproc -->
-
 Stub for Claim C13G3.
 
 <!-- caseproc element C13A1 -->
@@ -15535,10 +13907,6 @@ Referenced by: **[Package C13top](#package-c13top)**
 Supports: **[Claim C13G3](#claim-c13g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C13A1 -->
-References: [Package C13top](#package-c13top)
-<!-- end caseproc -->
-
 Stub for Assumption C13A1.
 
 <!-- caseproc element C13E2 -->
@@ -15548,10 +13916,6 @@ Stub for Assumption C13A1.
 Referenced by: **[Package C13top](#package-c13top)**
 
 Supports: **[Claim C13G3](#claim-c13g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C13E2 -->
-References: [Package C13top](#package-c13top)
 <!-- end caseproc -->
 
 Stub for Evidence C13E2.
@@ -15567,10 +13931,6 @@ Supported by: **[Context C14Xctx](#context-c14xctx)**, [Evidence C14Esh](#eviden
 Supports: [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C14top -->
-References: [Package C14top](#package-c14top), [Package G1](#package-g1)
-<!-- end caseproc -->
-
 Stub for Claim C14top.
 
 <!-- caseproc element C14Xctx -->
@@ -15582,10 +13942,6 @@ Referenced by: **[Package C14top](#package-c14top)**
 Supports: **[Claim C14top](#claim-c14top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C14Xctx -->
-References: [Package C14top](#package-c14top)
-<!-- end caseproc -->
-
 Stub for Context C14Xctx.
 
 <!-- caseproc element C14Esh -->
@@ -15595,10 +13951,6 @@ Stub for Context C14Xctx.
 Referenced by: **[Package C14top](#package-c14top)**
 
 Supports: **[Claim C14top](#claim-c14top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C14Esh -->
-References: [Package C14top](#package-c14top)
 <!-- end caseproc -->
 
 Stub for Evidence C14Esh.
@@ -15614,10 +13966,6 @@ Supported by: **[Claim C14G1](#claim-c14g1)**, [Claim C14G2](#claim-c14g2), [Cla
 Supports: **[Claim C14top](#claim-c14top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C14Sass -->
-References: [Package C14top](#package-c14top)
-<!-- end caseproc -->
-
 Stub for Strategy C14Sass.
 
 <!-- caseproc element C14G1 -->
@@ -15631,10 +13979,6 @@ Supported by: **[Evidence C14E1](#evidence-c14e1)**, [Context C14Xctx](#context-
 Supports: **[Strategy C14Sass](#strategy-c14sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C14G1 -->
-References: [Package C14top](#package-c14top)
-<!-- end caseproc -->
-
 Stub for Claim C14G1.
 
 <!-- caseproc element C14E1 -->
@@ -15644,10 +13988,6 @@ Stub for Claim C14G1.
 Referenced by: **[Package C14top](#package-c14top)**
 
 Supports: **[Claim C14G1](#claim-c14g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C14E1 -->
-References: [Package C14top](#package-c14top)
 <!-- end caseproc -->
 
 Stub for Evidence C14E1.
@@ -15663,10 +14003,6 @@ Supported by: **[Justification C14J1](#justification-c14j1)**, [Evidence C14Esh]
 Supports: **[Strategy C14Sass](#strategy-c14sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C14G2 -->
-References: [Package C14top](#package-c14top)
-<!-- end caseproc -->
-
 Stub for Claim C14G2.
 
 <!-- caseproc element C14J1 -->
@@ -15676,10 +14012,6 @@ Stub for Claim C14G2.
 Referenced by: **[Package C14top](#package-c14top)**
 
 Supports: **[Claim C14G2](#claim-c14g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C14J1 -->
-References: [Package C14top](#package-c14top)
 <!-- end caseproc -->
 
 Stub for Justification C14J1.
@@ -15695,10 +14027,6 @@ Supported by: **[Assumption C14A1](#assumption-c14a1)**, [Evidence C14E2](#evide
 Supports: **[Strategy C14Sass](#strategy-c14sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C14G3 -->
-References: [Package C14top](#package-c14top)
-<!-- end caseproc -->
-
 Stub for Claim C14G3.
 
 <!-- caseproc element C14A1 -->
@@ -15710,10 +14038,6 @@ Referenced by: **[Package C14top](#package-c14top)**
 Supports: **[Claim C14G3](#claim-c14g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C14A1 -->
-References: [Package C14top](#package-c14top)
-<!-- end caseproc -->
-
 Stub for Assumption C14A1.
 
 <!-- caseproc element C14E2 -->
@@ -15723,10 +14047,6 @@ Stub for Assumption C14A1.
 Referenced by: **[Package C14top](#package-c14top)**
 
 Supports: **[Claim C14G3](#claim-c14g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C14E2 -->
-References: [Package C14top](#package-c14top)
 <!-- end caseproc -->
 
 Stub for Evidence C14E2.
@@ -15742,10 +14062,6 @@ Supported by: **[Context C15Xctx](#context-c15xctx)**, [Evidence C15Esh](#eviden
 Supports: [Strategy L2Smain](#strategy-l2smain), [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C15top -->
-References: [Package C15top](#package-c15top), [Package G1](#package-g1), [Package L2top](#package-l2top)
-<!-- end caseproc -->
-
 Stub for Claim C15top.
 
 <!-- caseproc element C15Xctx -->
@@ -15757,10 +14073,6 @@ Referenced by: **[Package C15top](#package-c15top)**
 Supports: **[Claim C15top](#claim-c15top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C15Xctx -->
-References: [Package C15top](#package-c15top)
-<!-- end caseproc -->
-
 Stub for Context C15Xctx.
 
 <!-- caseproc element C15Esh -->
@@ -15770,10 +14082,6 @@ Stub for Context C15Xctx.
 Referenced by: **[Package C15top](#package-c15top)**
 
 Supports: **[Claim C15top](#claim-c15top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C15Esh -->
-References: [Package C15top](#package-c15top)
 <!-- end caseproc -->
 
 Stub for Evidence C15Esh.
@@ -15789,10 +14097,6 @@ Supported by: **[Claim C15G1](#claim-c15g1)**, [Claim C15G2](#claim-c15g2), [Cla
 Supports: **[Claim C15top](#claim-c15top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C15Sass -->
-References: [Package C15top](#package-c15top)
-<!-- end caseproc -->
-
 Stub for Strategy C15Sass.
 
 <!-- caseproc element C15G1 -->
@@ -15806,10 +14110,6 @@ Supported by: **[Evidence C15E1](#evidence-c15e1)**, [Context C15Xctx](#context-
 Supports: **[Strategy C15Sass](#strategy-c15sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C15G1 -->
-References: [Package C15top](#package-c15top)
-<!-- end caseproc -->
-
 Stub for Claim C15G1.
 
 <!-- caseproc element C15E1 -->
@@ -15819,10 +14119,6 @@ Stub for Claim C15G1.
 Referenced by: **[Package C15top](#package-c15top)**
 
 Supports: **[Claim C15G1](#claim-c15g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C15E1 -->
-References: [Package C15top](#package-c15top)
 <!-- end caseproc -->
 
 Stub for Evidence C15E1.
@@ -15838,10 +14134,6 @@ Supported by: **[Justification C15J1](#justification-c15j1)**, [Evidence C15Esh]
 Supports: **[Strategy C15Sass](#strategy-c15sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C15G2 -->
-References: [Package C15top](#package-c15top)
-<!-- end caseproc -->
-
 Stub for Claim C15G2.
 
 <!-- caseproc element C15J1 -->
@@ -15851,10 +14143,6 @@ Stub for Claim C15G2.
 Referenced by: **[Package C15top](#package-c15top)**
 
 Supports: **[Claim C15G2](#claim-c15g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C15J1 -->
-References: [Package C15top](#package-c15top)
 <!-- end caseproc -->
 
 Stub for Justification C15J1.
@@ -15870,10 +14158,6 @@ Supported by: **[Assumption C15A1](#assumption-c15a1)**, [Evidence C15E2](#evide
 Supports: **[Strategy C15Sass](#strategy-c15sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C15G3 -->
-References: [Package C15top](#package-c15top)
-<!-- end caseproc -->
-
 Stub for Claim C15G3.
 
 <!-- caseproc element C15A1 -->
@@ -15885,10 +14169,6 @@ Referenced by: **[Package C15top](#package-c15top)**
 Supports: **[Claim C15G3](#claim-c15g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C15A1 -->
-References: [Package C15top](#package-c15top)
-<!-- end caseproc -->
-
 Stub for Assumption C15A1.
 
 <!-- caseproc element C15E2 -->
@@ -15898,10 +14178,6 @@ Stub for Assumption C15A1.
 Referenced by: **[Package C15top](#package-c15top)**
 
 Supports: **[Claim C15G3](#claim-c15g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C15E2 -->
-References: [Package C15top](#package-c15top)
 <!-- end caseproc -->
 
 Stub for Evidence C15E2.
@@ -15917,10 +14193,6 @@ Supported by: **[Context C16Xctx](#context-c16xctx)**, [Evidence C16Esh](#eviden
 Supports: [Strategy L2Smain](#strategy-l2smain), [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C16top -->
-References: [Package C16top](#package-c16top), [Package G1](#package-g1), [Package L2top](#package-l2top)
-<!-- end caseproc -->
-
 Stub for Claim C16top.
 
 <!-- caseproc element C16Xctx -->
@@ -15932,10 +14204,6 @@ Referenced by: **[Package C16top](#package-c16top)**
 Supports: **[Claim C16top](#claim-c16top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C16Xctx -->
-References: [Package C16top](#package-c16top)
-<!-- end caseproc -->
-
 Stub for Context C16Xctx.
 
 <!-- caseproc element C16Esh -->
@@ -15945,10 +14213,6 @@ Stub for Context C16Xctx.
 Referenced by: **[Package C16top](#package-c16top)**
 
 Supports: **[Claim C16top](#claim-c16top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C16Esh -->
-References: [Package C16top](#package-c16top)
 <!-- end caseproc -->
 
 Stub for Evidence C16Esh.
@@ -15964,10 +14228,6 @@ Supported by: **[Claim C16G1](#claim-c16g1)**, [Claim C16G2](#claim-c16g2), [Cla
 Supports: **[Claim C16top](#claim-c16top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C16Sass -->
-References: [Package C16top](#package-c16top)
-<!-- end caseproc -->
-
 Stub for Strategy C16Sass.
 
 <!-- caseproc element C16G1 -->
@@ -15981,10 +14241,6 @@ Supported by: **[Evidence C16E1](#evidence-c16e1)**, [Context C16Xctx](#context-
 Supports: **[Strategy C16Sass](#strategy-c16sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C16G1 -->
-References: [Package C16top](#package-c16top)
-<!-- end caseproc -->
-
 Stub for Claim C16G1.
 
 <!-- caseproc element C16E1 -->
@@ -15994,10 +14250,6 @@ Stub for Claim C16G1.
 Referenced by: **[Package C16top](#package-c16top)**
 
 Supports: **[Claim C16G1](#claim-c16g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C16E1 -->
-References: [Package C16top](#package-c16top)
 <!-- end caseproc -->
 
 Stub for Evidence C16E1.
@@ -16013,10 +14265,6 @@ Supported by: **[Justification C16J1](#justification-c16j1)**, [Evidence C16Esh]
 Supports: **[Strategy C16Sass](#strategy-c16sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C16G2 -->
-References: [Package C16top](#package-c16top)
-<!-- end caseproc -->
-
 Stub for Claim C16G2.
 
 <!-- caseproc element C16J1 -->
@@ -16026,10 +14274,6 @@ Stub for Claim C16G2.
 Referenced by: **[Package C16top](#package-c16top)**
 
 Supports: **[Claim C16G2](#claim-c16g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C16J1 -->
-References: [Package C16top](#package-c16top)
 <!-- end caseproc -->
 
 Stub for Justification C16J1.
@@ -16045,10 +14289,6 @@ Supported by: **[Assumption C16A1](#assumption-c16a1)**, [Evidence C16E2](#evide
 Supports: **[Strategy C16Sass](#strategy-c16sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C16G3 -->
-References: [Package C16top](#package-c16top)
-<!-- end caseproc -->
-
 Stub for Claim C16G3.
 
 <!-- caseproc element C16A1 -->
@@ -16060,10 +14300,6 @@ Referenced by: **[Package C16top](#package-c16top)**
 Supports: **[Claim C16G3](#claim-c16g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C16A1 -->
-References: [Package C16top](#package-c16top)
-<!-- end caseproc -->
-
 Stub for Assumption C16A1.
 
 <!-- caseproc element C16E2 -->
@@ -16073,10 +14309,6 @@ Stub for Assumption C16A1.
 Referenced by: **[Package C16top](#package-c16top)**
 
 Supports: **[Claim C16G3](#claim-c16g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C16E2 -->
-References: [Package C16top](#package-c16top)
 <!-- end caseproc -->
 
 Stub for Evidence C16E2.
@@ -16092,10 +14324,6 @@ Supported by: **[Context C17Xctx](#context-c17xctx)**, [Evidence C17Esh](#eviden
 Supports: [Strategy L2Smain](#strategy-l2smain), [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C17top -->
-References: [Package C17top](#package-c17top), [Package G1](#package-g1), [Package L2top](#package-l2top)
-<!-- end caseproc -->
-
 Stub for Claim C17top.
 
 <!-- caseproc element C17Xctx -->
@@ -16107,10 +14335,6 @@ Referenced by: **[Package C17top](#package-c17top)**
 Supports: **[Claim C17top](#claim-c17top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C17Xctx -->
-References: [Package C17top](#package-c17top)
-<!-- end caseproc -->
-
 Stub for Context C17Xctx.
 
 <!-- caseproc element C17Esh -->
@@ -16120,10 +14344,6 @@ Stub for Context C17Xctx.
 Referenced by: **[Package C17top](#package-c17top)**
 
 Supports: **[Claim C17top](#claim-c17top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C17Esh -->
-References: [Package C17top](#package-c17top)
 <!-- end caseproc -->
 
 Stub for Evidence C17Esh.
@@ -16139,10 +14359,6 @@ Supported by: **[Claim C17G1](#claim-c17g1)**, [Claim C17G2](#claim-c17g2), [Cla
 Supports: **[Claim C17top](#claim-c17top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C17Sass -->
-References: [Package C17top](#package-c17top)
-<!-- end caseproc -->
-
 Stub for Strategy C17Sass.
 
 <!-- caseproc element C17G1 -->
@@ -16156,10 +14372,6 @@ Supported by: **[Evidence C17E1](#evidence-c17e1)**, [Context C17Xctx](#context-
 Supports: **[Strategy C17Sass](#strategy-c17sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C17G1 -->
-References: [Package C17top](#package-c17top)
-<!-- end caseproc -->
-
 Stub for Claim C17G1.
 
 <!-- caseproc element C17E1 -->
@@ -16169,10 +14381,6 @@ Stub for Claim C17G1.
 Referenced by: **[Package C17top](#package-c17top)**
 
 Supports: **[Claim C17G1](#claim-c17g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C17E1 -->
-References: [Package C17top](#package-c17top)
 <!-- end caseproc -->
 
 Stub for Evidence C17E1.
@@ -16188,10 +14396,6 @@ Supported by: **[Justification C17J1](#justification-c17j1)**, [Evidence C17Esh]
 Supports: **[Strategy C17Sass](#strategy-c17sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C17G2 -->
-References: [Package C17top](#package-c17top)
-<!-- end caseproc -->
-
 Stub for Claim C17G2.
 
 <!-- caseproc element C17J1 -->
@@ -16201,10 +14405,6 @@ Stub for Claim C17G2.
 Referenced by: **[Package C17top](#package-c17top)**
 
 Supports: **[Claim C17G2](#claim-c17g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C17J1 -->
-References: [Package C17top](#package-c17top)
 <!-- end caseproc -->
 
 Stub for Justification C17J1.
@@ -16220,10 +14420,6 @@ Supported by: **[Assumption C17A1](#assumption-c17a1)**, [Evidence C17E2](#evide
 Supports: **[Strategy C17Sass](#strategy-c17sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C17G3 -->
-References: [Package C17top](#package-c17top)
-<!-- end caseproc -->
-
 Stub for Claim C17G3.
 
 <!-- caseproc element C17A1 -->
@@ -16235,10 +14431,6 @@ Referenced by: **[Package C17top](#package-c17top)**
 Supports: **[Claim C17G3](#claim-c17g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C17A1 -->
-References: [Package C17top](#package-c17top)
-<!-- end caseproc -->
-
 Stub for Assumption C17A1.
 
 <!-- caseproc element C17E2 -->
@@ -16248,10 +14440,6 @@ Stub for Assumption C17A1.
 Referenced by: **[Package C17top](#package-c17top)**
 
 Supports: **[Claim C17G3](#claim-c17g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C17E2 -->
-References: [Package C17top](#package-c17top)
 <!-- end caseproc -->
 
 Stub for Evidence C17E2.
@@ -16267,10 +14455,6 @@ Supported by: **[Context C18Xctx](#context-c18xctx)**, [Evidence C18Esh](#eviden
 Supports: [Strategy L2Smain](#strategy-l2smain), [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C18top -->
-References: [Package C18top](#package-c18top), [Package G1](#package-g1), [Package L2top](#package-l2top)
-<!-- end caseproc -->
-
 Stub for Claim C18top.
 
 <!-- caseproc element C18Xctx -->
@@ -16282,10 +14466,6 @@ Referenced by: **[Package C18top](#package-c18top)**
 Supports: **[Claim C18top](#claim-c18top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C18Xctx -->
-References: [Package C18top](#package-c18top)
-<!-- end caseproc -->
-
 Stub for Context C18Xctx.
 
 <!-- caseproc element C18Esh -->
@@ -16295,10 +14475,6 @@ Stub for Context C18Xctx.
 Referenced by: **[Package C18top](#package-c18top)**
 
 Supports: **[Claim C18top](#claim-c18top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C18Esh -->
-References: [Package C18top](#package-c18top)
 <!-- end caseproc -->
 
 Stub for Evidence C18Esh.
@@ -16314,10 +14490,6 @@ Supported by: **[Claim C18G1](#claim-c18g1)**, [Claim C18G2](#claim-c18g2), [Cla
 Supports: **[Claim C18top](#claim-c18top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C18Sass -->
-References: [Package C18top](#package-c18top)
-<!-- end caseproc -->
-
 Stub for Strategy C18Sass.
 
 <!-- caseproc element C18G1 -->
@@ -16331,10 +14503,6 @@ Supported by: **[Evidence C18E1](#evidence-c18e1)**, [Context C18Xctx](#context-
 Supports: **[Strategy C18Sass](#strategy-c18sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C18G1 -->
-References: [Package C18top](#package-c18top)
-<!-- end caseproc -->
-
 Stub for Claim C18G1.
 
 <!-- caseproc element C18E1 -->
@@ -16344,10 +14512,6 @@ Stub for Claim C18G1.
 Referenced by: **[Package C18top](#package-c18top)**
 
 Supports: **[Claim C18G1](#claim-c18g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C18E1 -->
-References: [Package C18top](#package-c18top)
 <!-- end caseproc -->
 
 Stub for Evidence C18E1.
@@ -16363,10 +14527,6 @@ Supported by: **[Justification C18J1](#justification-c18j1)**, [Evidence C18Esh]
 Supports: **[Strategy C18Sass](#strategy-c18sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C18G2 -->
-References: [Package C18top](#package-c18top)
-<!-- end caseproc -->
-
 Stub for Claim C18G2.
 
 <!-- caseproc element C18J1 -->
@@ -16376,10 +14536,6 @@ Stub for Claim C18G2.
 Referenced by: **[Package C18top](#package-c18top)**
 
 Supports: **[Claim C18G2](#claim-c18g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C18J1 -->
-References: [Package C18top](#package-c18top)
 <!-- end caseproc -->
 
 Stub for Justification C18J1.
@@ -16395,10 +14551,6 @@ Supported by: **[Assumption C18A1](#assumption-c18a1)**, [Evidence C18E2](#evide
 Supports: **[Strategy C18Sass](#strategy-c18sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C18G3 -->
-References: [Package C18top](#package-c18top)
-<!-- end caseproc -->
-
 Stub for Claim C18G3.
 
 <!-- caseproc element C18A1 -->
@@ -16410,10 +14562,6 @@ Referenced by: **[Package C18top](#package-c18top)**
 Supports: **[Claim C18G3](#claim-c18g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C18A1 -->
-References: [Package C18top](#package-c18top)
-<!-- end caseproc -->
-
 Stub for Assumption C18A1.
 
 <!-- caseproc element C18E2 -->
@@ -16423,10 +14571,6 @@ Stub for Assumption C18A1.
 Referenced by: **[Package C18top](#package-c18top)**
 
 Supports: **[Claim C18G3](#claim-c18g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C18E2 -->
-References: [Package C18top](#package-c18top)
 <!-- end caseproc -->
 
 Stub for Evidence C18E2.
@@ -16442,10 +14586,6 @@ Supported by: **[Context C19Xctx](#context-c19xctx)**, [Evidence C19Esh](#eviden
 Supports: [Strategy L2Smain](#strategy-l2smain), [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C19top -->
-References: [Package C19top](#package-c19top), [Package G1](#package-g1), [Package L2top](#package-l2top)
-<!-- end caseproc -->
-
 Stub for Claim C19top.
 
 <!-- caseproc element C19Xctx -->
@@ -16457,10 +14597,6 @@ Referenced by: **[Package C19top](#package-c19top)**
 Supports: **[Claim C19top](#claim-c19top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C19Xctx -->
-References: [Package C19top](#package-c19top)
-<!-- end caseproc -->
-
 Stub for Context C19Xctx.
 
 <!-- caseproc element C19Esh -->
@@ -16470,10 +14606,6 @@ Stub for Context C19Xctx.
 Referenced by: **[Package C19top](#package-c19top)**
 
 Supports: **[Claim C19top](#claim-c19top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C19Esh -->
-References: [Package C19top](#package-c19top)
 <!-- end caseproc -->
 
 Stub for Evidence C19Esh.
@@ -16489,10 +14621,6 @@ Supported by: **[Claim C19G1](#claim-c19g1)**, [Claim C19G2](#claim-c19g2), [Cla
 Supports: **[Claim C19top](#claim-c19top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C19Sass -->
-References: [Package C19top](#package-c19top)
-<!-- end caseproc -->
-
 Stub for Strategy C19Sass.
 
 <!-- caseproc element C19G1 -->
@@ -16506,10 +14634,6 @@ Supported by: **[Evidence C19E1](#evidence-c19e1)**, [Context C19Xctx](#context-
 Supports: **[Strategy C19Sass](#strategy-c19sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C19G1 -->
-References: [Package C19top](#package-c19top)
-<!-- end caseproc -->
-
 Stub for Claim C19G1.
 
 <!-- caseproc element C19E1 -->
@@ -16519,10 +14643,6 @@ Stub for Claim C19G1.
 Referenced by: **[Package C19top](#package-c19top)**
 
 Supports: **[Claim C19G1](#claim-c19g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C19E1 -->
-References: [Package C19top](#package-c19top)
 <!-- end caseproc -->
 
 Stub for Evidence C19E1.
@@ -16538,10 +14658,6 @@ Supported by: **[Justification C19J1](#justification-c19j1)**, [Evidence C19Esh]
 Supports: **[Strategy C19Sass](#strategy-c19sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C19G2 -->
-References: [Package C19top](#package-c19top)
-<!-- end caseproc -->
-
 Stub for Claim C19G2.
 
 <!-- caseproc element C19J1 -->
@@ -16551,10 +14667,6 @@ Stub for Claim C19G2.
 Referenced by: **[Package C19top](#package-c19top)**
 
 Supports: **[Claim C19G2](#claim-c19g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C19J1 -->
-References: [Package C19top](#package-c19top)
 <!-- end caseproc -->
 
 Stub for Justification C19J1.
@@ -16570,10 +14682,6 @@ Supported by: **[Assumption C19A1](#assumption-c19a1)**, [Evidence C19E2](#evide
 Supports: **[Strategy C19Sass](#strategy-c19sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C19G3 -->
-References: [Package C19top](#package-c19top)
-<!-- end caseproc -->
-
 Stub for Claim C19G3.
 
 <!-- caseproc element C19A1 -->
@@ -16585,10 +14693,6 @@ Referenced by: **[Package C19top](#package-c19top)**
 Supports: **[Claim C19G3](#claim-c19g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C19A1 -->
-References: [Package C19top](#package-c19top)
-<!-- end caseproc -->
-
 Stub for Assumption C19A1.
 
 <!-- caseproc element C19E2 -->
@@ -16598,10 +14702,6 @@ Stub for Assumption C19A1.
 Referenced by: **[Package C19top](#package-c19top)**
 
 Supports: **[Claim C19G3](#claim-c19g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C19E2 -->
-References: [Package C19top](#package-c19top)
 <!-- end caseproc -->
 
 Stub for Evidence C19E2.
@@ -16617,10 +14717,6 @@ Supported by: **[Context C20Xctx](#context-c20xctx)**, [Evidence C20Esh](#eviden
 Supports: [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C20top -->
-References: [Package C20top](#package-c20top), [Package G1](#package-g1)
-<!-- end caseproc -->
-
 Stub for Claim C20top.
 
 <!-- caseproc element C20Xctx -->
@@ -16632,10 +14728,6 @@ Referenced by: **[Package C20top](#package-c20top)**
 Supports: **[Claim C20top](#claim-c20top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C20Xctx -->
-References: [Package C20top](#package-c20top)
-<!-- end caseproc -->
-
 Stub for Context C20Xctx.
 
 <!-- caseproc element C20Esh -->
@@ -16645,10 +14737,6 @@ Stub for Context C20Xctx.
 Referenced by: **[Package C20top](#package-c20top)**
 
 Supports: **[Claim C20top](#claim-c20top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C20Esh -->
-References: [Package C20top](#package-c20top)
 <!-- end caseproc -->
 
 Stub for Evidence C20Esh.
@@ -16664,10 +14752,6 @@ Supported by: **[Claim C20G1](#claim-c20g1)**, [Claim C20G2](#claim-c20g2), [Cla
 Supports: **[Claim C20top](#claim-c20top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C20Sass -->
-References: [Package C20top](#package-c20top)
-<!-- end caseproc -->
-
 Stub for Strategy C20Sass.
 
 <!-- caseproc element C20G1 -->
@@ -16681,10 +14765,6 @@ Supported by: **[Evidence C20E1](#evidence-c20e1)**, [Context C20Xctx](#context-
 Supports: **[Strategy C20Sass](#strategy-c20sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C20G1 -->
-References: [Package C20top](#package-c20top)
-<!-- end caseproc -->
-
 Stub for Claim C20G1.
 
 <!-- caseproc element C20E1 -->
@@ -16694,10 +14774,6 @@ Stub for Claim C20G1.
 Referenced by: **[Package C20top](#package-c20top)**
 
 Supports: **[Claim C20G1](#claim-c20g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C20E1 -->
-References: [Package C20top](#package-c20top)
 <!-- end caseproc -->
 
 Stub for Evidence C20E1.
@@ -16713,10 +14789,6 @@ Supported by: **[Justification C20J1](#justification-c20j1)**, [Evidence C20Esh]
 Supports: **[Strategy C20Sass](#strategy-c20sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C20G2 -->
-References: [Package C20top](#package-c20top)
-<!-- end caseproc -->
-
 Stub for Claim C20G2.
 
 <!-- caseproc element C20J1 -->
@@ -16726,10 +14798,6 @@ Stub for Claim C20G2.
 Referenced by: **[Package C20top](#package-c20top)**
 
 Supports: **[Claim C20G2](#claim-c20g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C20J1 -->
-References: [Package C20top](#package-c20top)
 <!-- end caseproc -->
 
 Stub for Justification C20J1.
@@ -16745,10 +14813,6 @@ Supported by: **[Assumption C20A1](#assumption-c20a1)**, [Evidence C20E2](#evide
 Supports: **[Strategy C20Sass](#strategy-c20sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C20G3 -->
-References: [Package C20top](#package-c20top)
-<!-- end caseproc -->
-
 Stub for Claim C20G3.
 
 <!-- caseproc element C20A1 -->
@@ -16760,10 +14824,6 @@ Referenced by: **[Package C20top](#package-c20top)**
 Supports: **[Claim C20G3](#claim-c20g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C20A1 -->
-References: [Package C20top](#package-c20top)
-<!-- end caseproc -->
-
 Stub for Assumption C20A1.
 
 <!-- caseproc element C20E2 -->
@@ -16773,10 +14833,6 @@ Stub for Assumption C20A1.
 Referenced by: **[Package C20top](#package-c20top)**
 
 Supports: **[Claim C20G3](#claim-c20g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C20E2 -->
-References: [Package C20top](#package-c20top)
 <!-- end caseproc -->
 
 Stub for Evidence C20E2.
@@ -16792,10 +14848,6 @@ Supported by: **[Context C21Xctx](#context-c21xctx)**, [Evidence C21Esh](#eviden
 Supports: [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C21top -->
-References: [Package C21top](#package-c21top), [Package G1](#package-g1)
-<!-- end caseproc -->
-
 Stub for Claim C21top.
 
 <!-- caseproc element C21Xctx -->
@@ -16807,10 +14859,6 @@ Referenced by: **[Package C21top](#package-c21top)**
 Supports: **[Claim C21top](#claim-c21top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C21Xctx -->
-References: [Package C21top](#package-c21top)
-<!-- end caseproc -->
-
 Stub for Context C21Xctx.
 
 <!-- caseproc element C21Esh -->
@@ -16820,10 +14868,6 @@ Stub for Context C21Xctx.
 Referenced by: **[Package C21top](#package-c21top)**
 
 Supports: **[Claim C21top](#claim-c21top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C21Esh -->
-References: [Package C21top](#package-c21top)
 <!-- end caseproc -->
 
 Stub for Evidence C21Esh.
@@ -16839,10 +14883,6 @@ Supported by: **[Claim C21G1](#claim-c21g1)**, [Claim C21G2](#claim-c21g2), [Cla
 Supports: **[Claim C21top](#claim-c21top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C21Sass -->
-References: [Package C21top](#package-c21top)
-<!-- end caseproc -->
-
 Stub for Strategy C21Sass.
 
 <!-- caseproc element C21G1 -->
@@ -16856,10 +14896,6 @@ Supported by: **[Evidence C21E1](#evidence-c21e1)**, [Context C21Xctx](#context-
 Supports: **[Strategy C21Sass](#strategy-c21sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C21G1 -->
-References: [Package C21top](#package-c21top)
-<!-- end caseproc -->
-
 Stub for Claim C21G1.
 
 <!-- caseproc element C21E1 -->
@@ -16869,10 +14905,6 @@ Stub for Claim C21G1.
 Referenced by: **[Package C21top](#package-c21top)**
 
 Supports: **[Claim C21G1](#claim-c21g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C21E1 -->
-References: [Package C21top](#package-c21top)
 <!-- end caseproc -->
 
 Stub for Evidence C21E1.
@@ -16888,10 +14920,6 @@ Supported by: **[Justification C21J1](#justification-c21j1)**, [Evidence C21Esh]
 Supports: **[Strategy C21Sass](#strategy-c21sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C21G2 -->
-References: [Package C21top](#package-c21top)
-<!-- end caseproc -->
-
 Stub for Claim C21G2.
 
 <!-- caseproc element C21J1 -->
@@ -16901,10 +14929,6 @@ Stub for Claim C21G2.
 Referenced by: **[Package C21top](#package-c21top)**
 
 Supports: **[Claim C21G2](#claim-c21g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C21J1 -->
-References: [Package C21top](#package-c21top)
 <!-- end caseproc -->
 
 Stub for Justification C21J1.
@@ -16920,10 +14944,6 @@ Supported by: **[Assumption C21A1](#assumption-c21a1)**, [Evidence C21E2](#evide
 Supports: **[Strategy C21Sass](#strategy-c21sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C21G3 -->
-References: [Package C21top](#package-c21top)
-<!-- end caseproc -->
-
 Stub for Claim C21G3.
 
 <!-- caseproc element C21A1 -->
@@ -16935,10 +14955,6 @@ Referenced by: **[Package C21top](#package-c21top)**
 Supports: **[Claim C21G3](#claim-c21g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C21A1 -->
-References: [Package C21top](#package-c21top)
-<!-- end caseproc -->
-
 Stub for Assumption C21A1.
 
 <!-- caseproc element C21E2 -->
@@ -16948,10 +14964,6 @@ Stub for Assumption C21A1.
 Referenced by: **[Package C21top](#package-c21top)**
 
 Supports: **[Claim C21G3](#claim-c21g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C21E2 -->
-References: [Package C21top](#package-c21top)
 <!-- end caseproc -->
 
 Stub for Evidence C21E2.
@@ -16967,10 +14979,6 @@ Supported by: **[Context C22Xctx](#context-c22xctx)**, [Evidence C22Esh](#eviden
 Supports: [Strategy L3Smain](#strategy-l3smain), [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C22top -->
-References: [Package C22top](#package-c22top), [Package G1](#package-g1), [Package L3top](#package-l3top)
-<!-- end caseproc -->
-
 Stub for Claim C22top.
 
 <!-- caseproc element C22Xctx -->
@@ -16982,10 +14990,6 @@ Referenced by: **[Package C22top](#package-c22top)**
 Supports: **[Claim C22top](#claim-c22top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C22Xctx -->
-References: [Package C22top](#package-c22top)
-<!-- end caseproc -->
-
 Stub for Context C22Xctx.
 
 <!-- caseproc element C22Esh -->
@@ -16995,10 +14999,6 @@ Stub for Context C22Xctx.
 Referenced by: **[Package C22top](#package-c22top)**
 
 Supports: **[Claim C22top](#claim-c22top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C22Esh -->
-References: [Package C22top](#package-c22top)
 <!-- end caseproc -->
 
 Stub for Evidence C22Esh.
@@ -17014,10 +15014,6 @@ Supported by: **[Claim C22G1](#claim-c22g1)**, [Claim C22G2](#claim-c22g2), [Cla
 Supports: **[Claim C22top](#claim-c22top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C22Sass -->
-References: [Package C22top](#package-c22top)
-<!-- end caseproc -->
-
 Stub for Strategy C22Sass.
 
 <!-- caseproc element C22G1 -->
@@ -17031,10 +15027,6 @@ Supported by: **[Evidence C22E1](#evidence-c22e1)**, [Context C22Xctx](#context-
 Supports: **[Strategy C22Sass](#strategy-c22sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C22G1 -->
-References: [Package C22top](#package-c22top)
-<!-- end caseproc -->
-
 Stub for Claim C22G1.
 
 <!-- caseproc element C22E1 -->
@@ -17044,10 +15036,6 @@ Stub for Claim C22G1.
 Referenced by: **[Package C22top](#package-c22top)**
 
 Supports: **[Claim C22G1](#claim-c22g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C22E1 -->
-References: [Package C22top](#package-c22top)
 <!-- end caseproc -->
 
 Stub for Evidence C22E1.
@@ -17063,10 +15051,6 @@ Supported by: **[Justification C22J1](#justification-c22j1)**, [Evidence C22Esh]
 Supports: **[Strategy C22Sass](#strategy-c22sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C22G2 -->
-References: [Package C22top](#package-c22top)
-<!-- end caseproc -->
-
 Stub for Claim C22G2.
 
 <!-- caseproc element C22J1 -->
@@ -17076,10 +15060,6 @@ Stub for Claim C22G2.
 Referenced by: **[Package C22top](#package-c22top)**
 
 Supports: **[Claim C22G2](#claim-c22g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C22J1 -->
-References: [Package C22top](#package-c22top)
 <!-- end caseproc -->
 
 Stub for Justification C22J1.
@@ -17095,10 +15075,6 @@ Supported by: **[Assumption C22A1](#assumption-c22a1)**, [Evidence C22E2](#evide
 Supports: **[Strategy C22Sass](#strategy-c22sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C22G3 -->
-References: [Package C22top](#package-c22top)
-<!-- end caseproc -->
-
 Stub for Claim C22G3.
 
 <!-- caseproc element C22A1 -->
@@ -17110,10 +15086,6 @@ Referenced by: **[Package C22top](#package-c22top)**
 Supports: **[Claim C22G3](#claim-c22g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C22A1 -->
-References: [Package C22top](#package-c22top)
-<!-- end caseproc -->
-
 Stub for Assumption C22A1.
 
 <!-- caseproc element C22E2 -->
@@ -17123,10 +15095,6 @@ Stub for Assumption C22A1.
 Referenced by: **[Package C22top](#package-c22top)**
 
 Supports: **[Claim C22G3](#claim-c22g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C22E2 -->
-References: [Package C22top](#package-c22top)
 <!-- end caseproc -->
 
 Stub for Evidence C22E2.
@@ -17142,10 +15110,6 @@ Supported by: **[Context C23Xctx](#context-c23xctx)**, [Evidence C23Esh](#eviden
 Supports: [Strategy L3Smain](#strategy-l3smain), [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C23top -->
-References: [Package C23top](#package-c23top), [Package G1](#package-g1), [Package L3top](#package-l3top)
-<!-- end caseproc -->
-
 Stub for Claim C23top.
 
 <!-- caseproc element C23Xctx -->
@@ -17157,10 +15121,6 @@ Referenced by: **[Package C23top](#package-c23top)**
 Supports: **[Claim C23top](#claim-c23top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C23Xctx -->
-References: [Package C23top](#package-c23top)
-<!-- end caseproc -->
-
 Stub for Context C23Xctx.
 
 <!-- caseproc element C23Esh -->
@@ -17170,10 +15130,6 @@ Stub for Context C23Xctx.
 Referenced by: **[Package C23top](#package-c23top)**
 
 Supports: **[Claim C23top](#claim-c23top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C23Esh -->
-References: [Package C23top](#package-c23top)
 <!-- end caseproc -->
 
 Stub for Evidence C23Esh.
@@ -17189,10 +15145,6 @@ Supported by: **[Claim C23G1](#claim-c23g1)**, [Claim C23G2](#claim-c23g2), [Cla
 Supports: **[Claim C23top](#claim-c23top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C23Sass -->
-References: [Package C23top](#package-c23top)
-<!-- end caseproc -->
-
 Stub for Strategy C23Sass.
 
 <!-- caseproc element C23G1 -->
@@ -17206,10 +15158,6 @@ Supported by: **[Evidence C23E1](#evidence-c23e1)**, [Context C23Xctx](#context-
 Supports: **[Strategy C23Sass](#strategy-c23sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C23G1 -->
-References: [Package C23top](#package-c23top)
-<!-- end caseproc -->
-
 Stub for Claim C23G1.
 
 <!-- caseproc element C23E1 -->
@@ -17219,10 +15167,6 @@ Stub for Claim C23G1.
 Referenced by: **[Package C23top](#package-c23top)**
 
 Supports: **[Claim C23G1](#claim-c23g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C23E1 -->
-References: [Package C23top](#package-c23top)
 <!-- end caseproc -->
 
 Stub for Evidence C23E1.
@@ -17238,10 +15182,6 @@ Supported by: **[Justification C23J1](#justification-c23j1)**, [Evidence C23Esh]
 Supports: **[Strategy C23Sass](#strategy-c23sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C23G2 -->
-References: [Package C23top](#package-c23top)
-<!-- end caseproc -->
-
 Stub for Claim C23G2.
 
 <!-- caseproc element C23J1 -->
@@ -17251,10 +15191,6 @@ Stub for Claim C23G2.
 Referenced by: **[Package C23top](#package-c23top)**
 
 Supports: **[Claim C23G2](#claim-c23g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C23J1 -->
-References: [Package C23top](#package-c23top)
 <!-- end caseproc -->
 
 Stub for Justification C23J1.
@@ -17270,10 +15206,6 @@ Supported by: **[Assumption C23A1](#assumption-c23a1)**, [Evidence C23E2](#evide
 Supports: **[Strategy C23Sass](#strategy-c23sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C23G3 -->
-References: [Package C23top](#package-c23top)
-<!-- end caseproc -->
-
 Stub for Claim C23G3.
 
 <!-- caseproc element C23A1 -->
@@ -17285,10 +15217,6 @@ Referenced by: **[Package C23top](#package-c23top)**
 Supports: **[Claim C23G3](#claim-c23g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C23A1 -->
-References: [Package C23top](#package-c23top)
-<!-- end caseproc -->
-
 Stub for Assumption C23A1.
 
 <!-- caseproc element C23E2 -->
@@ -17298,10 +15226,6 @@ Stub for Assumption C23A1.
 Referenced by: **[Package C23top](#package-c23top)**
 
 Supports: **[Claim C23G3](#claim-c23g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C23E2 -->
-References: [Package C23top](#package-c23top)
 <!-- end caseproc -->
 
 Stub for Evidence C23E2.
@@ -17317,10 +15241,6 @@ Supported by: **[Context C24Xctx](#context-c24xctx)**, [Evidence C24Esh](#eviden
 Supports: [Strategy L3Smain](#strategy-l3smain), [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C24top -->
-References: [Package C24top](#package-c24top), [Package G1](#package-g1), [Package L3top](#package-l3top)
-<!-- end caseproc -->
-
 Stub for Claim C24top.
 
 <!-- caseproc element C24Xctx -->
@@ -17332,10 +15252,6 @@ Referenced by: **[Package C24top](#package-c24top)**
 Supports: **[Claim C24top](#claim-c24top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C24Xctx -->
-References: [Package C24top](#package-c24top)
-<!-- end caseproc -->
-
 Stub for Context C24Xctx.
 
 <!-- caseproc element C24Esh -->
@@ -17345,10 +15261,6 @@ Stub for Context C24Xctx.
 Referenced by: **[Package C24top](#package-c24top)**
 
 Supports: **[Claim C24top](#claim-c24top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C24Esh -->
-References: [Package C24top](#package-c24top)
 <!-- end caseproc -->
 
 Stub for Evidence C24Esh.
@@ -17364,10 +15276,6 @@ Supported by: **[Claim C24G1](#claim-c24g1)**, [Claim C24G2](#claim-c24g2), [Cla
 Supports: **[Claim C24top](#claim-c24top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C24Sass -->
-References: [Package C24top](#package-c24top)
-<!-- end caseproc -->
-
 Stub for Strategy C24Sass.
 
 <!-- caseproc element C24G1 -->
@@ -17381,10 +15289,6 @@ Supported by: **[Evidence C24E1](#evidence-c24e1)**, [Context C24Xctx](#context-
 Supports: **[Strategy C24Sass](#strategy-c24sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C24G1 -->
-References: [Package C24top](#package-c24top)
-<!-- end caseproc -->
-
 Stub for Claim C24G1.
 
 <!-- caseproc element C24E1 -->
@@ -17394,10 +15298,6 @@ Stub for Claim C24G1.
 Referenced by: **[Package C24top](#package-c24top)**
 
 Supports: **[Claim C24G1](#claim-c24g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C24E1 -->
-References: [Package C24top](#package-c24top)
 <!-- end caseproc -->
 
 Stub for Evidence C24E1.
@@ -17413,10 +15313,6 @@ Supported by: **[Justification C24J1](#justification-c24j1)**, [Evidence C24Esh]
 Supports: **[Strategy C24Sass](#strategy-c24sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C24G2 -->
-References: [Package C24top](#package-c24top)
-<!-- end caseproc -->
-
 Stub for Claim C24G2.
 
 <!-- caseproc element C24J1 -->
@@ -17426,10 +15322,6 @@ Stub for Claim C24G2.
 Referenced by: **[Package C24top](#package-c24top)**
 
 Supports: **[Claim C24G2](#claim-c24g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C24J1 -->
-References: [Package C24top](#package-c24top)
 <!-- end caseproc -->
 
 Stub for Justification C24J1.
@@ -17445,10 +15337,6 @@ Supported by: **[Assumption C24A1](#assumption-c24a1)**, [Evidence C24E2](#evide
 Supports: **[Strategy C24Sass](#strategy-c24sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C24G3 -->
-References: [Package C24top](#package-c24top)
-<!-- end caseproc -->
-
 Stub for Claim C24G3.
 
 <!-- caseproc element C24A1 -->
@@ -17460,10 +15348,6 @@ Referenced by: **[Package C24top](#package-c24top)**
 Supports: **[Claim C24G3](#claim-c24g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C24A1 -->
-References: [Package C24top](#package-c24top)
-<!-- end caseproc -->
-
 Stub for Assumption C24A1.
 
 <!-- caseproc element C24E2 -->
@@ -17473,10 +15357,6 @@ Stub for Assumption C24A1.
 Referenced by: **[Package C24top](#package-c24top)**
 
 Supports: **[Claim C24G3](#claim-c24g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C24E2 -->
-References: [Package C24top](#package-c24top)
 <!-- end caseproc -->
 
 Stub for Evidence C24E2.
@@ -17492,10 +15372,6 @@ Supported by: **[Context C25Xctx](#context-c25xctx)**, [Evidence C25Esh](#eviden
 Supports: [Strategy L3Smain](#strategy-l3smain), [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C25top -->
-References: [Package C25top](#package-c25top), [Package G1](#package-g1), [Package L3top](#package-l3top)
-<!-- end caseproc -->
-
 Stub for Claim C25top.
 
 <!-- caseproc element C25Xctx -->
@@ -17507,10 +15383,6 @@ Referenced by: **[Package C25top](#package-c25top)**
 Supports: **[Claim C25top](#claim-c25top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C25Xctx -->
-References: [Package C25top](#package-c25top)
-<!-- end caseproc -->
-
 Stub for Context C25Xctx.
 
 <!-- caseproc element C25Esh -->
@@ -17520,10 +15392,6 @@ Stub for Context C25Xctx.
 Referenced by: **[Package C25top](#package-c25top)**
 
 Supports: **[Claim C25top](#claim-c25top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C25Esh -->
-References: [Package C25top](#package-c25top)
 <!-- end caseproc -->
 
 Stub for Evidence C25Esh.
@@ -17539,10 +15407,6 @@ Supported by: **[Claim C25G1](#claim-c25g1)**, [Claim C25G2](#claim-c25g2), [Cla
 Supports: **[Claim C25top](#claim-c25top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C25Sass -->
-References: [Package C25top](#package-c25top)
-<!-- end caseproc -->
-
 Stub for Strategy C25Sass.
 
 <!-- caseproc element C25G1 -->
@@ -17556,10 +15420,6 @@ Supported by: **[Evidence C25E1](#evidence-c25e1)**, [Context C25Xctx](#context-
 Supports: **[Strategy C25Sass](#strategy-c25sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C25G1 -->
-References: [Package C25top](#package-c25top)
-<!-- end caseproc -->
-
 Stub for Claim C25G1.
 
 <!-- caseproc element C25E1 -->
@@ -17569,10 +15429,6 @@ Stub for Claim C25G1.
 Referenced by: **[Package C25top](#package-c25top)**
 
 Supports: **[Claim C25G1](#claim-c25g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C25E1 -->
-References: [Package C25top](#package-c25top)
 <!-- end caseproc -->
 
 Stub for Evidence C25E1.
@@ -17588,10 +15444,6 @@ Supported by: **[Justification C25J1](#justification-c25j1)**, [Evidence C25Esh]
 Supports: **[Strategy C25Sass](#strategy-c25sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C25G2 -->
-References: [Package C25top](#package-c25top)
-<!-- end caseproc -->
-
 Stub for Claim C25G2.
 
 <!-- caseproc element C25J1 -->
@@ -17601,10 +15453,6 @@ Stub for Claim C25G2.
 Referenced by: **[Package C25top](#package-c25top)**
 
 Supports: **[Claim C25G2](#claim-c25g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C25J1 -->
-References: [Package C25top](#package-c25top)
 <!-- end caseproc -->
 
 Stub for Justification C25J1.
@@ -17620,10 +15468,6 @@ Supported by: **[Assumption C25A1](#assumption-c25a1)**, [Evidence C25E2](#evide
 Supports: **[Strategy C25Sass](#strategy-c25sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C25G3 -->
-References: [Package C25top](#package-c25top)
-<!-- end caseproc -->
-
 Stub for Claim C25G3.
 
 <!-- caseproc element C25A1 -->
@@ -17635,10 +15479,6 @@ Referenced by: **[Package C25top](#package-c25top)**
 Supports: **[Claim C25G3](#claim-c25g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C25A1 -->
-References: [Package C25top](#package-c25top)
-<!-- end caseproc -->
-
 Stub for Assumption C25A1.
 
 <!-- caseproc element C25E2 -->
@@ -17648,10 +15488,6 @@ Stub for Assumption C25A1.
 Referenced by: **[Package C25top](#package-c25top)**
 
 Supports: **[Claim C25G3](#claim-c25g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C25E2 -->
-References: [Package C25top](#package-c25top)
 <!-- end caseproc -->
 
 Stub for Evidence C25E2.
@@ -17667,10 +15503,6 @@ Supported by: **[Context C26Xctx](#context-c26xctx)**, [Evidence C26Esh](#eviden
 Supports: [Strategy L3Smain](#strategy-l3smain), [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C26top -->
-References: [Package C26top](#package-c26top), [Package G1](#package-g1), [Package L3top](#package-l3top)
-<!-- end caseproc -->
-
 Stub for Claim C26top.
 
 <!-- caseproc element C26Xctx -->
@@ -17682,10 +15514,6 @@ Referenced by: **[Package C26top](#package-c26top)**
 Supports: **[Claim C26top](#claim-c26top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C26Xctx -->
-References: [Package C26top](#package-c26top)
-<!-- end caseproc -->
-
 Stub for Context C26Xctx.
 
 <!-- caseproc element C26Esh -->
@@ -17695,10 +15523,6 @@ Stub for Context C26Xctx.
 Referenced by: **[Package C26top](#package-c26top)**
 
 Supports: **[Claim C26top](#claim-c26top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C26Esh -->
-References: [Package C26top](#package-c26top)
 <!-- end caseproc -->
 
 Stub for Evidence C26Esh.
@@ -17714,10 +15538,6 @@ Supported by: **[Claim C26G1](#claim-c26g1)**, [Claim C26G2](#claim-c26g2), [Cla
 Supports: **[Claim C26top](#claim-c26top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C26Sass -->
-References: [Package C26top](#package-c26top)
-<!-- end caseproc -->
-
 Stub for Strategy C26Sass.
 
 <!-- caseproc element C26G1 -->
@@ -17731,10 +15551,6 @@ Supported by: **[Evidence C26E1](#evidence-c26e1)**, [Context C26Xctx](#context-
 Supports: **[Strategy C26Sass](#strategy-c26sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C26G1 -->
-References: [Package C26top](#package-c26top)
-<!-- end caseproc -->
-
 Stub for Claim C26G1.
 
 <!-- caseproc element C26E1 -->
@@ -17744,10 +15560,6 @@ Stub for Claim C26G1.
 Referenced by: **[Package C26top](#package-c26top)**
 
 Supports: **[Claim C26G1](#claim-c26g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C26E1 -->
-References: [Package C26top](#package-c26top)
 <!-- end caseproc -->
 
 Stub for Evidence C26E1.
@@ -17763,10 +15575,6 @@ Supported by: **[Justification C26J1](#justification-c26j1)**, [Evidence C26Esh]
 Supports: **[Strategy C26Sass](#strategy-c26sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C26G2 -->
-References: [Package C26top](#package-c26top)
-<!-- end caseproc -->
-
 Stub for Claim C26G2.
 
 <!-- caseproc element C26J1 -->
@@ -17776,10 +15584,6 @@ Stub for Claim C26G2.
 Referenced by: **[Package C26top](#package-c26top)**
 
 Supports: **[Claim C26G2](#claim-c26g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C26J1 -->
-References: [Package C26top](#package-c26top)
 <!-- end caseproc -->
 
 Stub for Justification C26J1.
@@ -17795,10 +15599,6 @@ Supported by: **[Assumption C26A1](#assumption-c26a1)**, [Evidence C26E2](#evide
 Supports: **[Strategy C26Sass](#strategy-c26sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C26G3 -->
-References: [Package C26top](#package-c26top)
-<!-- end caseproc -->
-
 Stub for Claim C26G3.
 
 <!-- caseproc element C26A1 -->
@@ -17810,10 +15610,6 @@ Referenced by: **[Package C26top](#package-c26top)**
 Supports: **[Claim C26G3](#claim-c26g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C26A1 -->
-References: [Package C26top](#package-c26top)
-<!-- end caseproc -->
-
 Stub for Assumption C26A1.
 
 <!-- caseproc element C26E2 -->
@@ -17823,10 +15619,6 @@ Stub for Assumption C26A1.
 Referenced by: **[Package C26top](#package-c26top)**
 
 Supports: **[Claim C26G3](#claim-c26g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C26E2 -->
-References: [Package C26top](#package-c26top)
 <!-- end caseproc -->
 
 Stub for Evidence C26E2.
@@ -17842,10 +15634,6 @@ Supported by: **[Context C27Xctx](#context-c27xctx)**, [Evidence C27Esh](#eviden
 Supports: [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C27top -->
-References: [Package C27top](#package-c27top), [Package G1](#package-g1)
-<!-- end caseproc -->
-
 Stub for Claim C27top.
 
 <!-- caseproc element C27Xctx -->
@@ -17857,10 +15645,6 @@ Referenced by: **[Package C27top](#package-c27top)**
 Supports: **[Claim C27top](#claim-c27top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C27Xctx -->
-References: [Package C27top](#package-c27top)
-<!-- end caseproc -->
-
 Stub for Context C27Xctx.
 
 <!-- caseproc element C27Esh -->
@@ -17870,10 +15654,6 @@ Stub for Context C27Xctx.
 Referenced by: **[Package C27top](#package-c27top)**
 
 Supports: **[Claim C27top](#claim-c27top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C27Esh -->
-References: [Package C27top](#package-c27top)
 <!-- end caseproc -->
 
 Stub for Evidence C27Esh.
@@ -17889,10 +15669,6 @@ Supported by: **[Claim C27G1](#claim-c27g1)**, [Claim C27G2](#claim-c27g2), [Cla
 Supports: **[Claim C27top](#claim-c27top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C27Sass -->
-References: [Package C27top](#package-c27top)
-<!-- end caseproc -->
-
 Stub for Strategy C27Sass.
 
 <!-- caseproc element C27G1 -->
@@ -17906,10 +15682,6 @@ Supported by: **[Evidence C27E1](#evidence-c27e1)**, [Context C27Xctx](#context-
 Supports: **[Strategy C27Sass](#strategy-c27sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C27G1 -->
-References: [Package C27top](#package-c27top)
-<!-- end caseproc -->
-
 Stub for Claim C27G1.
 
 <!-- caseproc element C27E1 -->
@@ -17919,10 +15691,6 @@ Stub for Claim C27G1.
 Referenced by: **[Package C27top](#package-c27top)**
 
 Supports: **[Claim C27G1](#claim-c27g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C27E1 -->
-References: [Package C27top](#package-c27top)
 <!-- end caseproc -->
 
 Stub for Evidence C27E1.
@@ -17938,10 +15706,6 @@ Supported by: **[Justification C27J1](#justification-c27j1)**, [Evidence C27Esh]
 Supports: **[Strategy C27Sass](#strategy-c27sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C27G2 -->
-References: [Package C27top](#package-c27top)
-<!-- end caseproc -->
-
 Stub for Claim C27G2.
 
 <!-- caseproc element C27J1 -->
@@ -17951,10 +15715,6 @@ Stub for Claim C27G2.
 Referenced by: **[Package C27top](#package-c27top)**
 
 Supports: **[Claim C27G2](#claim-c27g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C27J1 -->
-References: [Package C27top](#package-c27top)
 <!-- end caseproc -->
 
 Stub for Justification C27J1.
@@ -17970,10 +15730,6 @@ Supported by: **[Assumption C27A1](#assumption-c27a1)**, [Evidence C27E2](#evide
 Supports: **[Strategy C27Sass](#strategy-c27sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C27G3 -->
-References: [Package C27top](#package-c27top)
-<!-- end caseproc -->
-
 Stub for Claim C27G3.
 
 <!-- caseproc element C27A1 -->
@@ -17985,10 +15741,6 @@ Referenced by: **[Package C27top](#package-c27top)**
 Supports: **[Claim C27G3](#claim-c27g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C27A1 -->
-References: [Package C27top](#package-c27top)
-<!-- end caseproc -->
-
 Stub for Assumption C27A1.
 
 <!-- caseproc element C27E2 -->
@@ -17998,10 +15750,6 @@ Stub for Assumption C27A1.
 Referenced by: **[Package C27top](#package-c27top)**
 
 Supports: **[Claim C27G3](#claim-c27g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C27E2 -->
-References: [Package C27top](#package-c27top)
 <!-- end caseproc -->
 
 Stub for Evidence C27E2.
@@ -18017,10 +15765,6 @@ Supported by: **[Context C28Xctx](#context-c28xctx)**, [Evidence C28Esh](#eviden
 Supports: [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C28top -->
-References: [Package C28top](#package-c28top), [Package G1](#package-g1)
-<!-- end caseproc -->
-
 Stub for Claim C28top.
 
 <!-- caseproc element C28Xctx -->
@@ -18032,10 +15776,6 @@ Referenced by: **[Package C28top](#package-c28top)**
 Supports: **[Claim C28top](#claim-c28top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C28Xctx -->
-References: [Package C28top](#package-c28top)
-<!-- end caseproc -->
-
 Stub for Context C28Xctx.
 
 <!-- caseproc element C28Esh -->
@@ -18045,10 +15785,6 @@ Stub for Context C28Xctx.
 Referenced by: **[Package C28top](#package-c28top)**
 
 Supports: **[Claim C28top](#claim-c28top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C28Esh -->
-References: [Package C28top](#package-c28top)
 <!-- end caseproc -->
 
 Stub for Evidence C28Esh.
@@ -18064,10 +15800,6 @@ Supported by: **[Claim C28G1](#claim-c28g1)**, [Claim C28G2](#claim-c28g2), [Cla
 Supports: **[Claim C28top](#claim-c28top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C28Sass -->
-References: [Package C28top](#package-c28top)
-<!-- end caseproc -->
-
 Stub for Strategy C28Sass.
 
 <!-- caseproc element C28G1 -->
@@ -18081,10 +15813,6 @@ Supported by: **[Evidence C28E1](#evidence-c28e1)**, [Context C28Xctx](#context-
 Supports: **[Strategy C28Sass](#strategy-c28sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C28G1 -->
-References: [Package C28top](#package-c28top)
-<!-- end caseproc -->
-
 Stub for Claim C28G1.
 
 <!-- caseproc element C28E1 -->
@@ -18094,10 +15822,6 @@ Stub for Claim C28G1.
 Referenced by: **[Package C28top](#package-c28top)**
 
 Supports: **[Claim C28G1](#claim-c28g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C28E1 -->
-References: [Package C28top](#package-c28top)
 <!-- end caseproc -->
 
 Stub for Evidence C28E1.
@@ -18113,10 +15837,6 @@ Supported by: **[Justification C28J1](#justification-c28j1)**, [Evidence C28Esh]
 Supports: **[Strategy C28Sass](#strategy-c28sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C28G2 -->
-References: [Package C28top](#package-c28top)
-<!-- end caseproc -->
-
 Stub for Claim C28G2.
 
 <!-- caseproc element C28J1 -->
@@ -18126,10 +15846,6 @@ Stub for Claim C28G2.
 Referenced by: **[Package C28top](#package-c28top)**
 
 Supports: **[Claim C28G2](#claim-c28g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C28J1 -->
-References: [Package C28top](#package-c28top)
 <!-- end caseproc -->
 
 Stub for Justification C28J1.
@@ -18145,10 +15861,6 @@ Supported by: **[Assumption C28A1](#assumption-c28a1)**, [Evidence C28E2](#evide
 Supports: **[Strategy C28Sass](#strategy-c28sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C28G3 -->
-References: [Package C28top](#package-c28top)
-<!-- end caseproc -->
-
 Stub for Claim C28G3.
 
 <!-- caseproc element C28A1 -->
@@ -18160,10 +15872,6 @@ Referenced by: **[Package C28top](#package-c28top)**
 Supports: **[Claim C28G3](#claim-c28g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C28A1 -->
-References: [Package C28top](#package-c28top)
-<!-- end caseproc -->
-
 Stub for Assumption C28A1.
 
 <!-- caseproc element C28E2 -->
@@ -18173,10 +15881,6 @@ Stub for Assumption C28A1.
 Referenced by: **[Package C28top](#package-c28top)**
 
 Supports: **[Claim C28G3](#claim-c28g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C28E2 -->
-References: [Package C28top](#package-c28top)
 <!-- end caseproc -->
 
 Stub for Evidence C28E2.
@@ -18192,10 +15896,6 @@ Supported by: **[Context C29Xctx](#context-c29xctx)**, [Evidence C29Esh](#eviden
 Supports: [Strategy L4Smain](#strategy-l4smain), [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C29top -->
-References: [Package C29top](#package-c29top), [Package G1](#package-g1), [Package L4top](#package-l4top)
-<!-- end caseproc -->
-
 Stub for Claim C29top.
 
 <!-- caseproc element C29Xctx -->
@@ -18207,10 +15907,6 @@ Referenced by: **[Package C29top](#package-c29top)**
 Supports: **[Claim C29top](#claim-c29top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C29Xctx -->
-References: [Package C29top](#package-c29top)
-<!-- end caseproc -->
-
 Stub for Context C29Xctx.
 
 <!-- caseproc element C29Esh -->
@@ -18220,10 +15916,6 @@ Stub for Context C29Xctx.
 Referenced by: **[Package C29top](#package-c29top)**
 
 Supports: **[Claim C29top](#claim-c29top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C29Esh -->
-References: [Package C29top](#package-c29top)
 <!-- end caseproc -->
 
 Stub for Evidence C29Esh.
@@ -18239,10 +15931,6 @@ Supported by: **[Claim C29G1](#claim-c29g1)**, [Claim C29G2](#claim-c29g2), [Cla
 Supports: **[Claim C29top](#claim-c29top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C29Sass -->
-References: [Package C29top](#package-c29top)
-<!-- end caseproc -->
-
 Stub for Strategy C29Sass.
 
 <!-- caseproc element C29G1 -->
@@ -18256,10 +15944,6 @@ Supported by: **[Evidence C29E1](#evidence-c29e1)**, [Context C29Xctx](#context-
 Supports: **[Strategy C29Sass](#strategy-c29sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C29G1 -->
-References: [Package C29top](#package-c29top)
-<!-- end caseproc -->
-
 Stub for Claim C29G1.
 
 <!-- caseproc element C29E1 -->
@@ -18269,10 +15953,6 @@ Stub for Claim C29G1.
 Referenced by: **[Package C29top](#package-c29top)**
 
 Supports: **[Claim C29G1](#claim-c29g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C29E1 -->
-References: [Package C29top](#package-c29top)
 <!-- end caseproc -->
 
 Stub for Evidence C29E1.
@@ -18288,10 +15968,6 @@ Supported by: **[Justification C29J1](#justification-c29j1)**, [Evidence C29Esh]
 Supports: **[Strategy C29Sass](#strategy-c29sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C29G2 -->
-References: [Package C29top](#package-c29top)
-<!-- end caseproc -->
-
 Stub for Claim C29G2.
 
 <!-- caseproc element C29J1 -->
@@ -18301,10 +15977,6 @@ Stub for Claim C29G2.
 Referenced by: **[Package C29top](#package-c29top)**
 
 Supports: **[Claim C29G2](#claim-c29g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C29J1 -->
-References: [Package C29top](#package-c29top)
 <!-- end caseproc -->
 
 Stub for Justification C29J1.
@@ -18320,10 +15992,6 @@ Supported by: **[Assumption C29A1](#assumption-c29a1)**, [Evidence C29E2](#evide
 Supports: **[Strategy C29Sass](#strategy-c29sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C29G3 -->
-References: [Package C29top](#package-c29top)
-<!-- end caseproc -->
-
 Stub for Claim C29G3.
 
 <!-- caseproc element C29A1 -->
@@ -18335,10 +16003,6 @@ Referenced by: **[Package C29top](#package-c29top)**
 Supports: **[Claim C29G3](#claim-c29g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C29A1 -->
-References: [Package C29top](#package-c29top)
-<!-- end caseproc -->
-
 Stub for Assumption C29A1.
 
 <!-- caseproc element C29E2 -->
@@ -18348,10 +16012,6 @@ Stub for Assumption C29A1.
 Referenced by: **[Package C29top](#package-c29top)**
 
 Supports: **[Claim C29G3](#claim-c29g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C29E2 -->
-References: [Package C29top](#package-c29top)
 <!-- end caseproc -->
 
 Stub for Evidence C29E2.
@@ -18367,10 +16027,6 @@ Supported by: **[Context C30Xctx](#context-c30xctx)**, [Evidence C30Esh](#eviden
 Supports: [Strategy L4Smain](#strategy-l4smain), [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C30top -->
-References: [Package C30top](#package-c30top), [Package G1](#package-g1), [Package L4top](#package-l4top)
-<!-- end caseproc -->
-
 Stub for Claim C30top.
 
 <!-- caseproc element C30Xctx -->
@@ -18382,10 +16038,6 @@ Referenced by: **[Package C30top](#package-c30top)**
 Supports: **[Claim C30top](#claim-c30top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C30Xctx -->
-References: [Package C30top](#package-c30top)
-<!-- end caseproc -->
-
 Stub for Context C30Xctx.
 
 <!-- caseproc element C30Esh -->
@@ -18395,10 +16047,6 @@ Stub for Context C30Xctx.
 Referenced by: **[Package C30top](#package-c30top)**
 
 Supports: **[Claim C30top](#claim-c30top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C30Esh -->
-References: [Package C30top](#package-c30top)
 <!-- end caseproc -->
 
 Stub for Evidence C30Esh.
@@ -18414,10 +16062,6 @@ Supported by: **[Claim C30G1](#claim-c30g1)**, [Claim C30G2](#claim-c30g2), [Cla
 Supports: **[Claim C30top](#claim-c30top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C30Sass -->
-References: [Package C30top](#package-c30top)
-<!-- end caseproc -->
-
 Stub for Strategy C30Sass.
 
 <!-- caseproc element C30G1 -->
@@ -18431,10 +16075,6 @@ Supported by: **[Evidence C30E1](#evidence-c30e1)**, [Context C30Xctx](#context-
 Supports: **[Strategy C30Sass](#strategy-c30sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C30G1 -->
-References: [Package C30top](#package-c30top)
-<!-- end caseproc -->
-
 Stub for Claim C30G1.
 
 <!-- caseproc element C30E1 -->
@@ -18444,10 +16084,6 @@ Stub for Claim C30G1.
 Referenced by: **[Package C30top](#package-c30top)**
 
 Supports: **[Claim C30G1](#claim-c30g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C30E1 -->
-References: [Package C30top](#package-c30top)
 <!-- end caseproc -->
 
 Stub for Evidence C30E1.
@@ -18463,10 +16099,6 @@ Supported by: **[Justification C30J1](#justification-c30j1)**, [Evidence C30Esh]
 Supports: **[Strategy C30Sass](#strategy-c30sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C30G2 -->
-References: [Package C30top](#package-c30top)
-<!-- end caseproc -->
-
 Stub for Claim C30G2.
 
 <!-- caseproc element C30J1 -->
@@ -18476,10 +16108,6 @@ Stub for Claim C30G2.
 Referenced by: **[Package C30top](#package-c30top)**
 
 Supports: **[Claim C30G2](#claim-c30g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C30J1 -->
-References: [Package C30top](#package-c30top)
 <!-- end caseproc -->
 
 Stub for Justification C30J1.
@@ -18495,10 +16123,6 @@ Supported by: **[Assumption C30A1](#assumption-c30a1)**, [Evidence C30E2](#evide
 Supports: **[Strategy C30Sass](#strategy-c30sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C30G3 -->
-References: [Package C30top](#package-c30top)
-<!-- end caseproc -->
-
 Stub for Claim C30G3.
 
 <!-- caseproc element C30A1 -->
@@ -18510,10 +16134,6 @@ Referenced by: **[Package C30top](#package-c30top)**
 Supports: **[Claim C30G3](#claim-c30g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C30A1 -->
-References: [Package C30top](#package-c30top)
-<!-- end caseproc -->
-
 Stub for Assumption C30A1.
 
 <!-- caseproc element C30E2 -->
@@ -18523,10 +16143,6 @@ Stub for Assumption C30A1.
 Referenced by: **[Package C30top](#package-c30top)**
 
 Supports: **[Claim C30G3](#claim-c30g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C30E2 -->
-References: [Package C30top](#package-c30top)
 <!-- end caseproc -->
 
 Stub for Evidence C30E2.
@@ -18542,10 +16158,6 @@ Supported by: **[Context C31Xctx](#context-c31xctx)**, [Evidence C31Esh](#eviden
 Supports: [Strategy L4Smain](#strategy-l4smain), [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C31top -->
-References: [Package C31top](#package-c31top), [Package G1](#package-g1), [Package L4top](#package-l4top)
-<!-- end caseproc -->
-
 Stub for Claim C31top.
 
 <!-- caseproc element C31Xctx -->
@@ -18557,10 +16169,6 @@ Referenced by: **[Package C31top](#package-c31top)**
 Supports: **[Claim C31top](#claim-c31top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C31Xctx -->
-References: [Package C31top](#package-c31top)
-<!-- end caseproc -->
-
 Stub for Context C31Xctx.
 
 <!-- caseproc element C31Esh -->
@@ -18570,10 +16178,6 @@ Stub for Context C31Xctx.
 Referenced by: **[Package C31top](#package-c31top)**
 
 Supports: **[Claim C31top](#claim-c31top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C31Esh -->
-References: [Package C31top](#package-c31top)
 <!-- end caseproc -->
 
 Stub for Evidence C31Esh.
@@ -18589,10 +16193,6 @@ Supported by: **[Claim C31G1](#claim-c31g1)**, [Claim C31G2](#claim-c31g2), [Cla
 Supports: **[Claim C31top](#claim-c31top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C31Sass -->
-References: [Package C31top](#package-c31top)
-<!-- end caseproc -->
-
 Stub for Strategy C31Sass.
 
 <!-- caseproc element C31G1 -->
@@ -18606,10 +16206,6 @@ Supported by: **[Evidence C31E1](#evidence-c31e1)**, [Context C31Xctx](#context-
 Supports: **[Strategy C31Sass](#strategy-c31sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C31G1 -->
-References: [Package C31top](#package-c31top)
-<!-- end caseproc -->
-
 Stub for Claim C31G1.
 
 <!-- caseproc element C31E1 -->
@@ -18619,10 +16215,6 @@ Stub for Claim C31G1.
 Referenced by: **[Package C31top](#package-c31top)**
 
 Supports: **[Claim C31G1](#claim-c31g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C31E1 -->
-References: [Package C31top](#package-c31top)
 <!-- end caseproc -->
 
 Stub for Evidence C31E1.
@@ -18638,10 +16230,6 @@ Supported by: **[Justification C31J1](#justification-c31j1)**, [Evidence C31Esh]
 Supports: **[Strategy C31Sass](#strategy-c31sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C31G2 -->
-References: [Package C31top](#package-c31top)
-<!-- end caseproc -->
-
 Stub for Claim C31G2.
 
 <!-- caseproc element C31J1 -->
@@ -18651,10 +16239,6 @@ Stub for Claim C31G2.
 Referenced by: **[Package C31top](#package-c31top)**
 
 Supports: **[Claim C31G2](#claim-c31g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C31J1 -->
-References: [Package C31top](#package-c31top)
 <!-- end caseproc -->
 
 Stub for Justification C31J1.
@@ -18670,10 +16254,6 @@ Supported by: **[Assumption C31A1](#assumption-c31a1)**, [Evidence C31E2](#evide
 Supports: **[Strategy C31Sass](#strategy-c31sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C31G3 -->
-References: [Package C31top](#package-c31top)
-<!-- end caseproc -->
-
 Stub for Claim C31G3.
 
 <!-- caseproc element C31A1 -->
@@ -18685,10 +16265,6 @@ Referenced by: **[Package C31top](#package-c31top)**
 Supports: **[Claim C31G3](#claim-c31g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C31A1 -->
-References: [Package C31top](#package-c31top)
-<!-- end caseproc -->
-
 Stub for Assumption C31A1.
 
 <!-- caseproc element C31E2 -->
@@ -18698,10 +16274,6 @@ Stub for Assumption C31A1.
 Referenced by: **[Package C31top](#package-c31top)**
 
 Supports: **[Claim C31G3](#claim-c31g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C31E2 -->
-References: [Package C31top](#package-c31top)
 <!-- end caseproc -->
 
 Stub for Evidence C31E2.
@@ -18717,10 +16289,6 @@ Supported by: **[Context C32Xctx](#context-c32xctx)**, [Evidence C32Esh](#eviden
 Supports: [Strategy L4Smain](#strategy-l4smain), [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C32top -->
-References: [Package C32top](#package-c32top), [Package G1](#package-g1), [Package L4top](#package-l4top)
-<!-- end caseproc -->
-
 Stub for Claim C32top.
 
 <!-- caseproc element C32Xctx -->
@@ -18732,10 +16300,6 @@ Referenced by: **[Package C32top](#package-c32top)**
 Supports: **[Claim C32top](#claim-c32top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C32Xctx -->
-References: [Package C32top](#package-c32top)
-<!-- end caseproc -->
-
 Stub for Context C32Xctx.
 
 <!-- caseproc element C32Esh -->
@@ -18745,10 +16309,6 @@ Stub for Context C32Xctx.
 Referenced by: **[Package C32top](#package-c32top)**
 
 Supports: **[Claim C32top](#claim-c32top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C32Esh -->
-References: [Package C32top](#package-c32top)
 <!-- end caseproc -->
 
 Stub for Evidence C32Esh.
@@ -18764,10 +16324,6 @@ Supported by: **[Claim C32G1](#claim-c32g1)**, [Claim C32G2](#claim-c32g2), [Cla
 Supports: **[Claim C32top](#claim-c32top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C32Sass -->
-References: [Package C32top](#package-c32top)
-<!-- end caseproc -->
-
 Stub for Strategy C32Sass.
 
 <!-- caseproc element C32G1 -->
@@ -18781,10 +16337,6 @@ Supported by: **[Evidence C32E1](#evidence-c32e1)**, [Context C32Xctx](#context-
 Supports: **[Strategy C32Sass](#strategy-c32sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C32G1 -->
-References: [Package C32top](#package-c32top)
-<!-- end caseproc -->
-
 Stub for Claim C32G1.
 
 <!-- caseproc element C32E1 -->
@@ -18794,10 +16346,6 @@ Stub for Claim C32G1.
 Referenced by: **[Package C32top](#package-c32top)**
 
 Supports: **[Claim C32G1](#claim-c32g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C32E1 -->
-References: [Package C32top](#package-c32top)
 <!-- end caseproc -->
 
 Stub for Evidence C32E1.
@@ -18813,10 +16361,6 @@ Supported by: **[Justification C32J1](#justification-c32j1)**, [Evidence C32Esh]
 Supports: **[Strategy C32Sass](#strategy-c32sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C32G2 -->
-References: [Package C32top](#package-c32top)
-<!-- end caseproc -->
-
 Stub for Claim C32G2.
 
 <!-- caseproc element C32J1 -->
@@ -18826,10 +16370,6 @@ Stub for Claim C32G2.
 Referenced by: **[Package C32top](#package-c32top)**
 
 Supports: **[Claim C32G2](#claim-c32g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C32J1 -->
-References: [Package C32top](#package-c32top)
 <!-- end caseproc -->
 
 Stub for Justification C32J1.
@@ -18845,10 +16385,6 @@ Supported by: **[Assumption C32A1](#assumption-c32a1)**, [Evidence C32E2](#evide
 Supports: **[Strategy C32Sass](#strategy-c32sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C32G3 -->
-References: [Package C32top](#package-c32top)
-<!-- end caseproc -->
-
 Stub for Claim C32G3.
 
 <!-- caseproc element C32A1 -->
@@ -18860,10 +16396,6 @@ Referenced by: **[Package C32top](#package-c32top)**
 Supports: **[Claim C32G3](#claim-c32g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C32A1 -->
-References: [Package C32top](#package-c32top)
-<!-- end caseproc -->
-
 Stub for Assumption C32A1.
 
 <!-- caseproc element C32E2 -->
@@ -18873,10 +16405,6 @@ Stub for Assumption C32A1.
 Referenced by: **[Package C32top](#package-c32top)**
 
 Supports: **[Claim C32G3](#claim-c32g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C32E2 -->
-References: [Package C32top](#package-c32top)
 <!-- end caseproc -->
 
 Stub for Evidence C32E2.
@@ -18892,10 +16420,6 @@ Supported by: **[Context C33Xctx](#context-c33xctx)**, [Evidence C33Esh](#eviden
 Supports: [Strategy L4Smain](#strategy-l4smain), [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C33top -->
-References: [Package C33top](#package-c33top), [Package G1](#package-g1), [Package L4top](#package-l4top)
-<!-- end caseproc -->
-
 Stub for Claim C33top.
 
 <!-- caseproc element C33Xctx -->
@@ -18907,10 +16431,6 @@ Referenced by: **[Package C33top](#package-c33top)**
 Supports: **[Claim C33top](#claim-c33top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C33Xctx -->
-References: [Package C33top](#package-c33top)
-<!-- end caseproc -->
-
 Stub for Context C33Xctx.
 
 <!-- caseproc element C33Esh -->
@@ -18920,10 +16440,6 @@ Stub for Context C33Xctx.
 Referenced by: **[Package C33top](#package-c33top)**
 
 Supports: **[Claim C33top](#claim-c33top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C33Esh -->
-References: [Package C33top](#package-c33top)
 <!-- end caseproc -->
 
 Stub for Evidence C33Esh.
@@ -18939,10 +16455,6 @@ Supported by: **[Claim C33G1](#claim-c33g1)**, [Claim C33G2](#claim-c33g2), [Cla
 Supports: **[Claim C33top](#claim-c33top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C33Sass -->
-References: [Package C33top](#package-c33top)
-<!-- end caseproc -->
-
 Stub for Strategy C33Sass.
 
 <!-- caseproc element C33G1 -->
@@ -18956,10 +16468,6 @@ Supported by: **[Evidence C33E1](#evidence-c33e1)**, [Context C33Xctx](#context-
 Supports: **[Strategy C33Sass](#strategy-c33sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C33G1 -->
-References: [Package C33top](#package-c33top)
-<!-- end caseproc -->
-
 Stub for Claim C33G1.
 
 <!-- caseproc element C33E1 -->
@@ -18969,10 +16477,6 @@ Stub for Claim C33G1.
 Referenced by: **[Package C33top](#package-c33top)**
 
 Supports: **[Claim C33G1](#claim-c33g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C33E1 -->
-References: [Package C33top](#package-c33top)
 <!-- end caseproc -->
 
 Stub for Evidence C33E1.
@@ -18988,10 +16492,6 @@ Supported by: **[Justification C33J1](#justification-c33j1)**, [Evidence C33Esh]
 Supports: **[Strategy C33Sass](#strategy-c33sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C33G2 -->
-References: [Package C33top](#package-c33top)
-<!-- end caseproc -->
-
 Stub for Claim C33G2.
 
 <!-- caseproc element C33J1 -->
@@ -19001,10 +16501,6 @@ Stub for Claim C33G2.
 Referenced by: **[Package C33top](#package-c33top)**
 
 Supports: **[Claim C33G2](#claim-c33g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C33J1 -->
-References: [Package C33top](#package-c33top)
 <!-- end caseproc -->
 
 Stub for Justification C33J1.
@@ -19020,10 +16516,6 @@ Supported by: **[Assumption C33A1](#assumption-c33a1)**, [Evidence C33E2](#evide
 Supports: **[Strategy C33Sass](#strategy-c33sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C33G3 -->
-References: [Package C33top](#package-c33top)
-<!-- end caseproc -->
-
 Stub for Claim C33G3.
 
 <!-- caseproc element C33A1 -->
@@ -19035,10 +16527,6 @@ Referenced by: **[Package C33top](#package-c33top)**
 Supports: **[Claim C33G3](#claim-c33g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C33A1 -->
-References: [Package C33top](#package-c33top)
-<!-- end caseproc -->
-
 Stub for Assumption C33A1.
 
 <!-- caseproc element C33E2 -->
@@ -19048,10 +16536,6 @@ Stub for Assumption C33A1.
 Referenced by: **[Package C33top](#package-c33top)**
 
 Supports: **[Claim C33G3](#claim-c33g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C33E2 -->
-References: [Package C33top](#package-c33top)
 <!-- end caseproc -->
 
 Stub for Evidence C33E2.
@@ -19067,10 +16551,6 @@ Supported by: **[Context C34Xctx](#context-c34xctx)**, [Evidence C34Esh](#eviden
 Supports: [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C34top -->
-References: [Package C34top](#package-c34top), [Package G1](#package-g1)
-<!-- end caseproc -->
-
 Stub for Claim C34top.
 
 <!-- caseproc element C34Xctx -->
@@ -19082,10 +16562,6 @@ Referenced by: **[Package C34top](#package-c34top)**
 Supports: **[Claim C34top](#claim-c34top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C34Xctx -->
-References: [Package C34top](#package-c34top)
-<!-- end caseproc -->
-
 Stub for Context C34Xctx.
 
 <!-- caseproc element C34Esh -->
@@ -19095,10 +16571,6 @@ Stub for Context C34Xctx.
 Referenced by: **[Package C34top](#package-c34top)**
 
 Supports: **[Claim C34top](#claim-c34top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C34Esh -->
-References: [Package C34top](#package-c34top)
 <!-- end caseproc -->
 
 Stub for Evidence C34Esh.
@@ -19114,10 +16586,6 @@ Supported by: **[Claim C34G1](#claim-c34g1)**, [Claim C34G2](#claim-c34g2), [Cla
 Supports: **[Claim C34top](#claim-c34top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C34Sass -->
-References: [Package C34top](#package-c34top)
-<!-- end caseproc -->
-
 Stub for Strategy C34Sass.
 
 <!-- caseproc element C34G1 -->
@@ -19131,10 +16599,6 @@ Supported by: **[Evidence C34E1](#evidence-c34e1)**, [Context C34Xctx](#context-
 Supports: **[Strategy C34Sass](#strategy-c34sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C34G1 -->
-References: [Package C34top](#package-c34top)
-<!-- end caseproc -->
-
 Stub for Claim C34G1.
 
 <!-- caseproc element C34E1 -->
@@ -19144,10 +16608,6 @@ Stub for Claim C34G1.
 Referenced by: **[Package C34top](#package-c34top)**
 
 Supports: **[Claim C34G1](#claim-c34g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C34E1 -->
-References: [Package C34top](#package-c34top)
 <!-- end caseproc -->
 
 Stub for Evidence C34E1.
@@ -19163,10 +16623,6 @@ Supported by: **[Justification C34J1](#justification-c34j1)**, [Evidence C34Esh]
 Supports: **[Strategy C34Sass](#strategy-c34sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C34G2 -->
-References: [Package C34top](#package-c34top)
-<!-- end caseproc -->
-
 Stub for Claim C34G2.
 
 <!-- caseproc element C34J1 -->
@@ -19176,10 +16632,6 @@ Stub for Claim C34G2.
 Referenced by: **[Package C34top](#package-c34top)**
 
 Supports: **[Claim C34G2](#claim-c34g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C34J1 -->
-References: [Package C34top](#package-c34top)
 <!-- end caseproc -->
 
 Stub for Justification C34J1.
@@ -19195,10 +16647,6 @@ Supported by: **[Assumption C34A1](#assumption-c34a1)**, [Evidence C34E2](#evide
 Supports: **[Strategy C34Sass](#strategy-c34sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C34G3 -->
-References: [Package C34top](#package-c34top)
-<!-- end caseproc -->
-
 Stub for Claim C34G3.
 
 <!-- caseproc element C34A1 -->
@@ -19210,10 +16658,6 @@ Referenced by: **[Package C34top](#package-c34top)**
 Supports: **[Claim C34G3](#claim-c34g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C34A1 -->
-References: [Package C34top](#package-c34top)
-<!-- end caseproc -->
-
 Stub for Assumption C34A1.
 
 <!-- caseproc element C34E2 -->
@@ -19223,10 +16667,6 @@ Stub for Assumption C34A1.
 Referenced by: **[Package C34top](#package-c34top)**
 
 Supports: **[Claim C34G3](#claim-c34g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C34E2 -->
-References: [Package C34top](#package-c34top)
 <!-- end caseproc -->
 
 Stub for Evidence C34E2.
@@ -19242,10 +16682,6 @@ Supported by: **[Context C35Xctx](#context-c35xctx)**, [Evidence C35Esh](#eviden
 Supports: [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C35top -->
-References: [Package C35top](#package-c35top), [Package G1](#package-g1)
-<!-- end caseproc -->
-
 Stub for Claim C35top.
 
 <!-- caseproc element C35Xctx -->
@@ -19257,10 +16693,6 @@ Referenced by: **[Package C35top](#package-c35top)**
 Supports: **[Claim C35top](#claim-c35top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C35Xctx -->
-References: [Package C35top](#package-c35top)
-<!-- end caseproc -->
-
 Stub for Context C35Xctx.
 
 <!-- caseproc element C35Esh -->
@@ -19270,10 +16702,6 @@ Stub for Context C35Xctx.
 Referenced by: **[Package C35top](#package-c35top)**
 
 Supports: **[Claim C35top](#claim-c35top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C35Esh -->
-References: [Package C35top](#package-c35top)
 <!-- end caseproc -->
 
 Stub for Evidence C35Esh.
@@ -19289,10 +16717,6 @@ Supported by: **[Claim C35G1](#claim-c35g1)**, [Claim C35G2](#claim-c35g2), [Cla
 Supports: **[Claim C35top](#claim-c35top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C35Sass -->
-References: [Package C35top](#package-c35top)
-<!-- end caseproc -->
-
 Stub for Strategy C35Sass.
 
 <!-- caseproc element C35G1 -->
@@ -19306,10 +16730,6 @@ Supported by: **[Evidence C35E1](#evidence-c35e1)**, [Context C35Xctx](#context-
 Supports: **[Strategy C35Sass](#strategy-c35sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C35G1 -->
-References: [Package C35top](#package-c35top)
-<!-- end caseproc -->
-
 Stub for Claim C35G1.
 
 <!-- caseproc element C35E1 -->
@@ -19319,10 +16739,6 @@ Stub for Claim C35G1.
 Referenced by: **[Package C35top](#package-c35top)**
 
 Supports: **[Claim C35G1](#claim-c35g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C35E1 -->
-References: [Package C35top](#package-c35top)
 <!-- end caseproc -->
 
 Stub for Evidence C35E1.
@@ -19338,10 +16754,6 @@ Supported by: **[Justification C35J1](#justification-c35j1)**, [Evidence C35Esh]
 Supports: **[Strategy C35Sass](#strategy-c35sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C35G2 -->
-References: [Package C35top](#package-c35top)
-<!-- end caseproc -->
-
 Stub for Claim C35G2.
 
 <!-- caseproc element C35J1 -->
@@ -19351,10 +16763,6 @@ Stub for Claim C35G2.
 Referenced by: **[Package C35top](#package-c35top)**
 
 Supports: **[Claim C35G2](#claim-c35g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C35J1 -->
-References: [Package C35top](#package-c35top)
 <!-- end caseproc -->
 
 Stub for Justification C35J1.
@@ -19370,10 +16778,6 @@ Supported by: **[Assumption C35A1](#assumption-c35a1)**, [Evidence C35E2](#evide
 Supports: **[Strategy C35Sass](#strategy-c35sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C35G3 -->
-References: [Package C35top](#package-c35top)
-<!-- end caseproc -->
-
 Stub for Claim C35G3.
 
 <!-- caseproc element C35A1 -->
@@ -19385,10 +16789,6 @@ Referenced by: **[Package C35top](#package-c35top)**
 Supports: **[Claim C35G3](#claim-c35g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C35A1 -->
-References: [Package C35top](#package-c35top)
-<!-- end caseproc -->
-
 Stub for Assumption C35A1.
 
 <!-- caseproc element C35E2 -->
@@ -19398,10 +16798,6 @@ Stub for Assumption C35A1.
 Referenced by: **[Package C35top](#package-c35top)**
 
 Supports: **[Claim C35G3](#claim-c35g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C35E2 -->
-References: [Package C35top](#package-c35top)
 <!-- end caseproc -->
 
 Stub for Evidence C35E2.
@@ -19417,10 +16813,6 @@ Supported by: **[Context C36Xctx](#context-c36xctx)**, [Evidence C36Esh](#eviden
 Supports: [Strategy L5Smain](#strategy-l5smain), [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C36top -->
-References: [Package C36top](#package-c36top), [Package G1](#package-g1), [Package L5top](#package-l5top)
-<!-- end caseproc -->
-
 Stub for Claim C36top.
 
 <!-- caseproc element C36Xctx -->
@@ -19432,10 +16824,6 @@ Referenced by: **[Package C36top](#package-c36top)**
 Supports: **[Claim C36top](#claim-c36top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C36Xctx -->
-References: [Package C36top](#package-c36top)
-<!-- end caseproc -->
-
 Stub for Context C36Xctx.
 
 <!-- caseproc element C36Esh -->
@@ -19445,10 +16833,6 @@ Stub for Context C36Xctx.
 Referenced by: **[Package C36top](#package-c36top)**
 
 Supports: **[Claim C36top](#claim-c36top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C36Esh -->
-References: [Package C36top](#package-c36top)
 <!-- end caseproc -->
 
 Stub for Evidence C36Esh.
@@ -19464,10 +16848,6 @@ Supported by: **[Claim C36G1](#claim-c36g1)**, [Claim C36G2](#claim-c36g2), [Cla
 Supports: **[Claim C36top](#claim-c36top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C36Sass -->
-References: [Package C36top](#package-c36top)
-<!-- end caseproc -->
-
 Stub for Strategy C36Sass.
 
 <!-- caseproc element C36G1 -->
@@ -19481,10 +16861,6 @@ Supported by: **[Evidence C36E1](#evidence-c36e1)**, [Context C36Xctx](#context-
 Supports: **[Strategy C36Sass](#strategy-c36sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C36G1 -->
-References: [Package C36top](#package-c36top)
-<!-- end caseproc -->
-
 Stub for Claim C36G1.
 
 <!-- caseproc element C36E1 -->
@@ -19494,10 +16870,6 @@ Stub for Claim C36G1.
 Referenced by: **[Package C36top](#package-c36top)**
 
 Supports: **[Claim C36G1](#claim-c36g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C36E1 -->
-References: [Package C36top](#package-c36top)
 <!-- end caseproc -->
 
 Stub for Evidence C36E1.
@@ -19513,10 +16885,6 @@ Supported by: **[Justification C36J1](#justification-c36j1)**, [Evidence C36Esh]
 Supports: **[Strategy C36Sass](#strategy-c36sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C36G2 -->
-References: [Package C36top](#package-c36top)
-<!-- end caseproc -->
-
 Stub for Claim C36G2.
 
 <!-- caseproc element C36J1 -->
@@ -19526,10 +16894,6 @@ Stub for Claim C36G2.
 Referenced by: **[Package C36top](#package-c36top)**
 
 Supports: **[Claim C36G2](#claim-c36g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C36J1 -->
-References: [Package C36top](#package-c36top)
 <!-- end caseproc -->
 
 Stub for Justification C36J1.
@@ -19545,10 +16909,6 @@ Supported by: **[Assumption C36A1](#assumption-c36a1)**, [Evidence C36E2](#evide
 Supports: **[Strategy C36Sass](#strategy-c36sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C36G3 -->
-References: [Package C36top](#package-c36top)
-<!-- end caseproc -->
-
 Stub for Claim C36G3.
 
 <!-- caseproc element C36A1 -->
@@ -19560,10 +16920,6 @@ Referenced by: **[Package C36top](#package-c36top)**
 Supports: **[Claim C36G3](#claim-c36g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C36A1 -->
-References: [Package C36top](#package-c36top)
-<!-- end caseproc -->
-
 Stub for Assumption C36A1.
 
 <!-- caseproc element C36E2 -->
@@ -19573,10 +16929,6 @@ Stub for Assumption C36A1.
 Referenced by: **[Package C36top](#package-c36top)**
 
 Supports: **[Claim C36G3](#claim-c36g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C36E2 -->
-References: [Package C36top](#package-c36top)
 <!-- end caseproc -->
 
 Stub for Evidence C36E2.
@@ -19592,10 +16944,6 @@ Supported by: **[Context C37Xctx](#context-c37xctx)**, [Evidence C37Esh](#eviden
 Supports: [Strategy L5Smain](#strategy-l5smain), [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C37top -->
-References: [Package C37top](#package-c37top), [Package G1](#package-g1), [Package L5top](#package-l5top)
-<!-- end caseproc -->
-
 Stub for Claim C37top.
 
 <!-- caseproc element C37Xctx -->
@@ -19607,10 +16955,6 @@ Referenced by: **[Package C37top](#package-c37top)**
 Supports: **[Claim C37top](#claim-c37top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C37Xctx -->
-References: [Package C37top](#package-c37top)
-<!-- end caseproc -->
-
 Stub for Context C37Xctx.
 
 <!-- caseproc element C37Esh -->
@@ -19620,10 +16964,6 @@ Stub for Context C37Xctx.
 Referenced by: **[Package C37top](#package-c37top)**
 
 Supports: **[Claim C37top](#claim-c37top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C37Esh -->
-References: [Package C37top](#package-c37top)
 <!-- end caseproc -->
 
 Stub for Evidence C37Esh.
@@ -19639,10 +16979,6 @@ Supported by: **[Claim C37G1](#claim-c37g1)**, [Claim C37G2](#claim-c37g2), [Cla
 Supports: **[Claim C37top](#claim-c37top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C37Sass -->
-References: [Package C37top](#package-c37top)
-<!-- end caseproc -->
-
 Stub for Strategy C37Sass.
 
 <!-- caseproc element C37G1 -->
@@ -19656,10 +16992,6 @@ Supported by: **[Evidence C37E1](#evidence-c37e1)**, [Context C37Xctx](#context-
 Supports: **[Strategy C37Sass](#strategy-c37sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C37G1 -->
-References: [Package C37top](#package-c37top)
-<!-- end caseproc -->
-
 Stub for Claim C37G1.
 
 <!-- caseproc element C37E1 -->
@@ -19669,10 +17001,6 @@ Stub for Claim C37G1.
 Referenced by: **[Package C37top](#package-c37top)**
 
 Supports: **[Claim C37G1](#claim-c37g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C37E1 -->
-References: [Package C37top](#package-c37top)
 <!-- end caseproc -->
 
 Stub for Evidence C37E1.
@@ -19688,10 +17016,6 @@ Supported by: **[Justification C37J1](#justification-c37j1)**, [Evidence C37Esh]
 Supports: **[Strategy C37Sass](#strategy-c37sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C37G2 -->
-References: [Package C37top](#package-c37top)
-<!-- end caseproc -->
-
 Stub for Claim C37G2.
 
 <!-- caseproc element C37J1 -->
@@ -19701,10 +17025,6 @@ Stub for Claim C37G2.
 Referenced by: **[Package C37top](#package-c37top)**
 
 Supports: **[Claim C37G2](#claim-c37g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C37J1 -->
-References: [Package C37top](#package-c37top)
 <!-- end caseproc -->
 
 Stub for Justification C37J1.
@@ -19720,10 +17040,6 @@ Supported by: **[Assumption C37A1](#assumption-c37a1)**, [Evidence C37E2](#evide
 Supports: **[Strategy C37Sass](#strategy-c37sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C37G3 -->
-References: [Package C37top](#package-c37top)
-<!-- end caseproc -->
-
 Stub for Claim C37G3.
 
 <!-- caseproc element C37A1 -->
@@ -19735,10 +17051,6 @@ Referenced by: **[Package C37top](#package-c37top)**
 Supports: **[Claim C37G3](#claim-c37g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C37A1 -->
-References: [Package C37top](#package-c37top)
-<!-- end caseproc -->
-
 Stub for Assumption C37A1.
 
 <!-- caseproc element C37E2 -->
@@ -19748,10 +17060,6 @@ Stub for Assumption C37A1.
 Referenced by: **[Package C37top](#package-c37top)**
 
 Supports: **[Claim C37G3](#claim-c37g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C37E2 -->
-References: [Package C37top](#package-c37top)
 <!-- end caseproc -->
 
 Stub for Evidence C37E2.
@@ -19767,10 +17075,6 @@ Supported by: **[Context C38Xctx](#context-c38xctx)**, [Evidence C38Esh](#eviden
 Supports: [Strategy L5Smain](#strategy-l5smain), [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C38top -->
-References: [Package C38top](#package-c38top), [Package G1](#package-g1), [Package L5top](#package-l5top)
-<!-- end caseproc -->
-
 Stub for Claim C38top.
 
 <!-- caseproc element C38Xctx -->
@@ -19782,10 +17086,6 @@ Referenced by: **[Package C38top](#package-c38top)**
 Supports: **[Claim C38top](#claim-c38top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C38Xctx -->
-References: [Package C38top](#package-c38top)
-<!-- end caseproc -->
-
 Stub for Context C38Xctx.
 
 <!-- caseproc element C38Esh -->
@@ -19795,10 +17095,6 @@ Stub for Context C38Xctx.
 Referenced by: **[Package C38top](#package-c38top)**
 
 Supports: **[Claim C38top](#claim-c38top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C38Esh -->
-References: [Package C38top](#package-c38top)
 <!-- end caseproc -->
 
 Stub for Evidence C38Esh.
@@ -19814,10 +17110,6 @@ Supported by: **[Claim C38G1](#claim-c38g1)**, [Claim C38G2](#claim-c38g2), [Cla
 Supports: **[Claim C38top](#claim-c38top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C38Sass -->
-References: [Package C38top](#package-c38top)
-<!-- end caseproc -->
-
 Stub for Strategy C38Sass.
 
 <!-- caseproc element C38G1 -->
@@ -19831,10 +17123,6 @@ Supported by: **[Evidence C38E1](#evidence-c38e1)**, [Context C38Xctx](#context-
 Supports: **[Strategy C38Sass](#strategy-c38sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C38G1 -->
-References: [Package C38top](#package-c38top)
-<!-- end caseproc -->
-
 Stub for Claim C38G1.
 
 <!-- caseproc element C38E1 -->
@@ -19844,10 +17132,6 @@ Stub for Claim C38G1.
 Referenced by: **[Package C38top](#package-c38top)**
 
 Supports: **[Claim C38G1](#claim-c38g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C38E1 -->
-References: [Package C38top](#package-c38top)
 <!-- end caseproc -->
 
 Stub for Evidence C38E1.
@@ -19863,10 +17147,6 @@ Supported by: **[Justification C38J1](#justification-c38j1)**, [Evidence C38Esh]
 Supports: **[Strategy C38Sass](#strategy-c38sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C38G2 -->
-References: [Package C38top](#package-c38top)
-<!-- end caseproc -->
-
 Stub for Claim C38G2.
 
 <!-- caseproc element C38J1 -->
@@ -19876,10 +17156,6 @@ Stub for Claim C38G2.
 Referenced by: **[Package C38top](#package-c38top)**
 
 Supports: **[Claim C38G2](#claim-c38g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C38J1 -->
-References: [Package C38top](#package-c38top)
 <!-- end caseproc -->
 
 Stub for Justification C38J1.
@@ -19895,10 +17171,6 @@ Supported by: **[Assumption C38A1](#assumption-c38a1)**, [Evidence C38E2](#evide
 Supports: **[Strategy C38Sass](#strategy-c38sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C38G3 -->
-References: [Package C38top](#package-c38top)
-<!-- end caseproc -->
-
 Stub for Claim C38G3.
 
 <!-- caseproc element C38A1 -->
@@ -19910,10 +17182,6 @@ Referenced by: **[Package C38top](#package-c38top)**
 Supports: **[Claim C38G3](#claim-c38g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C38A1 -->
-References: [Package C38top](#package-c38top)
-<!-- end caseproc -->
-
 Stub for Assumption C38A1.
 
 <!-- caseproc element C38E2 -->
@@ -19923,10 +17191,6 @@ Stub for Assumption C38A1.
 Referenced by: **[Package C38top](#package-c38top)**
 
 Supports: **[Claim C38G3](#claim-c38g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C38E2 -->
-References: [Package C38top](#package-c38top)
 <!-- end caseproc -->
 
 Stub for Evidence C38E2.
@@ -19942,10 +17206,6 @@ Supported by: **[Context C39Xctx](#context-c39xctx)**, [Evidence C39Esh](#eviden
 Supports: [Strategy L5Smain](#strategy-l5smain), [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C39top -->
-References: [Package C39top](#package-c39top), [Package G1](#package-g1), [Package L5top](#package-l5top)
-<!-- end caseproc -->
-
 Stub for Claim C39top.
 
 <!-- caseproc element C39Xctx -->
@@ -19957,10 +17217,6 @@ Referenced by: **[Package C39top](#package-c39top)**
 Supports: **[Claim C39top](#claim-c39top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C39Xctx -->
-References: [Package C39top](#package-c39top)
-<!-- end caseproc -->
-
 Stub for Context C39Xctx.
 
 <!-- caseproc element C39Esh -->
@@ -19970,10 +17226,6 @@ Stub for Context C39Xctx.
 Referenced by: **[Package C39top](#package-c39top)**
 
 Supports: **[Claim C39top](#claim-c39top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C39Esh -->
-References: [Package C39top](#package-c39top)
 <!-- end caseproc -->
 
 Stub for Evidence C39Esh.
@@ -19989,10 +17241,6 @@ Supported by: **[Claim C39G1](#claim-c39g1)**, [Claim C39G2](#claim-c39g2), [Cla
 Supports: **[Claim C39top](#claim-c39top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C39Sass -->
-References: [Package C39top](#package-c39top)
-<!-- end caseproc -->
-
 Stub for Strategy C39Sass.
 
 <!-- caseproc element C39G1 -->
@@ -20006,10 +17254,6 @@ Supported by: **[Evidence C39E1](#evidence-c39e1)**, [Context C39Xctx](#context-
 Supports: **[Strategy C39Sass](#strategy-c39sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C39G1 -->
-References: [Package C39top](#package-c39top)
-<!-- end caseproc -->
-
 Stub for Claim C39G1.
 
 <!-- caseproc element C39E1 -->
@@ -20019,10 +17263,6 @@ Stub for Claim C39G1.
 Referenced by: **[Package C39top](#package-c39top)**
 
 Supports: **[Claim C39G1](#claim-c39g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C39E1 -->
-References: [Package C39top](#package-c39top)
 <!-- end caseproc -->
 
 Stub for Evidence C39E1.
@@ -20038,10 +17278,6 @@ Supported by: **[Justification C39J1](#justification-c39j1)**, [Evidence C39Esh]
 Supports: **[Strategy C39Sass](#strategy-c39sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C39G2 -->
-References: [Package C39top](#package-c39top)
-<!-- end caseproc -->
-
 Stub for Claim C39G2.
 
 <!-- caseproc element C39J1 -->
@@ -20051,10 +17287,6 @@ Stub for Claim C39G2.
 Referenced by: **[Package C39top](#package-c39top)**
 
 Supports: **[Claim C39G2](#claim-c39g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C39J1 -->
-References: [Package C39top](#package-c39top)
 <!-- end caseproc -->
 
 Stub for Justification C39J1.
@@ -20070,10 +17302,6 @@ Supported by: **[Assumption C39A1](#assumption-c39a1)**, [Evidence C39E2](#evide
 Supports: **[Strategy C39Sass](#strategy-c39sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C39G3 -->
-References: [Package C39top](#package-c39top)
-<!-- end caseproc -->
-
 Stub for Claim C39G3.
 
 <!-- caseproc element C39A1 -->
@@ -20085,10 +17313,6 @@ Referenced by: **[Package C39top](#package-c39top)**
 Supports: **[Claim C39G3](#claim-c39g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C39A1 -->
-References: [Package C39top](#package-c39top)
-<!-- end caseproc -->
-
 Stub for Assumption C39A1.
 
 <!-- caseproc element C39E2 -->
@@ -20098,10 +17322,6 @@ Stub for Assumption C39A1.
 Referenced by: **[Package C39top](#package-c39top)**
 
 Supports: **[Claim C39G3](#claim-c39g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C39E2 -->
-References: [Package C39top](#package-c39top)
 <!-- end caseproc -->
 
 Stub for Evidence C39E2.
@@ -20117,10 +17337,6 @@ Supported by: **[Context C40Xctx](#context-c40xctx)**, [Evidence C40Esh](#eviden
 Supports: [Strategy L5Smain](#strategy-l5smain), [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C40top -->
-References: [Package C40top](#package-c40top), [Package G1](#package-g1), [Package L5top](#package-l5top)
-<!-- end caseproc -->
-
 Stub for Claim C40top.
 
 <!-- caseproc element C40Xctx -->
@@ -20132,10 +17348,6 @@ Referenced by: **[Package C40top](#package-c40top)**
 Supports: **[Claim C40top](#claim-c40top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C40Xctx -->
-References: [Package C40top](#package-c40top)
-<!-- end caseproc -->
-
 Stub for Context C40Xctx.
 
 <!-- caseproc element C40Esh -->
@@ -20145,10 +17357,6 @@ Stub for Context C40Xctx.
 Referenced by: **[Package C40top](#package-c40top)**
 
 Supports: **[Claim C40top](#claim-c40top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C40Esh -->
-References: [Package C40top](#package-c40top)
 <!-- end caseproc -->
 
 Stub for Evidence C40Esh.
@@ -20164,10 +17372,6 @@ Supported by: **[Claim C40G1](#claim-c40g1)**, [Claim C40G2](#claim-c40g2), [Cla
 Supports: **[Claim C40top](#claim-c40top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C40Sass -->
-References: [Package C40top](#package-c40top)
-<!-- end caseproc -->
-
 Stub for Strategy C40Sass.
 
 <!-- caseproc element C40G1 -->
@@ -20181,10 +17385,6 @@ Supported by: **[Evidence C40E1](#evidence-c40e1)**, [Context C40Xctx](#context-
 Supports: **[Strategy C40Sass](#strategy-c40sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C40G1 -->
-References: [Package C40top](#package-c40top)
-<!-- end caseproc -->
-
 Stub for Claim C40G1.
 
 <!-- caseproc element C40E1 -->
@@ -20194,10 +17394,6 @@ Stub for Claim C40G1.
 Referenced by: **[Package C40top](#package-c40top)**
 
 Supports: **[Claim C40G1](#claim-c40g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C40E1 -->
-References: [Package C40top](#package-c40top)
 <!-- end caseproc -->
 
 Stub for Evidence C40E1.
@@ -20213,10 +17409,6 @@ Supported by: **[Justification C40J1](#justification-c40j1)**, [Evidence C40Esh]
 Supports: **[Strategy C40Sass](#strategy-c40sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C40G2 -->
-References: [Package C40top](#package-c40top)
-<!-- end caseproc -->
-
 Stub for Claim C40G2.
 
 <!-- caseproc element C40J1 -->
@@ -20226,10 +17418,6 @@ Stub for Claim C40G2.
 Referenced by: **[Package C40top](#package-c40top)**
 
 Supports: **[Claim C40G2](#claim-c40g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C40J1 -->
-References: [Package C40top](#package-c40top)
 <!-- end caseproc -->
 
 Stub for Justification C40J1.
@@ -20245,10 +17433,6 @@ Supported by: **[Assumption C40A1](#assumption-c40a1)**, [Evidence C40E2](#evide
 Supports: **[Strategy C40Sass](#strategy-c40sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C40G3 -->
-References: [Package C40top](#package-c40top)
-<!-- end caseproc -->
-
 Stub for Claim C40G3.
 
 <!-- caseproc element C40A1 -->
@@ -20260,10 +17444,6 @@ Referenced by: **[Package C40top](#package-c40top)**
 Supports: **[Claim C40G3](#claim-c40g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C40A1 -->
-References: [Package C40top](#package-c40top)
-<!-- end caseproc -->
-
 Stub for Assumption C40A1.
 
 <!-- caseproc element C40E2 -->
@@ -20273,10 +17453,6 @@ Stub for Assumption C40A1.
 Referenced by: **[Package C40top](#package-c40top)**
 
 Supports: **[Claim C40G3](#claim-c40g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C40E2 -->
-References: [Package C40top](#package-c40top)
 <!-- end caseproc -->
 
 Stub for Evidence C40E2.
@@ -20292,10 +17468,6 @@ Supported by: **[Context C41Xctx](#context-c41xctx)**, [Evidence C41Esh](#eviden
 Supports: [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C41top -->
-References: [Package C41top](#package-c41top), [Package G1](#package-g1)
-<!-- end caseproc -->
-
 Stub for Claim C41top.
 
 <!-- caseproc element C41Xctx -->
@@ -20307,10 +17479,6 @@ Referenced by: **[Package C41top](#package-c41top)**
 Supports: **[Claim C41top](#claim-c41top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C41Xctx -->
-References: [Package C41top](#package-c41top)
-<!-- end caseproc -->
-
 Stub for Context C41Xctx.
 
 <!-- caseproc element C41Esh -->
@@ -20320,10 +17488,6 @@ Stub for Context C41Xctx.
 Referenced by: **[Package C41top](#package-c41top)**
 
 Supports: **[Claim C41top](#claim-c41top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C41Esh -->
-References: [Package C41top](#package-c41top)
 <!-- end caseproc -->
 
 Stub for Evidence C41Esh.
@@ -20339,10 +17503,6 @@ Supported by: **[Claim C41G1](#claim-c41g1)**, [Claim C41G2](#claim-c41g2), [Cla
 Supports: **[Claim C41top](#claim-c41top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C41Sass -->
-References: [Package C41top](#package-c41top)
-<!-- end caseproc -->
-
 Stub for Strategy C41Sass.
 
 <!-- caseproc element C41G1 -->
@@ -20356,10 +17516,6 @@ Supported by: **[Evidence C41E1](#evidence-c41e1)**, [Context C41Xctx](#context-
 Supports: **[Strategy C41Sass](#strategy-c41sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C41G1 -->
-References: [Package C41top](#package-c41top)
-<!-- end caseproc -->
-
 Stub for Claim C41G1.
 
 <!-- caseproc element C41E1 -->
@@ -20369,10 +17525,6 @@ Stub for Claim C41G1.
 Referenced by: **[Package C41top](#package-c41top)**
 
 Supports: **[Claim C41G1](#claim-c41g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C41E1 -->
-References: [Package C41top](#package-c41top)
 <!-- end caseproc -->
 
 Stub for Evidence C41E1.
@@ -20388,10 +17540,6 @@ Supported by: **[Justification C41J1](#justification-c41j1)**, [Evidence C41Esh]
 Supports: **[Strategy C41Sass](#strategy-c41sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C41G2 -->
-References: [Package C41top](#package-c41top)
-<!-- end caseproc -->
-
 Stub for Claim C41G2.
 
 <!-- caseproc element C41J1 -->
@@ -20401,10 +17549,6 @@ Stub for Claim C41G2.
 Referenced by: **[Package C41top](#package-c41top)**
 
 Supports: **[Claim C41G2](#claim-c41g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C41J1 -->
-References: [Package C41top](#package-c41top)
 <!-- end caseproc -->
 
 Stub for Justification C41J1.
@@ -20420,10 +17564,6 @@ Supported by: **[Assumption C41A1](#assumption-c41a1)**, [Evidence C41E2](#evide
 Supports: **[Strategy C41Sass](#strategy-c41sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C41G3 -->
-References: [Package C41top](#package-c41top)
-<!-- end caseproc -->
-
 Stub for Claim C41G3.
 
 <!-- caseproc element C41A1 -->
@@ -20435,10 +17575,6 @@ Referenced by: **[Package C41top](#package-c41top)**
 Supports: **[Claim C41G3](#claim-c41g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C41A1 -->
-References: [Package C41top](#package-c41top)
-<!-- end caseproc -->
-
 Stub for Assumption C41A1.
 
 <!-- caseproc element C41E2 -->
@@ -20448,10 +17584,6 @@ Stub for Assumption C41A1.
 Referenced by: **[Package C41top](#package-c41top)**
 
 Supports: **[Claim C41G3](#claim-c41g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C41E2 -->
-References: [Package C41top](#package-c41top)
 <!-- end caseproc -->
 
 Stub for Evidence C41E2.
@@ -20467,10 +17599,6 @@ Supported by: **[Context C42Xctx](#context-c42xctx)**, [Evidence C42Esh](#eviden
 Supports: [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C42top -->
-References: [Package C42top](#package-c42top), [Package G1](#package-g1)
-<!-- end caseproc -->
-
 Stub for Claim C42top.
 
 <!-- caseproc element C42Xctx -->
@@ -20482,10 +17610,6 @@ Referenced by: **[Package C42top](#package-c42top)**
 Supports: **[Claim C42top](#claim-c42top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C42Xctx -->
-References: [Package C42top](#package-c42top)
-<!-- end caseproc -->
-
 Stub for Context C42Xctx.
 
 <!-- caseproc element C42Esh -->
@@ -20495,10 +17619,6 @@ Stub for Context C42Xctx.
 Referenced by: **[Package C42top](#package-c42top)**
 
 Supports: **[Claim C42top](#claim-c42top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C42Esh -->
-References: [Package C42top](#package-c42top)
 <!-- end caseproc -->
 
 Stub for Evidence C42Esh.
@@ -20514,10 +17634,6 @@ Supported by: **[Claim C42G1](#claim-c42g1)**, [Claim C42G2](#claim-c42g2), [Cla
 Supports: **[Claim C42top](#claim-c42top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C42Sass -->
-References: [Package C42top](#package-c42top)
-<!-- end caseproc -->
-
 Stub for Strategy C42Sass.
 
 <!-- caseproc element C42G1 -->
@@ -20531,10 +17647,6 @@ Supported by: **[Evidence C42E1](#evidence-c42e1)**, [Context C42Xctx](#context-
 Supports: **[Strategy C42Sass](#strategy-c42sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C42G1 -->
-References: [Package C42top](#package-c42top)
-<!-- end caseproc -->
-
 Stub for Claim C42G1.
 
 <!-- caseproc element C42E1 -->
@@ -20544,10 +17656,6 @@ Stub for Claim C42G1.
 Referenced by: **[Package C42top](#package-c42top)**
 
 Supports: **[Claim C42G1](#claim-c42g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C42E1 -->
-References: [Package C42top](#package-c42top)
 <!-- end caseproc -->
 
 Stub for Evidence C42E1.
@@ -20563,10 +17671,6 @@ Supported by: **[Justification C42J1](#justification-c42j1)**, [Evidence C42Esh]
 Supports: **[Strategy C42Sass](#strategy-c42sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C42G2 -->
-References: [Package C42top](#package-c42top)
-<!-- end caseproc -->
-
 Stub for Claim C42G2.
 
 <!-- caseproc element C42J1 -->
@@ -20576,10 +17680,6 @@ Stub for Claim C42G2.
 Referenced by: **[Package C42top](#package-c42top)**
 
 Supports: **[Claim C42G2](#claim-c42g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C42J1 -->
-References: [Package C42top](#package-c42top)
 <!-- end caseproc -->
 
 Stub for Justification C42J1.
@@ -20595,10 +17695,6 @@ Supported by: **[Assumption C42A1](#assumption-c42a1)**, [Evidence C42E2](#evide
 Supports: **[Strategy C42Sass](#strategy-c42sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C42G3 -->
-References: [Package C42top](#package-c42top)
-<!-- end caseproc -->
-
 Stub for Claim C42G3.
 
 <!-- caseproc element C42A1 -->
@@ -20610,10 +17706,6 @@ Referenced by: **[Package C42top](#package-c42top)**
 Supports: **[Claim C42G3](#claim-c42g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C42A1 -->
-References: [Package C42top](#package-c42top)
-<!-- end caseproc -->
-
 Stub for Assumption C42A1.
 
 <!-- caseproc element C42E2 -->
@@ -20623,10 +17715,6 @@ Stub for Assumption C42A1.
 Referenced by: **[Package C42top](#package-c42top)**
 
 Supports: **[Claim C42G3](#claim-c42g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C42E2 -->
-References: [Package C42top](#package-c42top)
 <!-- end caseproc -->
 
 Stub for Evidence C42E2.
@@ -20642,10 +17730,6 @@ Supported by: **[Context C43Xctx](#context-c43xctx)**, [Evidence C43Esh](#eviden
 Supports: [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C43top -->
-References: [Package C43top](#package-c43top), [Package G1](#package-g1)
-<!-- end caseproc -->
-
 Stub for Claim C43top.
 
 <!-- caseproc element C43Xctx -->
@@ -20657,10 +17741,6 @@ Referenced by: **[Package C43top](#package-c43top)**
 Supports: **[Claim C43top](#claim-c43top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C43Xctx -->
-References: [Package C43top](#package-c43top)
-<!-- end caseproc -->
-
 Stub for Context C43Xctx.
 
 <!-- caseproc element C43Esh -->
@@ -20670,10 +17750,6 @@ Stub for Context C43Xctx.
 Referenced by: **[Package C43top](#package-c43top)**
 
 Supports: **[Claim C43top](#claim-c43top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C43Esh -->
-References: [Package C43top](#package-c43top)
 <!-- end caseproc -->
 
 Stub for Evidence C43Esh.
@@ -20689,10 +17765,6 @@ Supported by: **[Claim C43G1](#claim-c43g1)**, [Claim C43G2](#claim-c43g2), [Cla
 Supports: **[Claim C43top](#claim-c43top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C43Sass -->
-References: [Package C43top](#package-c43top)
-<!-- end caseproc -->
-
 Stub for Strategy C43Sass.
 
 <!-- caseproc element C43G1 -->
@@ -20706,10 +17778,6 @@ Supported by: **[Evidence C43E1](#evidence-c43e1)**, [Context C43Xctx](#context-
 Supports: **[Strategy C43Sass](#strategy-c43sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C43G1 -->
-References: [Package C43top](#package-c43top)
-<!-- end caseproc -->
-
 Stub for Claim C43G1.
 
 <!-- caseproc element C43E1 -->
@@ -20719,10 +17787,6 @@ Stub for Claim C43G1.
 Referenced by: **[Package C43top](#package-c43top)**
 
 Supports: **[Claim C43G1](#claim-c43g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C43E1 -->
-References: [Package C43top](#package-c43top)
 <!-- end caseproc -->
 
 Stub for Evidence C43E1.
@@ -20738,10 +17802,6 @@ Supported by: **[Justification C43J1](#justification-c43j1)**, [Evidence C43Esh]
 Supports: **[Strategy C43Sass](#strategy-c43sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C43G2 -->
-References: [Package C43top](#package-c43top)
-<!-- end caseproc -->
-
 Stub for Claim C43G2.
 
 <!-- caseproc element C43J1 -->
@@ -20751,10 +17811,6 @@ Stub for Claim C43G2.
 Referenced by: **[Package C43top](#package-c43top)**
 
 Supports: **[Claim C43G2](#claim-c43g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C43J1 -->
-References: [Package C43top](#package-c43top)
 <!-- end caseproc -->
 
 Stub for Justification C43J1.
@@ -20770,10 +17826,6 @@ Supported by: **[Assumption C43A1](#assumption-c43a1)**, [Evidence C43E2](#evide
 Supports: **[Strategy C43Sass](#strategy-c43sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C43G3 -->
-References: [Package C43top](#package-c43top)
-<!-- end caseproc -->
-
 Stub for Claim C43G3.
 
 <!-- caseproc element C43A1 -->
@@ -20785,10 +17837,6 @@ Referenced by: **[Package C43top](#package-c43top)**
 Supports: **[Claim C43G3](#claim-c43g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C43A1 -->
-References: [Package C43top](#package-c43top)
-<!-- end caseproc -->
-
 Stub for Assumption C43A1.
 
 <!-- caseproc element C43E2 -->
@@ -20798,10 +17846,6 @@ Stub for Assumption C43A1.
 Referenced by: **[Package C43top](#package-c43top)**
 
 Supports: **[Claim C43G3](#claim-c43g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C43E2 -->
-References: [Package C43top](#package-c43top)
 <!-- end caseproc -->
 
 Stub for Evidence C43E2.
@@ -20817,10 +17861,6 @@ Supported by: **[Context C44Xctx](#context-c44xctx)**, [Evidence C44Esh](#eviden
 Supports: [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C44top -->
-References: [Package C44top](#package-c44top), [Package G1](#package-g1)
-<!-- end caseproc -->
-
 Stub for Claim C44top.
 
 <!-- caseproc element C44Xctx -->
@@ -20832,10 +17872,6 @@ Referenced by: **[Package C44top](#package-c44top)**
 Supports: **[Claim C44top](#claim-c44top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C44Xctx -->
-References: [Package C44top](#package-c44top)
-<!-- end caseproc -->
-
 Stub for Context C44Xctx.
 
 <!-- caseproc element C44Esh -->
@@ -20845,10 +17881,6 @@ Stub for Context C44Xctx.
 Referenced by: **[Package C44top](#package-c44top)**
 
 Supports: **[Claim C44top](#claim-c44top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C44Esh -->
-References: [Package C44top](#package-c44top)
 <!-- end caseproc -->
 
 Stub for Evidence C44Esh.
@@ -20864,10 +17896,6 @@ Supported by: **[Claim C44G1](#claim-c44g1)**, [Claim C44G2](#claim-c44g2), [Cla
 Supports: **[Claim C44top](#claim-c44top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C44Sass -->
-References: [Package C44top](#package-c44top)
-<!-- end caseproc -->
-
 Stub for Strategy C44Sass.
 
 <!-- caseproc element C44G1 -->
@@ -20881,10 +17909,6 @@ Supported by: **[Evidence C44E1](#evidence-c44e1)**, [Context C44Xctx](#context-
 Supports: **[Strategy C44Sass](#strategy-c44sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C44G1 -->
-References: [Package C44top](#package-c44top)
-<!-- end caseproc -->
-
 Stub for Claim C44G1.
 
 <!-- caseproc element C44E1 -->
@@ -20894,10 +17918,6 @@ Stub for Claim C44G1.
 Referenced by: **[Package C44top](#package-c44top)**
 
 Supports: **[Claim C44G1](#claim-c44g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C44E1 -->
-References: [Package C44top](#package-c44top)
 <!-- end caseproc -->
 
 Stub for Evidence C44E1.
@@ -20913,10 +17933,6 @@ Supported by: **[Justification C44J1](#justification-c44j1)**, [Evidence C44Esh]
 Supports: **[Strategy C44Sass](#strategy-c44sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C44G2 -->
-References: [Package C44top](#package-c44top)
-<!-- end caseproc -->
-
 Stub for Claim C44G2.
 
 <!-- caseproc element C44J1 -->
@@ -20926,10 +17942,6 @@ Stub for Claim C44G2.
 Referenced by: **[Package C44top](#package-c44top)**
 
 Supports: **[Claim C44G2](#claim-c44g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C44J1 -->
-References: [Package C44top](#package-c44top)
 <!-- end caseproc -->
 
 Stub for Justification C44J1.
@@ -20945,10 +17957,6 @@ Supported by: **[Assumption C44A1](#assumption-c44a1)**, [Evidence C44E2](#evide
 Supports: **[Strategy C44Sass](#strategy-c44sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C44G3 -->
-References: [Package C44top](#package-c44top)
-<!-- end caseproc -->
-
 Stub for Claim C44G3.
 
 <!-- caseproc element C44A1 -->
@@ -20960,10 +17968,6 @@ Referenced by: **[Package C44top](#package-c44top)**
 Supports: **[Claim C44G3](#claim-c44g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C44A1 -->
-References: [Package C44top](#package-c44top)
-<!-- end caseproc -->
-
 Stub for Assumption C44A1.
 
 <!-- caseproc element C44E2 -->
@@ -20973,10 +17977,6 @@ Stub for Assumption C44A1.
 Referenced by: **[Package C44top](#package-c44top)**
 
 Supports: **[Claim C44G3](#claim-c44g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C44E2 -->
-References: [Package C44top](#package-c44top)
 <!-- end caseproc -->
 
 Stub for Evidence C44E2.
@@ -20992,10 +17992,6 @@ Supported by: **[Context C45Xctx](#context-c45xctx)**, [Evidence C45Esh](#eviden
 Supports: [Strategy Scomps](#strategy-scomps)
 <!-- end caseproc -->
 
-<!-- caseproc references C45top -->
-References: [Package C45top](#package-c45top), [Package G1](#package-g1)
-<!-- end caseproc -->
-
 Stub for Claim C45top.
 
 <!-- caseproc element C45Xctx -->
@@ -21007,10 +18003,6 @@ Referenced by: **[Package C45top](#package-c45top)**
 Supports: **[Claim C45top](#claim-c45top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C45Xctx -->
-References: [Package C45top](#package-c45top)
-<!-- end caseproc -->
-
 Stub for Context C45Xctx.
 
 <!-- caseproc element C45Esh -->
@@ -21020,10 +18012,6 @@ Stub for Context C45Xctx.
 Referenced by: **[Package C45top](#package-c45top)**
 
 Supports: **[Claim C45top](#claim-c45top)**
-<!-- end caseproc -->
-
-<!-- caseproc references C45Esh -->
-References: [Package C45top](#package-c45top)
 <!-- end caseproc -->
 
 Stub for Evidence C45Esh.
@@ -21039,10 +18027,6 @@ Supported by: **[Claim C45G1](#claim-c45g1)**, [Claim C45G2](#claim-c45g2), [Cla
 Supports: **[Claim C45top](#claim-c45top)**
 <!-- end caseproc -->
 
-<!-- caseproc references C45Sass -->
-References: [Package C45top](#package-c45top)
-<!-- end caseproc -->
-
 Stub for Strategy C45Sass.
 
 <!-- caseproc element C45G1 -->
@@ -21056,10 +18040,6 @@ Supported by: **[Evidence C45E1](#evidence-c45e1)**, [Context C45Xctx](#context-
 Supports: **[Strategy C45Sass](#strategy-c45sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C45G1 -->
-References: [Package C45top](#package-c45top)
-<!-- end caseproc -->
-
 Stub for Claim C45G1.
 
 <!-- caseproc element C45E1 -->
@@ -21069,10 +18049,6 @@ Stub for Claim C45G1.
 Referenced by: **[Package C45top](#package-c45top)**
 
 Supports: **[Claim C45G1](#claim-c45g1)**
-<!-- end caseproc -->
-
-<!-- caseproc references C45E1 -->
-References: [Package C45top](#package-c45top)
 <!-- end caseproc -->
 
 Stub for Evidence C45E1.
@@ -21088,10 +18064,6 @@ Supported by: **[Justification C45J1](#justification-c45j1)**, [Evidence C45Esh]
 Supports: **[Strategy C45Sass](#strategy-c45sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C45G2 -->
-References: [Package C45top](#package-c45top)
-<!-- end caseproc -->
-
 Stub for Claim C45G2.
 
 <!-- caseproc element C45J1 -->
@@ -21101,10 +18073,6 @@ Stub for Claim C45G2.
 Referenced by: **[Package C45top](#package-c45top)**
 
 Supports: **[Claim C45G2](#claim-c45g2)**
-<!-- end caseproc -->
-
-<!-- caseproc references C45J1 -->
-References: [Package C45top](#package-c45top)
 <!-- end caseproc -->
 
 Stub for Justification C45J1.
@@ -21120,10 +18088,6 @@ Supported by: **[Assumption C45A1](#assumption-c45a1)**, [Evidence C45E2](#evide
 Supports: **[Strategy C45Sass](#strategy-c45sass)**
 <!-- end caseproc -->
 
-<!-- caseproc references C45G3 -->
-References: [Package C45top](#package-c45top)
-<!-- end caseproc -->
-
 Stub for Claim C45G3.
 
 <!-- caseproc element C45A1 -->
@@ -21135,10 +18099,6 @@ Referenced by: **[Package C45top](#package-c45top)**
 Supports: **[Claim C45G3](#claim-c45g3)**
 <!-- end caseproc -->
 
-<!-- caseproc references C45A1 -->
-References: [Package C45top](#package-c45top)
-<!-- end caseproc -->
-
 Stub for Assumption C45A1.
 
 <!-- caseproc element C45E2 -->
@@ -21148,10 +18108,6 @@ Stub for Assumption C45A1.
 Referenced by: **[Package C45top](#package-c45top)**
 
 Supports: **[Claim C45G3](#claim-c45g3)**
-<!-- end caseproc -->
-
-<!-- caseproc references C45E2 -->
-References: [Package C45top](#package-c45top)
 <!-- end caseproc -->
 
 Stub for Evidence C45E2.

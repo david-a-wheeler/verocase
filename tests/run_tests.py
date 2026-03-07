@@ -300,7 +300,7 @@ class TestLTACValidation(unittest.TestCase):
             os.unlink(path)
 
     def test_star_invalid_with_statement_selector(self):
-        """'*' is not valid with statement/references/info and always exits non-zero."""
+        """'*' is not valid with 'statement' and always exits non-zero."""
         r = run('--ltac', fixture('simple.ltac'), '--select', 'statement *')
         self.assertNotEqual(r.returncode, 0)
         self.assertIn('not valid', r.stderr)

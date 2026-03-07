@@ -8,10 +8,6 @@
 Statement: The software is acceptably safe
 <!-- end caseproc -->
 
-<!-- caseproc references C1 -->
-References: None
-<!-- end caseproc -->
-
 <!-- caseproc sacm/mermaid C1 -->
 ```mermaid
 stale content

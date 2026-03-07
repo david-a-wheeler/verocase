@@ -55,10 +55,6 @@ Supported by: **[Strategy AR1](#strategy-ar1)**, [Assumption A1](#assumption-a1)
 Statement: The software is acceptably safe
 <!-- end caseproc -->
 
-<!-- caseproc references C1 -->
-References: [Package C1](#package-c1)
-<!-- end caseproc -->
-
 <!-- caseproc sacm/mermaid C1 -->
 ```mermaid
 ---

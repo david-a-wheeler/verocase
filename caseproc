@@ -733,52 +733,6 @@ def render_statement(node: Node) -> str:
     return f"Statement: {node.text}"
 
 
-def _node_pkg(node: Node) -> Node:
-    """Walk up the parent chain and return the package root for this node."""
-    while node.parent is not None:
-        node = node.parent
-    return node
-
-
-def render_references(node: Node, all_roots: List[Node], id_info: Dict[str, dict],
-                      config: dict) -> str:
-    """Return 'References: ' followed by markdown links to all packages that reference node.
-
-    Lists the declaring package first (if any), then any packages that cite
-    the node via ^ID.  Falls back to the node's own package root if the
-    identifier is not in id_info.
-    """
-    base_url = config.get('markdown_base_url', '')
-    ident = node.identifier
-
-    pkg_ids: List[str] = []
-    if ident and ident in id_info:
-        info = id_info[ident]
-        if info['decl_pkg_id']:
-            pkg_ids.append(info['decl_pkg_id'])
-        for pkg_id in info['citing_pkg_ids']:
-            if pkg_id not in pkg_ids:
-                pkg_ids.append(pkg_id)
-
-    if not pkg_ids:
-        pkg_root = _node_pkg(node)
-        if pkg_root not in all_roots:
-            return 'References: None'
-        if pkg_root.identifier:
-            pkg_ids = [pkg_root.identifier]
-
-    if not pkg_ids:
-        return 'References: None'
-
-    pkg_label = config.get('pkg_label', 'Package ')
-    links = []
-    for pkg_id in pkg_ids:
-        heading = f"{pkg_label}{pkg_id}"
-        url = base_url + '#' + to_github_fragment(heading)
-        links.append(f"[{heading}]({url})")
-    return 'References: ' + ', '.join(links)
-
-
 def _render_html_node(node: Node, indent: int, base_url: str, lines: list,
                       pkg_label: str = DEFAULT_CONFIG['pkg_label']) -> None:
     """Append HTML li element for node and recurse into its children.
@@ -1479,7 +1433,7 @@ _VALID_DISPLAY_TYPES = {
     'ltac/markdown', 'ltac/html',
     'sacm/mermaid', 'sacm/mermaid/markdown', 'sacm/mermaid/html',
     'gsn/mermaid',  'gsn/mermaid/markdown',  'gsn/mermaid/html',
-    'statement', 'references', 'info',
+    'statement',
     'element', 'package',
     'config',  # recognized to give a helpful error directing users to caseproc-config
     'referenced_by', 'supported_by', 'supports',
@@ -1895,7 +1849,7 @@ def render_selector(
         pkg_id = element_id if element_id is not None else '*'
         return render_package_selector(pkg_id, all_roots, registry, id_info, config, _state)
 
-    # statement, references, info operate on a single node
+    # statement operates on a single node
     if element_id == '*':
         error(f"'*' is not valid with the '{display_type}' selector")
         return ''
@@ -1905,10 +1859,6 @@ def render_selector(
     node = nodes[0]
     if display_type == 'statement':
         return render_statement(node)
-    if display_type == 'references':
-        return render_references(node, all_roots, id_info, config)
-    if display_type == 'info':
-        return render_statement(node) + '\n\n' + render_references(node, all_roots, id_info, config)
 
     return ''
 

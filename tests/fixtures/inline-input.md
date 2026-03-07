@@ -8,10 +8,6 @@
 STALE STATEMENT
 <!-- end caseproc -->
 
-<!-- caseproc references C1 -->
-STALE REFERENCES
-<!-- end caseproc -->
-
 <!-- caseproc sacm/mermaid C1 -->
 ```mermaid
 stale diagram content

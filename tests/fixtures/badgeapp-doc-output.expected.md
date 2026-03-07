@@ -142,10 +142,6 @@ Referenced by: **[Package Security](#package-security)**
 Supported by: **[Strategy Processes](#strategy-processes)**
 <!-- end caseproc -->
 
-<!-- caseproc references Security -->
-References: [Package Security](#package-security)
-<!-- end caseproc -->
-
 This is the top-level claim for the entire assurance case.
 
 <!-- caseproc element Requirements -->
@@ -157,10 +153,6 @@ Referenced by: **[Package Requirements](#package-requirements)**, [Package Secur
 Supported by: **[Evidence ReqSpec](#evidence-reqspec)**, [Evidence TestCoverage](#evidence-testcoverage), [Context ReqScope](#context-reqscope)
 
 Supports: [Claim Technical](#claim-technical)
-<!-- end caseproc -->
-
-<!-- caseproc references Requirements -->
-References: [Package Requirements](#package-requirements), [Package Security](#package-security)
 <!-- end caseproc -->
 
 The security requirements are documented and verified against the implementation.
@@ -176,10 +168,6 @@ Supported by: **[Evidence DesignDoc](#evidence-designdoc)**, [Evidence ThreatMod
 Supports: [Claim Technical](#claim-technical)
 <!-- end caseproc -->
 
-<!-- caseproc references Design -->
-References: [Package Design](#package-design), [Package Security](#package-security)
-<!-- end caseproc -->
-
 The system design incorporates security from the ground up.
 
 <!-- caseproc element ReqSpec -->
@@ -189,10 +177,6 @@ The system design incorporates security from the ground up.
 Referenced by: **[Package Requirements](#package-requirements)**
 
 Supports: **[Claim Requirements](#claim-requirements)**
-<!-- end caseproc -->
-
-<!-- caseproc references ReqSpec -->
-References: [Package Requirements](#package-requirements)
 <!-- end caseproc -->
 
 See the full requirements document for details.
@@ -206,10 +190,6 @@ Referenced by: **[Package Requirements](#package-requirements)**
 Supports: **[Claim Requirements](#claim-requirements)**
 <!-- end caseproc -->
 
-<!-- caseproc references TestCoverage -->
-References: [Package Requirements](#package-requirements)
-<!-- end caseproc -->
-
 All security tests pass with full coverage of requirements.
 
 <!-- caseproc element DesignDoc -->
@@ -219,10 +199,6 @@ All security tests pass with full coverage of requirements.
 Referenced by: **[Package Design](#package-design)**
 
 Supports: **[Claim Design](#claim-design)**
-<!-- end caseproc -->
-
-<!-- caseproc references DesignDoc -->
-References: [Package Design](#package-design)
 <!-- end caseproc -->
 
 The architecture has been reviewed by the security team.
@@ -236,10 +212,6 @@ Referenced by: **[Package Design](#package-design)**
 Supports: **[Claim Design](#claim-design)**
 <!-- end caseproc -->
 
-<!-- caseproc references ThreatModel -->
-References: [Package Design](#package-design)
-<!-- end caseproc -->
-
 Threats are systematically identified and mitigated.
 
 <!-- caseproc element ReqScope -->
@@ -249,10 +221,6 @@ Threats are systematically identified and mitigated.
 Referenced by: **[Package Requirements](#package-requirements)**
 
 Supports: **[Claim Requirements](#claim-requirements)**
-<!-- end caseproc -->
-
-<!-- caseproc references ReqScope -->
-References: [Package Requirements](#package-requirements)
 <!-- end caseproc -->
 
 Defines the scope of the requirements coverage.

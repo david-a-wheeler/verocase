@@ -1732,6 +1732,118 @@ def render_representation(pkg_root: Node, all_roots: List[Node],
     return ''
 
 
+def _apply_selections(selections: List[str], render_map: Dict[str, callable],
+                      config: dict, fmt: str) -> str:
+    """Apply a list of selection names and return their combined output.
+
+    Non-empty outputs are joined with blank lines; trailing blank line suppressed.
+    """
+    parts = []
+    for sel in selections:
+        fn = render_map.get(sel)
+        if fn is None:
+            warn(f"unknown selection name {sel!r}")
+            continue
+        out = fn()
+        if out:
+            parts.append(out)
+    return '\n\n'.join(parts)
+
+
+def render_element_selector(node_id: str, registry: Dict[str, Node],
+                             all_roots: List[Node], id_info: Dict[str, dict],
+                             config: dict, state: 'DocState') -> str:
+    """Render heading + sub-selections for a single element."""
+    node = registry.get(node_id)
+    if node is None:
+        error(f"element {node_id!r} not found")
+        return ''
+    state.current_id = node_id
+    state.seen_element_ids.add(node_id)
+
+    level = config.get('element_level', 3)
+    anchor = _component_anchor_id(node.node_type, node_id)
+    stmt = id_info.get(node_id, {}).get('statement') or node.text or ''
+    heading_text = f'{node.node_type} {node_id}'
+    if stmt:
+        heading_text += f': {stmt}'
+    fmt = state.doc_format
+
+    if fmt == 'markdown':
+        heading_lines = [f'<a id="{anchor}"></a>', '#' * level + ' ' + heading_text]
+    else:
+        heading_lines = [f'<h{level} id="{anchor}">{escape_html_content(heading_text)}</h{level}>']
+
+    sel_names = [s.strip() for s in
+                 config.get('element_selections', 'referenced_by,supported_by,supports')
+                 .split(',') if s.strip()]
+    render_map = {
+        'referenced_by': lambda: render_referenced_by(node, all_roots, id_info, config, fmt),
+        'supported_by':  lambda: render_supported_by(node, config, fmt),
+        'supports':      lambda: render_supports(node, all_roots, config, fmt),
+    }
+    selections_out = _apply_selections(sel_names, render_map, config, fmt)
+
+    parts = ['\n'.join(heading_lines)]
+    if selections_out:
+        parts.append(selections_out)
+    return '\n\n'.join(parts)
+
+
+def _render_single_package(pkg_root: Node, all_roots: List[Node],
+                            id_info: Dict[str, dict],
+                            config: dict, state: 'DocState') -> str:
+    """Render one package heading + its package_selections."""
+    fmt = state.doc_format
+    level = config.get('package_level', 3)
+    anchor = _component_anchor_id('Package', pkg_root.identifier)
+    stmt = id_info.get(pkg_root.identifier, {}).get('statement') or pkg_root.text or ''
+    heading_text = f'Package {pkg_root.identifier}'
+    if stmt:
+        heading_text += f': {stmt}'
+
+    if fmt == 'markdown':
+        heading_lines = [f'<a id="{anchor}"></a>', '#' * level + ' ' + heading_text]
+    else:
+        heading_lines = [f'<h{level} id="{anchor}">{escape_html_content(heading_text)}</h{level}>']
+
+    sel_names = [s.strip() for s in
+                 config.get('package_selections',
+                            'representation,pkg_defines,pkg_citing,pkg_cited')
+                 .split(',') if s.strip()]
+    render_map = {
+        'representation': lambda: render_representation(pkg_root, all_roots, config, fmt),
+        'pkg_defines':    lambda: render_pkg_defines(pkg_root, id_info, config, fmt),
+        'pkg_citing':     lambda: render_pkg_citing(pkg_root, id_info, config, fmt),
+        'pkg_cited':      lambda: render_pkg_cited(pkg_root, all_roots, id_info, config, fmt),
+    }
+    selections_out = _apply_selections(sel_names, render_map, config, fmt)
+
+    parts = ['\n'.join(heading_lines)]
+    if selections_out:
+        parts.append(selections_out)
+    return '\n\n'.join(parts)
+
+
+def render_package_selector(pkg_id_or_star: str, all_roots: List[Node],
+                             registry: Dict[str, Node],
+                             id_info: Dict[str, dict],
+                             config: dict, state: 'DocState') -> str:
+    """Render heading + sub-selections for one package, or all packages if '*'."""
+    if pkg_id_or_star == '*':
+        blocks = []
+        for root in all_roots:
+            state.current_id = root.identifier
+            blocks.append(_render_single_package(root, all_roots, id_info, config, state))
+        return '\n\n'.join(blocks)
+    pkg_root = registry.get(pkg_id_or_star)
+    if pkg_root is None or pkg_root.depth != 0:
+        error(f"package {pkg_id_or_star!r} not found or is not a root element")
+        return ''
+    state.current_id = pkg_id_or_star
+    return _render_single_package(pkg_root, all_roots, id_info, config, state)
+
+
 def render_selector(
     selector: str,
     registry: Dict[str, Node],
@@ -1740,6 +1852,7 @@ def render_selector(
     id_info: Dict[str, dict],
     current_element: Optional[Node] = None,
     doc_format: str = 'markdown',
+    state: 'DocState' = None,
 ) -> str:
     """Parse SELECTOR and return the rendered string.
 
@@ -1769,6 +1882,18 @@ def render_selector(
 
     if display_type == 'ltac/html':
         return _render_or_all(element_id, all_roots, render_html, registry, current_element, config)
+
+    if display_type == 'element':
+        if element_id is None:
+            error("'element' selector requires an explicit ID")
+            return ''
+        _state = state or DocState(doc_format=doc_format)
+        return render_element_selector(element_id, registry, all_roots, id_info, config, _state)
+
+    if display_type == 'package':
+        _state = state or DocState(doc_format=doc_format)
+        pkg_id = element_id if element_id is not None else '*'
+        return render_package_selector(pkg_id, all_roots, registry, id_info, config, _state)
 
     # statement, references, info operate on a single node
     if element_id == '*':
@@ -1926,7 +2051,7 @@ def process_document_stream(
             selector = m.group(1)
             found_end = _consume_region(line_iter, filename, lineno, selector)
             rendered = render_selector(selector, registry, all_roots, config, id_info,
-                                       current_element, doc_format)
+                                       current_element, doc_format, _doc_state)
             rendered = _maybe_inject_mermaid_js(rendered, config, _doc_state)
             out.write(text + '\n')
             if found_end:

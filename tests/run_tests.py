@@ -397,6 +397,38 @@ class TestSelectGsn(unittest.TestCase):
         self.assertEqual(actual, read_fixture('simple.gsn.mermaid.expected.md'))
 
 
+class TestElementPackageSelectors(unittest.TestCase):
+    def test_element_selector_produces_heading(self):
+        """'element C1' produces a heading with anchor and statement."""
+        r = run('--ltac', fixture('simple.ltac'),
+                '--stdout', fixture('element-selector-input.md'))
+        self.assertEqual(r.returncode, 0)
+        self.assertIn('<a id="claim-c1"></a>', r.stdout)
+        self.assertIn('### Claim C1:', r.stdout)
+        self.assertIn('Referenced by:', r.stdout)
+
+    def test_element_selector_missing_id_errors(self):
+        """'element' without an ID produces an error."""
+        r = run('--ltac', fixture('simple.ltac'), '--select', 'element')
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn('requires an explicit ID', r.stderr)
+
+    def test_package_star_produces_all_headings(self):
+        """'package *' produces headings and diagrams for all packages."""
+        r = run('--ltac', fixture('simple.ltac'),
+                '--stdout', fixture('package-star-input.md'))
+        self.assertEqual(r.returncode, 0)
+        self.assertIn('<a id="package-c1"></a>', r.stdout)
+        self.assertIn('### Package C1:', r.stdout)
+        self.assertIn('Defines:', r.stdout)
+
+    def test_package_selector_unknown_id_errors(self):
+        """'package NoSuchPkg' produces an error."""
+        r = run('--ltac', fixture('simple.ltac'), '--select', 'package NoSuchPkg')
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn('NoSuchPkg', r.stderr)
+
+
 class TestBadgeappDoc(unittest.TestCase):
     def test_badgeapp_doc_filter_mode(self):
         """--stdout renders all three packages via sacm/mermaid * with correct

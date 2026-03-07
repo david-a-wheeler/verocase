@@ -1563,6 +1563,175 @@ def _render_or_all(
     return render_fn(nodes, config)
 
 
+# ---------------------------------------------------------------------------
+# Selection renderers (for element/package sub-selections)
+# ---------------------------------------------------------------------------
+
+def _pkg_anchor_url(pkg_root_id: str, config: dict) -> str:
+    """Return the fragment URL for a package heading."""
+    base_url = config.get('markdown_base_url', '')
+    anchor = _component_anchor_id('Package', pkg_root_id)
+    return base_url + '#' + anchor
+
+
+def _element_anchor_url(node_type: str, ident: str, config: dict) -> str:
+    """Return the fragment URL for an element heading."""
+    base_url = config.get('markdown_base_url', '')
+    anchor = _component_anchor_id(node_type, ident)
+    return base_url + '#' + anchor
+
+
+def _find_citation_parents(ident: str, all_roots: List[Node]) -> List[Node]:
+    """Return parent nodes of all citations of ident across all packages."""
+    parents = []
+    for node in _all_nodes(all_roots):
+        if node.identifier == ident and node.is_cited and node.parent is not None:
+            if node.parent not in parents:
+                parents.append(node.parent)
+    return parents
+
+
+def render_referenced_by(node: Node, all_roots: List[Node],
+                         id_info: Dict[str, dict], config: dict, fmt: str) -> str:
+    """Render 'Referenced by: ...' line or '' if no packages to list."""
+    ident = node.identifier
+    info = id_info.get(ident, {})
+    pkg_ids = []
+    if info.get('decl_pkg_id'):
+        pkg_ids.append(info['decl_pkg_id'])
+    for cid in info.get('citing_pkg_ids', []):
+        if cid not in pkg_ids:
+            pkg_ids.append(cid)
+    if not pkg_ids:
+        return ''
+    links = []
+    for i, pid in enumerate(pkg_ids):
+        label = f'Package {pid}'
+        url = _pkg_anchor_url(pid, config)
+        link = hyperlink(label, url, fmt)
+        links.append(bold(link, fmt) if i == 0 else link)
+    return 'Referenced by: ' + ', '.join(links)
+
+
+def render_supported_by(node: Node, config: dict, fmt: str) -> str:
+    """Render 'Supported by: ...' line or '' if no children."""
+    children = [c for c in node.children if c.node_type != 'Link'
+                or c.link_target is not None]
+    if not children:
+        return ''
+    links = []
+    for i, child in enumerate(children):
+        target = child.link_target if child.node_type == 'Link' else child
+        if target is None or not target.identifier:
+            continue
+        label = f'{target.node_type} {target.identifier}'
+        url = _element_anchor_url(target.node_type, target.identifier, config)
+        link = hyperlink(label, url, fmt)
+        links.append(bold(link, fmt) if i == 0 else link)
+    if not links:
+        return ''
+    return 'Supported by: ' + ', '.join(links)
+
+
+def render_supports(node: Node, all_roots: List[Node],
+                    config: dict, fmt: str) -> str:
+    """Render 'Supports: ...' line or '' if no parents at all."""
+    entries = []
+    if node.parent is not None:
+        p = node.parent
+        label = f'{p.node_type} {p.identifier}'
+        url = _element_anchor_url(p.node_type, p.identifier, config)
+        entries.append((hyperlink(label, url, fmt), True))
+    for parent in _find_citation_parents(node.identifier, all_roots):
+        if not parent.identifier:
+            continue
+        label = f'{parent.node_type} {parent.identifier}'
+        url = _element_anchor_url(parent.node_type, parent.identifier, config)
+        entries.append((hyperlink(label, url, fmt), False))
+    if not entries:
+        return ''
+    links = [bold(link, fmt) if is_bold else link for link, is_bold in entries]
+    return 'Supports: ' + ', '.join(links)
+
+
+def render_pkg_defines(pkg_root: Node, id_info: Dict[str, dict],
+                       config: dict, fmt: str) -> str:
+    """Render 'Defines: ...' list for a package."""
+    pkg_id = pkg_root.identifier
+    defined = []
+    for node in _all_nodes([pkg_root]):
+        if (not node.is_cited and node.identifier
+                and id_info.get(node.identifier, {}).get('decl_pkg_id') == pkg_id):
+            defined.append(node)
+    if not defined:
+        return ''
+    links = []
+    for i, node in enumerate(defined):
+        label = f'{node.node_type} {node.identifier}'
+        url = _element_anchor_url(node.node_type, node.identifier, config)
+        link = hyperlink(label, url, fmt)
+        links.append(bold(link, fmt) if i == 0 else link)
+    return 'Defines: ' + ', '.join(links)
+
+
+def render_pkg_citing(pkg_root: Node, id_info: Dict[str, dict],
+                      config: dict, fmt: str) -> str:
+    """Render 'Citing: ...' list for a package, or '' if none."""
+    cited_nodes = [n for n in _all_nodes([pkg_root])
+                   if n.is_cited and n.identifier]
+    if not cited_nodes:
+        return ''
+    links = []
+    for node in cited_nodes:
+        decl_pkg = id_info.get(node.identifier, {}).get('decl_pkg_id', '')
+        label = f'{node.node_type} {node.identifier}'
+        url = _pkg_anchor_url(decl_pkg, config) if decl_pkg else ''
+        links.append(hyperlink(label, url, fmt) if url else label)
+    return 'Citing: ' + ', '.join(links)
+
+
+def render_pkg_cited(pkg_root: Node, all_roots: List[Node],
+                     id_info: Dict[str, dict], config: dict, fmt: str) -> str:
+    """Render 'Cited by: ...' list for a package, or '' if none."""
+    pkg_id = pkg_root.identifier
+    citing_pkgs = []
+    for ident, info in id_info.items():
+        if info.get('decl_pkg_id') == pkg_id:
+            for cpid in info.get('citing_pkg_ids', []):
+                if cpid not in citing_pkgs:
+                    citing_pkgs.append(cpid)
+    if not citing_pkgs:
+        return ''
+    links = []
+    for cpid in citing_pkgs:
+        label = f'Package {cpid}'
+        url = _pkg_anchor_url(cpid, config)
+        links.append(hyperlink(label, url, fmt))
+    return 'Cited by: ' + ', '.join(links)
+
+
+def render_representation(pkg_root: Node, all_roots: List[Node],
+                          config: dict, fmt: str) -> str:
+    """Render the default diagram representation for a package."""
+    notation = config.get('default_representation', 'sacm')
+    renderer = config.get('default_renderer', 'mermaid')
+    selector = f'{notation}/{renderer}/{fmt}'
+    if selector in ('sacm/mermaid/markdown', 'sacm/mermaid'):
+        return render_sacm([pkg_root], config)
+    if selector == 'sacm/mermaid/html':
+        return render_sacm_html([pkg_root], config)
+    if selector in ('gsn/mermaid/markdown', 'gsn/mermaid'):
+        return render_gsn([pkg_root], config)
+    if selector == 'gsn/mermaid/html':
+        return render_gsn_html([pkg_root], config)
+    if selector == 'ltac/markdown':
+        return render_markdown([pkg_root], config)
+    if selector == 'ltac/html':
+        return render_html([pkg_root], config)
+    error(f"unsupported representation {selector!r}")
+    return ''
+
+
 def render_selector(
     selector: str,
     registry: Dict[str, Node],

@@ -34,8 +34,12 @@ it generates `<a href="link">escaped content</a>`.
 It escapes content as necessary for that format.
 We'll use this routine often in the work to follow.
 
-After we've done that, let's focus on our main improvement.
+We'll create another short routine `bold` that takes text and a format.
+If format is HTML, it returns `<b>TEXT</b>`, if the format is
+markdown, it returns `**TEXT**`. We want to have short, simple reusable
+routines instead of constantly embedding special cases everywhere.
 
+After we've done that, let's focus on our main improvement.
 
 ## Main improvement
 

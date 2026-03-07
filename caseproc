@@ -926,24 +926,23 @@ def _sacm_node_decl(node: 'Node') -> str:
 
 # Standard mermaid YAML frontmatter and opening classDef lines shared by all
 # sacm/mermaid diagrams.  The closing ``` fence is appended by render_sacm().
-_SACM_HEADER = (
-    '```mermaid\n'
-    '---\n'
-    'config:\n'
-    '  theme: neutral\n'
-    '  flowchart:\n'
-    '    curve: linear\n'
-    '    htmlLabels: true\n'
-    '    rankSpacing: 60\n'
-    '    nodeSpacing: 45\n'
-    '    padding: 15\n'
-    '---\n'
-    'flowchart BT\n'
-    '    classDef invisible opacity:0\n'
-    '    classDef sacmDot fill:#000,stroke:#000\n'
-    '    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;\n'
-    '    classDef abstractClaim stroke-width:2px,stroke-dasharray: 5 5;'
-)
+_SACM_HEADER = """\
+```mermaid
+---
+config:
+  theme: neutral
+  flowchart:
+    curve: linear
+    htmlLabels: true
+    rankSpacing: 60
+    nodeSpacing: 45
+    padding: 15
+---
+flowchart BT
+    classDef invisible opacity:0
+    classDef sacmDot fill:#000,stroke:#000
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
+    classDef abstractClaim stroke-width:2px,stroke-dasharray: 5 5;"""
 
 
 def _sacm_source_edge(src_id: str, dot_id: str, abstract: bool = False) -> str:
@@ -1248,22 +1247,21 @@ def _gsn_node_decl(node: 'Node') -> str:
     return f'    {did}{shape}{abstract_cls}'
 
 
-_GSN_HEADER = (
-    '```mermaid\n'
-    '---\n'
-    'config:\n'
-    '  theme: neutral\n'
-    '  flowchart:\n'
-    '    curve: linear\n'
-    '    htmlLabels: true\n'
-    '    rankSpacing: 60\n'
-    '    nodeSpacing: 45\n'
-    '    padding: 15\n'
-    '---\n'
-    'flowchart TD\n'
-    '    classDef invisible opacity:0\n'
-    '    classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;'
-)
+_GSN_HEADER = """\
+```mermaid
+---
+config:
+  theme: neutral
+  flowchart:
+    curve: linear
+    htmlLabels: true
+    rankSpacing: 60
+    nodeSpacing: 45
+    padding: 15
+---
+flowchart TD
+    classDef invisible opacity:0
+    classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;"""
 
 
 def _gsn_collect_edges(node, edge_lines, leaf_nodes):

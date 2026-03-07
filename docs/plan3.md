@@ -1,4 +1,4 @@
-# Plan 3: Auto-generate document headers
+updated # Plan 3: Auto-generate document headers
 
 ## Tweaks
 
@@ -81,7 +81,8 @@ We'll guess standard input (`-`) is markdown.
 Anything else is a panic.
 In --stdout mode, the input determines the output type.
 
-The heading level (number of `#` in markdown) is determined by
+The heading level (number of `#` in markdown or the number in `<hNUMBER`
+in HTML) is determined by
 the config value `element_level`, which defaults to 3.
 
 In the past we tracked the "current element". Let's make that the
@@ -96,7 +97,8 @@ we will continue to do this for `package`.
 
 I said the selector element generates at least, because what it generates
 after that would depend on the config value `element_selections`.
-This is a comma-separated list of 0+ selection names, which will be applied
+This is a comma-separated list of zero or more
+selection names, which will be applied
 in order after this. They'll each use the "current id" to determine
 what to apply this to (as that was set by `element`).
 
@@ -108,14 +110,14 @@ Here is the markdown version of each of those selections:
 `referenced_by` (for markdown):
 ~~~~
 Referenced by: (hyperlinked list of packages containing it, starting with
-  the package that defines it, followed by all packages that cite it,
+  the package that defines it in bold, followed by all packages that cite it,
   in LTAC file order, comma-separated)
 
 ~~~~
 
 `supported_by`:
 ~~~~
-Supported by: (starting with this element's definition, a
+Supported by: (starting with this element's definition in bold, a
 hyperlinked list of all its children elements, including cited and link
 elements, comma-separated)
 
@@ -124,8 +126,9 @@ elements, comma-separated)
 `supports`:
 ~~~~
 Supports: (hyperlinked list. First it's the parent of this element's
-  definition, followed by the list of all parents of citations of this
-  element in LTAC file order)
+  definition in bold, followed by the list of all parents of citations of this
+  element in LTAC file order. If it's a top-level item with no direct
+  parent, just omit the parent.)
 
 ~~~~
 
@@ -160,11 +163,11 @@ the same place; that's unfortunate, but acceptable as it ensures it will work.
 We already require all ID to have unique GitHub ID representations,
 so this shouldn't be a problem.
 
-The config value `package_level` controls level of the heading,
-which starts at 3.
+The config value `package_level` controls level of the heading
+for markdown or HTML, which starts at 3. This is similar to `element_level`.
 
 In HTML it would generate at least:
-~~~~markdown
+~~~~html
 <h3 id="COMPONENT_ANCHOR_ID">Package ID: ELEMENT_STATEMENT</h3>
 
 ~~~~
@@ -177,7 +180,8 @@ sets the "current id" value to that ID
 
 Similarly, what `package` generates after that header
 would depend on the config value `package_selections`.
-This is a comma-separated list of 0+ selection names, which will be applied
+This is a comma-separated list of zero or more
+selection names, which will be applied
 in order after this header for each header. They'll each use the "current id".
 
 By default `package_selections` will have the value
@@ -193,9 +197,11 @@ Users don't *have* to change it, then they'll just get the default.
 Let's add new selectors sacm, gsn, and ltac. Each of them select
 the `/markdown` or `/html` variations of them depending on whether or not
 the containing document is markdown or html.
-E.g., `sacm` is interpreted as `sacm/markdown` when generating markdown.
+E.g., `sacm` is interpreted as `sacm/mermaid` when generating markdown.
 We'll keep the selectors with the specific variation names, in case
 we need to force the use of one.
+
+??? /mermaid, /markdown. How handle mermaid in HTML?
 
 The `pkg_defines` selector shows the word `Defines: `,
 followed by a comma-separated list of "TYPE ID" (e.g., "Claim Foo")
@@ -213,6 +219,15 @@ followed by a comma-separated list of "TYPE ID" (e.g., "Claim Foo").
 These are all of the elements that are citing (`^`) within this package,
 with a link to the *package* that defines it
 (even if it's also *defined* in this package, a weirdness we allow).
+This means that users who see one figure can click on a citation, which
+will bring them to the figure that shows its definition.
+From *that* figure they can click on its definition to see its details.
+For a citation
+we can't easily know if the user wants to see the package with the element
+definition, or the details about that element.
+So we'll presume the user wants to see the package, and
+from there the user can see it in context and select its definition to
+see its details.
 Again, a blank line follows.
 
 The `pkg_cited` selector shows `Cited by: `,
@@ -256,20 +271,35 @@ so we can convert our test suite efficiently.
 Let's make it possible to modify a config value dynamically.
 That'll be especially useful, for example, for the heading levels.
 
-To do this, we'll create a special selector `config` with this syntax:
+To do this, we'll create a special directive `config` with this syntax:
 
-`<!-- caseproc config KEY = VALUE... -->`
+`<!-- caseproc-config KEY = VALUE... -->`
 
 Note that VALUE is everything up to the first `-->` - it can contain spaces.
+The VALUE is trimmed of whitespace on the left/right side.
+That means we can't set leading/trailing whitespace, but we can add
+facilities to do that later if that's important.
+Currently we don't expect that to be important.
 
-Note that there's no reason to end it, so in this case we won't look for
-`<!-- end caseproc -->`. This is a selector, so we only expect this
-to exist outside the marked regions of other selectors (it would be ignored
-and replaced if it was inside).
+There's no reason to end it, so in this case we won't look for
+`<!-- end caseproc -->`.
+We'll use the slightly different `caseproc-config` instead of `caseproc`,
+and call this a directive and not a selector,
+so it's distinct from the selectors that *do* require `end caseproc`.
+If someone accidentally uses the *selector* `config`, report that as
+an error and explain that `caseproc-config`, not `caseproc config`, is
+the correct syntax.
 
-This special selector first checks if KEY is allowed to be changed, and
+We expect `caseproc-config`
+to only be used in documents and only to be used
+outside the marked regions of selectors.
+It would be ignored and replaced if it was inside a region, like
+any other text in a marked region.
+
+This special directive first checks if KEY is allowed to be changed, and
 that it's allowed to be changed to VALUE.
-If not, it prints an error message and continues.
+If not, it prints a warning message that it can't change KEY to VALUE
+at that document and line.
 If it is, this special selector immediately sets config KEY to VALUE,
 which will last until changed again.
 
@@ -285,6 +315,8 @@ The directive is itself preserved in the output.
 It takes effect immediately, and persists.
 It is even applied during `--validate`.
 
+## Other updates
+
 We'll need to update tests, `--help`, and `docs/reference.md` among other
 places.
 
@@ -294,11 +326,12 @@ Let's add a new option `--missing`. This will simplify handling
 missing element information.
 
 When `--missing` is run, it will still update the document as usual.
-It will also notice when an element appears to have no content,
-by noticing cases where its
-`<!-- caseproc element ID -->...<!-- end caseproc -->`
-has nothing other than blank lines and `<!-- caseproc ... -->`
-before another `<!-- caseproc element` or `<!-- caseproc package`.
+It will also notice when an element appears to have no user-created content.
+An element "appears to have no user-created
+content" if the text between its `<!-- end
+caseproc -->` closing marker and the next `<!-- caseproc element ` or `<!--
+caseproc package` directive consists only of blank lines and other caseproc
+and caseproc-config directives.
 
 Once it reaches the `</body>` of
 the last doc if it's HTML, or the end of the last doc no matter what,
@@ -312,13 +345,14 @@ not been in any document. That is, it will add:
 
 ~~~~
 
-It will then go through each element that was missing and appears
-to have no content.
+It will then go through each element that was either missing or appears
+to have no user-created content.
 Every element that
 (1) has no other assertionDeclaration (the default is considered `asserted`),
 and (2) is a leaf element in its definition,
 will have the option `needsSupport` added.
-The LTAC is then written back.
+If at least one element has had a new `needsSupport` added,
+the updated LTAC is then written back.
 As with all changes of files, this will use the safe backup mechanism.
 
 Basically, by running `--missing`, we add all markers missing in the document,

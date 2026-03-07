@@ -1,6 +1,51 @@
-Mermaid doesn't handle wide constructs well. Let's discuss creating an       
-addition for both GSN and SACM for *rendering* (this transformation only      
-happens during rendering, and must not modify the original data structures).  
+Mermaid doesn't handle wide constructs well. Let's discuss creating an
+addition for both GSN and SACM for *rendering* (this transformation only
+happens during rendering, and must not modify the original data structures).
+
+## Stage 1: Make GSN render Connector visibly (prerequisite)
+
+Currently `Connector` in GSN is completely transparent: `_gsn_node_decl`
+returns `''` for it, and `_gsn_collect_edges` flattens its children
+directly to the grandparent as if the Connector weren't there.
+This is fine for LTAC-authored Connectors in GSN (GSN has no grouping
+concept), but it means synthetic Connectors created for width management
+(Stage 2) would do nothing in GSN — the overflow children would just
+appear as additional siblings, leaving the diagram equally wide.
+
+We fix this before implementing Stage 2.
+
+**Changes to `_GSN_HEADER`:** add the same `classDef` used by SACM:
+
+```
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
+```
+
+**Changes to `_gsn_node_decl`:** return a node declaration for Connector
+instead of `''` — same gray-circle shape as SACM:
+
+```python
+if node.node_type == 'Connector':
+    return f'    {node.diagram_id}(("{_HAIR_SPACE}")):::connector'
+```
+
+**Changes to `_gsn_collect_edges`:** instead of flattening Connector's
+children to the grandparent, emit a `parent --> connector` edge and then
+recurse into the Connector's children normally (so they get
+`connector --> child` edges):
+
+```python
+elif child.node_type == 'Connector':
+    edge_lines.append(_edge_line(node.diagram_id, child.diagram_id,
+                                 False, False, False))
+    _gsn_collect_edges(child, edge_lines, leaf_nodes)
+```
+
+No existing test fixtures use Connector, so this change carries zero
+fixture-update cost.  Add a test that verifies a Connector in a GSN
+diagram produces a visible node declaration and edges through it (rather
+than being transparent).
+
+## Stage 2: Width-management transform
 
 If we're rendering a diagram, we make a duplicate, and we may do some
 transformations specifically for that kind of notation.

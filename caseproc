@@ -316,6 +316,30 @@ def parse_options(raw: str) -> set:
     return {token.strip().lower() for token in raw.split(',') if token.strip()}
 
 
+def detect_doc_format(path: str) -> str:
+    """Return 'html' for .htm/.html files; 'markdown' for everything else.
+
+    Stdin path '-' is treated as markdown.
+    Panics for unrecognised extensions.
+
+    >>> detect_doc_format('case.md')
+    'markdown'
+    >>> detect_doc_format('CASE.HTML')
+    'html'
+    >>> detect_doc_format('-')
+    'markdown'
+    >>> detect_doc_format('case.markdown')
+    'markdown'
+    """
+    low = path.lower()
+    if low == '-' or low.endswith('.md') or low.endswith('.markdown'):
+        return 'markdown'
+    if low.endswith('.html') or low.endswith('.htm'):
+        return 'html'
+    panic(f"cannot determine document format from filename {path!r}; "
+          f"expected .md, .markdown, .html, or .htm")
+
+
 # ---------------------------------------------------------------------------
 # Data model
 # ---------------------------------------------------------------------------
@@ -1566,6 +1590,7 @@ def process_document_stream(
     config: dict,
     id_info: Dict[str, dict],
     seen_headers: set,
+    doc_format: str = 'markdown',
 ) -> None:
     """Process a document file line by line, replacing ltac selector regions.
 
@@ -1969,11 +1994,13 @@ def _process_files(
         for path in files:
             try:
                 with open(path) as f:
-                    process_document_stream(f, out, registry, all_roots, config, id_info, seen_headers)
+                    process_document_stream(f, out, registry, all_roots, config, id_info,
+                                            seen_headers, detect_doc_format(path))
             except OSError as e:
                 error(f"cannot open {path!r}: {e}")
     else:
-        process_document_stream(sys.stdin, out, registry, all_roots, config, id_info, seen_headers)
+        process_document_stream(sys.stdin, out, registry, all_roots, config, id_info,
+                                seen_headers, 'markdown')
 
 
 def _check_header_coverage(registry: Dict[str, Node], seen_headers: set) -> None:
@@ -2156,7 +2183,8 @@ def _inline_rewrite_file(
     original_lf = original.replace('\r\n', '\n')
     buf = io.StringIO()
     with io.StringIO(original_lf) as src:
-        process_document_stream(src, buf, registry, all_roots, config, id_info, seen_headers)
+        process_document_stream(src, buf, registry, all_roots, config, id_info,
+                                seen_headers, detect_doc_format(path))
     if _had_error and not error_before:
         # Errors occurred while processing this file; leave it untouched.
         return None

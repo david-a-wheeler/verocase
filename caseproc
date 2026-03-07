@@ -1137,14 +1137,8 @@ def _sacm_leftmost_leaf(node: 'Node') -> 'Node':
     return node
 
 
-def render_sacm(roots: List['Node'], config: dict) -> str:
-    """Render package roots as a complete SACM/mermaid code block.
-
-    Returns the full mermaid fenced block (opening ```mermaid … closing ```).
-    The original nodes are not modified; a deep copy is used internally.
-    Output structure: header → node declarations (BFS) → sacmDot declarations
-    → click lines → blank line → BottomPadding + edges (DFS post-order, deepest first).
-    """
+def _sacm_diagram_body(roots: List['Node'], config: dict) -> str:
+    """Return the SACM diagram content without opening/closing fence markers."""
     base_url = config.get('base_url', '')
     pkg_label = config.get('pkg_label', DEFAULT_CONFIG['pkg_label'])
     bottom_padding = config.get('bottom_padding', DEFAULT_CONFIG['bottom_padding'])
@@ -1176,15 +1170,33 @@ def render_sacm(roots: List['Node'], config: dict) -> str:
         bottom_node = _sacm_leftmost_leaf(roots[0])
         edge_lines.insert(0, f'    BottomPadding[ ]:::invisible ~~~ {bottom_node.diagram_id}')
 
-    lines = [_SACM_HEADER]
+    # Build body: header content (minus the opening fence line) + nodes + edges.
+    body_header = _SACM_HEADER[len('```mermaid\n'):]
+    lines = [body_header]
     lines.extend(node_decl_lines)
     lines.extend(dot_decls)
     lines.extend(click_lines)
     if edge_lines:
         lines.append('')  # blank line between declarations and edges
         lines.extend(edge_lines)
-    lines.append('```')
     return '\n'.join(lines)
+
+
+def render_sacm(roots: List['Node'], config: dict) -> str:
+    """Render package roots as a complete SACM/mermaid code block.
+
+    Returns the full mermaid fenced block (opening ```mermaid … closing ```).
+    The original nodes are not modified; a deep copy is used internally.
+    Output structure: header → node declarations (BFS) → sacmDot declarations
+    → click lines → blank line → BottomPadding + edges (DFS post-order, deepest first).
+    """
+    return '```mermaid\n' + _sacm_diagram_body(roots, config) + '\n```'
+
+
+def render_sacm_html(roots: List['Node'], config: dict) -> str:
+    """Render SACM diagram as a <pre class="mermaid"> block."""
+    body = _sacm_diagram_body(roots, config)
+    return f'<pre class="mermaid">\n{body}\n</pre>'
 
 
 # ---------------------------------------------------------------------------
@@ -1358,14 +1370,8 @@ def _gsn_collect_edges(node, edge_lines, leaf_nodes):
         leaf_nodes.append(node)
 
 
-def render_gsn(roots: List['Node'], config: dict) -> str:
-    """Render package roots as a complete GSN/mermaid code block.
-
-    Returns the full mermaid fenced block (opening ```mermaid … closing ```).
-    The original nodes are not modified; a deep copy is used internally.
-    Output structure: header → node declarations (BFS) → click lines
-    → blank line → BottomPadding lines + edges (DFS pre-order).
-    """
+def _gsn_diagram_body(roots: List['Node'], config: dict) -> str:
+    """Return the GSN diagram content without opening/closing fence markers."""
     base_url = config.get('base_url', '')
     pkg_label = config.get('pkg_label', DEFAULT_CONFIG['pkg_label'])
     bottom_padding = config.get('bottom_padding', DEFAULT_CONFIG['bottom_padding'])
@@ -1403,14 +1409,31 @@ def render_gsn(roots: List['Node'], config: dict) -> str:
                 first = False
     edge_lines = bp_lines + edge_lines
 
-    lines = [_GSN_HEADER]
+    body_header = _GSN_HEADER[len('```mermaid\n'):]
+    lines = [body_header]
     lines.extend(node_decl_lines)
     lines.extend(click_lines)
     if edge_lines:
         lines.append('')  # blank line between declarations and edges
         lines.extend(edge_lines)
-    lines.append('```')
     return '\n'.join(lines)
+
+
+def render_gsn(roots: List['Node'], config: dict) -> str:
+    """Render package roots as a complete GSN/mermaid code block.
+
+    Returns the full mermaid fenced block (opening ```mermaid … closing ```).
+    The original nodes are not modified; a deep copy is used internally.
+    Output structure: header → node declarations (BFS) → click lines
+    → blank line → BottomPadding lines + edges (DFS pre-order).
+    """
+    return '```mermaid\n' + _gsn_diagram_body(roots, config) + '\n```'
+
+
+def render_gsn_html(roots: List['Node'], config: dict) -> str:
+    """Render GSN diagram as a <pre class="mermaid"> block."""
+    body = _gsn_diagram_body(roots, config)
+    return f'<pre class="mermaid">\n{body}\n</pre>'
 
 
 def resolve_element(
@@ -1600,6 +1623,45 @@ def render_selector(
 # Document processor
 # ---------------------------------------------------------------------------
 
+@dataclass
+class DocState:
+    """Mutable per-document processing state."""
+    current_id: Optional[str] = None
+    doc_format: str = 'markdown'
+    mermaid_injected: bool = False
+    seen_element_ids: set = None
+
+    def __post_init__(self):
+        if self.seen_element_ids is None:
+            self.seen_element_ids = set()
+
+
+def _maybe_inject_mermaid_js(rendered: str, config: dict, state: 'DocState') -> str:
+    """Prepend the Mermaid JS <script> block to rendered if not yet injected.
+
+    Only acts when:
+    - doc_format is 'html'
+    - rendered contains '<pre class="mermaid">'
+    - state.mermaid_injected is False
+    - mermaid_js_url is non-empty
+    """
+    if (state.doc_format != 'html'
+            or state.mermaid_injected
+            or '<pre class="mermaid">' not in rendered):
+        return rendered
+    url = config.get('mermaid_js_url', DEFAULT_CONFIG['mermaid_js_url'])
+    if not url:
+        return rendered
+    script = (
+        f'<script type="module">\n'
+        f"  import mermaid from '{url}';\n"
+        f'  mermaid.initialize({{ startOnLoad: true }});\n'
+        f'</script>\n'
+    )
+    state.mermaid_injected = True
+    return script + rendered
+
+
 # Matches '<!-- caseproc SELECTOR -->' lines (SELECTOR is captured in group 1).
 _CASEPROC_REGION_RE = re.compile(r'^<!--\s*caseproc\s+(.+?)\s*-->\s*$')
 
@@ -1670,6 +1732,7 @@ def process_document_stream(
     registry and all_roots; performs no LTAC parsing.
     """
     current_element: Optional[Node] = None
+    _doc_state = DocState(doc_format=doc_format)
     filename = getattr(f, 'name', '<stream>')
     pkg_label = config.get('pkg_label', DEFAULT_CONFIG['pkg_label'])
     do_update = config.get('update_headers', True)
@@ -1695,6 +1758,7 @@ def process_document_stream(
             found_end = _consume_region(line_iter, filename, lineno, selector)
             rendered = render_selector(selector, registry, all_roots, config, id_info,
                                        current_element, doc_format)
+            rendered = _maybe_inject_mermaid_js(rendered, config, _doc_state)
             out.write(text + '\n')
             if found_end:
                 if rendered:

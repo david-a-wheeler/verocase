@@ -559,6 +559,60 @@ class TestInlineMode(unittest.TestCase):
             os.unlink(tmp)
 
 
+class TestMermaidHtml(unittest.TestCase):
+    def _tmp_html(self, content):
+        os.makedirs(RESULTS, exist_ok=True)
+        path = os.path.join(RESULTS, 'mermaid-test.html')
+        with open(path, 'w', encoding='utf-8') as f:
+            f.write(content)
+        return path
+
+    def test_sacm_html_produces_pre_block(self):
+        """sacm/mermaid/html produces <pre class="mermaid"> inside an HTML file."""
+        content = '<!-- caseproc sacm/mermaid/html -->\n<!-- end caseproc -->\n'
+        tmp = self._tmp_html(content)
+        try:
+            result = run('--ltac', fixture('simple.ltac'), tmp)
+            self.assertEqual(result.returncode, 0)
+            updated = read_file(tmp)
+            self.assertIn('<pre class="mermaid">', updated)
+        finally:
+            os.unlink(tmp)
+
+    def test_sacm_html_injects_mermaid_js(self):
+        """First sacm/mermaid/html region gets a <script> block prepended."""
+        content = '<!-- caseproc sacm/mermaid/html -->\n<!-- end caseproc -->\n'
+        tmp = self._tmp_html(content)
+        try:
+            result = run('--ltac', fixture('simple.ltac'), tmp)
+            self.assertEqual(result.returncode, 0)
+            updated = read_file(tmp)
+            self.assertIn('<script type="module">', updated)
+            # Script should appear before the pre block.
+            script_pos = updated.index('<script type="module">')
+            pre_pos = updated.index('<pre class="mermaid">')
+            self.assertLess(script_pos, pre_pos)
+        finally:
+            os.unlink(tmp)
+
+    def test_mermaid_js_url_empty_disables_injection(self):
+        """Setting mermaid_js_url to '' disables script injection."""
+        import json, tempfile
+        fd, cfg = tempfile.mkstemp(suffix='.json')
+        content = '<!-- caseproc sacm/mermaid/html -->\n<!-- end caseproc -->\n'
+        tmp = self._tmp_html(content)
+        try:
+            with os.fdopen(fd, 'w') as f:
+                json.dump({'mermaid_js_url': ''}, f)
+            result = run('--ltac', fixture('simple.ltac'), '--config', cfg, tmp)
+            self.assertEqual(result.returncode, 0)
+            updated = read_file(tmp)
+            self.assertNotIn('<script', updated)
+        finally:
+            os.unlink(cfg)
+            os.unlink(tmp)
+
+
 class TestLineEndings(unittest.TestCase):
     def test_crlf_file_preserved(self):
         """A CRLF document file is updated and written back with CRLF line endings."""

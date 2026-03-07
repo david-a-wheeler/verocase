@@ -1,4 +1,4 @@
-updated # Plan 3: Auto-generate document headers
+# Plan 3: Auto-generate document headers
 
 ## Tweaks
 
@@ -81,7 +81,7 @@ We'll guess standard input (`-`) is markdown.
 Anything else is a panic.
 In --stdout mode, the input determines the output type.
 
-The heading level (number of `#` in markdown or the number in `<hNUMBER`
+The heading level (number of `#` in markdown or the number in `<hNUMBER>`
 in HTML) is determined by
 the config value `element_level`, which defaults to 3.
 
@@ -110,27 +110,40 @@ Here is the markdown version of each of those selections:
 `referenced_by` (for markdown):
 ~~~~
 Referenced by: (hyperlinked list of packages containing it, starting with
-  the package that defines it in bold, followed by all packages that cite it,
-  in LTAC file order, comma-separated)
+  the package that defines it in bold wrapping the link, followed by all
+  packages that cite it, in LTAC file order, comma-separated)
 
 ~~~~
+
+If there are no packages to list (which should not happen in practice,
+since every element is defined in some package), suppress this line and
+its following blank line entirely.
 
 `supported_by`:
 ~~~~
-Supported by: (starting with this element's definition in bold, a
-hyperlinked list of all its children elements, including cited and link
-elements, comma-separated)
+Supported by: (starting with this element's definition in bold wrapping
+the link, a hyperlinked list of all its children elements, including
+cited and link elements, comma-separated)
 
 ~~~~
+
+If the element has no children, suppress this line and its following
+blank line entirely.
 
 `supports`:
 ~~~~
 Supports: (hyperlinked list. First it's the parent of this element's
-  definition in bold, followed by the list of all parents of citations of this
-  element in LTAC file order. If it's a top-level item with no direct
-  parent, just omit the parent.)
+  definition in bold wrapping the link, followed by the list of all
+  parents of citations of this element in LTAC file order. If it's a
+  top-level item with no direct parent, just omit the parent.)
 
 ~~~~
+
+If the element has no parents at all (a root element with no citations),
+suppress this line and its following blank line entirely.
+
+Bold wraps the link in all cases: `**[text](url)**` in markdown,
+`<b><a href="url">text</a></b>` in HTML.
 
 If we're generating HTML, all of these generate the HTML version of the same
 thing as the markdown, e.g., `<a href="LINK">CONTENT</a>` instead of
@@ -190,6 +203,9 @@ By default `package_selections` will have the value
 The `representation` selector, whenever used,
 applies whatever selection is stored in
 the config value `default_representation`, which defaults to `sacm`.
+The accepted values are `sacm`, `gsn`, or `ltac`; these are the shorthand
+forms that expand through the three-part selector rules based on
+document type and `default_renderer`.
 That way, users can easily change just the config value
 `default_representation` to `gsn` and they'll get gsn for every package.
 Users don't *have* to change it, then they'll just get the default.
@@ -218,6 +234,16 @@ using the document type.
 We'll keep the explicit variation names in case the user needs to force
 the use of a specific format.
 
+`sacm/mermaid/markdown` and `gsn/mermaid/markdown` generate a fenced
+Mermaid code block, as before:
+
+~~~~markdown
+```mermaid
+flowchart BT
+  ...
+```
+~~~~
+
 `sacm/mermaid/html` and `gsn/mermaid/html` generate `<pre class="mermaid">`
 blocks (the Mermaid v10+ standard):
 
@@ -228,6 +254,10 @@ flowchart BT
 </pre>
 ~~~~
 
+Add a config key `default_renderer` with the value `mermaid`. We don't
+currently support alternative renderers, but this makes the architecture
+explicit and provides a clear placeholder for future alternatives.
+
 Add a config key `mermaid_js_url` with the default value:
 
 ```
@@ -236,8 +266,8 @@ https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs
 
 When generating a Mermaid diagram in an HTML document, caseproc checks
 whether the document already contains a `<script` tag referencing the
-`mermaid_js_url`. If not, it injects the following block immediately
-before the first generated `<pre class="mermaid">`:
+`mermaid_js_url`. If not, it prepends the following block inside the
+same marked region, immediately before the `<pre class="mermaid">`:
 
 ~~~~html
 <script type="module">
@@ -246,14 +276,12 @@ before the first generated `<pre class="mermaid">`:
 </script>
 ~~~~
 
+Since caseproc only modifies content inside marked regions, the script
+block lives inside the first diagram's region and is regenerated cleanly
+on every run — including if `mermaid_js_url` changes.
+
 Setting `mermaid_js_url` to `""` disables auto-injection entirely,
 for users who manage the script themselves in their HTML template.
-
-We inject before the first diagram rather than into `<head>` because
-caseproc doesn't require a valid full HTML document structure;
-injecting into `<head>` would require parsing/locating it, while
-injecting before the first diagram is always correct and works in
-partial HTML files.
 
 The `pkg_defines` selector shows the word `Defines: `,
 followed by a comma-separated list of "TYPE ID" (e.g., "Claim Foo")
@@ -280,7 +308,9 @@ definition, or the details about that element.
 So we'll presume the user wants to see the package, and
 from there the user can see it in context and select its definition to
 see its details.
-Again, a blank line follows.
+If this package has no citing elements, suppress this line and its
+following blank line entirely.
+Again, a blank line follows (when not suppressed).
 
 The `pkg_cited` selector shows `Cited by: `,
 followed by a comma-separated list of "Package ID" (e.g., "Package Foo"),
@@ -289,6 +319,8 @@ These are all of the packages in the assurance case
 that include a cite (`^`) to an id that is defined within this package,
 even if that's this package.
 Its link is to the *package*.
+If no packages cite this package, suppress this line and its following
+blank line entirely.
 
 Note that these all share the same heading.
 
@@ -350,8 +382,8 @@ any other text in a marked region.
 
 This special directive first checks if KEY is allowed to be changed, and
 that it's allowed to be changed to VALUE.
-If not, it prints a warning message that it can't change KEY to VALUE
-at that document and line.
+If not, it emits a warning (which becomes a fatal error with `--error`)
+that it can't change KEY to VALUE, citing the document and line number.
 If it is, this special selector immediately sets config KEY to VALUE,
 which will last until changed again.
 
@@ -388,7 +420,7 @@ and caseproc-config directives.
 Once it reaches the `</body>` of
 the last doc if it's HTML, or the end of the last doc no matter what,
 it will insert region markers for every element ID that has
-not been in any document. That is, it will add:
+not been in any document, in LTAC file order. That is, it will add:
 
 ~~~~
 <!-- caseproc element ID -->
@@ -411,9 +443,10 @@ Basically, by running `--missing`, we add all markers missing in the document,
 and we ensure that the user can see the elements that probably most
 need information.
 
-## Discussion
+## Former discussions
 
-Let's remove the selectors references info - they're getting superceded.
-The `statement` selector might be useful, let's keep it. It supports an
-optional ID - if ID is omitted, current component (most recently invoked)
-is used.
+The `references` and `info` selectors are removed — superseded by
+`element_selections`.
+The `statement` selector is kept. It supports an optional ID; if ID is
+omitted, the current component (most recently set by `element` or
+`package`) is used.

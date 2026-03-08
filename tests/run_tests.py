@@ -178,6 +178,24 @@ class TestSpecialChars(unittest.TestCase):
         self.assertIn('&alpha;', r.stdout)          # & entity passes through
         self.assertNotIn('&amp;alpha;', r.stdout)   # & not double-escaped
 
+    def test_mid_paren_is_text_not_ref(self):
+        """Parentheses in the middle of text are literal; only trailing (ref) is a ref."""
+        r = run('--ltac', fixture('mid-paren.ltac'), '--select', 'ltac/markdown')
+        self.assertEqual(r.returncode, 0)
+        actual = check(r.stdout, 'mid-paren.ltac.expected.md')
+        self.assertEqual(actual, read_fixture('mid-paren.ltac.expected.md'))
+        # Mid-text parens appear verbatim in the link label
+        self.assertIn('(for password storage)', r.stdout)   # C1: mid-paren in text
+        self.assertIn('(see hashing module)', r.stdout)     # E1: mid-paren in text
+        self.assertIn('(not GitHub SSO)', r.stdout)         # X1: mid-paren in text
+        self.assertIn('(Rack::Attack)', r.stdout)           # C2: mid-paren in text
+        # Trailing parens become external ref links, not part of the label
+        self.assertIn('[app/models/user.rb](app/models/user.rb)', r.stdout)
+        self.assertIn('[config/initializers/rack_attack.rb]', r.stdout)
+        # C1 and X1 have no trailing ref
+        self.assertNotIn('hashes)', r.stdout)  # C1 label ends at 'hashes', no ref
+        self.assertNotIn('users)', r.stdout)   # X1 label ends at 'users', no ref
+
 
 class TestDefaultMode(unittest.TestCase):
     def test_filter_mode_output(self):

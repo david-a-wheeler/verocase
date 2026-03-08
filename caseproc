@@ -385,7 +385,7 @@ _LTAC_LINE_RE = re.compile(
     r'(?P<nodetype>Claim|Strategy|Evidence|Justification'
     r'|Context|Assumption|Relation|Link|Connector)'
     r'(?:\s+(?P<cited>\^)?(?P<identifier>[^:{\n(]*))?'
-    r'(?::\s*(?P<text>[^({]*))?'
+    r'(?::\s*(?P<text>.*?))?'
     r'(?:\s*\((?P<ref>[^)\n]*)\))?'
     r'(?:\s*\{(?P<options>[^}\n]*)\})?'
     r'\s*$'

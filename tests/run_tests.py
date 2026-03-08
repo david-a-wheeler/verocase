@@ -52,9 +52,15 @@ RESULTS  = os.path.join(_HERE, 'results')
 
 
 def run(*args):
-    """Run caseproc with the given arguments and return the CompletedProcess."""
+    """Run caseproc with the given arguments and return the CompletedProcess.
+
+    Runs in the FIXTURES directory so that stray case.md / case.ltac files in
+    the project root are never auto-discovered during testing.  All paths
+    passed to caseproc are already absolute (via fixture()), so this is safe.
+    """
     return subprocess.run(
-        LTACPROC + list(args), capture_output=True, text=True, encoding='utf-8'
+        LTACPROC + list(args), capture_output=True, text=True, encoding='utf-8',
+        cwd=FIXTURES,
     )
 
 

@@ -31,7 +31,7 @@ has many extensions.
   a) The assurance case argument is structured using indentation. Two spaces are added for each level of the argument structure.
   b) Child nodes (sub-claims, evidence, strategies, etc.) are indented under their parents.
   c) Each indentation level, two spaces, represents one step deeper in the argument hierarchy.
-  d) Hyphens '-' or asterisks '*' are used at the start of each line to mark list items.
+  d) Hyphens '-' are used at the start of each line to mark list items.
   e) Evidence references may cite external artifacts, written inside parentheses at the end of element name.
   f) Justifications may need to be supported by evidence or an argument: subclaims or a strategy.
   g) The following relationships are permitted within the argument structure, which is presented in the format 'element -> sub-element'. Any relationships not listed below are not permitted.
@@ -41,7 +41,7 @@ has many extensions.
     - Any element -> Context, Relation
   h) Claims supported by Evidence should not be supported by any Justifications, Assumptions nor Strategies.
     - Justifications and Assumptions should be used for higher-level claims and strategies.
-    - If a Claim is to be supported by Evidence and by Strategy, the Evidence should be replaced by a Claim describing it and this Claim can be supported by this Evidence element
+	- If a Claim is to be supported by Evidence and by Strategy, the Evidence should be replaced by a Claim describing it and this Claim can be supported by this Evidence element
   i) LTAC can be used to present a single module argument, not modular arguments. Interfaces and away elements cannot be represented in LTAC. Other more advanced notations can be used to represent modular arguments.
   j) It's not allowed to add additional text to an LTAC package. Each line must contain one element. We don't allow blank lines so that an LTAC package is usually also legal markdown.
   k) LTAC is a code. In Markdown you should place 3 backticks ` ``` ` on a line above and below the code block to present LTAC packages.

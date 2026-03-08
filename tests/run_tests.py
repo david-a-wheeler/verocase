@@ -920,6 +920,297 @@ class TestMutations(unittest.TestCase):
             os.unlink(ltac)
 
 
+class TestDetach(unittest.TestCase):
+    """Tests for the --detach ID mutation option."""
+
+    def _write_ltac(self, content):
+        """Write content to a temp LTAC file and return its path."""
+        fd, path = tempfile.mkstemp(suffix='.ltac')
+        with os.fdopen(fd, 'w', encoding='utf-8') as f:
+            f.write(content)
+        return path
+
+    def test_detach_basic(self):
+        """--detach C2 on C1→C2→C3 produces two packages: C1 with ^C2 child, and C2→C3."""
+        ltac = (
+            '- Claim C1: Top claim\n'
+            '  - Claim C2: Middle claim\n'
+            '    - Claim C3: Leaf claim\n'
+        )
+        path = self._write_ltac(ltac)
+        try:
+            r = run('--ltac', path, '--detach', 'C2', '--validate')
+            self.assertEqual(r.returncode, 0, r.stderr)
+            content = read_file(path)
+            lines = content.splitlines()
+            # First package: C1 root with ^C2 as child, no C3
+            self.assertIn('Claim C1', content)
+            self.assertIn('^C2', content)
+            self.assertNotIn('C3', lines[lines.index(next(l for l in lines if 'C1' in l))])
+            # Second package: C2 as root with C3 as child
+            # Find C2 declaration (not cited)
+            decl_lines = [l for l in lines if 'Claim C2' in l and '^' not in l]
+            self.assertTrue(decl_lines, 'C2 definition not found as package root')
+            c2_decl_line = decl_lines[0]
+            # C2 should be at depth 0 (no leading spaces)
+            self.assertFalse(c2_decl_line.startswith(' '), 'C2 should be top-level package root')
+            self.assertIn('C3', content)
+        finally:
+            os.unlink(path)
+
+    def test_detach_unknown_id(self):
+        """--detach with an unknown ID exits non-zero with an error about 'not defined'."""
+        ltac = '- Claim C1: Top claim\n  - Claim C2: Child\n'
+        path = self._write_ltac(ltac)
+        try:
+            r = run('--ltac', path, '--detach', 'NoSuch', '--validate')
+            self.assertNotEqual(r.returncode, 0)
+            self.assertIn('not defined', r.stderr)
+        finally:
+            os.unlink(path)
+
+    def test_detach_top_level(self):
+        """--detach on a top-level package root exits non-zero with an error."""
+        ltac = '- Claim C1: Top claim\n  - Claim C2: Child\n'
+        path = self._write_ltac(ltac)
+        try:
+            r = run('--ltac', path, '--detach', 'C1', '--validate')
+            self.assertNotEqual(r.returncode, 0)
+            self.assertIn('C1', r.stderr)
+        finally:
+            os.unlink(path)
+
+    def test_detach_roundtrip(self):
+        """After --detach C2, the output LTAC is valid (--validate exits 0)."""
+        ltac = (
+            '- Claim C1: Top claim\n'
+            '  - Claim C2: Middle claim\n'
+            '    - Claim C3: Leaf claim\n'
+        )
+        path = self._write_ltac(ltac)
+        try:
+            r = run('--ltac', path, '--detach', 'C2', '--validate')
+            self.assertEqual(r.returncode, 0, r.stderr)
+        finally:
+            os.unlink(path)
+
+
+class TestMove(unittest.TestCase):
+    """Tests for the --move ID DESTINATION mutation option."""
+
+    def _write_ltac(self, content):
+        """Write content to a temp LTAC file and return its path."""
+        fd, path = tempfile.mkstemp(suffix='.ltac')
+        with os.fdopen(fd, 'w', encoding='utf-8') as f:
+            f.write(content)
+        return path
+
+    def test_move_from_top_level_with_citation(self):
+        """--move C2 C1 where C1 already has ^C2 (direct child) restores the original structure."""
+        # Post-detach state: C1 with direct ^C2 child, and separate C2→C3 package.
+        # Citation format: "- Claim ^C2: ..." means C2 is cited (not defined) here.
+        ltac = (
+            '- Claim C1: Top claim\n'
+            '  - Claim ^C2: Middle claim\n'
+            '\n'
+            '- Claim C2: Middle claim\n'
+            '  - Claim C3: Leaf claim\n'
+        )
+        path = self._write_ltac(ltac)
+        try:
+            r = run('--ltac', path, '--move', 'C2', 'C1', '--validate')
+            self.assertEqual(r.returncode, 0, r.stderr)
+            content = read_file(path)
+            # Should be one package with C1→C2→C3
+            lines = content.splitlines()
+            # Only one top-level declaration (C1)
+            top_level_decls = [l for l in lines if l.startswith('- ') and 'C' in l]
+            self.assertEqual(len(top_level_decls), 1, f'Expected one package, got: {top_level_decls}')
+            self.assertIn('C1', top_level_decls[0])
+            self.assertIn('C2', content)
+            self.assertIn('C3', content)
+        finally:
+            os.unlink(path)
+
+    def test_move_from_top_level_no_citation(self):
+        """--move C2 C1 where no direct ^C2 child of C1 exists appends C2 as last child of C1.
+
+        C2 is cited indirectly (via C4 under C1) so the LTAC is initially valid,
+        but there is no direct ^C2 child of C1, so the move appends C2 as last child.
+        """
+        # C2 is reachable via C4, but C1 has no direct ^C2 child.
+        ltac = (
+            '- Claim C1: Foo\n'
+            '  - Claim C4: Bridge\n'
+            '    - Claim ^C2: Bar\n'
+            '\n'
+            '- Claim C2: Bar\n'
+            '  - Claim C3: Baz\n'
+        )
+        path = self._write_ltac(ltac)
+        try:
+            r = run('--ltac', path, '--move', 'C2', 'C1', '--validate')
+            self.assertEqual(r.returncode, 0, r.stderr)
+            content = read_file(path)
+            lines = content.splitlines()
+            # Only one top-level declaration (C1)
+            top_level_decls = [l for l in lines if l.startswith('- ') and 'C' in l]
+            self.assertEqual(len(top_level_decls), 1, f'Expected one package, got: {top_level_decls}')
+            self.assertIn('C1', top_level_decls[0])
+            self.assertIn('C2', content)
+            self.assertIn('C3', content)
+            # C2 definition should be a direct child of C1 (appended last)
+            decl_lines = [l for l in lines if 'Claim C2' in l and '^' not in l]
+            self.assertTrue(decl_lines, 'C2 definition not found')
+            c2_indent = len(decl_lines[0]) - len(decl_lines[0].lstrip())
+            # C4 is also a direct child of C1; both should be at the same indent level
+            c4_lines = [l for l in lines if 'Claim C4' in l]
+            self.assertTrue(c4_lines, 'C4 not found')
+            c4_indent = len(c4_lines[0]) - len(c4_lines[0].lstrip())
+            self.assertEqual(c2_indent, c4_indent, 'C2 should be a sibling of C4 under C1')
+        finally:
+            os.unlink(path)
+
+    def test_move_from_nested(self):
+        """--move C3 C1 where C3 is nested under C2 moves C3 to be a child of C1."""
+        ltac = (
+            '- Claim C1: Top claim\n'
+            '  - Claim C2: Middle claim\n'
+            '    - Claim C3: Leaf claim\n'
+        )
+        path = self._write_ltac(ltac)
+        try:
+            r = run('--ltac', path, '--move', 'C3', 'C1', '--validate')
+            self.assertEqual(r.returncode, 0, r.stderr)
+            content = read_file(path)
+            lines = content.splitlines()
+            # C1 should have two direct children: C2 and C3
+            c1_idx = next(i for i, l in enumerate(lines) if 'Claim C1' in l and not l.startswith(' '))
+            # C2 and C3 should both appear in content
+            self.assertIn('C2', content)
+            self.assertIn('C3', content)
+            # C3 should not be indented further than C2 (should be sibling, not child of C2)
+            c2_line = next(l for l in lines if 'Claim C2' in l)
+            c3_line = next(l for l in lines if 'Claim C3' in l)
+            c2_indent = len(c2_line) - len(c2_line.lstrip())
+            c3_indent = len(c3_line) - len(c3_line.lstrip())
+            self.assertEqual(c2_indent, c3_indent, 'C2 and C3 should be at the same depth under C1')
+        finally:
+            os.unlink(path)
+
+    def test_move_no_citation_left(self):
+        """After --move C3 C1 (nested move), C2 has no children (no ^C3 left behind)."""
+        ltac = (
+            '- Claim C1: Top claim\n'
+            '  - Claim C2: Middle claim\n'
+            '    - Claim C3: Leaf claim\n'
+        )
+        path = self._write_ltac(ltac)
+        try:
+            r = run('--ltac', path, '--move', 'C3', 'C1', '--validate')
+            self.assertEqual(r.returncode, 0, r.stderr)
+            content = read_file(path)
+            lines = content.splitlines()
+            # C2 should have no children: no line after C2's line should be indented more
+            c2_idx = next(i for i, l in enumerate(lines) if 'Claim C2' in l)
+            c2_indent = len(lines[c2_idx]) - len(lines[c2_idx].lstrip())
+            child_of_c2 = [
+                l for l in lines[c2_idx + 1:]
+                if l.strip() and len(l) - len(l.lstrip()) > c2_indent
+            ]
+            self.assertEqual(child_of_c2, [], f'C2 should have no children, got: {child_of_c2}')
+            # No ^C3 citation should remain
+            self.assertNotIn('^', content.replace('^Claim C3', ''))
+            # More simply: no citation of C3 anywhere
+            self.assertNotIn('^C3', content)
+            self.assertNotIn('^Claim C3', content)
+        finally:
+            os.unlink(path)
+
+    def test_move_unknown_target(self):
+        """--move with an unknown ID exits non-zero with error containing 'not defined'."""
+        ltac = '- Claim C1: Top claim\n  - Claim C2: Child\n'
+        path = self._write_ltac(ltac)
+        try:
+            r = run('--ltac', path, '--move', 'NoSuch', 'C1', '--validate')
+            self.assertNotEqual(r.returncode, 0)
+            self.assertIn('not defined', r.stderr)
+        finally:
+            os.unlink(path)
+
+    def test_move_unknown_dest(self):
+        """--move with an unknown DESTINATION exits non-zero with error containing 'not defined'."""
+        ltac = '- Claim C1: Top claim\n  - Claim C2: Child\n'
+        path = self._write_ltac(ltac)
+        try:
+            r = run('--ltac', path, '--move', 'C1', 'NoSuch', '--validate')
+            self.assertNotEqual(r.returncode, 0)
+            self.assertIn('not defined', r.stderr)
+        finally:
+            os.unlink(path)
+
+
+class TestMoveQueue(unittest.TestCase):
+    """Queue ordering tests for combined --detach and --move mutations."""
+
+    def _write_ltac(self, content):
+        """Write content to a temp LTAC file and return its path."""
+        fd, path = tempfile.mkstemp(suffix='.ltac')
+        with os.fdopen(fd, 'w', encoding='utf-8') as f:
+            f.write(content)
+        return path
+
+    def test_detach_then_move_restores(self):
+        """--detach C2 --move C2 C1 on C1→C2→C3 restores the original single-package structure."""
+        ltac = (
+            '- Claim C1: Top claim\n'
+            '  - Claim C2: Middle claim\n'
+            '    - Claim C3: Leaf claim\n'
+        )
+        path = self._write_ltac(ltac)
+        try:
+            r = run('--ltac', path, '--detach', 'C2', '--move', 'C2', 'C1', '--validate')
+            self.assertEqual(r.returncode, 0, r.stderr)
+            content = read_file(path)
+            lines = content.splitlines()
+            # Should be one package with C1 at root
+            top_level_decls = [l for l in lines if l.startswith('- ') and 'Claim' in l]
+            self.assertEqual(len(top_level_decls), 1, f'Expected one package, got: {top_level_decls}')
+            self.assertIn('C1', top_level_decls[0])
+            self.assertIn('C2', content)
+            self.assertIn('C3', content)
+        finally:
+            os.unlink(path)
+
+    def test_rename_then_detach(self):
+        """--rename C2 X2 --detach X2 on C1→C2→C3 produces C1 with ^X2, and X2→C3 package."""
+        ltac = (
+            '- Claim C1: Top claim\n'
+            '  - Claim C2: Middle claim\n'
+            '    - Claim C3: Leaf claim\n'
+        )
+        path = self._write_ltac(ltac)
+        try:
+            r = run('--ltac', path, '--rename', 'C2', 'X2', '--detach', 'X2', '--validate')
+            self.assertEqual(r.returncode, 0, r.stderr)
+            content = read_file(path)
+            lines = content.splitlines()
+            # C2 should be gone, X2 should appear
+            self.assertNotIn('C2', content)
+            self.assertIn('X2', content)
+            # ^X2 citation should be under C1
+            self.assertIn('^', content)
+            # X2 should be a top-level package root
+            x2_decl_lines = [l for l in lines if 'Claim X2' in l and '^' not in l]
+            self.assertTrue(x2_decl_lines, 'X2 definition not found')
+            x2_decl = x2_decl_lines[0]
+            self.assertFalse(x2_decl.startswith(' '), 'X2 should be a top-level package root')
+            # C3 should be under X2
+            self.assertIn('C3', content)
+        finally:
+            os.unlink(path)
+
+
 class TestWriteLTAC(unittest.TestCase):
     def test_roundtrip(self):
         """write_ltac round-trips a simple LTAC file without loss."""

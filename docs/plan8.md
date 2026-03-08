@@ -57,16 +57,17 @@ The command `--detach C2` would produce:
   - Claim C3: Baz
 ~~~~
 
-The next option we'll add is `--attach ID DESTINATION`, which is
-the reverse of `--detach`. Given ID, which is defined at a top level,
-it moves its definition to be under the DESTINATION id,
-where ID is currently cited
-(making ID no longer cited under DESTINATION).
-Panic if ID isn't defined, DESTINATION isn't defined,
-ID isn't top-level, or ID isn't cited under DESTINATION.
+The next option we'll add is `--move ID DESTINATION`, which moves ID's
+definition to be a child of DESTINATION. ID may be anywhere in the tree
+(top-level or nested). If a `^ID` citation already exists as a direct child
+of DESTINATION, it is replaced by the definition; otherwise the definition
+is appended as DESTINATION's last child. `--move` does NOT leave a citation
+at ID's original location. To leave a citation behind, run `--detach ID`
+first (which creates `^ID` in place), then `--move ID DESTINATION`.
+Panic if ID isn't defined or DESTINATION isn't defined.
 
 Given the produced LTAC after `--detach C2`, the option
-`--attach C2 C1` would reverse it and produce our previous LTAC.
+`--move C2 C1` would reverse it and produce our previous LTAC.
 
 Let me clear up a misunderstanding: if ID is also cited elsewhere
 in the tree, that is *not* a problem - it would still be cited.
@@ -77,7 +78,7 @@ We do require that there be only 1 definition (1 use of ID without ^)
 and that there be no cycles, but an ID inside a tree can be cited in
 many other places.
 
-The `--detach` and `--attach` options
+The `--detach` and `--move` options
 should go into the same queue that
 `--restate` and `--rename` use.
 If there's more than one such use, they are applied in order.

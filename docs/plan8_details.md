@@ -5,10 +5,19 @@
 Plan 8 adds three features:
 1. `--stats` — print LTAC and document statistics after processing
 2. `--detach ID` — extract a subtree into a new top-level package
-3. `--attach ID DESTINATION` — merge a top-level package inline under a parent
+3. `--move ID DESTINATION` — move ID's definition to be a child of DESTINATION
 
-`--detach` and `--attach` join the existing ordered mutation queue shared with
+`--detach` and `--move` join the existing ordered mutation queue shared with
 `--rename` and `--restate`.
+
+**Change from original plan:** `--attach` was renamed to `--move` and generalized.
+The original required ID to be top-level and a `^ID` citation to already exist under
+DESTINATION. `--move` removes both restrictions: ID can be anywhere in the tree, and
+no pre-existing citation is required. If a `^ID` citation exists directly under
+DESTINATION it is replaced by the definition; otherwise the definition is appended
+as DESTINATION's last child. `--move` does **not** leave a citation at ID's original
+location. To leave a citation behind when moving a non-top-level node, use
+`--detach ID` first (which creates a `^ID` citation in place), then `--move ID DESTINATION`.
 
 ---
 
@@ -318,144 +327,126 @@ packages, which is correct LTAC.
 
 ---
 
-## Part 3: `--attach ID DESTINATION`
+## Part 3: `--move ID DESTINATION`
 
-### 3.1 Algorithm: `apply_attach`
+**Change from original plan:** this was `--attach`, which required ID to be top-level
+and a citation to pre-exist under DESTINATION. `--move` is fully generalized.
+
+### 3.1 Algorithm: `apply_move`
 
 ```python
-def apply_attach(roots: List[Node], registry: Dict[str, Node],
-                 id_info: Dict[str, dict], target_id: str, dest_id: str) -> None:
-    """Move top-level target_id's definition inline under dest_id, replacing ^citation.
+def apply_move(roots: List[Node], registry: Dict[str, Node],
+               id_info: Dict[str, dict], target_id: str, dest_id: str) -> None:
+    """Move target_id's definition to be a child of dest_id.
+
+    ID may be top-level or nested anywhere in the tree.
+    If a ^ID citation exists as a direct child of dest_id, it is replaced by
+    the definition; otherwise the definition is appended as the last child.
+    No citation is left at the original location. To leave a citation behind
+    when moving a non-top-level node, run --detach ID first, then --move.
 
     Panics if:
     - target_id is not defined
     - dest_id is not defined
-    - target_id is not a top-level package root
-    - target_id is not cited (^) as a direct child of dest_id
+    - dest_id is a descendant of target_id (would create a cycle; caught by
+      post-mutation check_circularities, but we can also check eagerly)
     """
     node = registry.get(target_id)
     if node is None:
-        panic(f"--attach: {target_id!r} is not defined")
+        panic(f"--move: {target_id!r} is not defined")
     dest = registry.get(dest_id)
     if dest is None:
-        panic(f"--attach: {dest_id!r} is not defined")
-    if node.parent is not None:
-        panic(f"--attach: {target_id!r} is not a top-level package root")
+        panic(f"--move: {dest_id!r} is not defined")
 
-    # Find the citation of target_id among dest's direct children.
-    cited_node = None
+    # Detach node from its current location (no citation left behind).
+    if node.parent is None:
+        # Top-level package: remove from roots list.
+        roots.remove(node)
+    else:
+        node.parent.children.remove(node)
+        node.parent = None
+
+    # Find a pre-existing ^ID citation among dest's direct children.
     cited_idx = None
     for i, child in enumerate(dest.children):
         if child.is_cited and child.identifier == target_id:
-            cited_node = child
             cited_idx = i
             break
-    if cited_node is None:
-        panic(f"--attach: {target_id!r} is not cited as a direct child of {dest_id!r}")
 
-    # Remove the top-level package.
-    roots.remove(node)
+    # Insert node under dest.
+    if cited_idx is not None:
+        # Replace the citation with the definition; citation count decreases by 1.
+        dest.children[cited_idx] = node
+        id_info[target_id]['citations'] = max(
+            0, id_info[target_id].get('citations', 1) - 1)
+    else:
+        # No pre-existing citation; append as last child.
+        dest.children.append(node)
 
-    # Replace the citation with the full definition.
-    dest.children[cited_idx] = node
     node.parent = dest
     _recalc_depths(node, dest.depth + 1)
 
-    # Update id_info: decl_pkg_id for node and all descendants changes to dest's pkg.
+    # Update decl_pkg_id for node and all its descendants to dest's package root.
     dest_pkg_root = dest
     while dest_pkg_root.parent is not None:
         dest_pkg_root = dest_pkg_root.parent
     new_pkg_id = dest_pkg_root.identifier
-    old_pkg_id = node.identifier  # was its own package root
+    old_pkg_id = id_info.get(target_id, {}).get('decl_pkg_id')
     for n in _all_nodes([node]):
         if n.identifier and n.identifier in id_info:
             info = id_info[n.identifier]
             if info.get('decl_pkg_id') == old_pkg_id:
                 info['decl_pkg_id'] = new_pkg_id
-
-    # Decrement the citation count.
-    id_info[target_id]['citations'] = max(0, id_info[target_id].get('citations', 1) - 1)
-    # Remove the citing pkg from citing_pkg_ids if it's now gone.
-    old_pkg_id_str = node.identifier  # was its own root before
-    # The citation was under dest's package; that package still exists with the def now.
-    # citing_pkg_ids may need no change since dest_pkg still references target (now inline).
 ```
 
-### 3.2 Note on citations elsewhere
+### 3.2 Notes
 
-As plan8.md clarifies: if `target_id` is also cited elsewhere in the tree
-(not just under DESTINATION), those citations remain valid — they cite the
-definition that is now inline under DESTINATION. Only the one citation under
-DESTINATION is replaced by the definition. The citation count decreases by 1,
-but other citations are untouched.
+- **No citation left behind.** `--move` silently removes ID from its original
+  location. To leave a `^ID` citation there, run `--detach ID` first (which
+  creates the citation), then `--move ID DESTINATION`.
+- **Cycle detection.** Moving a node under one of its own descendants would
+  create a cycle. The existing `check_circularities` call after all mutations
+  catches this; no extra eager check is strictly required, but it is shown in
+  the docstring for clarity.
+- **Citations elsewhere.** Any `^ID` citations in other parts of the tree
+  remain valid — they still refer to the definition, which has just moved.
+  Only a direct `^ID` child of DESTINATION (if present) is consumed.
 
-(`_recalc_depths` is also needed by `apply_detach`.)
+(`_recalc_depths` is shared with `apply_detach`.)
 
 ---
 
 ## Part 4: Queue integration
 
-### 4.1 Extend `_MutationAction`
+### 4.1 `_MutationAction` — no change needed
 
-The current implementation at line 2314 always reads two values and stores
-`(op, values[0], values[1])`. We need to support `--detach` (1 arg) and
-`--attach` (2 args).
+The `_MutationAction` class already uses `option_string.lstrip('-')` to derive
+the op name, so adding `--move` requires no change to the class itself.
 
-Change to:
+### 4.2 Replace `--attach` with `--move` in the argument parser
 
-```python
-class _MutationAction(argparse.Action):
-    """Accumulate --rename/--restate/--detach/--attach operations as ordered tuples.
-
-    All four options share a single ordered queue (dest='mutations').
-    Tuples are (op, a, b) where b is None for --detach (single-argument option).
-    The order on the command line is the order of application.
-    """
-    def __call__(self, parser, namespace, values, option_string=None):
-        mutations = getattr(namespace, self.dest, None) or []
-        op = option_string.lstrip('-')   # 'rename', 'restate', 'detach', or 'attach'
-        if isinstance(values, list):
-            a = values[0]
-            b = values[1] if len(values) > 1 else None
-        else:
-            a, b = values, None
-        mutations.append((op, a, b))
-        setattr(namespace, self.dest, mutations)
-```
-
-Using `option_string.lstrip('-')` replaces the current hard-coded
-`'rename' if option_string == '--rename' else 'restate'` logic, making it
-automatically correct for all four operations.
-
-### 4.2 Add `--detach` and `--attach` to the argument parser
-
-Near the `--rename`/`--restate` definitions (around line 2399):
+Remove the `--attach` `add_argument` call and replace with:
 
 ```python
 parser.add_argument(
-    '--detach', metavar='ID',
-    nargs=1, action=_MutationAction, dest='mutations', default=None,
-    help=(
-        'replace ID\'s definition with a citation (^ID) in its current location '
-        'and move its subtree to a new top-level package. '
-        'Panics if ID is not defined or is already a top-level package root. '
-        'Joins the shared mutation queue with --rename, --restate, and --attach.'
-    ),
-)
-parser.add_argument(
-    '--attach', metavar=('ID', 'DESTINATION'),
+    '--move', metavar=('ID', 'DESTINATION'),
     nargs=2, action=_MutationAction, dest='mutations', default=None,
     help=(
-        'move top-level ID\'s definition inline under DESTINATION, replacing '
-        'the ^ID citation there. '
-        'Panics if ID or DESTINATION is not defined, ID is not top-level, '
-        'or ID is not cited as a direct child of DESTINATION. '
-        'Joins the shared mutation queue with --rename, --restate, and --detach.'
+        "move ID's definition to be a child of DESTINATION. "
+        "ID may be anywhere in the tree (top-level or nested). "
+        "If ^ID is already a direct child of DESTINATION it is replaced by "
+        "the definition; otherwise the definition is appended as the last child. "
+        "No citation is left at the original location — to leave one behind, "
+        "run --detach ID first, then --move ID DESTINATION. "
+        "Panics if ID or DESTINATION is not defined. "
+        "Joins the shared mutation queue with --rename, --restate, and --detach."
     ),
 )
 ```
 
-### 4.3 Update the mutation dispatch loop (line 2952)
+### 4.3 Update the mutation dispatch loop
+
+Replace `attach` with `move`:
 
 ```python
 for op, a, b in args.mutations:
@@ -465,29 +456,24 @@ for op, a, b in args.mutations:
         apply_restate(all_roots, registry, id_info, a, b)
     elif op == 'detach':
         apply_detach(all_roots, registry, id_info, a)
-    elif op == 'attach':
-        apply_attach(all_roots, registry, id_info, a, b)
+    elif op == 'move':
+        apply_move(all_roots, registry, id_info, a, b)
 ```
 
 ### 4.4 Update help text and epilog
 
-1. Update `_MutationAction` docstring (done above).
+1. Update `_MutationAction` docstring to mention `--move` instead of `--attach`.
 
-2. In the `parse_args()` epilog, change the sentence:
+2. In the `parse_args()` epilog, replace `--attach` with `--move` in the list
+   of options that may modify the LTAC file.
 
-   > "By default the program treats the LTAC file strictly as an input and
-   > it will *not* modify the LTAC file. However, the options --update,
-   > --rename, --restate, --missing, and --start *may* modify the LTAC file."
-
-   to include `--detach` and `--attach`.
-
-3. Add a paragraph to the epilog explaining the shared queue:
+3. Update the shared-queue paragraph:
 
    ```
-   The options --rename, --restate, --detach, and --attach all share a single
+   The options --rename, --restate, --detach, and --move all share a single
    ordered mutation queue. They are applied to the LTAC tree in the order
    they appear on the command line. Order matters: for example,
-   '--detach C2 --attach C2 C1' detaches C2 first, then attaches it back.
+   '--detach C2 --move C2 C1' detaches C2 first, then moves it under C1.
    ```
 
 ---
@@ -524,40 +510,46 @@ Add a new `TestDetach` class:
 
 Since `--detach` modifies the LTAC file, use `tempfile`-based fixtures.
 
-### 5.3 `--attach` tests
+### 5.3 `--move` tests
 
-Add a new `TestAttach` class:
+Add a new `TestMove` class:
 
-- **`test_attach_basic`**: Start with the output of `test_detach_basic`, run
-  `--attach C2 C1`. Verify the LTAC is back to original three-level structure.
-- **`test_attach_unknown_target`**: panics.
-- **`test_attach_unknown_dest`**: panics.
-- **`test_attach_not_top_level`**: Target is not a package root — panics.
-- **`test_attach_not_cited_under_dest`**: Target is top-level but not cited
-  under DESTINATION — panics.
+- **`test_move_from_top_level_with_citation`**: Start with the LTAC produced by
+  `test_detach_basic` (C1→^C2 in one package, C2→C3 as its own package). Run
+  `--move C2 C1`. Verify the LTAC is back to the original three-level structure
+  (C1→C2→C3 in one package, no separate C2 package).
+- **`test_move_from_top_level_no_citation`**: C1 and C2 are separate top-level
+  packages with no citation relationship. Run `--move C2 C1`. Verify C2 becomes
+  a child of C1 (appended as last child) and no separate C2 package remains.
+- **`test_move_from_nested`**: C1→C2→C3 in one package. Run `--move C3 C1`.
+  Verify C3 is now a direct child of C1 (no citation left behind under C2)
+  and C2 has no children.
+- **`test_move_no_citation_left`**: Confirm that after `--move` the original
+  parent has no `^ID` citation where the definition used to be.
+- **`test_move_unknown_target`**: panics.
+- **`test_move_unknown_dest`**: panics.
 
 ### 5.4 Queue ordering test
 
-- **`test_detach_then_attach_queue`**: Single invocation with `--detach C2 --attach C2 C1`.
-  Verify the result matches the original (detach then attach is identity).
+- **`test_detach_then_move_queue`**: Single invocation with `--detach C2 --move C2 C1`.
+  Verify the result matches the original three-level structure (detach then move
+  is identity when citation pre-existed).
 - **`test_rename_then_detach_queue`**: `--rename C2 X2 --detach X2`.
-  Verify C2 is renamed to X2, then X2 is detached (so old name C2 is gone,
+  Verify C2 is renamed to X2, then X2 is detached (old name C2 gone,
   new top-level package is X2).
 
 ---
 
 ## Part 6: Implementation order
 
-1. Add `_recalc_depths` helper (needed by both detach and attach).
-2. Add `apply_detach` function.
-3. Add `apply_attach` function.
-4. Extend `_MutationAction` (simple change to use `option_string.lstrip('-')`).
-5. Add `--detach` and `--attach` to `parse_args()`.
-6. Update mutation dispatch loop.
-7. Update help text/epilog.
-8. Add `_compute_ltac_stats`, `_scan_doc_stats`, `_print_stats` functions.
-9. Add `--stats` argument to parser.
-10. Add stats collection and printing call in `main()`.
-11. Write tests in order: detach, attach, queue, stats.
+1. ~~Add `_recalc_depths` helper~~ — already done.
+2. ~~Add `apply_detach` function~~ — already done.
+3. ~~Extend `_MutationAction`~~ — already done (uses `option_string.lstrip('-')`).
+4. ~~Add `--stats`, `_compute_ltac_stats`, `_scan_doc_stats`, `_print_stats`~~ — already done.
+5. Replace `apply_attach` with `apply_move` (generalized algorithm).
+6. Replace `--attach` with `--move` in `parse_args()`.
+7. Update mutation dispatch loop (`attach` → `move`).
+8. Update `_MutationAction` docstring and epilog (`attach` → `move`).
+9. Write tests in order: detach, move, queue.
 
-Run `python tests/run_tests.py` after each step.
+Run `tests/run_tests.py` after each step.

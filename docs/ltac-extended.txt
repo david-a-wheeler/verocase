@@ -50,6 +50,7 @@ has many extensions.
   a) After the element text you may add an optional curly-brace-enclosed comma-separated list of options that mark the element
   b) After that you may add an optional parentheses-enclosed reference (a URL or file being referred to)
   c) To supply text ending in parentheses or braces, use `()` and/or `{}`
+  d) Options are an ordered, case-insensitive, non-duplicative, comma-separated list of options. Comparisons of option values must be case-insensitive; implementations are free to normalize options to lowercase when reading or writing.
 
 # LTAC example
 ```

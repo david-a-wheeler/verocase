@@ -306,25 +306,35 @@ def bold(text: str, fmt: str) -> str:
     return f'**{text}**'
 
 
-def parse_options(raw: str) -> set:
-    """Parse a {OPTIONS} suffix string into a set of option names.
+def parse_options(raw: str) -> list:
+    """Parse a {OPTIONS} suffix string into an ordered list of option names.
 
     raw is the content between { and } (already stripped of braces).
     Splits on commas, strips whitespace, lowercases each token.
-    Returns a set of lowercase strings.
+    Preserves order; silently drops duplicates (keeping first occurrence).
+    Returns a list of lowercase strings.
 
-    >>> sorted(parse_options("counter, abstract"))
-    ['abstract', 'counter']
+    >>> parse_options("counter, abstract")
+    ['counter', 'abstract']
     >>> parse_options("DEFEATED")
-    {'defeated'}
+    ['defeated']
     >>> parse_options("")
-    set()
+    []
     >>> parse_options("  ")
-    set()
+    []
+    >>> parse_options("a, b, a")
+    ['a', 'b']
     """
     if not raw.strip():
-        return set()
-    return {token.strip().lower() for token in raw.split(',') if token.strip()}
+        return []
+    seen: set = set()
+    result = []
+    for token in raw.split(','):
+        t = token.strip().lower()
+        if t and t not in seen:
+            seen.add(t)
+            result.append(t)
+    return result
 
 
 def detect_doc_format(path: str) -> str:
@@ -362,8 +372,8 @@ class Node:
     identifier: str          # e.g. "C1"; empty string if absent
     text: str                # descriptive text (statement / reasoning)
     ext_ref: str             # text from trailing (...), empty if absent
-    options: Set[str]        # e.g.: needsSupport axiomatic defeated
-                             #        counter abstract assumed
+    options: List[str]       # e.g.: needssupport axiomatic defeated
+                             #        counter abstract assumed (lowercased, ordered)
     children: List['Node']   # child nodes
     is_cited: bool           # True when identifier had a ^ prefix
     depth: int               # 0-based indentation level (0 = root)
@@ -838,7 +848,7 @@ def _make_syn_connector(children: List['Node'], parent: 'Node',
         identifier='',
         text='',
         ext_ref='',
-        options=set(),
+        options=[],
         children=list(children),
         is_cited=False,
         depth=parent.depth + 1,
@@ -1031,7 +1041,7 @@ def _edge_line(src_id: str, tgt_id: str, is_context: bool,
 _HAIR_SPACE = '\u200a'
 
 
-def _sacm_assertion_suffix(node_type: str, options: Set[str]) -> str:
+def _sacm_assertion_suffix(node_type: str, options: List[str]) -> str:
     """Return the mermaid assertion-state suffix for the given node type and options.
 
     Valid nodes carry at most one assertion status (enforced by
@@ -1352,7 +1362,7 @@ def _gsn_is_incontextof(node: 'Node') -> bool:
            (node.node_type == 'Claim' and 'assumed' in node.options)
 
 
-def _gsn_assertion_suffix(node_type: str, options: Set[str]) -> str:
+def _gsn_assertion_suffix(node_type: str, options: List[str]) -> str:
     """Return the GSN mermaid assertion-state suffix for the given node type and options.
 
     >>> _gsn_assertion_suffix('Claim', {'defeated'})
@@ -2734,9 +2744,9 @@ def _mark_needs_support(candidate_ids: List[str],
         # Assumption nodes implicitly carry 'assumed'; don't add a conflicting status.
         if node.node_type == 'Assumption':
             continue
-        if node.options & _ASSERTION_STATUSES:
+        if any(o in _ASSERTION_STATUSES for o in node.options):
             continue
-        node.options.add('needssupport')
+        node.options.append('needssupport')
         count += 1
     return count
 
@@ -2899,7 +2909,7 @@ def _write_ltac_node(node: 'Node', lines: list) -> None:
     if node.text:
         line += f': {node.text}'
     if node.options:
-        line += ' {' + ', '.join(sorted(node.options)) + '}'
+        line += ' {' + ', '.join(node.options) + '}'
     elif node.text and node.text.endswith('}'):
         line += ' {}'  # escape: text ends with '}', no real options to disambiguate
     if node.ext_ref:
@@ -3015,7 +3025,7 @@ def apply_detach(roots: List[Node], registry: Dict[str, Node],
         identifier=node.identifier,
         text=node.text,
         ext_ref='',
-        options=set(),
+        options=[],
         children=[],
         is_cited=True,
         depth=node.depth,

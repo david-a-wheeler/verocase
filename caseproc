@@ -52,6 +52,8 @@ DEFAULT_CONFIG = {
     'base_url': '',
     'bottom_padding': True,
     'default_renderer': 'mermaid',
+    'max_mermaid_children': 8,
+    'narrowed_mermaid_children': 6,
     'default_representation': 'sacm',
     'document_files': [],
     'element_level': 3,
@@ -810,6 +812,183 @@ def _collect_bfs(roots: List['Node']) -> List['Node']:
     return result
 
 
+def _make_syn_connector(children: List['Node'], parent: 'Node',
+                        counter: list) -> 'Node':
+    """Create a synthetic Connector node that groups *children*.
+
+    counter is a one-element list [int] incremented on each call so IDs are
+    unique within a rendering pass (e.g. SynConnect_00000000, _00000001, …).
+    The returned node is NOT yet inserted into parent.children; the caller
+    is responsible for insertion.  Each child's .parent is updated here.
+    """
+    conn_id = f'SynConnect_{counter[0]:08x}'
+    counter[0] += 1
+    connector = Node(
+        node_type='Connector',
+        identifier='',
+        text='',
+        ext_ref='',
+        options=set(),
+        children=list(children),
+        is_cited=False,
+        depth=parent.depth + 1,
+        parent=parent,
+        link_target=None,
+        diagram_id=conn_id,
+    )
+    for child in children:
+        child.parent = connector
+    return connector
+
+
+def _sacm_effective_sources(
+    node: 'Node',
+) -> List[Tuple['Node', 'Node']]:
+    """Return (src, tree_parent) for each node in node's SACM inference group.
+
+    Mirrors _sacm_collect_edges inference_sources logic without emitting edges.
+    Counter/abstract options are intentionally ignored (only counts matter here).
+    """
+    sources: List[Tuple['Node', 'Node']] = []
+    for child in node.children:
+        if child.node_type == 'Context':
+            pass
+        elif child.node_type == 'Strategy':
+            for gc in child.children:
+                if gc.node_type == 'Context':
+                    pass
+                elif gc.node_type == 'Relation':
+                    for ggc in gc.children:
+                        if ggc.node_type not in ('Context', 'Relation', 'Link'):
+                            sources.append((ggc, gc))
+                elif gc.node_type not in ('Relation', 'Link'):
+                    sources.append((gc, child))
+            sources.append((child, node))
+        elif child.node_type == 'Relation':
+            for gc in child.children:
+                if gc.node_type not in ('Context', 'Relation', 'Link'):
+                    sources.append((gc, child))
+        elif child.node_type != 'Link':
+            sources.append((child, node))
+    return sources
+
+
+def _gsn_visual_children(
+    node: 'Node',
+) -> List[Tuple['Node', 'Node']]:
+    """Return (child, tree_parent) for each visually-expressed child in GSN.
+
+    Counts direct non-Link, non-Relation children (with parent=node), plus
+    non-Link grandchildren of Relation children (with parent=Relation child).
+    Link targets are cross-package citations and are not counted.
+    """
+    result: List[Tuple['Node', 'Node']] = []
+    for child in node.children:
+        if child.node_type == 'Link':
+            pass
+        elif child.node_type == 'Relation':
+            for gc in child.children:
+                if gc.node_type != 'Link':
+                    result.append((gc, child))
+        else:
+            result.append((child, node))
+    return result
+
+
+def _insert_connectors_for_overflow(
+    overflow: List[Tuple['Node', 'Node']],
+    counter: list,
+) -> None:
+    """Group overflow items by tree-parent; create one Connector per group.
+
+    Removes overflow items from their parent's children list and inserts a
+    synthetic Connector at the position of the first removed item.
+    counter is passed to _make_syn_connector to produce unique IDs.
+    """
+    groups: Dict[int, Tuple['Node', List['Node']]] = {}
+    for src, parent in overflow:
+        pid = id(parent)
+        if pid not in groups:
+            groups[pid] = (parent, [])
+        groups[pid][1].append(src)
+
+    for parent, items in groups.values():
+        item_ids = {id(n) for n in items}
+        first_pos = next(
+            i for i, c in enumerate(parent.children) if id(c) in item_ids
+        )
+        for src in items:
+            parent.children.remove(src)
+        connector = _make_syn_connector(items, parent, counter)
+        parent.children.insert(first_pos, connector)
+
+
+def _apply_sacm_width_transform(roots: List['Node'], config: dict,
+                                counter: list) -> None:
+    """Narrow SACM inference groups that exceed max_mermaid_children.
+
+    Operates in-place on the deep-copied forest.  Inserts synthetic Connector
+    nodes to group middle overflow children.  Recurses into all children so
+    that nested over-wide groups are narrowed too.
+    counter is a one-element list [int] used to generate unique Connector IDs.
+    """
+    max_ch: int = config.get('max_mermaid_children',
+                             DEFAULT_CONFIG['max_mermaid_children'])
+    narrowed: int = config.get('narrowed_mermaid_children',
+                               DEFAULT_CONFIG['narrowed_mermaid_children'])
+    if max_ch == 0:
+        return
+
+    def _transform(node: 'Node') -> None:
+        if node.node_type in ('Link', 'Relation'):
+            return
+        while True:
+            sources = _sacm_effective_sources(node)
+            if len(sources) <= max_ch:
+                break
+            n_left = narrowed // 2
+            n_right = narrowed - n_left
+            overflow = sources[n_left: len(sources) - n_right]
+            _insert_connectors_for_overflow(overflow, counter)
+        for child in list(node.children):
+            _transform(child)
+
+    for root in roots:
+        _transform(root)
+
+
+def _apply_gsn_width_transform(roots: List['Node'], config: dict,
+                               counter: list) -> None:
+    """Narrow GSN nodes that have too many visual children.
+
+    Operates in-place on the deep-copied forest.
+    counter is a one-element list [int] used to generate unique Connector IDs.
+    """
+    max_ch: int = config.get('max_mermaid_children',
+                             DEFAULT_CONFIG['max_mermaid_children'])
+    narrowed: int = config.get('narrowed_mermaid_children',
+                               DEFAULT_CONFIG['narrowed_mermaid_children'])
+    if max_ch == 0:
+        return
+
+    def _transform(node: 'Node') -> None:
+        if node.node_type in ('Link', 'Relation'):
+            return
+        while True:
+            children = _gsn_visual_children(node)
+            if len(children) <= max_ch:
+                break
+            n_left = narrowed // 2
+            n_right = narrowed - n_left
+            overflow = children[n_left: len(children) - n_right]
+            _insert_connectors_for_overflow(overflow, counter)
+        for child in list(node.children):
+            _transform(child)
+
+    for root in roots:
+        _transform(root)
+
+
 def _edge_line(src_id: str, tgt_id: str, is_context: bool,
                counter: bool = False, abstract: bool = False) -> str:
     """Return a directed edge line (with arrowhead) from src to tgt.
@@ -1095,6 +1274,8 @@ def _sacm_diagram_body(roots: List['Node'], config: dict) -> str:
     pkg_label = config.get('pkg_label', DEFAULT_CONFIG['pkg_label'])
     bottom_padding = config.get('bottom_padding', DEFAULT_CONFIG['bottom_padding'])
     roots = _copy_forest(roots)
+    syn_counter = [0]
+    _apply_sacm_width_transform(roots, config, syn_counter)
 
     # Node declarations (BFS) and click lines collected in a single pass.
     node_decl_lines = []
@@ -1195,11 +1376,13 @@ def _gsn_assertion_suffix(node_type: str, options: Set[str]) -> str:
 def _gsn_node_decl(node: 'Node') -> str:
     """Return the mermaid node-declaration line for a single LTAC node (GSN style).
 
-    Returns '' for Relation, Link, and Connector nodes.
+    Returns '' for Relation and Link nodes.
     diagram_id must already be set on the node.
     """
-    if node.node_type in ('Relation', 'Link', 'Connector'):
+    if node.node_type in ('Relation', 'Link'):
         return ''
+    if node.node_type == 'Connector':
+        return f'    {node.diagram_id}(("{_HAIR_SPACE}")):::connector'
 
     did = node.diagram_id
     eid = escape_html(node.identifier) if node.identifier else ''
@@ -1261,7 +1444,8 @@ config:
 ---
 flowchart TD
     classDef invisible opacity:0
-    classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;"""
+    classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;"""
 
 
 def _gsn_collect_edges(node, edge_lines, leaf_nodes):
@@ -1282,20 +1466,9 @@ def _gsn_collect_edges(node, edge_lines, leaf_nodes):
                     _gsn_is_incontextof(tgt),
                     'counter' in child.options, False))
         elif child.node_type == 'Connector':
-            for gc in child.children:
-                if gc.node_type == 'Link':
-                    if gc.link_target is not None:
-                        tgt = gc.link_target
-                        edge_lines.append(_edge_line(
-                            node.diagram_id, tgt.diagram_id,
-                            _gsn_is_incontextof(tgt),
-                            'counter' in gc.options, False))
-                else:
-                    edge_lines.append(_edge_line(
-                        node.diagram_id, gc.diagram_id,
-                        _gsn_is_incontextof(gc),
-                        'counter' in gc.options, False))
-                    _gsn_collect_edges(gc, edge_lines, leaf_nodes)
+            edge_lines.append(_edge_line(node.diagram_id, child.diagram_id,
+                                         False, False, False))
+            _gsn_collect_edges(child, edge_lines, leaf_nodes)
         elif child.node_type == 'Relation':
             rc = 'counter' in child.options
             ra = 'abstract' in child.options
@@ -1327,6 +1500,8 @@ def _gsn_diagram_body(roots: List['Node'], config: dict) -> str:
     pkg_label = config.get('pkg_label', DEFAULT_CONFIG['pkg_label'])
     bottom_padding = config.get('bottom_padding', DEFAULT_CONFIG['bottom_padding'])
     roots = _copy_forest(roots)
+    syn_counter = [0]
+    _apply_gsn_width_transform(roots, config, syn_counter)
 
     # Node declarations (BFS) and click lines collected in a single pass.
     node_decl_lines = []
@@ -1932,7 +2107,36 @@ _CASEPROC_CONFIG_RE = re.compile(r'^<!--\s*caseproc-config\s+(\S+)\s*=\s*(.*?)\s
 _ALLOWED_CONFIG_VALUES = {
     'element_level': re.compile(r'^[1-6]$'),
     'package_level': re.compile(r'^[1-6]$'),
+    'max_mermaid_children':    re.compile(r'^(0|[1-9][0-9]*)\Z'),
+    'narrowed_mermaid_children': re.compile(r'^(0|[1-9][0-9]*)\Z'),
 }
+
+
+def config_invariant_checker(config: dict,
+                             filename: str = '',
+                             lineno: int = 0) -> None:
+    """Panic if max/narrowed_mermaid_children violate required invariants.
+
+    max_mermaid_children == 0 disables the width-management transform entirely;
+    the narrowed value is irrelevant in that case.
+    When max > 0:
+      narrowed_mermaid_children >= 2           (enough room to place a connector)
+      narrowed_mermaid_children < max_mermaid_children  (strictly improves)
+    """
+    mx = config.get('max_mermaid_children',
+                    DEFAULT_CONFIG['max_mermaid_children'])
+    nr = config.get('narrowed_mermaid_children',
+                    DEFAULT_CONFIG['narrowed_mermaid_children'])
+    if mx == 0:
+        return
+    prefix = f'{filename}:{lineno}: ' if filename else ''
+    if nr < 2:
+        panic(f'{prefix}narrowed_mermaid_children ({nr}) must be >= 2')
+    if nr >= mx:
+        panic(
+            f'{prefix}narrowed_mermaid_children ({nr}) must be less than '
+            f'max_mermaid_children ({mx})'
+        )
 
 
 def apply_config_directive(key: str, value: str, config: dict,
@@ -1948,10 +2152,13 @@ def apply_config_directive(key: str, value: str, config: dict,
     if not pattern.match(value):
         warn(f"{filename}:{lineno}: caseproc-config: invalid value {value!r} for {key!r}")
         return
-    if key in ('element_level', 'package_level'):
+    if key in ('element_level', 'package_level',
+               'max_mermaid_children', 'narrowed_mermaid_children'):
         config[key] = int(value)
     else:
         config[key] = value
+    if key in ('max_mermaid_children', 'narrowed_mermaid_children'):
+        config_invariant_checker(config, filename, lineno)
 
 
 def _consume_region(line_iter, filename: str, start_lineno: int, selector: str) -> bool:
@@ -2180,7 +2387,9 @@ Configuration keys (--config FILE, JSON object):
   default_representation  content for 'package' selector: "sacm" (default)
   element_level      heading level (1-6) for 'element' selector (default: 3)
   element_selections comma-separated list for element sub-sections (default: referenced_by,supported_by,supports)
+  max_mermaid_children      max visual children before width narrowing (default: 8; 0 disables)
   mermaid_js_url     URL for Mermaid JS script in HTML output (default: CDN URL; "" disables)
+  narrowed_mermaid_children children kept (left+right) when narrowing (default: 6; must be >=2 and <max)
   package_level      heading level (1-6) for 'package' selector (default: 3)
   package_selections comma-separated list for package sub-sections (default: representation,pkg_defines,pkg_citing,pkg_cited)
   pkg_label          word used to identify packages in output (default: "Package ")
@@ -2709,6 +2918,7 @@ def main() -> None:
         elif os.path.exists('docs/case.config'):
             config_path = 'docs/case.config'
     config = load_config(config_path)
+    config_invariant_checker(config)
 
     all_roots: List[Node] = []
     registry: Dict[str, Node] = {}

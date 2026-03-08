@@ -12,6 +12,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C1["<b>C1</b><br>The software is acceptably safe"]
     AR1[/"<b>AR1</b><br>Argue safety by hazard category"/]
     A1("<b>A1</b>&nbsp;Ⓐ<br>Threat model is current")

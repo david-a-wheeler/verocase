@@ -365,7 +365,9 @@ All keys are optional; unrecognized keys produce a warning.
 | `element_selections` | `"referenced_by,supported_by,supports"` | Comma-separated list of sub-sections rendered inside each `element` region.  Valid values: `referenced_by`, `supported_by`, `supports`. |
 | `ltac_file` | `""` | Path to the LTAC file; overridden by `--ltac`. |
 | `markdown_base_url` | `""` | Base URL for hyperlinks in `ltac/markdown` and `ltac/html` output. |
+| `max_mermaid_children` | `8` | Maximum number of visual children a node may have before the width-management transform splits the overflow into a synthetic `Connector`.  Set to `0` to disable the transform entirely. |
 | `mermaid_js_url` | CDN URL | URL of the Mermaid JS script injected into HTML output.  Set to `""` to disable injection. |
+| `narrowed_mermaid_children` | `6` | Number of children retained (left + right combined) when the width-management transform splits a wide node; the middle overflow becomes a `Connector`.  Must satisfy `narrowed_mermaid_children >= 2` and `narrowed_mermaid_children < max_mermaid_children` (when `max_mermaid_children > 0`).  Can also be set per-document with `caseproc-config`. |
 | `package_level` | `3` | Heading level (1–6) used by the `package` selector.  Can also be set per-document with `caseproc-config`. |
 | `package_selections` | `"representation,pkg_defines,pkg_citing,pkg_cited"` | Comma-separated list of sub-sections rendered inside each `package` region.  Valid values: `representation`, `pkg_defines`, `pkg_citing`, `pkg_cited`. |
 | `pkg_header_prefix` | `"### "` | String prepended to each package header when rendering `*` with `ltac/*` selectors. |
@@ -478,6 +480,8 @@ Currently supported keys:
 | Key | Accepted values |
 |---|---|
 | `element_level` | `1`–`6` |
+| `max_mermaid_children` | non-negative integer |
+| `narrowed_mermaid_children` | non-negative integer |
 | `package_level` | `1`–`6` |
 
 Example — use level-2 headings for packages and level-3 for elements:

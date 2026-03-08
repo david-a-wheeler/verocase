@@ -26,31 +26,60 @@ flowchart BT
     Xscope[("<b>Xscope</b>&nbsp;↗<br>Scope of Sys")]
     Asys["<b>Asys</b><br>Assumption of Sys<br>ASSUMED"]
     Esys1[("<b>Esys1</b>&nbsp;↗<br>System-level evidence")]
-    Sdecomp[/"<b>Sdecomp</b><br>Decompose by large area"/]
+    SynConnect_00000001((" ")):::connector
     Scomps[/"<b>Scomps</b><br>Argue by component"/]
+    Sdecomp[/"<b>Sdecomp</b><br>Decompose by large area"/]
+    SynConnect_00000002((" ")):::connector
+    C44top[["<b>C44top</b><br>Statement of C44top"]]
+    C45top[["<b>C45top</b><br>Statement of C45top"]]
     L1top[["<b>L1top</b><br>Statement of L1top"]]
+    SynConnect_00000000((" ")):::connector
+    C01top[["<b>C01top</b><br>Statement of C01top"]]
+    C02top[["<b>C02top</b><br>Statement of C02top"]]
+    C03top[["<b>C03top</b><br>Statement of C03top"]]
+    SynConnect_00000003((" ")):::connector
+    C41top[["<b>C41top</b><br>Statement of C41top"]]
+    C42top[["<b>C42top</b><br>Statement of C42top"]]
+    C43top[["<b>C43top</b><br>Statement of C43top"]]
     L2top[["<b>L2top</b><br>Statement of L2top"]]
     L3top[["<b>L3top</b><br>Statement of L3top"]]
     L4top[["<b>L4top</b><br>Statement of L4top"]]
     L5top[["<b>L5top</b><br>Statement of L5top"]]
-    C01top[["<b>C01top</b><br>Statement of C01top"]]
-    C02top[["<b>C02top</b><br>Statement of C02top"]]
-    C03top[["<b>C03top</b><br>Statement of C03top"]]
     C04top[["<b>C04top</b><br>Statement of C04top"]]
     C05top[["<b>C05top</b><br>Statement of C05top"]]
     C06top[["<b>C06top</b><br>Statement of C06top"]]
+    SynConnect_00000004((" ")):::connector
+    C38top[["<b>C38top</b><br>Statement of C38top"]]
+    C39top[["<b>C39top</b><br>Statement of C39top"]]
+    C40top[["<b>C40top</b><br>Statement of C40top"]]
     C07top[["<b>C07top</b><br>Statement of C07top"]]
     C08top[["<b>C08top</b><br>Statement of C08top"]]
     C09top[["<b>C09top</b><br>Statement of C09top"]]
+    SynConnect_00000005((" ")):::connector
+    C35top[["<b>C35top</b><br>Statement of C35top"]]
+    C36top[["<b>C36top</b><br>Statement of C36top"]]
+    C37top[["<b>C37top</b><br>Statement of C37top"]]
     C10top[["<b>C10top</b><br>Statement of C10top"]]
     C11top[["<b>C11top</b><br>Statement of C11top"]]
     C12top[["<b>C12top</b><br>Statement of C12top"]]
+    SynConnect_00000006((" ")):::connector
+    C32top[["<b>C32top</b><br>Statement of C32top"]]
+    C33top[["<b>C33top</b><br>Statement of C33top"]]
+    C34top[["<b>C34top</b><br>Statement of C34top"]]
     C13top[["<b>C13top</b><br>Statement of C13top"]]
     C14top[["<b>C14top</b><br>Statement of C14top"]]
     C15top[["<b>C15top</b><br>Statement of C15top"]]
+    SynConnect_00000007((" ")):::connector
+    C29top[["<b>C29top</b><br>Statement of C29top"]]
+    C30top[["<b>C30top</b><br>Statement of C30top"]]
+    C31top[["<b>C31top</b><br>Statement of C31top"]]
     C16top[["<b>C16top</b><br>Statement of C16top"]]
     C17top[["<b>C17top</b><br>Statement of C17top"]]
     C18top[["<b>C18top</b><br>Statement of C18top"]]
+    SynConnect_00000008((" ")):::connector
+    C26top[["<b>C26top</b><br>Statement of C26top"]]
+    C27top[["<b>C27top</b><br>Statement of C27top"]]
+    C28top[["<b>C28top</b><br>Statement of C28top"]]
     C19top[["<b>C19top</b><br>Statement of C19top"]]
     C20top[["<b>C20top</b><br>Statement of C20top"]]
     C21top[["<b>C21top</b><br>Statement of C21top"]]
@@ -58,56 +87,56 @@ flowchart BT
     C23top[["<b>C23top</b><br>Statement of C23top"]]
     C24top[["<b>C24top</b><br>Statement of C24top"]]
     C25top[["<b>C25top</b><br>Statement of C25top"]]
-    C26top[["<b>C26top</b><br>Statement of C26top"]]
-    C27top[["<b>C27top</b><br>Statement of C27top"]]
-    C28top[["<b>C28top</b><br>Statement of C28top"]]
-    C29top[["<b>C29top</b><br>Statement of C29top"]]
-    C30top[["<b>C30top</b><br>Statement of C30top"]]
-    C31top[["<b>C31top</b><br>Statement of C31top"]]
-    C32top[["<b>C32top</b><br>Statement of C32top"]]
-    C33top[["<b>C33top</b><br>Statement of C33top"]]
-    C34top[["<b>C34top</b><br>Statement of C34top"]]
-    C35top[["<b>C35top</b><br>Statement of C35top"]]
-    C36top[["<b>C36top</b><br>Statement of C36top"]]
-    C37top[["<b>C37top</b><br>Statement of C37top"]]
-    C38top[["<b>C38top</b><br>Statement of C38top"]]
-    C39top[["<b>C39top</b><br>Statement of C39top"]]
-    C40top[["<b>C40top</b><br>Statement of C40top"]]
-    C41top[["<b>C41top</b><br>Statement of C41top"]]
-    C42top[["<b>C42top</b><br>Statement of C42top"]]
-    C43top[["<b>C43top</b><br>Statement of C43top"]]
-    C44top[["<b>C44top</b><br>Statement of C44top"]]
-    C45top[["<b>C45top</b><br>Statement of C45top"]]
     Dot1((" ")):::sacmDot
     click G1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-g1"
     click Xscope "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#context-xscope"
     click Asys "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-asys"
     click Esys1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-esys1"
-    click Sdecomp "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-sdecomp"
     click Scomps "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-scomps"
+    click Sdecomp "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-sdecomp"
+    click C44top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c44top"
+    click C45top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c45top"
     click L1top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-l1top"
+    click C01top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c01top"
+    click C02top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c02top"
+    click C03top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c03top"
+    click C41top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c41top"
+    click C42top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c42top"
+    click C43top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c43top"
     click L2top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-l2top"
     click L3top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-l3top"
     click L4top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-l4top"
     click L5top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-l5top"
-    click C01top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c01top"
-    click C02top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c02top"
-    click C03top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c03top"
     click C04top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c04top"
     click C05top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c05top"
     click C06top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c06top"
+    click C38top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c38top"
+    click C39top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c39top"
+    click C40top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c40top"
     click C07top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c07top"
     click C08top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c08top"
     click C09top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c09top"
+    click C35top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c35top"
+    click C36top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c36top"
+    click C37top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c37top"
     click C10top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c10top"
     click C11top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c11top"
     click C12top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c12top"
+    click C32top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c32top"
+    click C33top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c33top"
+    click C34top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c34top"
     click C13top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c13top"
     click C14top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c14top"
     click C15top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c15top"
+    click C29top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c29top"
+    click C30top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c30top"
+    click C31top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c31top"
     click C16top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c16top"
     click C17top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c17top"
     click C18top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c18top"
+    click C26top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c26top"
+    click C27top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c27top"
+    click C28top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c28top"
     click C19top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c19top"
     click C20top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c20top"
     click C21top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c21top"
@@ -115,79 +144,66 @@ flowchart BT
     click C23top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c23top"
     click C24top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c24top"
     click C25top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c25top"
-    click C26top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c26top"
-    click C27top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c27top"
-    click C28top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c28top"
-    click C29top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c29top"
-    click C30top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c30top"
-    click C31top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c31top"
-    click C32top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c32top"
-    click C33top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c33top"
-    click C34top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c34top"
-    click C35top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c35top"
-    click C36top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c36top"
-    click C37top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c37top"
-    click C38top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c38top"
-    click C39top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c39top"
-    click C40top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c40top"
-    click C41top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c41top"
-    click C42top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c42top"
-    click C43top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c43top"
-    click C44top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c44top"
-    click C45top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c45top"
 
     BottomPadding[ ]:::invisible ~~~ Xscope
+    L2top --- SynConnect_00000000
+    L3top --- SynConnect_00000000
+    L4top --- SynConnect_00000000
+    L5top --- SynConnect_00000000
+    Sdecomp --- SynConnect_00000001
+    C19top --- SynConnect_00000008
+    C20top --- SynConnect_00000008
+    C21top --- SynConnect_00000008
+    C22top --- SynConnect_00000008
+    C23top --- SynConnect_00000008
+    C24top --- SynConnect_00000008
+    C25top --- SynConnect_00000008
+    C16top --- SynConnect_00000007
+    C17top --- SynConnect_00000007
+    C18top --- SynConnect_00000007
+    SynConnect_00000008 --- SynConnect_00000007
+    C26top --- SynConnect_00000007
+    C27top --- SynConnect_00000007
+    C28top --- SynConnect_00000007
+    C13top --- SynConnect_00000006
+    C14top --- SynConnect_00000006
+    C15top --- SynConnect_00000006
+    SynConnect_00000007 --- SynConnect_00000006
+    C29top --- SynConnect_00000006
+    C30top --- SynConnect_00000006
+    C31top --- SynConnect_00000006
+    C10top --- SynConnect_00000005
+    C11top --- SynConnect_00000005
+    C12top --- SynConnect_00000005
+    SynConnect_00000006 --- SynConnect_00000005
+    C32top --- SynConnect_00000005
+    C33top --- SynConnect_00000005
+    C34top --- SynConnect_00000005
+    C07top --- SynConnect_00000004
+    C08top --- SynConnect_00000004
+    C09top --- SynConnect_00000004
+    SynConnect_00000005 --- SynConnect_00000004
+    C35top --- SynConnect_00000004
+    C36top --- SynConnect_00000004
+    C37top --- SynConnect_00000004
+    C04top --- SynConnect_00000003
+    C05top --- SynConnect_00000003
+    C06top --- SynConnect_00000003
+    SynConnect_00000004 --- SynConnect_00000003
+    C38top --- SynConnect_00000003
+    C39top --- SynConnect_00000003
+    C40top --- SynConnect_00000003
+    C01top --- SynConnect_00000002
+    C02top --- SynConnect_00000002
+    C03top --- SynConnect_00000002
+    SynConnect_00000003 --- SynConnect_00000002
+    C41top --- SynConnect_00000002
+    C42top --- SynConnect_00000002
+    C43top --- SynConnect_00000002
     Asys --- Dot1
     Esys1 --- Dot1
-    L1top --- Dot1
-    L2top --- Dot1
-    L3top --- Dot1
-    L4top --- Dot1
-    L5top --- Dot1
-    Sdecomp --- Dot1
-    C01top --- Dot1
-    C02top --- Dot1
-    C03top --- Dot1
-    C04top --- Dot1
-    C05top --- Dot1
-    C06top --- Dot1
-    C07top --- Dot1
-    C08top --- Dot1
-    C09top --- Dot1
-    C10top --- Dot1
-    C11top --- Dot1
-    C12top --- Dot1
-    C13top --- Dot1
-    C14top --- Dot1
-    C15top --- Dot1
-    C16top --- Dot1
-    C17top --- Dot1
-    C18top --- Dot1
-    C19top --- Dot1
-    C20top --- Dot1
-    C21top --- Dot1
-    C22top --- Dot1
-    C23top --- Dot1
-    C24top --- Dot1
-    C25top --- Dot1
-    C26top --- Dot1
-    C27top --- Dot1
-    C28top --- Dot1
-    C29top --- Dot1
-    C30top --- Dot1
-    C31top --- Dot1
-    C32top --- Dot1
-    C33top --- Dot1
-    C34top --- Dot1
-    C35top --- Dot1
-    C36top --- Dot1
-    C37top --- Dot1
-    C38top --- Dot1
-    C39top --- Dot1
-    C40top --- Dot1
-    C41top --- Dot1
-    C42top --- Dot1
-    C43top --- Dot1
+    SynConnect_00000001 --- Dot1
+    SynConnect_00000002 --- Dot1
     C44top --- Dot1
     C45top --- Dot1
     Scomps --- Dot1
@@ -218,33 +234,18 @@ flowchart BT
     L1Esh2[("<b>L1Esh2</b>&nbsp;↗<br>Shared evidence B of L1")]
     L1Smain[/"<b>L1Smain</b><br>Main strategy of L1"/]
     L1G2["<b>L1G2</b><br>Level-2 claim of L1"]
-    C08top[["<b>C08top</b><br>Statement of C08top"]]
-    C09top[["<b>C09top</b><br>Statement of C09top"]]
-    C10top[["<b>C10top</b><br>Statement of C10top"]]
-    C11top[["<b>C11top</b><br>Statement of C11top"]]
-    C12top[["<b>C12top</b><br>Statement of C12top"]]
-    L1Gbr1["<b>L1Gbr1</b><br>Breadth claim 1 of L1"]
-    L1Gbr2["<b>L1Gbr2</b><br>Breadth claim 2 of L1"]
-    L1Gbr3["<b>L1Gbr3</b><br>Breadth claim 3 of L1"]
-    L1Gbr4["<b>L1Gbr4</b><br>Breadth claim 4 of L1"]
-    L1Gbr5["<b>L1Gbr5</b><br>Breadth claim 5 of L1"]
-    L1Gbr6["<b>L1Gbr6</b><br>Breadth claim 6 of L1"]
+    SynConnect_00000000((" ")):::connector
     L1Gbr7["<b>L1Gbr7</b><br>Breadth claim 7 of L1"]
     L1Gbr8["<b>L1Gbr8</b><br>Breadth claim 8 of L1"]
     L1S2[/"<b>L1S2</b><br>Level-3 strategy of L1"/]
     L1G2b["<b>L1G2b</b><br>Level-3 alt claim of L1"]
-    L1Gbr1a["<b>L1Gbr1a</b><br>Sub-claim 1a of L1"]
-    L1Gbr1b["<b>L1Gbr1b</b><br>Sub-claim 1b of L1"]
-    L1Gbr2a["<b>L1Gbr2a</b><br>Sub-claim 2a of L1"]
-    L1Gbr2b["<b>L1Gbr2b</b><br>Sub-claim 2b of L1"]
-    L1Gbr3a["<b>L1Gbr3a</b><br>Sub-claim 3a of L1"]
-    L1Gbr3b["<b>L1Gbr3b</b><br>Sub-claim 3b of L1"]
-    L1Gbr4a["<b>L1Gbr4a</b><br>Sub-claim 4a of L1"]
-    L1Gbr4b["<b>L1Gbr4b</b><br>Sub-claim 4b of L1"]
-    L1Gbr5a["<b>L1Gbr5a</b><br>Sub-claim 5a of L1"]
-    L1Gbr5b["<b>L1Gbr5b</b><br>Sub-claim 5b of L1"]
-    L1Gbr6a["<b>L1Gbr6a</b><br>Sub-claim 6a of L1"]
-    L1Gbr6b["<b>L1Gbr6b</b><br>Sub-claim 6b of L1"]
+    C08top[["<b>C08top</b><br>Statement of C08top"]]
+    C09top[["<b>C09top</b><br>Statement of C09top"]]
+    C10top[["<b>C10top</b><br>Statement of C10top"]]
+    SynConnect_00000001((" ")):::connector
+    L1Gbr4["<b>L1Gbr4</b><br>Breadth claim 4 of L1"]
+    L1Gbr5["<b>L1Gbr5</b><br>Breadth claim 5 of L1"]
+    L1Gbr6["<b>L1Gbr6</b><br>Breadth claim 6 of L1"]
     L1Gbr7a["<b>L1Gbr7a</b><br>Sub-claim 7a of L1"]
     L1Gbr7b["<b>L1Gbr7b</b><br>Sub-claim 7b of L1"]
     L1Gbr8a["<b>L1Gbr8a</b><br>Sub-claim 8a of L1"]
@@ -252,12 +253,17 @@ flowchart BT
     L1G3["<b>L1G3</b><br>Level-4 claim of L1"]
     L1G3c["<b>L1G3c</b><br>Level-4 alt claim of L1"]
     L1S2b[/"<b>L1S2b</b><br>Level-4 alt strategy of L1"/]
-    L1Ebr1[("<b>L1Ebr1</b>&nbsp;↗<br>Evidence for breadth 1 of L1")]
-    L1Ebr2[("<b>L1Ebr2</b>&nbsp;↗<br>Evidence for breadth 2 of L1")]
-    L1Ebr3[("<b>L1Ebr3</b>&nbsp;↗<br>Evidence for breadth 3 of L1")]
-    L1Ebr4[("<b>L1Ebr4</b>&nbsp;↗<br>Evidence for breadth 4 of L1")]
-    L1Ebr5[("<b>L1Ebr5</b>&nbsp;↗<br>Evidence for breadth 5 of L1")]
-    L1Ebr6[("<b>L1Ebr6</b>&nbsp;↗<br>Evidence for breadth 6 of L1")]
+    C11top[["<b>C11top</b><br>Statement of C11top"]]
+    C12top[["<b>C12top</b><br>Statement of C12top"]]
+    L1Gbr1["<b>L1Gbr1</b><br>Breadth claim 1 of L1"]
+    L1Gbr2["<b>L1Gbr2</b><br>Breadth claim 2 of L1"]
+    L1Gbr3["<b>L1Gbr3</b><br>Breadth claim 3 of L1"]
+    L1Gbr4a["<b>L1Gbr4a</b><br>Sub-claim 4a of L1"]
+    L1Gbr4b["<b>L1Gbr4b</b><br>Sub-claim 4b of L1"]
+    L1Gbr5a["<b>L1Gbr5a</b><br>Sub-claim 5a of L1"]
+    L1Gbr5b["<b>L1Gbr5b</b><br>Sub-claim 5b of L1"]
+    L1Gbr6a["<b>L1Gbr6a</b><br>Sub-claim 6a of L1"]
+    L1Gbr6b["<b>L1Gbr6b</b><br>Sub-claim 6b of L1"]
     L1Ebr7[("<b>L1Ebr7</b>&nbsp;↗<br>Evidence for breadth 7 of L1")]
     L1Ebr8[("<b>L1Ebr8</b>&nbsp;↗<br>Evidence for breadth 8 of L1")]
     L1S3[/"<b>L1S3</b><br>Level-5 strategy of L1"/]
@@ -265,9 +271,21 @@ flowchart BT
     L1J1["<b>L1J1</b><br>Justification of L1"]
     L1G3d["<b>L1G3d</b><br>Level-5 claim D of L1"]
     L1G3e["<b>L1G3e</b><br>Level-5 claim E of L1"]
+    L1Gbr1a["<b>L1Gbr1a</b><br>Sub-claim 1a of L1"]
+    L1Gbr1b["<b>L1Gbr1b</b><br>Sub-claim 1b of L1"]
+    L1Gbr2a["<b>L1Gbr2a</b><br>Sub-claim 2a of L1"]
+    L1Gbr2b["<b>L1Gbr2b</b><br>Sub-claim 2b of L1"]
+    L1Gbr3a["<b>L1Gbr3a</b><br>Sub-claim 3a of L1"]
+    L1Gbr3b["<b>L1Gbr3b</b><br>Sub-claim 3b of L1"]
+    L1Ebr4[("<b>L1Ebr4</b>&nbsp;↗<br>Evidence for breadth 4 of L1")]
+    L1Ebr5[("<b>L1Ebr5</b>&nbsp;↗<br>Evidence for breadth 5 of L1")]
+    L1Ebr6[("<b>L1Ebr6</b>&nbsp;↗<br>Evidence for breadth 6 of L1")]
     L1G4["<b>L1G4</b><br>Level-6 claim of L1"]
     L1G4b["<b>L1G4b</b><br>Level-6 alt claim of L1"]
     L1E2[("<b>L1E2</b>&nbsp;↗<br>Extra evidence of L1")]
+    L1Ebr1[("<b>L1Ebr1</b>&nbsp;↗<br>Evidence for breadth 1 of L1")]
+    L1Ebr2[("<b>L1Ebr2</b>&nbsp;↗<br>Evidence for breadth 2 of L1")]
+    L1Ebr3[("<b>L1Ebr3</b>&nbsp;↗<br>Evidence for breadth 3 of L1")]
     L1Edeep[("<b>L1Edeep</b>&nbsp;↗<br>Deep evidence of L1")]
     Dot1((" ")):::sacmDot
     Dot2((" ")):::sacmDot
@@ -287,33 +305,16 @@ flowchart BT
     click L1Esh2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l1esh2"
     click L1Smain "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l1smain"
     click L1G2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1g2"
-    click C08top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c08top"
-    click C09top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c09top"
-    click C10top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c10top"
-    click C11top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c11top"
-    click C12top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c12top"
-    click L1Gbr1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr1"
-    click L1Gbr2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr2"
-    click L1Gbr3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr3"
-    click L1Gbr4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr4"
-    click L1Gbr5 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr5"
-    click L1Gbr6 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr6"
     click L1Gbr7 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr7"
     click L1Gbr8 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr8"
     click L1S2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l1s2"
     click L1G2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1g2b"
-    click L1Gbr1a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr1a"
-    click L1Gbr1b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr1b"
-    click L1Gbr2a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr2a"
-    click L1Gbr2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr2b"
-    click L1Gbr3a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr3a"
-    click L1Gbr3b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr3b"
-    click L1Gbr4a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr4a"
-    click L1Gbr4b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr4b"
-    click L1Gbr5a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr5a"
-    click L1Gbr5b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr5b"
-    click L1Gbr6a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr6a"
-    click L1Gbr6b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr6b"
+    click C08top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c08top"
+    click C09top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c09top"
+    click C10top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c10top"
+    click L1Gbr4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr4"
+    click L1Gbr5 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr5"
+    click L1Gbr6 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr6"
     click L1Gbr7a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr7a"
     click L1Gbr7b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr7b"
     click L1Gbr8a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr8a"
@@ -321,12 +322,17 @@ flowchart BT
     click L1G3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1g3"
     click L1G3c "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1g3c"
     click L1S2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l1s2b"
-    click L1Ebr1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l1ebr1"
-    click L1Ebr2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l1ebr2"
-    click L1Ebr3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l1ebr3"
-    click L1Ebr4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l1ebr4"
-    click L1Ebr5 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l1ebr5"
-    click L1Ebr6 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l1ebr6"
+    click C11top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c11top"
+    click C12top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c12top"
+    click L1Gbr1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr1"
+    click L1Gbr2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr2"
+    click L1Gbr3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr3"
+    click L1Gbr4a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr4a"
+    click L1Gbr4b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr4b"
+    click L1Gbr5a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr5a"
+    click L1Gbr5b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr5b"
+    click L1Gbr6a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr6a"
+    click L1Gbr6b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr6b"
     click L1Ebr7 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l1ebr7"
     click L1Ebr8 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l1ebr8"
     click L1S3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l1s3"
@@ -334,9 +340,21 @@ flowchart BT
     click L1J1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#justification-l1j1"
     click L1G3d "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1g3d"
     click L1G3e "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1g3e"
+    click L1Gbr1a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr1a"
+    click L1Gbr1b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr1b"
+    click L1Gbr2a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr2a"
+    click L1Gbr2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr2b"
+    click L1Gbr3a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr3a"
+    click L1Gbr3b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr3b"
+    click L1Ebr4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l1ebr4"
+    click L1Ebr5 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l1ebr5"
+    click L1Ebr6 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l1ebr6"
     click L1G4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1g4"
     click L1G4b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1g4b"
     click L1E2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l1e2"
+    click L1Ebr1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l1ebr1"
+    click L1Ebr2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l1ebr2"
+    click L1Ebr3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l1ebr3"
     click L1Edeep "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l1edeep"
 
     BottomPadding[ ]:::invisible ~~~ L1Xctx
@@ -369,6 +387,11 @@ flowchart BT
     L1Gbr3a --- Dot6
     L1Gbr3b --- Dot6
     Dot6 --> L1Gbr3
+    C11top --- SynConnect_00000001
+    C12top --- SynConnect_00000001
+    L1Gbr1 --- SynConnect_00000001
+    L1Gbr2 --- SynConnect_00000001
+    L1Gbr3 --- SynConnect_00000001
     L1Ebr4 --> L1Gbr4a
     L1Gbr4a --- Dot7
     L1Gbr4b --- Dot7
@@ -381,6 +404,13 @@ flowchart BT
     L1Gbr6a --- Dot9
     L1Gbr6b --- Dot9
     Dot9 --> L1Gbr6
+    C08top --- SynConnect_00000000
+    C09top --- SynConnect_00000000
+    C10top --- SynConnect_00000000
+    SynConnect_00000001 --- SynConnect_00000000
+    L1Gbr4 --- SynConnect_00000000
+    L1Gbr5 --- SynConnect_00000000
+    L1Gbr6 --- SynConnect_00000000
     L1Ebr7 --> L1Gbr7a
     L1Gbr7a --- Dot10
     L1Gbr7b --- Dot10
@@ -392,17 +422,7 @@ flowchart BT
     L1Esh1 --- Dot12
     L1Esh2 --- Dot12
     L1G2 --- Dot12
-    C08top --- Dot12
-    C09top --- Dot12
-    C10top --- Dot12
-    C11top --- Dot12
-    C12top --- Dot12
-    L1Gbr1 --- Dot12
-    L1Gbr2 --- Dot12
-    L1Gbr3 --- Dot12
-    L1Gbr4 --- Dot12
-    L1Gbr5 --- Dot12
-    L1Gbr6 --- Dot12
+    SynConnect_00000000 --- Dot12
     L1Gbr7 --- Dot12
     L1Gbr8 --- Dot12
     L1Smain --- Dot12
@@ -433,33 +453,18 @@ flowchart BT
     L2Esh2[("<b>L2Esh2</b>&nbsp;↗<br>Shared evidence B of L2")]
     L2Smain[/"<b>L2Smain</b><br>Main strategy of L2"/]
     L2G2["<b>L2G2</b><br>Level-2 claim of L2"]
-    C15top[["<b>C15top</b><br>Statement of C15top"]]
-    C16top[["<b>C16top</b><br>Statement of C16top"]]
-    C17top[["<b>C17top</b><br>Statement of C17top"]]
-    C18top[["<b>C18top</b><br>Statement of C18top"]]
-    C19top[["<b>C19top</b><br>Statement of C19top"]]
-    L2Gbr1["<b>L2Gbr1</b><br>Breadth claim 1 of L2"]
-    L2Gbr2["<b>L2Gbr2</b><br>Breadth claim 2 of L2"]
-    L2Gbr3["<b>L2Gbr3</b><br>Breadth claim 3 of L2"]
-    L2Gbr4["<b>L2Gbr4</b><br>Breadth claim 4 of L2"]
-    L2Gbr5["<b>L2Gbr5</b><br>Breadth claim 5 of L2"]
-    L2Gbr6["<b>L2Gbr6</b><br>Breadth claim 6 of L2"]
+    SynConnect_00000000((" ")):::connector
     L2Gbr7["<b>L2Gbr7</b><br>Breadth claim 7 of L2"]
     L2Gbr8["<b>L2Gbr8</b><br>Breadth claim 8 of L2"]
     L2S2[/"<b>L2S2</b><br>Level-3 strategy of L2"/]
     L2G2b["<b>L2G2b</b><br>Level-3 alt claim of L2"]
-    L2Gbr1a["<b>L2Gbr1a</b><br>Sub-claim 1a of L2"]
-    L2Gbr1b["<b>L2Gbr1b</b><br>Sub-claim 1b of L2"]
-    L2Gbr2a["<b>L2Gbr2a</b><br>Sub-claim 2a of L2"]
-    L2Gbr2b["<b>L2Gbr2b</b><br>Sub-claim 2b of L2"]
-    L2Gbr3a["<b>L2Gbr3a</b><br>Sub-claim 3a of L2"]
-    L2Gbr3b["<b>L2Gbr3b</b><br>Sub-claim 3b of L2"]
-    L2Gbr4a["<b>L2Gbr4a</b><br>Sub-claim 4a of L2"]
-    L2Gbr4b["<b>L2Gbr4b</b><br>Sub-claim 4b of L2"]
-    L2Gbr5a["<b>L2Gbr5a</b><br>Sub-claim 5a of L2"]
-    L2Gbr5b["<b>L2Gbr5b</b><br>Sub-claim 5b of L2"]
-    L2Gbr6a["<b>L2Gbr6a</b><br>Sub-claim 6a of L2"]
-    L2Gbr6b["<b>L2Gbr6b</b><br>Sub-claim 6b of L2"]
+    C15top[["<b>C15top</b><br>Statement of C15top"]]
+    C16top[["<b>C16top</b><br>Statement of C16top"]]
+    C17top[["<b>C17top</b><br>Statement of C17top"]]
+    SynConnect_00000001((" ")):::connector
+    L2Gbr4["<b>L2Gbr4</b><br>Breadth claim 4 of L2"]
+    L2Gbr5["<b>L2Gbr5</b><br>Breadth claim 5 of L2"]
+    L2Gbr6["<b>L2Gbr6</b><br>Breadth claim 6 of L2"]
     L2Gbr7a["<b>L2Gbr7a</b><br>Sub-claim 7a of L2"]
     L2Gbr7b["<b>L2Gbr7b</b><br>Sub-claim 7b of L2"]
     L2Gbr8a["<b>L2Gbr8a</b><br>Sub-claim 8a of L2"]
@@ -467,12 +472,17 @@ flowchart BT
     L2G3["<b>L2G3</b><br>Level-4 claim of L2"]
     L2G3c["<b>L2G3c</b><br>Level-4 alt claim of L2"]
     L2S2b[/"<b>L2S2b</b><br>Level-4 alt strategy of L2"/]
-    L2Ebr1[("<b>L2Ebr1</b>&nbsp;↗<br>Evidence for breadth 1 of L2")]
-    L2Ebr2[("<b>L2Ebr2</b>&nbsp;↗<br>Evidence for breadth 2 of L2")]
-    L2Ebr3[("<b>L2Ebr3</b>&nbsp;↗<br>Evidence for breadth 3 of L2")]
-    L2Ebr4[("<b>L2Ebr4</b>&nbsp;↗<br>Evidence for breadth 4 of L2")]
-    L2Ebr5[("<b>L2Ebr5</b>&nbsp;↗<br>Evidence for breadth 5 of L2")]
-    L2Ebr6[("<b>L2Ebr6</b>&nbsp;↗<br>Evidence for breadth 6 of L2")]
+    C18top[["<b>C18top</b><br>Statement of C18top"]]
+    C19top[["<b>C19top</b><br>Statement of C19top"]]
+    L2Gbr1["<b>L2Gbr1</b><br>Breadth claim 1 of L2"]
+    L2Gbr2["<b>L2Gbr2</b><br>Breadth claim 2 of L2"]
+    L2Gbr3["<b>L2Gbr3</b><br>Breadth claim 3 of L2"]
+    L2Gbr4a["<b>L2Gbr4a</b><br>Sub-claim 4a of L2"]
+    L2Gbr4b["<b>L2Gbr4b</b><br>Sub-claim 4b of L2"]
+    L2Gbr5a["<b>L2Gbr5a</b><br>Sub-claim 5a of L2"]
+    L2Gbr5b["<b>L2Gbr5b</b><br>Sub-claim 5b of L2"]
+    L2Gbr6a["<b>L2Gbr6a</b><br>Sub-claim 6a of L2"]
+    L2Gbr6b["<b>L2Gbr6b</b><br>Sub-claim 6b of L2"]
     L2Ebr7[("<b>L2Ebr7</b>&nbsp;↗<br>Evidence for breadth 7 of L2")]
     L2Ebr8[("<b>L2Ebr8</b>&nbsp;↗<br>Evidence for breadth 8 of L2")]
     L2S3[/"<b>L2S3</b><br>Level-5 strategy of L2"/]
@@ -480,9 +490,21 @@ flowchart BT
     L2J1["<b>L2J1</b><br>Justification of L2"]
     L2G3d["<b>L2G3d</b><br>Level-5 claim D of L2"]
     L2G3e["<b>L2G3e</b><br>Level-5 claim E of L2"]
+    L2Gbr1a["<b>L2Gbr1a</b><br>Sub-claim 1a of L2"]
+    L2Gbr1b["<b>L2Gbr1b</b><br>Sub-claim 1b of L2"]
+    L2Gbr2a["<b>L2Gbr2a</b><br>Sub-claim 2a of L2"]
+    L2Gbr2b["<b>L2Gbr2b</b><br>Sub-claim 2b of L2"]
+    L2Gbr3a["<b>L2Gbr3a</b><br>Sub-claim 3a of L2"]
+    L2Gbr3b["<b>L2Gbr3b</b><br>Sub-claim 3b of L2"]
+    L2Ebr4[("<b>L2Ebr4</b>&nbsp;↗<br>Evidence for breadth 4 of L2")]
+    L2Ebr5[("<b>L2Ebr5</b>&nbsp;↗<br>Evidence for breadth 5 of L2")]
+    L2Ebr6[("<b>L2Ebr6</b>&nbsp;↗<br>Evidence for breadth 6 of L2")]
     L2G4["<b>L2G4</b><br>Level-6 claim of L2"]
     L2G4b["<b>L2G4b</b><br>Level-6 alt claim of L2"]
     L2E2[("<b>L2E2</b>&nbsp;↗<br>Extra evidence of L2")]
+    L2Ebr1[("<b>L2Ebr1</b>&nbsp;↗<br>Evidence for breadth 1 of L2")]
+    L2Ebr2[("<b>L2Ebr2</b>&nbsp;↗<br>Evidence for breadth 2 of L2")]
+    L2Ebr3[("<b>L2Ebr3</b>&nbsp;↗<br>Evidence for breadth 3 of L2")]
     L2Edeep[("<b>L2Edeep</b>&nbsp;↗<br>Deep evidence of L2")]
     Dot1((" ")):::sacmDot
     Dot2((" ")):::sacmDot
@@ -502,33 +524,16 @@ flowchart BT
     click L2Esh2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l2esh2"
     click L2Smain "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l2smain"
     click L2G2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2g2"
-    click C15top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c15top"
-    click C16top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c16top"
-    click C17top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c17top"
-    click C18top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c18top"
-    click C19top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c19top"
-    click L2Gbr1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr1"
-    click L2Gbr2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr2"
-    click L2Gbr3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr3"
-    click L2Gbr4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr4"
-    click L2Gbr5 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr5"
-    click L2Gbr6 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr6"
     click L2Gbr7 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr7"
     click L2Gbr8 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr8"
     click L2S2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l2s2"
     click L2G2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2g2b"
-    click L2Gbr1a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr1a"
-    click L2Gbr1b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr1b"
-    click L2Gbr2a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr2a"
-    click L2Gbr2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr2b"
-    click L2Gbr3a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr3a"
-    click L2Gbr3b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr3b"
-    click L2Gbr4a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr4a"
-    click L2Gbr4b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr4b"
-    click L2Gbr5a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr5a"
-    click L2Gbr5b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr5b"
-    click L2Gbr6a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr6a"
-    click L2Gbr6b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr6b"
+    click C15top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c15top"
+    click C16top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c16top"
+    click C17top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c17top"
+    click L2Gbr4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr4"
+    click L2Gbr5 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr5"
+    click L2Gbr6 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr6"
     click L2Gbr7a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr7a"
     click L2Gbr7b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr7b"
     click L2Gbr8a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr8a"
@@ -536,12 +541,17 @@ flowchart BT
     click L2G3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2g3"
     click L2G3c "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2g3c"
     click L2S2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l2s2b"
-    click L2Ebr1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l2ebr1"
-    click L2Ebr2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l2ebr2"
-    click L2Ebr3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l2ebr3"
-    click L2Ebr4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l2ebr4"
-    click L2Ebr5 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l2ebr5"
-    click L2Ebr6 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l2ebr6"
+    click C18top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c18top"
+    click C19top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c19top"
+    click L2Gbr1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr1"
+    click L2Gbr2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr2"
+    click L2Gbr3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr3"
+    click L2Gbr4a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr4a"
+    click L2Gbr4b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr4b"
+    click L2Gbr5a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr5a"
+    click L2Gbr5b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr5b"
+    click L2Gbr6a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr6a"
+    click L2Gbr6b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr6b"
     click L2Ebr7 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l2ebr7"
     click L2Ebr8 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l2ebr8"
     click L2S3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l2s3"
@@ -549,9 +559,21 @@ flowchart BT
     click L2J1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#justification-l2j1"
     click L2G3d "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2g3d"
     click L2G3e "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2g3e"
+    click L2Gbr1a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr1a"
+    click L2Gbr1b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr1b"
+    click L2Gbr2a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr2a"
+    click L2Gbr2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr2b"
+    click L2Gbr3a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr3a"
+    click L2Gbr3b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr3b"
+    click L2Ebr4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l2ebr4"
+    click L2Ebr5 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l2ebr5"
+    click L2Ebr6 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l2ebr6"
     click L2G4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2g4"
     click L2G4b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2g4b"
     click L2E2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l2e2"
+    click L2Ebr1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l2ebr1"
+    click L2Ebr2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l2ebr2"
+    click L2Ebr3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l2ebr3"
     click L2Edeep "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l2edeep"
 
     BottomPadding[ ]:::invisible ~~~ L2Xctx
@@ -584,6 +606,11 @@ flowchart BT
     L2Gbr3a --- Dot6
     L2Gbr3b --- Dot6
     Dot6 --> L2Gbr3
+    C18top --- SynConnect_00000001
+    C19top --- SynConnect_00000001
+    L2Gbr1 --- SynConnect_00000001
+    L2Gbr2 --- SynConnect_00000001
+    L2Gbr3 --- SynConnect_00000001
     L2Ebr4 --> L2Gbr4a
     L2Gbr4a --- Dot7
     L2Gbr4b --- Dot7
@@ -596,6 +623,13 @@ flowchart BT
     L2Gbr6a --- Dot9
     L2Gbr6b --- Dot9
     Dot9 --> L2Gbr6
+    C15top --- SynConnect_00000000
+    C16top --- SynConnect_00000000
+    C17top --- SynConnect_00000000
+    SynConnect_00000001 --- SynConnect_00000000
+    L2Gbr4 --- SynConnect_00000000
+    L2Gbr5 --- SynConnect_00000000
+    L2Gbr6 --- SynConnect_00000000
     L2Ebr7 --> L2Gbr7a
     L2Gbr7a --- Dot10
     L2Gbr7b --- Dot10
@@ -607,17 +641,7 @@ flowchart BT
     L2Esh1 --- Dot12
     L2Esh2 --- Dot12
     L2G2 --- Dot12
-    C15top --- Dot12
-    C16top --- Dot12
-    C17top --- Dot12
-    C18top --- Dot12
-    C19top --- Dot12
-    L2Gbr1 --- Dot12
-    L2Gbr2 --- Dot12
-    L2Gbr3 --- Dot12
-    L2Gbr4 --- Dot12
-    L2Gbr5 --- Dot12
-    L2Gbr6 --- Dot12
+    SynConnect_00000000 --- Dot12
     L2Gbr7 --- Dot12
     L2Gbr8 --- Dot12
     L2Smain --- Dot12
@@ -648,33 +672,18 @@ flowchart BT
     L3Esh2[("<b>L3Esh2</b>&nbsp;↗<br>Shared evidence B of L3")]
     L3Smain[/"<b>L3Smain</b><br>Main strategy of L3"/]
     L3G2["<b>L3G2</b><br>Level-2 claim of L3"]
-    C22top[["<b>C22top</b><br>Statement of C22top"]]
-    C23top[["<b>C23top</b><br>Statement of C23top"]]
-    C24top[["<b>C24top</b><br>Statement of C24top"]]
-    C25top[["<b>C25top</b><br>Statement of C25top"]]
-    C26top[["<b>C26top</b><br>Statement of C26top"]]
-    L3Gbr1["<b>L3Gbr1</b><br>Breadth claim 1 of L3"]
-    L3Gbr2["<b>L3Gbr2</b><br>Breadth claim 2 of L3"]
-    L3Gbr3["<b>L3Gbr3</b><br>Breadth claim 3 of L3"]
-    L3Gbr4["<b>L3Gbr4</b><br>Breadth claim 4 of L3"]
-    L3Gbr5["<b>L3Gbr5</b><br>Breadth claim 5 of L3"]
-    L3Gbr6["<b>L3Gbr6</b><br>Breadth claim 6 of L3"]
+    SynConnect_00000000((" ")):::connector
     L3Gbr7["<b>L3Gbr7</b><br>Breadth claim 7 of L3"]
     L3Gbr8["<b>L3Gbr8</b><br>Breadth claim 8 of L3"]
     L3S2[/"<b>L3S2</b><br>Level-3 strategy of L3"/]
     L3G2b["<b>L3G2b</b><br>Level-3 alt claim of L3"]
-    L3Gbr1a["<b>L3Gbr1a</b><br>Sub-claim 1a of L3"]
-    L3Gbr1b["<b>L3Gbr1b</b><br>Sub-claim 1b of L3"]
-    L3Gbr2a["<b>L3Gbr2a</b><br>Sub-claim 2a of L3"]
-    L3Gbr2b["<b>L3Gbr2b</b><br>Sub-claim 2b of L3"]
-    L3Gbr3a["<b>L3Gbr3a</b><br>Sub-claim 3a of L3"]
-    L3Gbr3b["<b>L3Gbr3b</b><br>Sub-claim 3b of L3"]
-    L3Gbr4a["<b>L3Gbr4a</b><br>Sub-claim 4a of L3"]
-    L3Gbr4b["<b>L3Gbr4b</b><br>Sub-claim 4b of L3"]
-    L3Gbr5a["<b>L3Gbr5a</b><br>Sub-claim 5a of L3"]
-    L3Gbr5b["<b>L3Gbr5b</b><br>Sub-claim 5b of L3"]
-    L3Gbr6a["<b>L3Gbr6a</b><br>Sub-claim 6a of L3"]
-    L3Gbr6b["<b>L3Gbr6b</b><br>Sub-claim 6b of L3"]
+    C22top[["<b>C22top</b><br>Statement of C22top"]]
+    C23top[["<b>C23top</b><br>Statement of C23top"]]
+    C24top[["<b>C24top</b><br>Statement of C24top"]]
+    SynConnect_00000001((" ")):::connector
+    L3Gbr4["<b>L3Gbr4</b><br>Breadth claim 4 of L3"]
+    L3Gbr5["<b>L3Gbr5</b><br>Breadth claim 5 of L3"]
+    L3Gbr6["<b>L3Gbr6</b><br>Breadth claim 6 of L3"]
     L3Gbr7a["<b>L3Gbr7a</b><br>Sub-claim 7a of L3"]
     L3Gbr7b["<b>L3Gbr7b</b><br>Sub-claim 7b of L3"]
     L3Gbr8a["<b>L3Gbr8a</b><br>Sub-claim 8a of L3"]
@@ -682,12 +691,17 @@ flowchart BT
     L3G3["<b>L3G3</b><br>Level-4 claim of L3"]
     L3G3c["<b>L3G3c</b><br>Level-4 alt claim of L3"]
     L3S2b[/"<b>L3S2b</b><br>Level-4 alt strategy of L3"/]
-    L3Ebr1[("<b>L3Ebr1</b>&nbsp;↗<br>Evidence for breadth 1 of L3")]
-    L3Ebr2[("<b>L3Ebr2</b>&nbsp;↗<br>Evidence for breadth 2 of L3")]
-    L3Ebr3[("<b>L3Ebr3</b>&nbsp;↗<br>Evidence for breadth 3 of L3")]
-    L3Ebr4[("<b>L3Ebr4</b>&nbsp;↗<br>Evidence for breadth 4 of L3")]
-    L3Ebr5[("<b>L3Ebr5</b>&nbsp;↗<br>Evidence for breadth 5 of L3")]
-    L3Ebr6[("<b>L3Ebr6</b>&nbsp;↗<br>Evidence for breadth 6 of L3")]
+    C25top[["<b>C25top</b><br>Statement of C25top"]]
+    C26top[["<b>C26top</b><br>Statement of C26top"]]
+    L3Gbr1["<b>L3Gbr1</b><br>Breadth claim 1 of L3"]
+    L3Gbr2["<b>L3Gbr2</b><br>Breadth claim 2 of L3"]
+    L3Gbr3["<b>L3Gbr3</b><br>Breadth claim 3 of L3"]
+    L3Gbr4a["<b>L3Gbr4a</b><br>Sub-claim 4a of L3"]
+    L3Gbr4b["<b>L3Gbr4b</b><br>Sub-claim 4b of L3"]
+    L3Gbr5a["<b>L3Gbr5a</b><br>Sub-claim 5a of L3"]
+    L3Gbr5b["<b>L3Gbr5b</b><br>Sub-claim 5b of L3"]
+    L3Gbr6a["<b>L3Gbr6a</b><br>Sub-claim 6a of L3"]
+    L3Gbr6b["<b>L3Gbr6b</b><br>Sub-claim 6b of L3"]
     L3Ebr7[("<b>L3Ebr7</b>&nbsp;↗<br>Evidence for breadth 7 of L3")]
     L3Ebr8[("<b>L3Ebr8</b>&nbsp;↗<br>Evidence for breadth 8 of L3")]
     L3S3[/"<b>L3S3</b><br>Level-5 strategy of L3"/]
@@ -695,9 +709,21 @@ flowchart BT
     L3J1["<b>L3J1</b><br>Justification of L3"]
     L3G3d["<b>L3G3d</b><br>Level-5 claim D of L3"]
     L3G3e["<b>L3G3e</b><br>Level-5 claim E of L3"]
+    L3Gbr1a["<b>L3Gbr1a</b><br>Sub-claim 1a of L3"]
+    L3Gbr1b["<b>L3Gbr1b</b><br>Sub-claim 1b of L3"]
+    L3Gbr2a["<b>L3Gbr2a</b><br>Sub-claim 2a of L3"]
+    L3Gbr2b["<b>L3Gbr2b</b><br>Sub-claim 2b of L3"]
+    L3Gbr3a["<b>L3Gbr3a</b><br>Sub-claim 3a of L3"]
+    L3Gbr3b["<b>L3Gbr3b</b><br>Sub-claim 3b of L3"]
+    L3Ebr4[("<b>L3Ebr4</b>&nbsp;↗<br>Evidence for breadth 4 of L3")]
+    L3Ebr5[("<b>L3Ebr5</b>&nbsp;↗<br>Evidence for breadth 5 of L3")]
+    L3Ebr6[("<b>L3Ebr6</b>&nbsp;↗<br>Evidence for breadth 6 of L3")]
     L3G4["<b>L3G4</b><br>Level-6 claim of L3"]
     L3G4b["<b>L3G4b</b><br>Level-6 alt claim of L3"]
     L3E2[("<b>L3E2</b>&nbsp;↗<br>Extra evidence of L3")]
+    L3Ebr1[("<b>L3Ebr1</b>&nbsp;↗<br>Evidence for breadth 1 of L3")]
+    L3Ebr2[("<b>L3Ebr2</b>&nbsp;↗<br>Evidence for breadth 2 of L3")]
+    L3Ebr3[("<b>L3Ebr3</b>&nbsp;↗<br>Evidence for breadth 3 of L3")]
     L3Edeep[("<b>L3Edeep</b>&nbsp;↗<br>Deep evidence of L3")]
     Dot1((" ")):::sacmDot
     Dot2((" ")):::sacmDot
@@ -717,33 +743,16 @@ flowchart BT
     click L3Esh2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l3esh2"
     click L3Smain "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l3smain"
     click L3G2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3g2"
-    click C22top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c22top"
-    click C23top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c23top"
-    click C24top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c24top"
-    click C25top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c25top"
-    click C26top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c26top"
-    click L3Gbr1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr1"
-    click L3Gbr2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr2"
-    click L3Gbr3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr3"
-    click L3Gbr4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr4"
-    click L3Gbr5 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr5"
-    click L3Gbr6 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr6"
     click L3Gbr7 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr7"
     click L3Gbr8 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr8"
     click L3S2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l3s2"
     click L3G2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3g2b"
-    click L3Gbr1a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr1a"
-    click L3Gbr1b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr1b"
-    click L3Gbr2a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr2a"
-    click L3Gbr2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr2b"
-    click L3Gbr3a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr3a"
-    click L3Gbr3b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr3b"
-    click L3Gbr4a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr4a"
-    click L3Gbr4b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr4b"
-    click L3Gbr5a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr5a"
-    click L3Gbr5b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr5b"
-    click L3Gbr6a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr6a"
-    click L3Gbr6b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr6b"
+    click C22top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c22top"
+    click C23top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c23top"
+    click C24top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c24top"
+    click L3Gbr4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr4"
+    click L3Gbr5 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr5"
+    click L3Gbr6 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr6"
     click L3Gbr7a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr7a"
     click L3Gbr7b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr7b"
     click L3Gbr8a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr8a"
@@ -751,12 +760,17 @@ flowchart BT
     click L3G3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3g3"
     click L3G3c "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3g3c"
     click L3S2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l3s2b"
-    click L3Ebr1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l3ebr1"
-    click L3Ebr2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l3ebr2"
-    click L3Ebr3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l3ebr3"
-    click L3Ebr4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l3ebr4"
-    click L3Ebr5 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l3ebr5"
-    click L3Ebr6 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l3ebr6"
+    click C25top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c25top"
+    click C26top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c26top"
+    click L3Gbr1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr1"
+    click L3Gbr2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr2"
+    click L3Gbr3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr3"
+    click L3Gbr4a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr4a"
+    click L3Gbr4b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr4b"
+    click L3Gbr5a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr5a"
+    click L3Gbr5b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr5b"
+    click L3Gbr6a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr6a"
+    click L3Gbr6b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr6b"
     click L3Ebr7 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l3ebr7"
     click L3Ebr8 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l3ebr8"
     click L3S3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l3s3"
@@ -764,9 +778,21 @@ flowchart BT
     click L3J1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#justification-l3j1"
     click L3G3d "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3g3d"
     click L3G3e "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3g3e"
+    click L3Gbr1a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr1a"
+    click L3Gbr1b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr1b"
+    click L3Gbr2a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr2a"
+    click L3Gbr2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr2b"
+    click L3Gbr3a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr3a"
+    click L3Gbr3b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr3b"
+    click L3Ebr4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l3ebr4"
+    click L3Ebr5 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l3ebr5"
+    click L3Ebr6 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l3ebr6"
     click L3G4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3g4"
     click L3G4b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3g4b"
     click L3E2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l3e2"
+    click L3Ebr1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l3ebr1"
+    click L3Ebr2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l3ebr2"
+    click L3Ebr3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l3ebr3"
     click L3Edeep "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l3edeep"
 
     BottomPadding[ ]:::invisible ~~~ L3Xctx
@@ -799,6 +825,11 @@ flowchart BT
     L3Gbr3a --- Dot6
     L3Gbr3b --- Dot6
     Dot6 --> L3Gbr3
+    C25top --- SynConnect_00000001
+    C26top --- SynConnect_00000001
+    L3Gbr1 --- SynConnect_00000001
+    L3Gbr2 --- SynConnect_00000001
+    L3Gbr3 --- SynConnect_00000001
     L3Ebr4 --> L3Gbr4a
     L3Gbr4a --- Dot7
     L3Gbr4b --- Dot7
@@ -811,6 +842,13 @@ flowchart BT
     L3Gbr6a --- Dot9
     L3Gbr6b --- Dot9
     Dot9 --> L3Gbr6
+    C22top --- SynConnect_00000000
+    C23top --- SynConnect_00000000
+    C24top --- SynConnect_00000000
+    SynConnect_00000001 --- SynConnect_00000000
+    L3Gbr4 --- SynConnect_00000000
+    L3Gbr5 --- SynConnect_00000000
+    L3Gbr6 --- SynConnect_00000000
     L3Ebr7 --> L3Gbr7a
     L3Gbr7a --- Dot10
     L3Gbr7b --- Dot10
@@ -822,17 +860,7 @@ flowchart BT
     L3Esh1 --- Dot12
     L3Esh2 --- Dot12
     L3G2 --- Dot12
-    C22top --- Dot12
-    C23top --- Dot12
-    C24top --- Dot12
-    C25top --- Dot12
-    C26top --- Dot12
-    L3Gbr1 --- Dot12
-    L3Gbr2 --- Dot12
-    L3Gbr3 --- Dot12
-    L3Gbr4 --- Dot12
-    L3Gbr5 --- Dot12
-    L3Gbr6 --- Dot12
+    SynConnect_00000000 --- Dot12
     L3Gbr7 --- Dot12
     L3Gbr8 --- Dot12
     L3Smain --- Dot12
@@ -863,33 +891,18 @@ flowchart BT
     L4Esh2[("<b>L4Esh2</b>&nbsp;↗<br>Shared evidence B of L4")]
     L4Smain[/"<b>L4Smain</b><br>Main strategy of L4"/]
     L4G2["<b>L4G2</b><br>Level-2 claim of L4"]
-    C29top[["<b>C29top</b><br>Statement of C29top"]]
-    C30top[["<b>C30top</b><br>Statement of C30top"]]
-    C31top[["<b>C31top</b><br>Statement of C31top"]]
-    C32top[["<b>C32top</b><br>Statement of C32top"]]
-    C33top[["<b>C33top</b><br>Statement of C33top"]]
-    L4Gbr1["<b>L4Gbr1</b><br>Breadth claim 1 of L4"]
-    L4Gbr2["<b>L4Gbr2</b><br>Breadth claim 2 of L4"]
-    L4Gbr3["<b>L4Gbr3</b><br>Breadth claim 3 of L4"]
-    L4Gbr4["<b>L4Gbr4</b><br>Breadth claim 4 of L4"]
-    L4Gbr5["<b>L4Gbr5</b><br>Breadth claim 5 of L4"]
-    L4Gbr6["<b>L4Gbr6</b><br>Breadth claim 6 of L4"]
+    SynConnect_00000000((" ")):::connector
     L4Gbr7["<b>L4Gbr7</b><br>Breadth claim 7 of L4"]
     L4Gbr8["<b>L4Gbr8</b><br>Breadth claim 8 of L4"]
     L4S2[/"<b>L4S2</b><br>Level-3 strategy of L4"/]
     L4G2b["<b>L4G2b</b><br>Level-3 alt claim of L4"]
-    L4Gbr1a["<b>L4Gbr1a</b><br>Sub-claim 1a of L4"]
-    L4Gbr1b["<b>L4Gbr1b</b><br>Sub-claim 1b of L4"]
-    L4Gbr2a["<b>L4Gbr2a</b><br>Sub-claim 2a of L4"]
-    L4Gbr2b["<b>L4Gbr2b</b><br>Sub-claim 2b of L4"]
-    L4Gbr3a["<b>L4Gbr3a</b><br>Sub-claim 3a of L4"]
-    L4Gbr3b["<b>L4Gbr3b</b><br>Sub-claim 3b of L4"]
-    L4Gbr4a["<b>L4Gbr4a</b><br>Sub-claim 4a of L4"]
-    L4Gbr4b["<b>L4Gbr4b</b><br>Sub-claim 4b of L4"]
-    L4Gbr5a["<b>L4Gbr5a</b><br>Sub-claim 5a of L4"]
-    L4Gbr5b["<b>L4Gbr5b</b><br>Sub-claim 5b of L4"]
-    L4Gbr6a["<b>L4Gbr6a</b><br>Sub-claim 6a of L4"]
-    L4Gbr6b["<b>L4Gbr6b</b><br>Sub-claim 6b of L4"]
+    C29top[["<b>C29top</b><br>Statement of C29top"]]
+    C30top[["<b>C30top</b><br>Statement of C30top"]]
+    C31top[["<b>C31top</b><br>Statement of C31top"]]
+    SynConnect_00000001((" ")):::connector
+    L4Gbr4["<b>L4Gbr4</b><br>Breadth claim 4 of L4"]
+    L4Gbr5["<b>L4Gbr5</b><br>Breadth claim 5 of L4"]
+    L4Gbr6["<b>L4Gbr6</b><br>Breadth claim 6 of L4"]
     L4Gbr7a["<b>L4Gbr7a</b><br>Sub-claim 7a of L4"]
     L4Gbr7b["<b>L4Gbr7b</b><br>Sub-claim 7b of L4"]
     L4Gbr8a["<b>L4Gbr8a</b><br>Sub-claim 8a of L4"]
@@ -897,12 +910,17 @@ flowchart BT
     L4G3["<b>L4G3</b><br>Level-4 claim of L4"]
     L4G3c["<b>L4G3c</b><br>Level-4 alt claim of L4"]
     L4S2b[/"<b>L4S2b</b><br>Level-4 alt strategy of L4"/]
-    L4Ebr1[("<b>L4Ebr1</b>&nbsp;↗<br>Evidence for breadth 1 of L4")]
-    L4Ebr2[("<b>L4Ebr2</b>&nbsp;↗<br>Evidence for breadth 2 of L4")]
-    L4Ebr3[("<b>L4Ebr3</b>&nbsp;↗<br>Evidence for breadth 3 of L4")]
-    L4Ebr4[("<b>L4Ebr4</b>&nbsp;↗<br>Evidence for breadth 4 of L4")]
-    L4Ebr5[("<b>L4Ebr5</b>&nbsp;↗<br>Evidence for breadth 5 of L4")]
-    L4Ebr6[("<b>L4Ebr6</b>&nbsp;↗<br>Evidence for breadth 6 of L4")]
+    C32top[["<b>C32top</b><br>Statement of C32top"]]
+    C33top[["<b>C33top</b><br>Statement of C33top"]]
+    L4Gbr1["<b>L4Gbr1</b><br>Breadth claim 1 of L4"]
+    L4Gbr2["<b>L4Gbr2</b><br>Breadth claim 2 of L4"]
+    L4Gbr3["<b>L4Gbr3</b><br>Breadth claim 3 of L4"]
+    L4Gbr4a["<b>L4Gbr4a</b><br>Sub-claim 4a of L4"]
+    L4Gbr4b["<b>L4Gbr4b</b><br>Sub-claim 4b of L4"]
+    L4Gbr5a["<b>L4Gbr5a</b><br>Sub-claim 5a of L4"]
+    L4Gbr5b["<b>L4Gbr5b</b><br>Sub-claim 5b of L4"]
+    L4Gbr6a["<b>L4Gbr6a</b><br>Sub-claim 6a of L4"]
+    L4Gbr6b["<b>L4Gbr6b</b><br>Sub-claim 6b of L4"]
     L4Ebr7[("<b>L4Ebr7</b>&nbsp;↗<br>Evidence for breadth 7 of L4")]
     L4Ebr8[("<b>L4Ebr8</b>&nbsp;↗<br>Evidence for breadth 8 of L4")]
     L4S3[/"<b>L4S3</b><br>Level-5 strategy of L4"/]
@@ -910,9 +928,21 @@ flowchart BT
     L4J1["<b>L4J1</b><br>Justification of L4"]
     L4G3d["<b>L4G3d</b><br>Level-5 claim D of L4"]
     L4G3e["<b>L4G3e</b><br>Level-5 claim E of L4"]
+    L4Gbr1a["<b>L4Gbr1a</b><br>Sub-claim 1a of L4"]
+    L4Gbr1b["<b>L4Gbr1b</b><br>Sub-claim 1b of L4"]
+    L4Gbr2a["<b>L4Gbr2a</b><br>Sub-claim 2a of L4"]
+    L4Gbr2b["<b>L4Gbr2b</b><br>Sub-claim 2b of L4"]
+    L4Gbr3a["<b>L4Gbr3a</b><br>Sub-claim 3a of L4"]
+    L4Gbr3b["<b>L4Gbr3b</b><br>Sub-claim 3b of L4"]
+    L4Ebr4[("<b>L4Ebr4</b>&nbsp;↗<br>Evidence for breadth 4 of L4")]
+    L4Ebr5[("<b>L4Ebr5</b>&nbsp;↗<br>Evidence for breadth 5 of L4")]
+    L4Ebr6[("<b>L4Ebr6</b>&nbsp;↗<br>Evidence for breadth 6 of L4")]
     L4G4["<b>L4G4</b><br>Level-6 claim of L4"]
     L4G4b["<b>L4G4b</b><br>Level-6 alt claim of L4"]
     L4E2[("<b>L4E2</b>&nbsp;↗<br>Extra evidence of L4")]
+    L4Ebr1[("<b>L4Ebr1</b>&nbsp;↗<br>Evidence for breadth 1 of L4")]
+    L4Ebr2[("<b>L4Ebr2</b>&nbsp;↗<br>Evidence for breadth 2 of L4")]
+    L4Ebr3[("<b>L4Ebr3</b>&nbsp;↗<br>Evidence for breadth 3 of L4")]
     L4Edeep[("<b>L4Edeep</b>&nbsp;↗<br>Deep evidence of L4")]
     Dot1((" ")):::sacmDot
     Dot2((" ")):::sacmDot
@@ -932,33 +962,16 @@ flowchart BT
     click L4Esh2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l4esh2"
     click L4Smain "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l4smain"
     click L4G2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4g2"
-    click C29top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c29top"
-    click C30top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c30top"
-    click C31top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c31top"
-    click C32top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c32top"
-    click C33top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c33top"
-    click L4Gbr1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr1"
-    click L4Gbr2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr2"
-    click L4Gbr3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr3"
-    click L4Gbr4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr4"
-    click L4Gbr5 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr5"
-    click L4Gbr6 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr6"
     click L4Gbr7 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr7"
     click L4Gbr8 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr8"
     click L4S2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l4s2"
     click L4G2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4g2b"
-    click L4Gbr1a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr1a"
-    click L4Gbr1b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr1b"
-    click L4Gbr2a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr2a"
-    click L4Gbr2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr2b"
-    click L4Gbr3a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr3a"
-    click L4Gbr3b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr3b"
-    click L4Gbr4a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr4a"
-    click L4Gbr4b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr4b"
-    click L4Gbr5a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr5a"
-    click L4Gbr5b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr5b"
-    click L4Gbr6a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr6a"
-    click L4Gbr6b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr6b"
+    click C29top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c29top"
+    click C30top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c30top"
+    click C31top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c31top"
+    click L4Gbr4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr4"
+    click L4Gbr5 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr5"
+    click L4Gbr6 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr6"
     click L4Gbr7a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr7a"
     click L4Gbr7b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr7b"
     click L4Gbr8a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr8a"
@@ -966,12 +979,17 @@ flowchart BT
     click L4G3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4g3"
     click L4G3c "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4g3c"
     click L4S2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l4s2b"
-    click L4Ebr1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l4ebr1"
-    click L4Ebr2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l4ebr2"
-    click L4Ebr3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l4ebr3"
-    click L4Ebr4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l4ebr4"
-    click L4Ebr5 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l4ebr5"
-    click L4Ebr6 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l4ebr6"
+    click C32top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c32top"
+    click C33top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c33top"
+    click L4Gbr1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr1"
+    click L4Gbr2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr2"
+    click L4Gbr3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr3"
+    click L4Gbr4a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr4a"
+    click L4Gbr4b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr4b"
+    click L4Gbr5a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr5a"
+    click L4Gbr5b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr5b"
+    click L4Gbr6a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr6a"
+    click L4Gbr6b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr6b"
     click L4Ebr7 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l4ebr7"
     click L4Ebr8 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l4ebr8"
     click L4S3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l4s3"
@@ -979,9 +997,21 @@ flowchart BT
     click L4J1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#justification-l4j1"
     click L4G3d "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4g3d"
     click L4G3e "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4g3e"
+    click L4Gbr1a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr1a"
+    click L4Gbr1b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr1b"
+    click L4Gbr2a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr2a"
+    click L4Gbr2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr2b"
+    click L4Gbr3a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr3a"
+    click L4Gbr3b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr3b"
+    click L4Ebr4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l4ebr4"
+    click L4Ebr5 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l4ebr5"
+    click L4Ebr6 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l4ebr6"
     click L4G4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4g4"
     click L4G4b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4g4b"
     click L4E2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l4e2"
+    click L4Ebr1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l4ebr1"
+    click L4Ebr2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l4ebr2"
+    click L4Ebr3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l4ebr3"
     click L4Edeep "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l4edeep"
 
     BottomPadding[ ]:::invisible ~~~ L4Xctx
@@ -1014,6 +1044,11 @@ flowchart BT
     L4Gbr3a --- Dot6
     L4Gbr3b --- Dot6
     Dot6 --> L4Gbr3
+    C32top --- SynConnect_00000001
+    C33top --- SynConnect_00000001
+    L4Gbr1 --- SynConnect_00000001
+    L4Gbr2 --- SynConnect_00000001
+    L4Gbr3 --- SynConnect_00000001
     L4Ebr4 --> L4Gbr4a
     L4Gbr4a --- Dot7
     L4Gbr4b --- Dot7
@@ -1026,6 +1061,13 @@ flowchart BT
     L4Gbr6a --- Dot9
     L4Gbr6b --- Dot9
     Dot9 --> L4Gbr6
+    C29top --- SynConnect_00000000
+    C30top --- SynConnect_00000000
+    C31top --- SynConnect_00000000
+    SynConnect_00000001 --- SynConnect_00000000
+    L4Gbr4 --- SynConnect_00000000
+    L4Gbr5 --- SynConnect_00000000
+    L4Gbr6 --- SynConnect_00000000
     L4Ebr7 --> L4Gbr7a
     L4Gbr7a --- Dot10
     L4Gbr7b --- Dot10
@@ -1037,17 +1079,7 @@ flowchart BT
     L4Esh1 --- Dot12
     L4Esh2 --- Dot12
     L4G2 --- Dot12
-    C29top --- Dot12
-    C30top --- Dot12
-    C31top --- Dot12
-    C32top --- Dot12
-    C33top --- Dot12
-    L4Gbr1 --- Dot12
-    L4Gbr2 --- Dot12
-    L4Gbr3 --- Dot12
-    L4Gbr4 --- Dot12
-    L4Gbr5 --- Dot12
-    L4Gbr6 --- Dot12
+    SynConnect_00000000 --- Dot12
     L4Gbr7 --- Dot12
     L4Gbr8 --- Dot12
     L4Smain --- Dot12
@@ -1078,33 +1110,18 @@ flowchart BT
     L5Esh2[("<b>L5Esh2</b>&nbsp;↗<br>Shared evidence B of L5")]
     L5Smain[/"<b>L5Smain</b><br>Main strategy of L5"/]
     L5G2["<b>L5G2</b><br>Level-2 claim of L5"]
-    C36top[["<b>C36top</b><br>Statement of C36top"]]
-    C37top[["<b>C37top</b><br>Statement of C37top"]]
-    C38top[["<b>C38top</b><br>Statement of C38top"]]
-    C39top[["<b>C39top</b><br>Statement of C39top"]]
-    C40top[["<b>C40top</b><br>Statement of C40top"]]
-    L5Gbr1["<b>L5Gbr1</b><br>Breadth claim 1 of L5"]
-    L5Gbr2["<b>L5Gbr2</b><br>Breadth claim 2 of L5"]
-    L5Gbr3["<b>L5Gbr3</b><br>Breadth claim 3 of L5"]
-    L5Gbr4["<b>L5Gbr4</b><br>Breadth claim 4 of L5"]
-    L5Gbr5["<b>L5Gbr5</b><br>Breadth claim 5 of L5"]
-    L5Gbr6["<b>L5Gbr6</b><br>Breadth claim 6 of L5"]
+    SynConnect_00000000((" ")):::connector
     L5Gbr7["<b>L5Gbr7</b><br>Breadth claim 7 of L5"]
     L5Gbr8["<b>L5Gbr8</b><br>Breadth claim 8 of L5"]
     L5S2[/"<b>L5S2</b><br>Level-3 strategy of L5"/]
     L5G2b["<b>L5G2b</b><br>Level-3 alt claim of L5"]
-    L5Gbr1a["<b>L5Gbr1a</b><br>Sub-claim 1a of L5"]
-    L5Gbr1b["<b>L5Gbr1b</b><br>Sub-claim 1b of L5"]
-    L5Gbr2a["<b>L5Gbr2a</b><br>Sub-claim 2a of L5"]
-    L5Gbr2b["<b>L5Gbr2b</b><br>Sub-claim 2b of L5"]
-    L5Gbr3a["<b>L5Gbr3a</b><br>Sub-claim 3a of L5"]
-    L5Gbr3b["<b>L5Gbr3b</b><br>Sub-claim 3b of L5"]
-    L5Gbr4a["<b>L5Gbr4a</b><br>Sub-claim 4a of L5"]
-    L5Gbr4b["<b>L5Gbr4b</b><br>Sub-claim 4b of L5"]
-    L5Gbr5a["<b>L5Gbr5a</b><br>Sub-claim 5a of L5"]
-    L5Gbr5b["<b>L5Gbr5b</b><br>Sub-claim 5b of L5"]
-    L5Gbr6a["<b>L5Gbr6a</b><br>Sub-claim 6a of L5"]
-    L5Gbr6b["<b>L5Gbr6b</b><br>Sub-claim 6b of L5"]
+    C36top[["<b>C36top</b><br>Statement of C36top"]]
+    C37top[["<b>C37top</b><br>Statement of C37top"]]
+    C38top[["<b>C38top</b><br>Statement of C38top"]]
+    SynConnect_00000001((" ")):::connector
+    L5Gbr4["<b>L5Gbr4</b><br>Breadth claim 4 of L5"]
+    L5Gbr5["<b>L5Gbr5</b><br>Breadth claim 5 of L5"]
+    L5Gbr6["<b>L5Gbr6</b><br>Breadth claim 6 of L5"]
     L5Gbr7a["<b>L5Gbr7a</b><br>Sub-claim 7a of L5"]
     L5Gbr7b["<b>L5Gbr7b</b><br>Sub-claim 7b of L5"]
     L5Gbr8a["<b>L5Gbr8a</b><br>Sub-claim 8a of L5"]
@@ -1112,12 +1129,17 @@ flowchart BT
     L5G3["<b>L5G3</b><br>Level-4 claim of L5"]
     L5G3c["<b>L5G3c</b><br>Level-4 alt claim of L5"]
     L5S2b[/"<b>L5S2b</b><br>Level-4 alt strategy of L5"/]
-    L5Ebr1[("<b>L5Ebr1</b>&nbsp;↗<br>Evidence for breadth 1 of L5")]
-    L5Ebr2[("<b>L5Ebr2</b>&nbsp;↗<br>Evidence for breadth 2 of L5")]
-    L5Ebr3[("<b>L5Ebr3</b>&nbsp;↗<br>Evidence for breadth 3 of L5")]
-    L5Ebr4[("<b>L5Ebr4</b>&nbsp;↗<br>Evidence for breadth 4 of L5")]
-    L5Ebr5[("<b>L5Ebr5</b>&nbsp;↗<br>Evidence for breadth 5 of L5")]
-    L5Ebr6[("<b>L5Ebr6</b>&nbsp;↗<br>Evidence for breadth 6 of L5")]
+    C39top[["<b>C39top</b><br>Statement of C39top"]]
+    C40top[["<b>C40top</b><br>Statement of C40top"]]
+    L5Gbr1["<b>L5Gbr1</b><br>Breadth claim 1 of L5"]
+    L5Gbr2["<b>L5Gbr2</b><br>Breadth claim 2 of L5"]
+    L5Gbr3["<b>L5Gbr3</b><br>Breadth claim 3 of L5"]
+    L5Gbr4a["<b>L5Gbr4a</b><br>Sub-claim 4a of L5"]
+    L5Gbr4b["<b>L5Gbr4b</b><br>Sub-claim 4b of L5"]
+    L5Gbr5a["<b>L5Gbr5a</b><br>Sub-claim 5a of L5"]
+    L5Gbr5b["<b>L5Gbr5b</b><br>Sub-claim 5b of L5"]
+    L5Gbr6a["<b>L5Gbr6a</b><br>Sub-claim 6a of L5"]
+    L5Gbr6b["<b>L5Gbr6b</b><br>Sub-claim 6b of L5"]
     L5Ebr7[("<b>L5Ebr7</b>&nbsp;↗<br>Evidence for breadth 7 of L5")]
     L5Ebr8[("<b>L5Ebr8</b>&nbsp;↗<br>Evidence for breadth 8 of L5")]
     L5S3[/"<b>L5S3</b><br>Level-5 strategy of L5"/]
@@ -1125,9 +1147,21 @@ flowchart BT
     L5J1["<b>L5J1</b><br>Justification of L5"]
     L5G3d["<b>L5G3d</b><br>Level-5 claim D of L5"]
     L5G3e["<b>L5G3e</b><br>Level-5 claim E of L5"]
+    L5Gbr1a["<b>L5Gbr1a</b><br>Sub-claim 1a of L5"]
+    L5Gbr1b["<b>L5Gbr1b</b><br>Sub-claim 1b of L5"]
+    L5Gbr2a["<b>L5Gbr2a</b><br>Sub-claim 2a of L5"]
+    L5Gbr2b["<b>L5Gbr2b</b><br>Sub-claim 2b of L5"]
+    L5Gbr3a["<b>L5Gbr3a</b><br>Sub-claim 3a of L5"]
+    L5Gbr3b["<b>L5Gbr3b</b><br>Sub-claim 3b of L5"]
+    L5Ebr4[("<b>L5Ebr4</b>&nbsp;↗<br>Evidence for breadth 4 of L5")]
+    L5Ebr5[("<b>L5Ebr5</b>&nbsp;↗<br>Evidence for breadth 5 of L5")]
+    L5Ebr6[("<b>L5Ebr6</b>&nbsp;↗<br>Evidence for breadth 6 of L5")]
     L5G4["<b>L5G4</b><br>Level-6 claim of L5"]
     L5G4b["<b>L5G4b</b><br>Level-6 alt claim of L5"]
     L5E2[("<b>L5E2</b>&nbsp;↗<br>Extra evidence of L5")]
+    L5Ebr1[("<b>L5Ebr1</b>&nbsp;↗<br>Evidence for breadth 1 of L5")]
+    L5Ebr2[("<b>L5Ebr2</b>&nbsp;↗<br>Evidence for breadth 2 of L5")]
+    L5Ebr3[("<b>L5Ebr3</b>&nbsp;↗<br>Evidence for breadth 3 of L5")]
     L5Edeep[("<b>L5Edeep</b>&nbsp;↗<br>Deep evidence of L5")]
     Dot1((" ")):::sacmDot
     Dot2((" ")):::sacmDot
@@ -1147,33 +1181,16 @@ flowchart BT
     click L5Esh2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l5esh2"
     click L5Smain "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l5smain"
     click L5G2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5g2"
-    click C36top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c36top"
-    click C37top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c37top"
-    click C38top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c38top"
-    click C39top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c39top"
-    click C40top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c40top"
-    click L5Gbr1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr1"
-    click L5Gbr2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr2"
-    click L5Gbr3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr3"
-    click L5Gbr4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr4"
-    click L5Gbr5 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr5"
-    click L5Gbr6 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr6"
     click L5Gbr7 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr7"
     click L5Gbr8 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr8"
     click L5S2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l5s2"
     click L5G2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5g2b"
-    click L5Gbr1a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr1a"
-    click L5Gbr1b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr1b"
-    click L5Gbr2a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr2a"
-    click L5Gbr2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr2b"
-    click L5Gbr3a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr3a"
-    click L5Gbr3b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr3b"
-    click L5Gbr4a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr4a"
-    click L5Gbr4b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr4b"
-    click L5Gbr5a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr5a"
-    click L5Gbr5b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr5b"
-    click L5Gbr6a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr6a"
-    click L5Gbr6b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr6b"
+    click C36top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c36top"
+    click C37top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c37top"
+    click C38top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c38top"
+    click L5Gbr4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr4"
+    click L5Gbr5 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr5"
+    click L5Gbr6 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr6"
     click L5Gbr7a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr7a"
     click L5Gbr7b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr7b"
     click L5Gbr8a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr8a"
@@ -1181,12 +1198,17 @@ flowchart BT
     click L5G3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5g3"
     click L5G3c "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5g3c"
     click L5S2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l5s2b"
-    click L5Ebr1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l5ebr1"
-    click L5Ebr2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l5ebr2"
-    click L5Ebr3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l5ebr3"
-    click L5Ebr4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l5ebr4"
-    click L5Ebr5 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l5ebr5"
-    click L5Ebr6 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l5ebr6"
+    click C39top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c39top"
+    click C40top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c40top"
+    click L5Gbr1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr1"
+    click L5Gbr2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr2"
+    click L5Gbr3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr3"
+    click L5Gbr4a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr4a"
+    click L5Gbr4b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr4b"
+    click L5Gbr5a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr5a"
+    click L5Gbr5b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr5b"
+    click L5Gbr6a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr6a"
+    click L5Gbr6b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr6b"
     click L5Ebr7 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l5ebr7"
     click L5Ebr8 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l5ebr8"
     click L5S3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l5s3"
@@ -1194,9 +1216,21 @@ flowchart BT
     click L5J1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#justification-l5j1"
     click L5G3d "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5g3d"
     click L5G3e "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5g3e"
+    click L5Gbr1a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr1a"
+    click L5Gbr1b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr1b"
+    click L5Gbr2a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr2a"
+    click L5Gbr2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr2b"
+    click L5Gbr3a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr3a"
+    click L5Gbr3b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr3b"
+    click L5Ebr4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l5ebr4"
+    click L5Ebr5 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l5ebr5"
+    click L5Ebr6 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l5ebr6"
     click L5G4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5g4"
     click L5G4b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5g4b"
     click L5E2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l5e2"
+    click L5Ebr1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l5ebr1"
+    click L5Ebr2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l5ebr2"
+    click L5Ebr3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l5ebr3"
     click L5Edeep "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l5edeep"
 
     BottomPadding[ ]:::invisible ~~~ L5Xctx
@@ -1229,6 +1263,11 @@ flowchart BT
     L5Gbr3a --- Dot6
     L5Gbr3b --- Dot6
     Dot6 --> L5Gbr3
+    C39top --- SynConnect_00000001
+    C40top --- SynConnect_00000001
+    L5Gbr1 --- SynConnect_00000001
+    L5Gbr2 --- SynConnect_00000001
+    L5Gbr3 --- SynConnect_00000001
     L5Ebr4 --> L5Gbr4a
     L5Gbr4a --- Dot7
     L5Gbr4b --- Dot7
@@ -1241,6 +1280,13 @@ flowchart BT
     L5Gbr6a --- Dot9
     L5Gbr6b --- Dot9
     Dot9 --> L5Gbr6
+    C36top --- SynConnect_00000000
+    C37top --- SynConnect_00000000
+    C38top --- SynConnect_00000000
+    SynConnect_00000001 --- SynConnect_00000000
+    L5Gbr4 --- SynConnect_00000000
+    L5Gbr5 --- SynConnect_00000000
+    L5Gbr6 --- SynConnect_00000000
     L5Ebr7 --> L5Gbr7a
     L5Gbr7a --- Dot10
     L5Gbr7b --- Dot10
@@ -1252,17 +1298,7 @@ flowchart BT
     L5Esh1 --- Dot12
     L5Esh2 --- Dot12
     L5G2 --- Dot12
-    C36top --- Dot12
-    C37top --- Dot12
-    C38top --- Dot12
-    C39top --- Dot12
-    C40top --- Dot12
-    L5Gbr1 --- Dot12
-    L5Gbr2 --- Dot12
-    L5Gbr3 --- Dot12
-    L5Gbr4 --- Dot12
-    L5Gbr5 --- Dot12
-    L5Gbr6 --- Dot12
+    SynConnect_00000000 --- Dot12
     L5Gbr7 --- Dot12
     L5Gbr8 --- Dot12
     L5Smain --- Dot12
@@ -3884,6 +3920,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     G1["<b>G1</b><br>Statement of G1"]
     Xscope(["<b>Xscope</b><br>Scope of Sys"])
     Asys("<b>Asys</b>&nbsp;Ⓐ<br>Assumption of Sys")
@@ -3898,48 +3935,55 @@ flowchart TD
     C01top[["<b>C01top</b><br>Statement of C01top"]]
     C02top[["<b>C02top</b><br>Statement of C02top"]]
     C03top[["<b>C03top</b><br>Statement of C03top"]]
-    C04top[["<b>C04top</b><br>Statement of C04top"]]
-    C05top[["<b>C05top</b><br>Statement of C05top"]]
-    C06top[["<b>C06top</b><br>Statement of C06top"]]
-    C07top[["<b>C07top</b><br>Statement of C07top"]]
-    C08top[["<b>C08top</b><br>Statement of C08top"]]
-    C09top[["<b>C09top</b><br>Statement of C09top"]]
-    C10top[["<b>C10top</b><br>Statement of C10top"]]
-    C11top[["<b>C11top</b><br>Statement of C11top"]]
-    C12top[["<b>C12top</b><br>Statement of C12top"]]
-    C13top[["<b>C13top</b><br>Statement of C13top"]]
-    C14top[["<b>C14top</b><br>Statement of C14top"]]
-    C15top[["<b>C15top</b><br>Statement of C15top"]]
-    C16top[["<b>C16top</b><br>Statement of C16top"]]
-    C17top[["<b>C17top</b><br>Statement of C17top"]]
-    C18top[["<b>C18top</b><br>Statement of C18top"]]
-    C19top[["<b>C19top</b><br>Statement of C19top"]]
-    C20top[["<b>C20top</b><br>Statement of C20top"]]
-    C21top[["<b>C21top</b><br>Statement of C21top"]]
-    C22top[["<b>C22top</b><br>Statement of C22top"]]
-    C23top[["<b>C23top</b><br>Statement of C23top"]]
-    C24top[["<b>C24top</b><br>Statement of C24top"]]
-    C25top[["<b>C25top</b><br>Statement of C25top"]]
-    C26top[["<b>C26top</b><br>Statement of C26top"]]
-    C27top[["<b>C27top</b><br>Statement of C27top"]]
-    C28top[["<b>C28top</b><br>Statement of C28top"]]
-    C29top[["<b>C29top</b><br>Statement of C29top"]]
-    C30top[["<b>C30top</b><br>Statement of C30top"]]
-    C31top[["<b>C31top</b><br>Statement of C31top"]]
-    C32top[["<b>C32top</b><br>Statement of C32top"]]
-    C33top[["<b>C33top</b><br>Statement of C33top"]]
-    C34top[["<b>C34top</b><br>Statement of C34top"]]
-    C35top[["<b>C35top</b><br>Statement of C35top"]]
-    C36top[["<b>C36top</b><br>Statement of C36top"]]
-    C37top[["<b>C37top</b><br>Statement of C37top"]]
-    C38top[["<b>C38top</b><br>Statement of C38top"]]
-    C39top[["<b>C39top</b><br>Statement of C39top"]]
-    C40top[["<b>C40top</b><br>Statement of C40top"]]
-    C41top[["<b>C41top</b><br>Statement of C41top"]]
-    C42top[["<b>C42top</b><br>Statement of C42top"]]
+    SynConnect_00000000((" ")):::connector
     C43top[["<b>C43top</b><br>Statement of C43top"]]
     C44top[["<b>C44top</b><br>Statement of C44top"]]
     C45top[["<b>C45top</b><br>Statement of C45top"]]
+    C04top[["<b>C04top</b><br>Statement of C04top"]]
+    C05top[["<b>C05top</b><br>Statement of C05top"]]
+    C06top[["<b>C06top</b><br>Statement of C06top"]]
+    SynConnect_00000001((" ")):::connector
+    C40top[["<b>C40top</b><br>Statement of C40top"]]
+    C41top[["<b>C41top</b><br>Statement of C41top"]]
+    C42top[["<b>C42top</b><br>Statement of C42top"]]
+    C07top[["<b>C07top</b><br>Statement of C07top"]]
+    C08top[["<b>C08top</b><br>Statement of C08top"]]
+    C09top[["<b>C09top</b><br>Statement of C09top"]]
+    SynConnect_00000002((" ")):::connector
+    C37top[["<b>C37top</b><br>Statement of C37top"]]
+    C38top[["<b>C38top</b><br>Statement of C38top"]]
+    C39top[["<b>C39top</b><br>Statement of C39top"]]
+    C10top[["<b>C10top</b><br>Statement of C10top"]]
+    C11top[["<b>C11top</b><br>Statement of C11top"]]
+    C12top[["<b>C12top</b><br>Statement of C12top"]]
+    SynConnect_00000003((" ")):::connector
+    C34top[["<b>C34top</b><br>Statement of C34top"]]
+    C35top[["<b>C35top</b><br>Statement of C35top"]]
+    C36top[["<b>C36top</b><br>Statement of C36top"]]
+    C13top[["<b>C13top</b><br>Statement of C13top"]]
+    C14top[["<b>C14top</b><br>Statement of C14top"]]
+    C15top[["<b>C15top</b><br>Statement of C15top"]]
+    SynConnect_00000004((" ")):::connector
+    C31top[["<b>C31top</b><br>Statement of C31top"]]
+    C32top[["<b>C32top</b><br>Statement of C32top"]]
+    C33top[["<b>C33top</b><br>Statement of C33top"]]
+    C16top[["<b>C16top</b><br>Statement of C16top"]]
+    C17top[["<b>C17top</b><br>Statement of C17top"]]
+    C18top[["<b>C18top</b><br>Statement of C18top"]]
+    SynConnect_00000005((" ")):::connector
+    C28top[["<b>C28top</b><br>Statement of C28top"]]
+    C29top[["<b>C29top</b><br>Statement of C29top"]]
+    C30top[["<b>C30top</b><br>Statement of C30top"]]
+    C19top[["<b>C19top</b><br>Statement of C19top"]]
+    C20top[["<b>C20top</b><br>Statement of C20top"]]
+    C21top[["<b>C21top</b><br>Statement of C21top"]]
+    SynConnect_00000006((" ")):::connector
+    C25top[["<b>C25top</b><br>Statement of C25top"]]
+    C26top[["<b>C26top</b><br>Statement of C26top"]]
+    C27top[["<b>C27top</b><br>Statement of C27top"]]
+    C22top[["<b>C22top</b><br>Statement of C22top"]]
+    C23top[["<b>C23top</b><br>Statement of C23top"]]
+    C24top[["<b>C24top</b><br>Statement of C24top"]]
     click G1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-g1"
     click Xscope "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#context-xscope"
     click Asys "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-asys"
@@ -3954,48 +3998,48 @@ flowchart TD
     click C01top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c01top"
     click C02top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c02top"
     click C03top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c03top"
-    click C04top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c04top"
-    click C05top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c05top"
-    click C06top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c06top"
-    click C07top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c07top"
-    click C08top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c08top"
-    click C09top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c09top"
-    click C10top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c10top"
-    click C11top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c11top"
-    click C12top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c12top"
-    click C13top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c13top"
-    click C14top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c14top"
-    click C15top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c15top"
-    click C16top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c16top"
-    click C17top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c17top"
-    click C18top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c18top"
-    click C19top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c19top"
-    click C20top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c20top"
-    click C21top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c21top"
-    click C22top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c22top"
-    click C23top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c23top"
-    click C24top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c24top"
-    click C25top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c25top"
-    click C26top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c26top"
-    click C27top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c27top"
-    click C28top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c28top"
-    click C29top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c29top"
-    click C30top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c30top"
-    click C31top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c31top"
-    click C32top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c32top"
-    click C33top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c33top"
-    click C34top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c34top"
-    click C35top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c35top"
-    click C36top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c36top"
-    click C37top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c37top"
-    click C38top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c38top"
-    click C39top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c39top"
-    click C40top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c40top"
-    click C41top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c41top"
-    click C42top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c42top"
     click C43top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c43top"
     click C44top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c44top"
     click C45top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c45top"
+    click C04top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c04top"
+    click C05top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c05top"
+    click C06top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c06top"
+    click C40top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c40top"
+    click C41top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c41top"
+    click C42top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c42top"
+    click C07top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c07top"
+    click C08top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c08top"
+    click C09top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c09top"
+    click C37top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c37top"
+    click C38top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c38top"
+    click C39top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c39top"
+    click C10top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c10top"
+    click C11top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c11top"
+    click C12top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c12top"
+    click C34top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c34top"
+    click C35top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c35top"
+    click C36top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c36top"
+    click C13top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c13top"
+    click C14top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c14top"
+    click C15top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c15top"
+    click C31top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c31top"
+    click C32top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c32top"
+    click C33top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c33top"
+    click C16top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c16top"
+    click C17top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c17top"
+    click C18top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c18top"
+    click C28top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c28top"
+    click C29top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c29top"
+    click C30top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c30top"
+    click C19top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c19top"
+    click C20top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c20top"
+    click C21top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c21top"
+    click C25top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c25top"
+    click C26top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c26top"
+    click C27top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c27top"
+    click C22top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c22top"
+    click C23top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c23top"
+    click C24top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c24top"
 
     Xscope ~~~ BottomPadding[ ]:::invisible
     Asys ~~~ BottomPadding
@@ -4063,45 +4107,52 @@ flowchart TD
     Scomps --> C01top
     Scomps --> C02top
     Scomps --> C03top
-    Scomps --> C04top
-    Scomps --> C05top
-    Scomps --> C06top
-    Scomps --> C07top
-    Scomps --> C08top
-    Scomps --> C09top
-    Scomps --> C10top
-    Scomps --> C11top
-    Scomps --> C12top
-    Scomps --> C13top
-    Scomps --> C14top
-    Scomps --> C15top
-    Scomps --> C16top
-    Scomps --> C17top
-    Scomps --> C18top
-    Scomps --> C19top
-    Scomps --> C20top
-    Scomps --> C21top
-    Scomps --> C22top
-    Scomps --> C23top
-    Scomps --> C24top
-    Scomps --> C25top
-    Scomps --> C26top
-    Scomps --> C27top
-    Scomps --> C28top
-    Scomps --> C29top
-    Scomps --> C30top
-    Scomps --> C31top
-    Scomps --> C32top
-    Scomps --> C33top
-    Scomps --> C34top
-    Scomps --> C35top
-    Scomps --> C36top
-    Scomps --> C37top
-    Scomps --> C38top
-    Scomps --> C39top
-    Scomps --> C40top
-    Scomps --> C41top
-    Scomps --> C42top
+    Scomps --> SynConnect_00000000
+    SynConnect_00000000 --> C04top
+    SynConnect_00000000 --> C05top
+    SynConnect_00000000 --> C06top
+    SynConnect_00000000 --> SynConnect_00000001
+    SynConnect_00000001 --> C07top
+    SynConnect_00000001 --> C08top
+    SynConnect_00000001 --> C09top
+    SynConnect_00000001 --> SynConnect_00000002
+    SynConnect_00000002 --> C10top
+    SynConnect_00000002 --> C11top
+    SynConnect_00000002 --> C12top
+    SynConnect_00000002 --> SynConnect_00000003
+    SynConnect_00000003 --> C13top
+    SynConnect_00000003 --> C14top
+    SynConnect_00000003 --> C15top
+    SynConnect_00000003 --> SynConnect_00000004
+    SynConnect_00000004 --> C16top
+    SynConnect_00000004 --> C17top
+    SynConnect_00000004 --> C18top
+    SynConnect_00000004 --> SynConnect_00000005
+    SynConnect_00000005 --> C19top
+    SynConnect_00000005 --> C20top
+    SynConnect_00000005 --> C21top
+    SynConnect_00000005 --> SynConnect_00000006
+    SynConnect_00000006 --> C22top
+    SynConnect_00000006 --> C23top
+    SynConnect_00000006 --> C24top
+    SynConnect_00000005 --> C25top
+    SynConnect_00000005 --> C26top
+    SynConnect_00000005 --> C27top
+    SynConnect_00000004 --> C28top
+    SynConnect_00000004 --> C29top
+    SynConnect_00000004 --> C30top
+    SynConnect_00000003 --> C31top
+    SynConnect_00000003 --> C32top
+    SynConnect_00000003 --> C33top
+    SynConnect_00000002 --> C34top
+    SynConnect_00000002 --> C35top
+    SynConnect_00000002 --> C36top
+    SynConnect_00000001 --> C37top
+    SynConnect_00000001 --> C38top
+    SynConnect_00000001 --> C39top
+    SynConnect_00000000 --> C40top
+    SynConnect_00000000 --> C41top
+    SynConnect_00000000 --> C42top
     Scomps --> C43top
     Scomps --> C44top
     Scomps --> C45top
@@ -4122,6 +4173,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     L1top["<b>L1top</b><br>Statement of L1top"]
     L1Xctx(["<b>L1Xctx</b><br>Context of L1Xctx"])
     L1Esh1(("<b>L1Esh1</b><br>Shared evidence A of L1"))
@@ -4130,6 +4182,12 @@ flowchart TD
     L1G2["<b>L1G2</b><br>Level-2 claim of L1"]
     C08top[["<b>C08top</b><br>Statement of C08top"]]
     C09top[["<b>C09top</b><br>Statement of C09top"]]
+    SynConnect_00000000((" ")):::connector
+    L1Gbr6["<b>L1Gbr6</b><br>Breadth claim 6 of L1"]
+    L1Gbr7["<b>L1Gbr7</b><br>Breadth claim 7 of L1"]
+    L1Gbr8["<b>L1Gbr8</b><br>Breadth claim 8 of L1"]
+    L1S2[/"<b>L1S2</b><br>Level-3 strategy of L1"/]
+    L1G2b["<b>L1G2b</b><br>Level-3 alt claim of L1"]
     C10top[["<b>C10top</b><br>Statement of C10top"]]
     C11top[["<b>C11top</b><br>Statement of C11top"]]
     C12top[["<b>C12top</b><br>Statement of C12top"]]
@@ -4138,11 +4196,15 @@ flowchart TD
     L1Gbr3["<b>L1Gbr3</b><br>Breadth claim 3 of L1"]
     L1Gbr4["<b>L1Gbr4</b><br>Breadth claim 4 of L1"]
     L1Gbr5["<b>L1Gbr5</b><br>Breadth claim 5 of L1"]
-    L1Gbr6["<b>L1Gbr6</b><br>Breadth claim 6 of L1"]
-    L1Gbr7["<b>L1Gbr7</b><br>Breadth claim 7 of L1"]
-    L1Gbr8["<b>L1Gbr8</b><br>Breadth claim 8 of L1"]
-    L1S2[/"<b>L1S2</b><br>Level-3 strategy of L1"/]
-    L1G2b["<b>L1G2b</b><br>Level-3 alt claim of L1"]
+    L1Gbr6a["<b>L1Gbr6a</b><br>Sub-claim 6a of L1"]
+    L1Gbr6b["<b>L1Gbr6b</b><br>Sub-claim 6b of L1"]
+    L1Gbr7a["<b>L1Gbr7a</b><br>Sub-claim 7a of L1"]
+    L1Gbr7b["<b>L1Gbr7b</b><br>Sub-claim 7b of L1"]
+    L1Gbr8a["<b>L1Gbr8a</b><br>Sub-claim 8a of L1"]
+    L1Gbr8b["<b>L1Gbr8b</b><br>Sub-claim 8b of L1"]
+    L1G3["<b>L1G3</b><br>Level-4 claim of L1"]
+    L1G3c["<b>L1G3c</b><br>Level-4 alt claim of L1"]
+    L1S2b[/"<b>L1S2b</b><br>Level-4 alt strategy of L1"/]
     L1Gbr1a["<b>L1Gbr1a</b><br>Sub-claim 1a of L1"]
     L1Gbr1b["<b>L1Gbr1b</b><br>Sub-claim 1b of L1"]
     L1Gbr2a["<b>L1Gbr2a</b><br>Sub-claim 2a of L1"]
@@ -4153,20 +4215,6 @@ flowchart TD
     L1Gbr4b["<b>L1Gbr4b</b><br>Sub-claim 4b of L1"]
     L1Gbr5a["<b>L1Gbr5a</b><br>Sub-claim 5a of L1"]
     L1Gbr5b["<b>L1Gbr5b</b><br>Sub-claim 5b of L1"]
-    L1Gbr6a["<b>L1Gbr6a</b><br>Sub-claim 6a of L1"]
-    L1Gbr6b["<b>L1Gbr6b</b><br>Sub-claim 6b of L1"]
-    L1Gbr7a["<b>L1Gbr7a</b><br>Sub-claim 7a of L1"]
-    L1Gbr7b["<b>L1Gbr7b</b><br>Sub-claim 7b of L1"]
-    L1Gbr8a["<b>L1Gbr8a</b><br>Sub-claim 8a of L1"]
-    L1Gbr8b["<b>L1Gbr8b</b><br>Sub-claim 8b of L1"]
-    L1G3["<b>L1G3</b><br>Level-4 claim of L1"]
-    L1G3c["<b>L1G3c</b><br>Level-4 alt claim of L1"]
-    L1S2b[/"<b>L1S2b</b><br>Level-4 alt strategy of L1"/]
-    L1Ebr1(("<b>L1Ebr1</b><br>Evidence for breadth 1 of L1"))
-    L1Ebr2(("<b>L1Ebr2</b><br>Evidence for breadth 2 of L1"))
-    L1Ebr3(("<b>L1Ebr3</b><br>Evidence for breadth 3 of L1"))
-    L1Ebr4(("<b>L1Ebr4</b><br>Evidence for breadth 4 of L1"))
-    L1Ebr5(("<b>L1Ebr5</b><br>Evidence for breadth 5 of L1"))
     L1Ebr6(("<b>L1Ebr6</b><br>Evidence for breadth 6 of L1"))
     L1Ebr7(("<b>L1Ebr7</b><br>Evidence for breadth 7 of L1"))
     L1Ebr8(("<b>L1Ebr8</b><br>Evidence for breadth 8 of L1"))
@@ -4175,6 +4223,11 @@ flowchart TD
     L1J1("<b>L1J1</b>&nbsp;Ⓙ<br>Justification of L1")
     L1G3d["<b>L1G3d</b><br>Level-5 claim D of L1"]
     L1G3e["<b>L1G3e</b><br>Level-5 claim E of L1"]
+    L1Ebr1(("<b>L1Ebr1</b><br>Evidence for breadth 1 of L1"))
+    L1Ebr2(("<b>L1Ebr2</b><br>Evidence for breadth 2 of L1"))
+    L1Ebr3(("<b>L1Ebr3</b><br>Evidence for breadth 3 of L1"))
+    L1Ebr4(("<b>L1Ebr4</b><br>Evidence for breadth 4 of L1"))
+    L1Ebr5(("<b>L1Ebr5</b><br>Evidence for breadth 5 of L1"))
     L1G4["<b>L1G4</b><br>Level-6 claim of L1"]
     L1G4b["<b>L1G4b</b><br>Level-6 alt claim of L1"]
     L1E2(("<b>L1E2</b><br>Extra evidence of L1"))
@@ -4187,6 +4240,11 @@ flowchart TD
     click L1G2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1g2"
     click C08top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c08top"
     click C09top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c09top"
+    click L1Gbr6 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr6"
+    click L1Gbr7 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr7"
+    click L1Gbr8 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr8"
+    click L1S2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l1s2"
+    click L1G2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1g2b"
     click C10top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c10top"
     click C11top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c11top"
     click C12top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c12top"
@@ -4195,11 +4253,15 @@ flowchart TD
     click L1Gbr3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr3"
     click L1Gbr4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr4"
     click L1Gbr5 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr5"
-    click L1Gbr6 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr6"
-    click L1Gbr7 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr7"
-    click L1Gbr8 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr8"
-    click L1S2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l1s2"
-    click L1G2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1g2b"
+    click L1Gbr6a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr6a"
+    click L1Gbr6b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr6b"
+    click L1Gbr7a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr7a"
+    click L1Gbr7b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr7b"
+    click L1Gbr8a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr8a"
+    click L1Gbr8b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr8b"
+    click L1G3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1g3"
+    click L1G3c "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1g3c"
+    click L1S2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l1s2b"
     click L1Gbr1a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr1a"
     click L1Gbr1b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr1b"
     click L1Gbr2a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr2a"
@@ -4210,20 +4272,6 @@ flowchart TD
     click L1Gbr4b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr4b"
     click L1Gbr5a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr5a"
     click L1Gbr5b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr5b"
-    click L1Gbr6a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr6a"
-    click L1Gbr6b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr6b"
-    click L1Gbr7a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr7a"
-    click L1Gbr7b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr7b"
-    click L1Gbr8a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr8a"
-    click L1Gbr8b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1gbr8b"
-    click L1G3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1g3"
-    click L1G3c "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1g3c"
-    click L1S2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l1s2b"
-    click L1Ebr1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l1ebr1"
-    click L1Ebr2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l1ebr2"
-    click L1Ebr3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l1ebr3"
-    click L1Ebr4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l1ebr4"
-    click L1Ebr5 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l1ebr5"
     click L1Ebr6 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l1ebr6"
     click L1Ebr7 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l1ebr7"
     click L1Ebr8 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l1ebr8"
@@ -4232,6 +4280,11 @@ flowchart TD
     click L1J1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#justification-l1j1"
     click L1G3d "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1g3d"
     click L1G3e "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1g3e"
+    click L1Ebr1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l1ebr1"
+    click L1Ebr2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l1ebr2"
+    click L1Ebr3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l1ebr3"
+    click L1Ebr4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l1ebr4"
+    click L1Ebr5 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l1ebr5"
     click L1G4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1g4"
     click L1G4b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l1g4b"
     click L1E2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l1e2"
@@ -4284,34 +4337,35 @@ flowchart TD
     L1G3e --> L1E2
     L1Smain --> C08top
     L1Smain --> C09top
-    L1Smain --> C10top
-    L1Smain --> C11top
-    L1Smain --> C12top
-    L1Smain --> L1Gbr1
+    L1Smain --> SynConnect_00000000
+    SynConnect_00000000 --> C10top
+    SynConnect_00000000 --> C11top
+    SynConnect_00000000 --> C12top
+    SynConnect_00000000 --> L1Gbr1
     L1Gbr1 --> L1Gbr1a
     L1Gbr1a --> L1Ebr1
     L1Gbr1a --> L1Esh1
     L1Gbr1 --> L1Gbr1b
     L1Gbr1b --> L1Esh2
-    L1Smain --> L1Gbr2
+    SynConnect_00000000 --> L1Gbr2
     L1Gbr2 --> L1Gbr2a
     L1Gbr2a --> L1Ebr2
     L1Gbr2a --> L1Esh1
     L1Gbr2 --> L1Gbr2b
     L1Gbr2b --> L1Esh2
-    L1Smain --> L1Gbr3
+    SynConnect_00000000 --> L1Gbr3
     L1Gbr3 --> L1Gbr3a
     L1Gbr3a --> L1Ebr3
     L1Gbr3a --> L1Esh1
     L1Gbr3 --> L1Gbr3b
     L1Gbr3b --> L1Esh2
-    L1Smain --> L1Gbr4
+    SynConnect_00000000 --> L1Gbr4
     L1Gbr4 --> L1Gbr4a
     L1Gbr4a --> L1Ebr4
     L1Gbr4a --> L1Esh1
     L1Gbr4 --> L1Gbr4b
     L1Gbr4b --> L1Esh2
-    L1Smain --> L1Gbr5
+    SynConnect_00000000 --> L1Gbr5
     L1Gbr5 --> L1Gbr5a
     L1Gbr5a --> L1Ebr5
     L1Gbr5a --> L1Esh1
@@ -4352,6 +4406,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     L2top["<b>L2top</b><br>Statement of L2top"]
     L2Xctx(["<b>L2Xctx</b><br>Context of L2Xctx"])
     L2Esh1(("<b>L2Esh1</b><br>Shared evidence A of L2"))
@@ -4360,6 +4415,12 @@ flowchart TD
     L2G2["<b>L2G2</b><br>Level-2 claim of L2"]
     C15top[["<b>C15top</b><br>Statement of C15top"]]
     C16top[["<b>C16top</b><br>Statement of C16top"]]
+    SynConnect_00000000((" ")):::connector
+    L2Gbr6["<b>L2Gbr6</b><br>Breadth claim 6 of L2"]
+    L2Gbr7["<b>L2Gbr7</b><br>Breadth claim 7 of L2"]
+    L2Gbr8["<b>L2Gbr8</b><br>Breadth claim 8 of L2"]
+    L2S2[/"<b>L2S2</b><br>Level-3 strategy of L2"/]
+    L2G2b["<b>L2G2b</b><br>Level-3 alt claim of L2"]
     C17top[["<b>C17top</b><br>Statement of C17top"]]
     C18top[["<b>C18top</b><br>Statement of C18top"]]
     C19top[["<b>C19top</b><br>Statement of C19top"]]
@@ -4368,11 +4429,15 @@ flowchart TD
     L2Gbr3["<b>L2Gbr3</b><br>Breadth claim 3 of L2"]
     L2Gbr4["<b>L2Gbr4</b><br>Breadth claim 4 of L2"]
     L2Gbr5["<b>L2Gbr5</b><br>Breadth claim 5 of L2"]
-    L2Gbr6["<b>L2Gbr6</b><br>Breadth claim 6 of L2"]
-    L2Gbr7["<b>L2Gbr7</b><br>Breadth claim 7 of L2"]
-    L2Gbr8["<b>L2Gbr8</b><br>Breadth claim 8 of L2"]
-    L2S2[/"<b>L2S2</b><br>Level-3 strategy of L2"/]
-    L2G2b["<b>L2G2b</b><br>Level-3 alt claim of L2"]
+    L2Gbr6a["<b>L2Gbr6a</b><br>Sub-claim 6a of L2"]
+    L2Gbr6b["<b>L2Gbr6b</b><br>Sub-claim 6b of L2"]
+    L2Gbr7a["<b>L2Gbr7a</b><br>Sub-claim 7a of L2"]
+    L2Gbr7b["<b>L2Gbr7b</b><br>Sub-claim 7b of L2"]
+    L2Gbr8a["<b>L2Gbr8a</b><br>Sub-claim 8a of L2"]
+    L2Gbr8b["<b>L2Gbr8b</b><br>Sub-claim 8b of L2"]
+    L2G3["<b>L2G3</b><br>Level-4 claim of L2"]
+    L2G3c["<b>L2G3c</b><br>Level-4 alt claim of L2"]
+    L2S2b[/"<b>L2S2b</b><br>Level-4 alt strategy of L2"/]
     L2Gbr1a["<b>L2Gbr1a</b><br>Sub-claim 1a of L2"]
     L2Gbr1b["<b>L2Gbr1b</b><br>Sub-claim 1b of L2"]
     L2Gbr2a["<b>L2Gbr2a</b><br>Sub-claim 2a of L2"]
@@ -4383,20 +4448,6 @@ flowchart TD
     L2Gbr4b["<b>L2Gbr4b</b><br>Sub-claim 4b of L2"]
     L2Gbr5a["<b>L2Gbr5a</b><br>Sub-claim 5a of L2"]
     L2Gbr5b["<b>L2Gbr5b</b><br>Sub-claim 5b of L2"]
-    L2Gbr6a["<b>L2Gbr6a</b><br>Sub-claim 6a of L2"]
-    L2Gbr6b["<b>L2Gbr6b</b><br>Sub-claim 6b of L2"]
-    L2Gbr7a["<b>L2Gbr7a</b><br>Sub-claim 7a of L2"]
-    L2Gbr7b["<b>L2Gbr7b</b><br>Sub-claim 7b of L2"]
-    L2Gbr8a["<b>L2Gbr8a</b><br>Sub-claim 8a of L2"]
-    L2Gbr8b["<b>L2Gbr8b</b><br>Sub-claim 8b of L2"]
-    L2G3["<b>L2G3</b><br>Level-4 claim of L2"]
-    L2G3c["<b>L2G3c</b><br>Level-4 alt claim of L2"]
-    L2S2b[/"<b>L2S2b</b><br>Level-4 alt strategy of L2"/]
-    L2Ebr1(("<b>L2Ebr1</b><br>Evidence for breadth 1 of L2"))
-    L2Ebr2(("<b>L2Ebr2</b><br>Evidence for breadth 2 of L2"))
-    L2Ebr3(("<b>L2Ebr3</b><br>Evidence for breadth 3 of L2"))
-    L2Ebr4(("<b>L2Ebr4</b><br>Evidence for breadth 4 of L2"))
-    L2Ebr5(("<b>L2Ebr5</b><br>Evidence for breadth 5 of L2"))
     L2Ebr6(("<b>L2Ebr6</b><br>Evidence for breadth 6 of L2"))
     L2Ebr7(("<b>L2Ebr7</b><br>Evidence for breadth 7 of L2"))
     L2Ebr8(("<b>L2Ebr8</b><br>Evidence for breadth 8 of L2"))
@@ -4405,6 +4456,11 @@ flowchart TD
     L2J1("<b>L2J1</b>&nbsp;Ⓙ<br>Justification of L2")
     L2G3d["<b>L2G3d</b><br>Level-5 claim D of L2"]
     L2G3e["<b>L2G3e</b><br>Level-5 claim E of L2"]
+    L2Ebr1(("<b>L2Ebr1</b><br>Evidence for breadth 1 of L2"))
+    L2Ebr2(("<b>L2Ebr2</b><br>Evidence for breadth 2 of L2"))
+    L2Ebr3(("<b>L2Ebr3</b><br>Evidence for breadth 3 of L2"))
+    L2Ebr4(("<b>L2Ebr4</b><br>Evidence for breadth 4 of L2"))
+    L2Ebr5(("<b>L2Ebr5</b><br>Evidence for breadth 5 of L2"))
     L2G4["<b>L2G4</b><br>Level-6 claim of L2"]
     L2G4b["<b>L2G4b</b><br>Level-6 alt claim of L2"]
     L2E2(("<b>L2E2</b><br>Extra evidence of L2"))
@@ -4417,6 +4473,11 @@ flowchart TD
     click L2G2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2g2"
     click C15top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c15top"
     click C16top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c16top"
+    click L2Gbr6 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr6"
+    click L2Gbr7 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr7"
+    click L2Gbr8 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr8"
+    click L2S2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l2s2"
+    click L2G2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2g2b"
     click C17top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c17top"
     click C18top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c18top"
     click C19top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c19top"
@@ -4425,11 +4486,15 @@ flowchart TD
     click L2Gbr3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr3"
     click L2Gbr4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr4"
     click L2Gbr5 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr5"
-    click L2Gbr6 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr6"
-    click L2Gbr7 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr7"
-    click L2Gbr8 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr8"
-    click L2S2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l2s2"
-    click L2G2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2g2b"
+    click L2Gbr6a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr6a"
+    click L2Gbr6b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr6b"
+    click L2Gbr7a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr7a"
+    click L2Gbr7b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr7b"
+    click L2Gbr8a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr8a"
+    click L2Gbr8b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr8b"
+    click L2G3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2g3"
+    click L2G3c "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2g3c"
+    click L2S2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l2s2b"
     click L2Gbr1a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr1a"
     click L2Gbr1b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr1b"
     click L2Gbr2a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr2a"
@@ -4440,20 +4505,6 @@ flowchart TD
     click L2Gbr4b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr4b"
     click L2Gbr5a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr5a"
     click L2Gbr5b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr5b"
-    click L2Gbr6a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr6a"
-    click L2Gbr6b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr6b"
-    click L2Gbr7a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr7a"
-    click L2Gbr7b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr7b"
-    click L2Gbr8a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr8a"
-    click L2Gbr8b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2gbr8b"
-    click L2G3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2g3"
-    click L2G3c "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2g3c"
-    click L2S2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l2s2b"
-    click L2Ebr1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l2ebr1"
-    click L2Ebr2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l2ebr2"
-    click L2Ebr3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l2ebr3"
-    click L2Ebr4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l2ebr4"
-    click L2Ebr5 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l2ebr5"
     click L2Ebr6 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l2ebr6"
     click L2Ebr7 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l2ebr7"
     click L2Ebr8 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l2ebr8"
@@ -4462,6 +4513,11 @@ flowchart TD
     click L2J1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#justification-l2j1"
     click L2G3d "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2g3d"
     click L2G3e "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2g3e"
+    click L2Ebr1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l2ebr1"
+    click L2Ebr2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l2ebr2"
+    click L2Ebr3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l2ebr3"
+    click L2Ebr4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l2ebr4"
+    click L2Ebr5 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l2ebr5"
     click L2G4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2g4"
     click L2G4b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l2g4b"
     click L2E2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l2e2"
@@ -4514,34 +4570,35 @@ flowchart TD
     L2G3e --> L2E2
     L2Smain --> C15top
     L2Smain --> C16top
-    L2Smain --> C17top
-    L2Smain --> C18top
-    L2Smain --> C19top
-    L2Smain --> L2Gbr1
+    L2Smain --> SynConnect_00000000
+    SynConnect_00000000 --> C17top
+    SynConnect_00000000 --> C18top
+    SynConnect_00000000 --> C19top
+    SynConnect_00000000 --> L2Gbr1
     L2Gbr1 --> L2Gbr1a
     L2Gbr1a --> L2Ebr1
     L2Gbr1a --> L2Esh1
     L2Gbr1 --> L2Gbr1b
     L2Gbr1b --> L2Esh2
-    L2Smain --> L2Gbr2
+    SynConnect_00000000 --> L2Gbr2
     L2Gbr2 --> L2Gbr2a
     L2Gbr2a --> L2Ebr2
     L2Gbr2a --> L2Esh1
     L2Gbr2 --> L2Gbr2b
     L2Gbr2b --> L2Esh2
-    L2Smain --> L2Gbr3
+    SynConnect_00000000 --> L2Gbr3
     L2Gbr3 --> L2Gbr3a
     L2Gbr3a --> L2Ebr3
     L2Gbr3a --> L2Esh1
     L2Gbr3 --> L2Gbr3b
     L2Gbr3b --> L2Esh2
-    L2Smain --> L2Gbr4
+    SynConnect_00000000 --> L2Gbr4
     L2Gbr4 --> L2Gbr4a
     L2Gbr4a --> L2Ebr4
     L2Gbr4a --> L2Esh1
     L2Gbr4 --> L2Gbr4b
     L2Gbr4b --> L2Esh2
-    L2Smain --> L2Gbr5
+    SynConnect_00000000 --> L2Gbr5
     L2Gbr5 --> L2Gbr5a
     L2Gbr5a --> L2Ebr5
     L2Gbr5a --> L2Esh1
@@ -4582,6 +4639,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     L3top["<b>L3top</b><br>Statement of L3top"]
     L3Xctx(["<b>L3Xctx</b><br>Context of L3Xctx"])
     L3Esh1(("<b>L3Esh1</b><br>Shared evidence A of L3"))
@@ -4590,6 +4648,12 @@ flowchart TD
     L3G2["<b>L3G2</b><br>Level-2 claim of L3"]
     C22top[["<b>C22top</b><br>Statement of C22top"]]
     C23top[["<b>C23top</b><br>Statement of C23top"]]
+    SynConnect_00000000((" ")):::connector
+    L3Gbr6["<b>L3Gbr6</b><br>Breadth claim 6 of L3"]
+    L3Gbr7["<b>L3Gbr7</b><br>Breadth claim 7 of L3"]
+    L3Gbr8["<b>L3Gbr8</b><br>Breadth claim 8 of L3"]
+    L3S2[/"<b>L3S2</b><br>Level-3 strategy of L3"/]
+    L3G2b["<b>L3G2b</b><br>Level-3 alt claim of L3"]
     C24top[["<b>C24top</b><br>Statement of C24top"]]
     C25top[["<b>C25top</b><br>Statement of C25top"]]
     C26top[["<b>C26top</b><br>Statement of C26top"]]
@@ -4598,11 +4662,15 @@ flowchart TD
     L3Gbr3["<b>L3Gbr3</b><br>Breadth claim 3 of L3"]
     L3Gbr4["<b>L3Gbr4</b><br>Breadth claim 4 of L3"]
     L3Gbr5["<b>L3Gbr5</b><br>Breadth claim 5 of L3"]
-    L3Gbr6["<b>L3Gbr6</b><br>Breadth claim 6 of L3"]
-    L3Gbr7["<b>L3Gbr7</b><br>Breadth claim 7 of L3"]
-    L3Gbr8["<b>L3Gbr8</b><br>Breadth claim 8 of L3"]
-    L3S2[/"<b>L3S2</b><br>Level-3 strategy of L3"/]
-    L3G2b["<b>L3G2b</b><br>Level-3 alt claim of L3"]
+    L3Gbr6a["<b>L3Gbr6a</b><br>Sub-claim 6a of L3"]
+    L3Gbr6b["<b>L3Gbr6b</b><br>Sub-claim 6b of L3"]
+    L3Gbr7a["<b>L3Gbr7a</b><br>Sub-claim 7a of L3"]
+    L3Gbr7b["<b>L3Gbr7b</b><br>Sub-claim 7b of L3"]
+    L3Gbr8a["<b>L3Gbr8a</b><br>Sub-claim 8a of L3"]
+    L3Gbr8b["<b>L3Gbr8b</b><br>Sub-claim 8b of L3"]
+    L3G3["<b>L3G3</b><br>Level-4 claim of L3"]
+    L3G3c["<b>L3G3c</b><br>Level-4 alt claim of L3"]
+    L3S2b[/"<b>L3S2b</b><br>Level-4 alt strategy of L3"/]
     L3Gbr1a["<b>L3Gbr1a</b><br>Sub-claim 1a of L3"]
     L3Gbr1b["<b>L3Gbr1b</b><br>Sub-claim 1b of L3"]
     L3Gbr2a["<b>L3Gbr2a</b><br>Sub-claim 2a of L3"]
@@ -4613,20 +4681,6 @@ flowchart TD
     L3Gbr4b["<b>L3Gbr4b</b><br>Sub-claim 4b of L3"]
     L3Gbr5a["<b>L3Gbr5a</b><br>Sub-claim 5a of L3"]
     L3Gbr5b["<b>L3Gbr5b</b><br>Sub-claim 5b of L3"]
-    L3Gbr6a["<b>L3Gbr6a</b><br>Sub-claim 6a of L3"]
-    L3Gbr6b["<b>L3Gbr6b</b><br>Sub-claim 6b of L3"]
-    L3Gbr7a["<b>L3Gbr7a</b><br>Sub-claim 7a of L3"]
-    L3Gbr7b["<b>L3Gbr7b</b><br>Sub-claim 7b of L3"]
-    L3Gbr8a["<b>L3Gbr8a</b><br>Sub-claim 8a of L3"]
-    L3Gbr8b["<b>L3Gbr8b</b><br>Sub-claim 8b of L3"]
-    L3G3["<b>L3G3</b><br>Level-4 claim of L3"]
-    L3G3c["<b>L3G3c</b><br>Level-4 alt claim of L3"]
-    L3S2b[/"<b>L3S2b</b><br>Level-4 alt strategy of L3"/]
-    L3Ebr1(("<b>L3Ebr1</b><br>Evidence for breadth 1 of L3"))
-    L3Ebr2(("<b>L3Ebr2</b><br>Evidence for breadth 2 of L3"))
-    L3Ebr3(("<b>L3Ebr3</b><br>Evidence for breadth 3 of L3"))
-    L3Ebr4(("<b>L3Ebr4</b><br>Evidence for breadth 4 of L3"))
-    L3Ebr5(("<b>L3Ebr5</b><br>Evidence for breadth 5 of L3"))
     L3Ebr6(("<b>L3Ebr6</b><br>Evidence for breadth 6 of L3"))
     L3Ebr7(("<b>L3Ebr7</b><br>Evidence for breadth 7 of L3"))
     L3Ebr8(("<b>L3Ebr8</b><br>Evidence for breadth 8 of L3"))
@@ -4635,6 +4689,11 @@ flowchart TD
     L3J1("<b>L3J1</b>&nbsp;Ⓙ<br>Justification of L3")
     L3G3d["<b>L3G3d</b><br>Level-5 claim D of L3"]
     L3G3e["<b>L3G3e</b><br>Level-5 claim E of L3"]
+    L3Ebr1(("<b>L3Ebr1</b><br>Evidence for breadth 1 of L3"))
+    L3Ebr2(("<b>L3Ebr2</b><br>Evidence for breadth 2 of L3"))
+    L3Ebr3(("<b>L3Ebr3</b><br>Evidence for breadth 3 of L3"))
+    L3Ebr4(("<b>L3Ebr4</b><br>Evidence for breadth 4 of L3"))
+    L3Ebr5(("<b>L3Ebr5</b><br>Evidence for breadth 5 of L3"))
     L3G4["<b>L3G4</b><br>Level-6 claim of L3"]
     L3G4b["<b>L3G4b</b><br>Level-6 alt claim of L3"]
     L3E2(("<b>L3E2</b><br>Extra evidence of L3"))
@@ -4647,6 +4706,11 @@ flowchart TD
     click L3G2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3g2"
     click C22top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c22top"
     click C23top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c23top"
+    click L3Gbr6 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr6"
+    click L3Gbr7 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr7"
+    click L3Gbr8 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr8"
+    click L3S2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l3s2"
+    click L3G2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3g2b"
     click C24top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c24top"
     click C25top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c25top"
     click C26top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c26top"
@@ -4655,11 +4719,15 @@ flowchart TD
     click L3Gbr3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr3"
     click L3Gbr4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr4"
     click L3Gbr5 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr5"
-    click L3Gbr6 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr6"
-    click L3Gbr7 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr7"
-    click L3Gbr8 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr8"
-    click L3S2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l3s2"
-    click L3G2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3g2b"
+    click L3Gbr6a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr6a"
+    click L3Gbr6b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr6b"
+    click L3Gbr7a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr7a"
+    click L3Gbr7b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr7b"
+    click L3Gbr8a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr8a"
+    click L3Gbr8b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr8b"
+    click L3G3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3g3"
+    click L3G3c "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3g3c"
+    click L3S2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l3s2b"
     click L3Gbr1a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr1a"
     click L3Gbr1b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr1b"
     click L3Gbr2a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr2a"
@@ -4670,20 +4738,6 @@ flowchart TD
     click L3Gbr4b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr4b"
     click L3Gbr5a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr5a"
     click L3Gbr5b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr5b"
-    click L3Gbr6a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr6a"
-    click L3Gbr6b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr6b"
-    click L3Gbr7a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr7a"
-    click L3Gbr7b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr7b"
-    click L3Gbr8a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr8a"
-    click L3Gbr8b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3gbr8b"
-    click L3G3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3g3"
-    click L3G3c "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3g3c"
-    click L3S2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l3s2b"
-    click L3Ebr1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l3ebr1"
-    click L3Ebr2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l3ebr2"
-    click L3Ebr3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l3ebr3"
-    click L3Ebr4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l3ebr4"
-    click L3Ebr5 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l3ebr5"
     click L3Ebr6 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l3ebr6"
     click L3Ebr7 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l3ebr7"
     click L3Ebr8 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l3ebr8"
@@ -4692,6 +4746,11 @@ flowchart TD
     click L3J1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#justification-l3j1"
     click L3G3d "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3g3d"
     click L3G3e "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3g3e"
+    click L3Ebr1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l3ebr1"
+    click L3Ebr2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l3ebr2"
+    click L3Ebr3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l3ebr3"
+    click L3Ebr4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l3ebr4"
+    click L3Ebr5 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l3ebr5"
     click L3G4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3g4"
     click L3G4b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l3g4b"
     click L3E2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l3e2"
@@ -4744,34 +4803,35 @@ flowchart TD
     L3G3e --> L3E2
     L3Smain --> C22top
     L3Smain --> C23top
-    L3Smain --> C24top
-    L3Smain --> C25top
-    L3Smain --> C26top
-    L3Smain --> L3Gbr1
+    L3Smain --> SynConnect_00000000
+    SynConnect_00000000 --> C24top
+    SynConnect_00000000 --> C25top
+    SynConnect_00000000 --> C26top
+    SynConnect_00000000 --> L3Gbr1
     L3Gbr1 --> L3Gbr1a
     L3Gbr1a --> L3Ebr1
     L3Gbr1a --> L3Esh1
     L3Gbr1 --> L3Gbr1b
     L3Gbr1b --> L3Esh2
-    L3Smain --> L3Gbr2
+    SynConnect_00000000 --> L3Gbr2
     L3Gbr2 --> L3Gbr2a
     L3Gbr2a --> L3Ebr2
     L3Gbr2a --> L3Esh1
     L3Gbr2 --> L3Gbr2b
     L3Gbr2b --> L3Esh2
-    L3Smain --> L3Gbr3
+    SynConnect_00000000 --> L3Gbr3
     L3Gbr3 --> L3Gbr3a
     L3Gbr3a --> L3Ebr3
     L3Gbr3a --> L3Esh1
     L3Gbr3 --> L3Gbr3b
     L3Gbr3b --> L3Esh2
-    L3Smain --> L3Gbr4
+    SynConnect_00000000 --> L3Gbr4
     L3Gbr4 --> L3Gbr4a
     L3Gbr4a --> L3Ebr4
     L3Gbr4a --> L3Esh1
     L3Gbr4 --> L3Gbr4b
     L3Gbr4b --> L3Esh2
-    L3Smain --> L3Gbr5
+    SynConnect_00000000 --> L3Gbr5
     L3Gbr5 --> L3Gbr5a
     L3Gbr5a --> L3Ebr5
     L3Gbr5a --> L3Esh1
@@ -4812,6 +4872,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     L4top["<b>L4top</b><br>Statement of L4top"]
     L4Xctx(["<b>L4Xctx</b><br>Context of L4Xctx"])
     L4Esh1(("<b>L4Esh1</b><br>Shared evidence A of L4"))
@@ -4820,6 +4881,12 @@ flowchart TD
     L4G2["<b>L4G2</b><br>Level-2 claim of L4"]
     C29top[["<b>C29top</b><br>Statement of C29top"]]
     C30top[["<b>C30top</b><br>Statement of C30top"]]
+    SynConnect_00000000((" ")):::connector
+    L4Gbr6["<b>L4Gbr6</b><br>Breadth claim 6 of L4"]
+    L4Gbr7["<b>L4Gbr7</b><br>Breadth claim 7 of L4"]
+    L4Gbr8["<b>L4Gbr8</b><br>Breadth claim 8 of L4"]
+    L4S2[/"<b>L4S2</b><br>Level-3 strategy of L4"/]
+    L4G2b["<b>L4G2b</b><br>Level-3 alt claim of L4"]
     C31top[["<b>C31top</b><br>Statement of C31top"]]
     C32top[["<b>C32top</b><br>Statement of C32top"]]
     C33top[["<b>C33top</b><br>Statement of C33top"]]
@@ -4828,11 +4895,15 @@ flowchart TD
     L4Gbr3["<b>L4Gbr3</b><br>Breadth claim 3 of L4"]
     L4Gbr4["<b>L4Gbr4</b><br>Breadth claim 4 of L4"]
     L4Gbr5["<b>L4Gbr5</b><br>Breadth claim 5 of L4"]
-    L4Gbr6["<b>L4Gbr6</b><br>Breadth claim 6 of L4"]
-    L4Gbr7["<b>L4Gbr7</b><br>Breadth claim 7 of L4"]
-    L4Gbr8["<b>L4Gbr8</b><br>Breadth claim 8 of L4"]
-    L4S2[/"<b>L4S2</b><br>Level-3 strategy of L4"/]
-    L4G2b["<b>L4G2b</b><br>Level-3 alt claim of L4"]
+    L4Gbr6a["<b>L4Gbr6a</b><br>Sub-claim 6a of L4"]
+    L4Gbr6b["<b>L4Gbr6b</b><br>Sub-claim 6b of L4"]
+    L4Gbr7a["<b>L4Gbr7a</b><br>Sub-claim 7a of L4"]
+    L4Gbr7b["<b>L4Gbr7b</b><br>Sub-claim 7b of L4"]
+    L4Gbr8a["<b>L4Gbr8a</b><br>Sub-claim 8a of L4"]
+    L4Gbr8b["<b>L4Gbr8b</b><br>Sub-claim 8b of L4"]
+    L4G3["<b>L4G3</b><br>Level-4 claim of L4"]
+    L4G3c["<b>L4G3c</b><br>Level-4 alt claim of L4"]
+    L4S2b[/"<b>L4S2b</b><br>Level-4 alt strategy of L4"/]
     L4Gbr1a["<b>L4Gbr1a</b><br>Sub-claim 1a of L4"]
     L4Gbr1b["<b>L4Gbr1b</b><br>Sub-claim 1b of L4"]
     L4Gbr2a["<b>L4Gbr2a</b><br>Sub-claim 2a of L4"]
@@ -4843,20 +4914,6 @@ flowchart TD
     L4Gbr4b["<b>L4Gbr4b</b><br>Sub-claim 4b of L4"]
     L4Gbr5a["<b>L4Gbr5a</b><br>Sub-claim 5a of L4"]
     L4Gbr5b["<b>L4Gbr5b</b><br>Sub-claim 5b of L4"]
-    L4Gbr6a["<b>L4Gbr6a</b><br>Sub-claim 6a of L4"]
-    L4Gbr6b["<b>L4Gbr6b</b><br>Sub-claim 6b of L4"]
-    L4Gbr7a["<b>L4Gbr7a</b><br>Sub-claim 7a of L4"]
-    L4Gbr7b["<b>L4Gbr7b</b><br>Sub-claim 7b of L4"]
-    L4Gbr8a["<b>L4Gbr8a</b><br>Sub-claim 8a of L4"]
-    L4Gbr8b["<b>L4Gbr8b</b><br>Sub-claim 8b of L4"]
-    L4G3["<b>L4G3</b><br>Level-4 claim of L4"]
-    L4G3c["<b>L4G3c</b><br>Level-4 alt claim of L4"]
-    L4S2b[/"<b>L4S2b</b><br>Level-4 alt strategy of L4"/]
-    L4Ebr1(("<b>L4Ebr1</b><br>Evidence for breadth 1 of L4"))
-    L4Ebr2(("<b>L4Ebr2</b><br>Evidence for breadth 2 of L4"))
-    L4Ebr3(("<b>L4Ebr3</b><br>Evidence for breadth 3 of L4"))
-    L4Ebr4(("<b>L4Ebr4</b><br>Evidence for breadth 4 of L4"))
-    L4Ebr5(("<b>L4Ebr5</b><br>Evidence for breadth 5 of L4"))
     L4Ebr6(("<b>L4Ebr6</b><br>Evidence for breadth 6 of L4"))
     L4Ebr7(("<b>L4Ebr7</b><br>Evidence for breadth 7 of L4"))
     L4Ebr8(("<b>L4Ebr8</b><br>Evidence for breadth 8 of L4"))
@@ -4865,6 +4922,11 @@ flowchart TD
     L4J1("<b>L4J1</b>&nbsp;Ⓙ<br>Justification of L4")
     L4G3d["<b>L4G3d</b><br>Level-5 claim D of L4"]
     L4G3e["<b>L4G3e</b><br>Level-5 claim E of L4"]
+    L4Ebr1(("<b>L4Ebr1</b><br>Evidence for breadth 1 of L4"))
+    L4Ebr2(("<b>L4Ebr2</b><br>Evidence for breadth 2 of L4"))
+    L4Ebr3(("<b>L4Ebr3</b><br>Evidence for breadth 3 of L4"))
+    L4Ebr4(("<b>L4Ebr4</b><br>Evidence for breadth 4 of L4"))
+    L4Ebr5(("<b>L4Ebr5</b><br>Evidence for breadth 5 of L4"))
     L4G4["<b>L4G4</b><br>Level-6 claim of L4"]
     L4G4b["<b>L4G4b</b><br>Level-6 alt claim of L4"]
     L4E2(("<b>L4E2</b><br>Extra evidence of L4"))
@@ -4877,6 +4939,11 @@ flowchart TD
     click L4G2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4g2"
     click C29top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c29top"
     click C30top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c30top"
+    click L4Gbr6 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr6"
+    click L4Gbr7 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr7"
+    click L4Gbr8 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr8"
+    click L4S2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l4s2"
+    click L4G2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4g2b"
     click C31top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c31top"
     click C32top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c32top"
     click C33top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c33top"
@@ -4885,11 +4952,15 @@ flowchart TD
     click L4Gbr3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr3"
     click L4Gbr4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr4"
     click L4Gbr5 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr5"
-    click L4Gbr6 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr6"
-    click L4Gbr7 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr7"
-    click L4Gbr8 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr8"
-    click L4S2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l4s2"
-    click L4G2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4g2b"
+    click L4Gbr6a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr6a"
+    click L4Gbr6b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr6b"
+    click L4Gbr7a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr7a"
+    click L4Gbr7b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr7b"
+    click L4Gbr8a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr8a"
+    click L4Gbr8b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr8b"
+    click L4G3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4g3"
+    click L4G3c "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4g3c"
+    click L4S2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l4s2b"
     click L4Gbr1a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr1a"
     click L4Gbr1b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr1b"
     click L4Gbr2a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr2a"
@@ -4900,20 +4971,6 @@ flowchart TD
     click L4Gbr4b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr4b"
     click L4Gbr5a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr5a"
     click L4Gbr5b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr5b"
-    click L4Gbr6a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr6a"
-    click L4Gbr6b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr6b"
-    click L4Gbr7a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr7a"
-    click L4Gbr7b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr7b"
-    click L4Gbr8a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr8a"
-    click L4Gbr8b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4gbr8b"
-    click L4G3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4g3"
-    click L4G3c "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4g3c"
-    click L4S2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l4s2b"
-    click L4Ebr1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l4ebr1"
-    click L4Ebr2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l4ebr2"
-    click L4Ebr3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l4ebr3"
-    click L4Ebr4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l4ebr4"
-    click L4Ebr5 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l4ebr5"
     click L4Ebr6 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l4ebr6"
     click L4Ebr7 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l4ebr7"
     click L4Ebr8 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l4ebr8"
@@ -4922,6 +4979,11 @@ flowchart TD
     click L4J1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#justification-l4j1"
     click L4G3d "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4g3d"
     click L4G3e "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4g3e"
+    click L4Ebr1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l4ebr1"
+    click L4Ebr2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l4ebr2"
+    click L4Ebr3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l4ebr3"
+    click L4Ebr4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l4ebr4"
+    click L4Ebr5 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l4ebr5"
     click L4G4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4g4"
     click L4G4b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l4g4b"
     click L4E2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l4e2"
@@ -4974,34 +5036,35 @@ flowchart TD
     L4G3e --> L4E2
     L4Smain --> C29top
     L4Smain --> C30top
-    L4Smain --> C31top
-    L4Smain --> C32top
-    L4Smain --> C33top
-    L4Smain --> L4Gbr1
+    L4Smain --> SynConnect_00000000
+    SynConnect_00000000 --> C31top
+    SynConnect_00000000 --> C32top
+    SynConnect_00000000 --> C33top
+    SynConnect_00000000 --> L4Gbr1
     L4Gbr1 --> L4Gbr1a
     L4Gbr1a --> L4Ebr1
     L4Gbr1a --> L4Esh1
     L4Gbr1 --> L4Gbr1b
     L4Gbr1b --> L4Esh2
-    L4Smain --> L4Gbr2
+    SynConnect_00000000 --> L4Gbr2
     L4Gbr2 --> L4Gbr2a
     L4Gbr2a --> L4Ebr2
     L4Gbr2a --> L4Esh1
     L4Gbr2 --> L4Gbr2b
     L4Gbr2b --> L4Esh2
-    L4Smain --> L4Gbr3
+    SynConnect_00000000 --> L4Gbr3
     L4Gbr3 --> L4Gbr3a
     L4Gbr3a --> L4Ebr3
     L4Gbr3a --> L4Esh1
     L4Gbr3 --> L4Gbr3b
     L4Gbr3b --> L4Esh2
-    L4Smain --> L4Gbr4
+    SynConnect_00000000 --> L4Gbr4
     L4Gbr4 --> L4Gbr4a
     L4Gbr4a --> L4Ebr4
     L4Gbr4a --> L4Esh1
     L4Gbr4 --> L4Gbr4b
     L4Gbr4b --> L4Esh2
-    L4Smain --> L4Gbr5
+    SynConnect_00000000 --> L4Gbr5
     L4Gbr5 --> L4Gbr5a
     L4Gbr5a --> L4Ebr5
     L4Gbr5a --> L4Esh1
@@ -5042,6 +5105,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     L5top["<b>L5top</b><br>Statement of L5top"]
     L5Xctx(["<b>L5Xctx</b><br>Context of L5Xctx"])
     L5Esh1(("<b>L5Esh1</b><br>Shared evidence A of L5"))
@@ -5050,6 +5114,12 @@ flowchart TD
     L5G2["<b>L5G2</b><br>Level-2 claim of L5"]
     C36top[["<b>C36top</b><br>Statement of C36top"]]
     C37top[["<b>C37top</b><br>Statement of C37top"]]
+    SynConnect_00000000((" ")):::connector
+    L5Gbr6["<b>L5Gbr6</b><br>Breadth claim 6 of L5"]
+    L5Gbr7["<b>L5Gbr7</b><br>Breadth claim 7 of L5"]
+    L5Gbr8["<b>L5Gbr8</b><br>Breadth claim 8 of L5"]
+    L5S2[/"<b>L5S2</b><br>Level-3 strategy of L5"/]
+    L5G2b["<b>L5G2b</b><br>Level-3 alt claim of L5"]
     C38top[["<b>C38top</b><br>Statement of C38top"]]
     C39top[["<b>C39top</b><br>Statement of C39top"]]
     C40top[["<b>C40top</b><br>Statement of C40top"]]
@@ -5058,11 +5128,15 @@ flowchart TD
     L5Gbr3["<b>L5Gbr3</b><br>Breadth claim 3 of L5"]
     L5Gbr4["<b>L5Gbr4</b><br>Breadth claim 4 of L5"]
     L5Gbr5["<b>L5Gbr5</b><br>Breadth claim 5 of L5"]
-    L5Gbr6["<b>L5Gbr6</b><br>Breadth claim 6 of L5"]
-    L5Gbr7["<b>L5Gbr7</b><br>Breadth claim 7 of L5"]
-    L5Gbr8["<b>L5Gbr8</b><br>Breadth claim 8 of L5"]
-    L5S2[/"<b>L5S2</b><br>Level-3 strategy of L5"/]
-    L5G2b["<b>L5G2b</b><br>Level-3 alt claim of L5"]
+    L5Gbr6a["<b>L5Gbr6a</b><br>Sub-claim 6a of L5"]
+    L5Gbr6b["<b>L5Gbr6b</b><br>Sub-claim 6b of L5"]
+    L5Gbr7a["<b>L5Gbr7a</b><br>Sub-claim 7a of L5"]
+    L5Gbr7b["<b>L5Gbr7b</b><br>Sub-claim 7b of L5"]
+    L5Gbr8a["<b>L5Gbr8a</b><br>Sub-claim 8a of L5"]
+    L5Gbr8b["<b>L5Gbr8b</b><br>Sub-claim 8b of L5"]
+    L5G3["<b>L5G3</b><br>Level-4 claim of L5"]
+    L5G3c["<b>L5G3c</b><br>Level-4 alt claim of L5"]
+    L5S2b[/"<b>L5S2b</b><br>Level-4 alt strategy of L5"/]
     L5Gbr1a["<b>L5Gbr1a</b><br>Sub-claim 1a of L5"]
     L5Gbr1b["<b>L5Gbr1b</b><br>Sub-claim 1b of L5"]
     L5Gbr2a["<b>L5Gbr2a</b><br>Sub-claim 2a of L5"]
@@ -5073,20 +5147,6 @@ flowchart TD
     L5Gbr4b["<b>L5Gbr4b</b><br>Sub-claim 4b of L5"]
     L5Gbr5a["<b>L5Gbr5a</b><br>Sub-claim 5a of L5"]
     L5Gbr5b["<b>L5Gbr5b</b><br>Sub-claim 5b of L5"]
-    L5Gbr6a["<b>L5Gbr6a</b><br>Sub-claim 6a of L5"]
-    L5Gbr6b["<b>L5Gbr6b</b><br>Sub-claim 6b of L5"]
-    L5Gbr7a["<b>L5Gbr7a</b><br>Sub-claim 7a of L5"]
-    L5Gbr7b["<b>L5Gbr7b</b><br>Sub-claim 7b of L5"]
-    L5Gbr8a["<b>L5Gbr8a</b><br>Sub-claim 8a of L5"]
-    L5Gbr8b["<b>L5Gbr8b</b><br>Sub-claim 8b of L5"]
-    L5G3["<b>L5G3</b><br>Level-4 claim of L5"]
-    L5G3c["<b>L5G3c</b><br>Level-4 alt claim of L5"]
-    L5S2b[/"<b>L5S2b</b><br>Level-4 alt strategy of L5"/]
-    L5Ebr1(("<b>L5Ebr1</b><br>Evidence for breadth 1 of L5"))
-    L5Ebr2(("<b>L5Ebr2</b><br>Evidence for breadth 2 of L5"))
-    L5Ebr3(("<b>L5Ebr3</b><br>Evidence for breadth 3 of L5"))
-    L5Ebr4(("<b>L5Ebr4</b><br>Evidence for breadth 4 of L5"))
-    L5Ebr5(("<b>L5Ebr5</b><br>Evidence for breadth 5 of L5"))
     L5Ebr6(("<b>L5Ebr6</b><br>Evidence for breadth 6 of L5"))
     L5Ebr7(("<b>L5Ebr7</b><br>Evidence for breadth 7 of L5"))
     L5Ebr8(("<b>L5Ebr8</b><br>Evidence for breadth 8 of L5"))
@@ -5095,6 +5155,11 @@ flowchart TD
     L5J1("<b>L5J1</b>&nbsp;Ⓙ<br>Justification of L5")
     L5G3d["<b>L5G3d</b><br>Level-5 claim D of L5"]
     L5G3e["<b>L5G3e</b><br>Level-5 claim E of L5"]
+    L5Ebr1(("<b>L5Ebr1</b><br>Evidence for breadth 1 of L5"))
+    L5Ebr2(("<b>L5Ebr2</b><br>Evidence for breadth 2 of L5"))
+    L5Ebr3(("<b>L5Ebr3</b><br>Evidence for breadth 3 of L5"))
+    L5Ebr4(("<b>L5Ebr4</b><br>Evidence for breadth 4 of L5"))
+    L5Ebr5(("<b>L5Ebr5</b><br>Evidence for breadth 5 of L5"))
     L5G4["<b>L5G4</b><br>Level-6 claim of L5"]
     L5G4b["<b>L5G4b</b><br>Level-6 alt claim of L5"]
     L5E2(("<b>L5E2</b><br>Extra evidence of L5"))
@@ -5107,6 +5172,11 @@ flowchart TD
     click L5G2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5g2"
     click C36top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c36top"
     click C37top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c37top"
+    click L5Gbr6 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr6"
+    click L5Gbr7 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr7"
+    click L5Gbr8 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr8"
+    click L5S2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l5s2"
+    click L5G2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5g2b"
     click C38top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c38top"
     click C39top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c39top"
     click C40top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#package-c40top"
@@ -5115,11 +5185,15 @@ flowchart TD
     click L5Gbr3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr3"
     click L5Gbr4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr4"
     click L5Gbr5 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr5"
-    click L5Gbr6 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr6"
-    click L5Gbr7 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr7"
-    click L5Gbr8 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr8"
-    click L5S2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l5s2"
-    click L5G2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5g2b"
+    click L5Gbr6a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr6a"
+    click L5Gbr6b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr6b"
+    click L5Gbr7a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr7a"
+    click L5Gbr7b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr7b"
+    click L5Gbr8a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr8a"
+    click L5Gbr8b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr8b"
+    click L5G3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5g3"
+    click L5G3c "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5g3c"
+    click L5S2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l5s2b"
     click L5Gbr1a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr1a"
     click L5Gbr1b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr1b"
     click L5Gbr2a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr2a"
@@ -5130,20 +5204,6 @@ flowchart TD
     click L5Gbr4b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr4b"
     click L5Gbr5a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr5a"
     click L5Gbr5b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr5b"
-    click L5Gbr6a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr6a"
-    click L5Gbr6b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr6b"
-    click L5Gbr7a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr7a"
-    click L5Gbr7b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr7b"
-    click L5Gbr8a "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr8a"
-    click L5Gbr8b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5gbr8b"
-    click L5G3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5g3"
-    click L5G3c "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5g3c"
-    click L5S2b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#strategy-l5s2b"
-    click L5Ebr1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l5ebr1"
-    click L5Ebr2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l5ebr2"
-    click L5Ebr3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l5ebr3"
-    click L5Ebr4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l5ebr4"
-    click L5Ebr5 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l5ebr5"
     click L5Ebr6 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l5ebr6"
     click L5Ebr7 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l5ebr7"
     click L5Ebr8 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l5ebr8"
@@ -5152,6 +5212,11 @@ flowchart TD
     click L5J1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#justification-l5j1"
     click L5G3d "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5g3d"
     click L5G3e "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5g3e"
+    click L5Ebr1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l5ebr1"
+    click L5Ebr2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l5ebr2"
+    click L5Ebr3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l5ebr3"
+    click L5Ebr4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l5ebr4"
+    click L5Ebr5 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l5ebr5"
     click L5G4 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5g4"
     click L5G4b "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#claim-l5g4b"
     click L5E2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l5e2"
@@ -5204,34 +5269,35 @@ flowchart TD
     L5G3e --> L5E2
     L5Smain --> C36top
     L5Smain --> C37top
-    L5Smain --> C38top
-    L5Smain --> C39top
-    L5Smain --> C40top
-    L5Smain --> L5Gbr1
+    L5Smain --> SynConnect_00000000
+    SynConnect_00000000 --> C38top
+    SynConnect_00000000 --> C39top
+    SynConnect_00000000 --> C40top
+    SynConnect_00000000 --> L5Gbr1
     L5Gbr1 --> L5Gbr1a
     L5Gbr1a --> L5Ebr1
     L5Gbr1a --> L5Esh1
     L5Gbr1 --> L5Gbr1b
     L5Gbr1b --> L5Esh2
-    L5Smain --> L5Gbr2
+    SynConnect_00000000 --> L5Gbr2
     L5Gbr2 --> L5Gbr2a
     L5Gbr2a --> L5Ebr2
     L5Gbr2a --> L5Esh1
     L5Gbr2 --> L5Gbr2b
     L5Gbr2b --> L5Esh2
-    L5Smain --> L5Gbr3
+    SynConnect_00000000 --> L5Gbr3
     L5Gbr3 --> L5Gbr3a
     L5Gbr3a --> L5Ebr3
     L5Gbr3a --> L5Esh1
     L5Gbr3 --> L5Gbr3b
     L5Gbr3b --> L5Esh2
-    L5Smain --> L5Gbr4
+    SynConnect_00000000 --> L5Gbr4
     L5Gbr4 --> L5Gbr4a
     L5Gbr4a --> L5Ebr4
     L5Gbr4a --> L5Esh1
     L5Gbr4 --> L5Gbr4b
     L5Gbr4b --> L5Esh2
-    L5Smain --> L5Gbr5
+    SynConnect_00000000 --> L5Gbr5
     L5Gbr5 --> L5Gbr5a
     L5Gbr5a --> L5Ebr5
     L5Gbr5a --> L5Esh1
@@ -5272,6 +5338,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C01top["<b>C01top</b><br>Statement of C01top"]
     C02top[["<b>C02top</b><br>Statement of C02top"]]
     C01Xctx(["<b>C01Xctx</b><br>Context of C01Xctx"])
@@ -5335,6 +5402,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C02top["<b>C02top</b><br>Statement of C02top"]
     C03top[["<b>C03top</b><br>Statement of C03top"]]
     C02Xctx(["<b>C02Xctx</b><br>Context of C02Xctx"])
@@ -5398,6 +5466,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C03top["<b>C03top</b><br>Statement of C03top"]
     C04top[["<b>C04top</b><br>Statement of C04top"]]
     C03Xctx(["<b>C03Xctx</b><br>Context of C03Xctx"])
@@ -5461,6 +5530,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C04top["<b>C04top</b><br>Statement of C04top"]
     C05top[["<b>C05top</b><br>Statement of C05top"]]
     C04Xctx(["<b>C04Xctx</b><br>Context of C04Xctx"])
@@ -5524,6 +5594,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C05top["<b>C05top</b><br>Statement of C05top"]
     C06top[["<b>C06top</b><br>Statement of C06top"]]
     C05Xctx(["<b>C05Xctx</b><br>Context of C05Xctx"])
@@ -5587,6 +5658,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C06top["<b>C06top</b><br>Statement of C06top"]
     C07top[["<b>C07top</b><br>Statement of C07top"]]
     C06Xctx(["<b>C06Xctx</b><br>Context of C06Xctx"])
@@ -5650,6 +5722,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C07top["<b>C07top</b><br>Statement of C07top"]
     C08top[["<b>C08top</b><br>Statement of C08top"]]
     C07Xctx(["<b>C07Xctx</b><br>Context of C07Xctx"])
@@ -5713,6 +5786,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C08top["<b>C08top</b><br>Statement of C08top"]
     C09top[["<b>C09top</b><br>Statement of C09top"]]
     C08Xctx(["<b>C08Xctx</b><br>Context of C08Xctx"])
@@ -5776,6 +5850,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C09top["<b>C09top</b><br>Statement of C09top"]
     C10top[["<b>C10top</b><br>Statement of C10top"]]
     C09Xctx(["<b>C09Xctx</b><br>Context of C09Xctx"])
@@ -5839,6 +5914,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C10top["<b>C10top</b><br>Statement of C10top"]
     C11top[["<b>C11top</b><br>Statement of C11top"]]
     C10Xctx(["<b>C10Xctx</b><br>Context of C10Xctx"])
@@ -5902,6 +5978,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C11top["<b>C11top</b><br>Statement of C11top"]
     C11Xctx(["<b>C11Xctx</b><br>Context of C11Xctx"])
     C11Esh(("<b>C11Esh</b><br>Shared evidence of C11"))
@@ -5961,6 +6038,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C12top["<b>C12top</b><br>Statement of C12top"]
     C12Xctx(["<b>C12Xctx</b><br>Context of C12Xctx"])
     C12Esh(("<b>C12Esh</b><br>Shared evidence of C12"))
@@ -6020,6 +6098,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C13top["<b>C13top</b><br>Statement of C13top"]
     C13Xctx(["<b>C13Xctx</b><br>Context of C13Xctx"])
     C13Esh(("<b>C13Esh</b><br>Shared evidence of C13"))
@@ -6079,6 +6158,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C14top["<b>C14top</b><br>Statement of C14top"]
     C14Xctx(["<b>C14Xctx</b><br>Context of C14Xctx"])
     C14Esh(("<b>C14Esh</b><br>Shared evidence of C14"))
@@ -6138,6 +6218,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C15top["<b>C15top</b><br>Statement of C15top"]
     C15Xctx(["<b>C15Xctx</b><br>Context of C15Xctx"])
     C15Esh(("<b>C15Esh</b><br>Shared evidence of C15"))
@@ -6197,6 +6278,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C16top["<b>C16top</b><br>Statement of C16top"]
     C16Xctx(["<b>C16Xctx</b><br>Context of C16Xctx"])
     C16Esh(("<b>C16Esh</b><br>Shared evidence of C16"))
@@ -6256,6 +6338,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C17top["<b>C17top</b><br>Statement of C17top"]
     C17Xctx(["<b>C17Xctx</b><br>Context of C17Xctx"])
     C17Esh(("<b>C17Esh</b><br>Shared evidence of C17"))
@@ -6315,6 +6398,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C18top["<b>C18top</b><br>Statement of C18top"]
     C18Xctx(["<b>C18Xctx</b><br>Context of C18Xctx"])
     C18Esh(("<b>C18Esh</b><br>Shared evidence of C18"))
@@ -6374,6 +6458,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C19top["<b>C19top</b><br>Statement of C19top"]
     C19Xctx(["<b>C19Xctx</b><br>Context of C19Xctx"])
     C19Esh(("<b>C19Esh</b><br>Shared evidence of C19"))
@@ -6433,6 +6518,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C20top["<b>C20top</b><br>Statement of C20top"]
     C20Xctx(["<b>C20Xctx</b><br>Context of C20Xctx"])
     C20Esh(("<b>C20Esh</b><br>Shared evidence of C20"))
@@ -6492,6 +6578,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C21top["<b>C21top</b><br>Statement of C21top"]
     C21Xctx(["<b>C21Xctx</b><br>Context of C21Xctx"])
     C21Esh(("<b>C21Esh</b><br>Shared evidence of C21"))
@@ -6551,6 +6638,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C22top["<b>C22top</b><br>Statement of C22top"]
     C22Xctx(["<b>C22Xctx</b><br>Context of C22Xctx"])
     C22Esh(("<b>C22Esh</b><br>Shared evidence of C22"))
@@ -6610,6 +6698,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C23top["<b>C23top</b><br>Statement of C23top"]
     C23Xctx(["<b>C23Xctx</b><br>Context of C23Xctx"])
     C23Esh(("<b>C23Esh</b><br>Shared evidence of C23"))
@@ -6669,6 +6758,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C24top["<b>C24top</b><br>Statement of C24top"]
     C24Xctx(["<b>C24Xctx</b><br>Context of C24Xctx"])
     C24Esh(("<b>C24Esh</b><br>Shared evidence of C24"))
@@ -6728,6 +6818,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C25top["<b>C25top</b><br>Statement of C25top"]
     C25Xctx(["<b>C25Xctx</b><br>Context of C25Xctx"])
     C25Esh(("<b>C25Esh</b><br>Shared evidence of C25"))
@@ -6787,6 +6878,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C26top["<b>C26top</b><br>Statement of C26top"]
     C26Xctx(["<b>C26Xctx</b><br>Context of C26Xctx"])
     C26Esh(("<b>C26Esh</b><br>Shared evidence of C26"))
@@ -6846,6 +6938,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C27top["<b>C27top</b><br>Statement of C27top"]
     C27Xctx(["<b>C27Xctx</b><br>Context of C27Xctx"])
     C27Esh(("<b>C27Esh</b><br>Shared evidence of C27"))
@@ -6905,6 +6998,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C28top["<b>C28top</b><br>Statement of C28top"]
     C28Xctx(["<b>C28Xctx</b><br>Context of C28Xctx"])
     C28Esh(("<b>C28Esh</b><br>Shared evidence of C28"))
@@ -6964,6 +7058,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C29top["<b>C29top</b><br>Statement of C29top"]
     C29Xctx(["<b>C29Xctx</b><br>Context of C29Xctx"])
     C29Esh(("<b>C29Esh</b><br>Shared evidence of C29"))
@@ -7023,6 +7118,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C30top["<b>C30top</b><br>Statement of C30top"]
     C30Xctx(["<b>C30Xctx</b><br>Context of C30Xctx"])
     C30Esh(("<b>C30Esh</b><br>Shared evidence of C30"))
@@ -7082,6 +7178,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C31top["<b>C31top</b><br>Statement of C31top"]
     C31Xctx(["<b>C31Xctx</b><br>Context of C31Xctx"])
     C31Esh(("<b>C31Esh</b><br>Shared evidence of C31"))
@@ -7141,6 +7238,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C32top["<b>C32top</b><br>Statement of C32top"]
     C32Xctx(["<b>C32Xctx</b><br>Context of C32Xctx"])
     C32Esh(("<b>C32Esh</b><br>Shared evidence of C32"))
@@ -7200,6 +7298,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C33top["<b>C33top</b><br>Statement of C33top"]
     C33Xctx(["<b>C33Xctx</b><br>Context of C33Xctx"])
     C33Esh(("<b>C33Esh</b><br>Shared evidence of C33"))
@@ -7259,6 +7358,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C34top["<b>C34top</b><br>Statement of C34top"]
     C34Xctx(["<b>C34Xctx</b><br>Context of C34Xctx"])
     C34Esh(("<b>C34Esh</b><br>Shared evidence of C34"))
@@ -7318,6 +7418,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C35top["<b>C35top</b><br>Statement of C35top"]
     C35Xctx(["<b>C35Xctx</b><br>Context of C35Xctx"])
     C35Esh(("<b>C35Esh</b><br>Shared evidence of C35"))
@@ -7377,6 +7478,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C36top["<b>C36top</b><br>Statement of C36top"]
     C36Xctx(["<b>C36Xctx</b><br>Context of C36Xctx"])
     C36Esh(("<b>C36Esh</b><br>Shared evidence of C36"))
@@ -7436,6 +7538,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C37top["<b>C37top</b><br>Statement of C37top"]
     C37Xctx(["<b>C37Xctx</b><br>Context of C37Xctx"])
     C37Esh(("<b>C37Esh</b><br>Shared evidence of C37"))
@@ -7495,6 +7598,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C38top["<b>C38top</b><br>Statement of C38top"]
     C38Xctx(["<b>C38Xctx</b><br>Context of C38Xctx"])
     C38Esh(("<b>C38Esh</b><br>Shared evidence of C38"))
@@ -7554,6 +7658,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C39top["<b>C39top</b><br>Statement of C39top"]
     C39Xctx(["<b>C39Xctx</b><br>Context of C39Xctx"])
     C39Esh(("<b>C39Esh</b><br>Shared evidence of C39"))
@@ -7613,6 +7718,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C40top["<b>C40top</b><br>Statement of C40top"]
     C40Xctx(["<b>C40Xctx</b><br>Context of C40Xctx"])
     C40Esh(("<b>C40Esh</b><br>Shared evidence of C40"))
@@ -7672,6 +7778,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C41top["<b>C41top</b><br>Statement of C41top"]
     C41Xctx(["<b>C41Xctx</b><br>Context of C41Xctx"])
     C41Esh(("<b>C41Esh</b><br>Shared evidence of C41"))
@@ -7731,6 +7838,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C42top["<b>C42top</b><br>Statement of C42top"]
     C42Xctx(["<b>C42Xctx</b><br>Context of C42Xctx"])
     C42Esh(("<b>C42Esh</b><br>Shared evidence of C42"))
@@ -7790,6 +7898,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C43top["<b>C43top</b><br>Statement of C43top"]
     C43Xctx(["<b>C43Xctx</b><br>Context of C43Xctx"])
     C43Esh(("<b>C43Esh</b><br>Shared evidence of C43"))
@@ -7849,6 +7958,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C44top["<b>C44top</b><br>Statement of C44top"]
     C44Xctx(["<b>C44Xctx</b><br>Context of C44Xctx"])
     C44Esh(("<b>C44Esh</b><br>Shared evidence of C44"))
@@ -7908,6 +8018,7 @@ config:
 flowchart TD
     classDef invisible opacity:0
     classDef gsnUndev stroke-width:2px,stroke-dasharray: 5 5;
+    classDef connector fill:none,stroke:#cccccc,stroke-width:1px;
     C45top["<b>C45top</b><br>Statement of C45top"]
     C45Xctx(["<b>C45Xctx</b><br>Context of C45Xctx"])
     C45Esh(("<b>C45Esh</b><br>Shared evidence of C45"))

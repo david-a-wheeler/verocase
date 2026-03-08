@@ -1228,5 +1228,166 @@ class TestStartOption(unittest.TestCase):
             shutil.rmtree(workdir, ignore_errors=True)
 
 
+class TestGsnConnectorVisible(unittest.TestCase):
+    """GSN Stage 1: Connector nodes produce a visible gray-circle in the diagram."""
+
+    def _run_gsn(self, ltac_text):
+        fd, path = tempfile.mkstemp(suffix='.ltac')
+        try:
+            with os.fdopen(fd, 'w', encoding='utf-8') as f:
+                f.write(ltac_text)
+            return run('--ltac', path, '--select', 'gsn/mermaid')
+        finally:
+            os.unlink(path)
+
+    def test_gsn_connector_node_declared(self):
+        """A Connector in a GSN diagram produces a visible node and routes edges through it."""
+        ltac = (
+            '- Claim Root: Root claim\n'
+            '  - Connector Grp\n'
+            '    - Claim C1: Child one\n'
+            '    - Claim C2: Child two\n'
+        )
+        r = self._run_gsn(ltac)
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertIn(':::connector', r.stdout)
+        self.assertIn('Grp', r.stdout)
+        self.assertIn('Root --> Grp', r.stdout)
+        self.assertIn('Grp --> C1', r.stdout)
+        self.assertIn('Grp --> C2', r.stdout)
+
+    def test_gsn_connector_not_transparent(self):
+        """Connector children are NOT connected directly to the grandparent (old transparent behaviour)."""
+        ltac = (
+            '- Claim Root: Root claim\n'
+            '  - Connector Grp\n'
+            '    - Claim C1: Child one\n'
+            '    - Claim C2: Child two\n'
+        )
+        r = self._run_gsn(ltac)
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertNotIn('Root --> C1', r.stdout)
+        self.assertNotIn('Root --> C2', r.stdout)
+
+
+class TestMermaidWidthConfig(unittest.TestCase):
+    """Stage 2+3: max_mermaid_children / narrowed_mermaid_children config and transform."""
+
+    def _wide_ltac(self, n_children=10):
+        """Return LTAC text with one parent and n_children direct children."""
+        lines = ['- Claim Root: Root claim']
+        for i in range(n_children):
+            lines.append(f'  - Claim C{i}: child {i}')
+        return '\n'.join(lines) + '\n'
+
+    def _run_with_config(self, ltac_text, cfg, selector='sacm/mermaid'):
+        """Write temp LTAC + config, run caseproc --select selector, return result."""
+        import json
+        fd_l, ltac_path = tempfile.mkstemp(suffix='.ltac')
+        fd_c, cfg_path = tempfile.mkstemp(suffix='.json')
+        try:
+            with os.fdopen(fd_l, 'w', encoding='utf-8') as f:
+                f.write(ltac_text)
+            with os.fdopen(fd_c, 'w', encoding='utf-8') as f:
+                json.dump(cfg, f)
+            return run('--ltac', ltac_path, '--config', cfg_path,
+                       '--select', selector)
+        finally:
+            os.unlink(ltac_path)
+            os.unlink(cfg_path)
+
+    def test_invariant_defaults_ok(self):
+        """Default config satisfies invariant (no panic)."""
+        r = self._run_with_config(self._wide_ltac(3),
+                                  {'max_mermaid_children': 8,
+                                   'narrowed_mermaid_children': 6})
+        self.assertEqual(r.returncode, 0)
+
+    def test_invariant_panics_narrowed_ge_max(self):
+        """narrowed >= max triggers a fatal error."""
+        r = self._run_with_config(self._wide_ltac(3),
+                                  {'max_mermaid_children': 5,
+                                   'narrowed_mermaid_children': 5})
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn('narrowed_mermaid_children', r.stderr)
+
+    def test_invariant_panics_narrowed_less_than_2(self):
+        """narrowed < 2 triggers a fatal error."""
+        r = self._run_with_config(self._wide_ltac(3),
+                                  {'max_mermaid_children': 5,
+                                   'narrowed_mermaid_children': 1})
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn('narrowed_mermaid_children', r.stderr)
+
+    def test_invariant_max_zero_skips_check(self):
+        """max == 0 disables the transform; narrowed value is irrelevant."""
+        r = self._run_with_config(self._wide_ltac(3),
+                                  {'max_mermaid_children': 0,
+                                   'narrowed_mermaid_children': 1})
+        self.assertEqual(r.returncode, 0)
+        self.assertNotIn('SynConnect_', r.stdout)
+
+    def test_sacm_wide_diagram_narrowed(self):
+        """10 direct SACM children > 8 (default max) → SynConnect_ inserted."""
+        r = self._run_with_config(self._wide_ltac(10), {})
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertIn('SynConnect_', r.stdout)
+
+    def test_gsn_wide_diagram_narrowed(self):
+        """10 direct GSN children > 8 (default max) → SynConnect_ inserted."""
+        r = self._run_with_config(self._wide_ltac(10), {}, selector='gsn/mermaid')
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertIn('SynConnect_', r.stdout)
+        self.assertIn(':::connector', r.stdout)
+
+    def test_width_transform_disabled_when_max_zero(self):
+        """max == 0 disables transform; no SynConnect_ even for wide diagrams."""
+        r = self._run_with_config(self._wide_ltac(10),
+                                  {'max_mermaid_children': 0,
+                                   'narrowed_mermaid_children': 6})
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertNotIn('SynConnect_', r.stdout)
+
+    def test_sacm_strategy_absorbed_narrowed(self):
+        """Strategy-absorbed children are counted and narrowed when too many."""
+        ltac = (
+            '- Claim Top: Top\n'
+            '  - Strategy S1: Strategy\n'
+            '    - Claim C1: c1\n'
+            '    - Claim C2: c2\n'
+            '    - Claim C3: c3\n'
+            '    - Claim C4: c4\n'
+        )
+        # inference_sources = [C1, C2, C3, C4, S1] = 5 > max=4
+        r = self._run_with_config(ltac, {'max_mermaid_children': 4,
+                                         'narrowed_mermaid_children': 2})
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertIn('SynConnect_', r.stdout)
+        # S1 kept (rightmost), C1 kept (leftmost)
+        self.assertIn('S1', r.stdout)
+        self.assertIn('C1', r.stdout)
+
+    def test_config_directive_sets_max(self):
+        """caseproc-config directives can set max/narrowed_mermaid_children."""
+        ltac_text = self._wide_ltac(10)
+        fd_l, ltac_path = tempfile.mkstemp(suffix='.ltac')
+        fd_d, doc_path = tempfile.mkstemp(suffix='.md')
+        try:
+            with os.fdopen(fd_l, 'w', encoding='utf-8') as f:
+                f.write(ltac_text)
+            # Set narrowed first to avoid transient invariant failure
+            with os.fdopen(fd_d, 'w', encoding='utf-8') as f:
+                f.write('<!-- caseproc-config narrowed_mermaid_children = 2 -->\n')
+                f.write('<!-- caseproc-config max_mermaid_children = 4 -->\n')
+                f.write('<!-- caseproc sacm/mermaid -->\n')
+                f.write('<!-- end caseproc -->\n')
+            r = run('--ltac', ltac_path, '--stdout', doc_path)
+            self.assertEqual(r.returncode, 0, r.stderr)
+            self.assertIn('SynConnect_', r.stdout)
+        finally:
+            os.unlink(ltac_path)
+            os.unlink(doc_path)
+
+
 if __name__ == '__main__':
     unittest.main()

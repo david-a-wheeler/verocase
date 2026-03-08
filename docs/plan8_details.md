@@ -240,12 +240,12 @@ def apply_detach(roots: List[Node], registry: Dict[str, Node],
                  id_info: Dict[str, dict], target_id: str) -> None:
     """Replace target_id's definition with a citation; promote subtree to new package.
 
-    Panics if target_id is not declared, or if its definition is already a
+    Panics if target_id is not defined, or if its definition is already a
     top-level package root (has no parent).
     """
     node = registry.get(target_id)
     if node is None:
-        panic(f"--detach: {target_id!r} is not a declared identifier")
+        panic(f"--detach: {target_id!r} is not defined")
     if node.parent is None:
         panic(f"--detach: {target_id!r} is a top-level package root; cannot detach")
 
@@ -328,17 +328,17 @@ def apply_attach(roots: List[Node], registry: Dict[str, Node],
     """Move top-level target_id's definition inline under dest_id, replacing ^citation.
 
     Panics if:
-    - target_id is not declared
-    - dest_id is not declared
+    - target_id is not defined
+    - dest_id is not defined
     - target_id is not a top-level package root
     - target_id is not cited (^) as a direct child of dest_id
     """
     node = registry.get(target_id)
     if node is None:
-        panic(f"--attach: {target_id!r} is not a declared identifier")
+        panic(f"--attach: {target_id!r} is not defined")
     dest = registry.get(dest_id)
     if dest is None:
-        panic(f"--attach: {dest_id!r} is not a declared identifier")
+        panic(f"--attach: {dest_id!r} is not defined")
     if node.parent is not None:
         panic(f"--attach: {target_id!r} is not a top-level package root")
 
@@ -438,7 +438,7 @@ parser.add_argument(
     help=(
         'replace ID\'s definition with a citation (^ID) in its current location '
         'and move its subtree to a new top-level package. '
-        'Panics if ID is not declared or is already a top-level package root. '
+        'Panics if ID is not defined or is already a top-level package root. '
         'Joins the shared mutation queue with --rename, --restate, and --attach.'
     ),
 )
@@ -448,7 +448,7 @@ parser.add_argument(
     help=(
         'move top-level ID\'s definition inline under DESTINATION, replacing '
         'the ^ID citation there. '
-        'Panics if ID or DESTINATION is not declared, ID is not top-level, '
+        'Panics if ID or DESTINATION is not defined, ID is not top-level, '
         'or ID is not cited as a direct child of DESTINATION. '
         'Joins the shared mutation queue with --rename, --restate, and --detach.'
     ),

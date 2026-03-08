@@ -106,11 +106,20 @@ An unreachable package is an error.
 
 ### Options
 
-Options are listed inside braces at the end of a line, comma-separated:
+Options are listed inside curly braces near the end of a line
+(before the reference if any).
+They are ordered, case-insensitive, non-duplicative, and comma-separated.
+You can use uppercase, but when written out they'll be converted
+to lowercase.
+If you want a statement to end in `{...}`, you can
+disambiguate it by adding an empty `{}` after it.
 
 ```
 - Claim C1: The system is safe {defeated}
-- Claim C2: Residual risk is acceptable {needsSupport}
+
+- Claim C2: Residual risk is acceptable {needssupport}
+
+- Claim C3: Meets criterion {72.3} {}
 ```
 
 Each element may carry **at most one** assertion-status option (this
@@ -119,7 +128,7 @@ mirrors SACM's mutually exclusive `assertionDeclaration` attribute):
 | Option | SACM assertionDeclaration |
 |---|---|
 | *(none)* | `asserted` (default) |
-| `needsSupport` | `needsSupport` |
+| `needssupport` | `needsSupport` |
 | `assumed` | `assumed` |
 | `axiomatic` | `axiomatic` |
 | `defeated` | `defeated` |
@@ -129,14 +138,26 @@ Other options that may be combined with an assertion-status option:
 
 | Option | Effect |
 |---|---|
-| `isCounter` | Sets `isCounter=true`; marks counter-evidence |
+| `iscounter` | Sets `isCounter=true`; marks counter-evidence |
 | `abstract` | Sets `isAbstract=true` |
-| `metaClaim` | Sets `metaClaim=true` |
+| `metaclaim` | Sets `metaClaim=true` |
 
 ### External references
 
 A parenthesized reference `(ref)` on an element is used as the click-target
-URL for that element's node in diagram output.
+URL for that element's node in diagram output. This is at the very end.
+If you want a statement to end in `(...)`, you can
+disambiguate it by adding an empty `()` after it.
+Here are some examples:
+
+```
+- Claim C1: The system is safe (safety-analysis.md)
+
+- Claim C2: Residual risk is acceptable (https://example.com/residual-risk.html)
+
+- Claim C3: Meets criterion for safety (as discussed with stakeholders) ()
+```
+
 Resolution rules:
 
 | `ref` form | `base_url` set? | Result |

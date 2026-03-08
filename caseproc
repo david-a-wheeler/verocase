@@ -18,6 +18,8 @@ from collections import deque
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Set, Tuple
 
+CASEPROC_VERSION = '0.1.0'
+
 _had_error = False # If true, we saw an error during processing
 _strict = False # If true, turn warnings into errors
 
@@ -2419,6 +2421,10 @@ Configuration keys (--config FILE, JSON object):
   pkg_label          word used to identify packages in output (default: "Package ")
 
 For full details see docs/design-spec.md.""",
+    )
+    parser.add_argument(
+        '--version', action='version', version=CASEPROC_VERSION,
+        help='print version and exit',
     )
     parser.add_argument(
         '--config', type=str, metavar='FILE',

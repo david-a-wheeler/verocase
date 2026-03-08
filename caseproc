@@ -2216,7 +2216,7 @@ For full details see docs/design-spec.md.""",
     )
     parser.add_argument(
         'files', nargs='*',
-        help='Documentation file(s) (Markdown/HTML) to update in place (default: auto-discover case.md etc.)',
+        help='Documentation file(s) (Markdown/HTML) to update in place (default: auto-discover case.md or docs/case.md etc.)',
     )
 
     mode = parser.add_mutually_exclusive_group()

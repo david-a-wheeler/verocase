@@ -24,6 +24,28 @@ tests and case.ltac, do a grep first - I suspect doing both a reference and
 options is extremely rare. There may not even be a test of this; if there
 isn't, add one where we have both an option and a reference.
 
+## Warn on reference without "."
+
+It's really easy to add a parenthetical at the end of a statement
+and have it incorrectly interpreted as a reference.
+
+Let's add a new config option, `warn_undotted_reference`, default true.
+If true, we emit a warning every time we read a reference from an LTAC
+file that is non-empty but fails to include a `.` somewhere.
+
+Normal references normally have a dot, e.g.,
+in the URL domain name or to introduce a file extension.
+It's not strictly *required*, but as a warning of a potential problem,
+it's not a bad heuristic.
+
+It's easy to add a dot, e.g., you can add `./` before a local directory.
+If you use domain `localhost`, adding a period technically changes the
+domain from "relative" to "absolute" but in *practice* it'll end up
+with 127.0.0.1 either way. Or you could disable this setting.
+
+Add this to the set of values you can set with `caseproc-config` - valid
+values are `true` or `false`. Then you can set it in the doc.
+
 ## Check for escapes when writing LTAC, fix and test
 
 It's legal for an LTAC statement to end in {...} or (...), you just have

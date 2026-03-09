@@ -37,12 +37,12 @@ in [Extended LTAC format specification](ltac-extended.txt) format.
 Here's what the file `case.ltac' might look like:
 
 ~~~~ltac
-- Claim Top: Top level claim
+- Claim Secure: The system is secure
   - Claim G2: G2 is true {needssupport}
   - Claim G3: G3 is true {needssupport}
 ~~~~
 
-Every non-blank line expresses an `element` of the case by starting with indentation (2 spaces per level) and `-`. A `Claim` is true-or-false claim. This is followed by its ID; every element must must have a unique ID, and while spaces are allowed, short is good. This is followed by colon, space, and the statement of the claim.
+Every non-blank line expresses an `element` of the case by starting with indentation (2 spaces per level) and `-`. A `Claim` is true-or-false claim. This is normally followed by its ID; every element must must have a unique ID, and while spaces are allowed, short is good. If you don't specify an ID, the text is used as an ID (keeping spaces but removing a few characters like parentheses and curly braces). That said, we strongly encourage assigning an ID to each element. This is followed by colon, space, and the statement of the claim.
 
 You can insert a blank line and start another "package" of elements,
 starting again from the top (0 indents). You can cite an element, instead of

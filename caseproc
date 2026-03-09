@@ -381,6 +381,7 @@ class Node:
     parent: Optional['Node'] # back-reference; None for roots
     link_target: Optional['Node']  # for Link nodes: referenced node
     diagram_id: str          # computed valid diagram node id for any renderer
+    id_inferred: bool = False  # True when identifier was inferred from text
 
 
 # ---------------------------------------------------------------------------
@@ -390,6 +391,18 @@ class Node:
 # Node types that cannot act as inference parents for Claims or Strategies.
 # Used to warn about structurally invalid parent-child relationships.
 _NON_INFERENTIAL_TYPES = frozenset({'Evidence', 'Context', 'Assumption', 'Justification'})
+
+def _infer_id(text: str) -> str:
+    """Derive an LTAC identifier from element text for nodes with no explicit ID.
+
+    Strips characters that are either illegal in LTAC identifiers per the spec
+    (':' and '^') or that our parser treats as delimiters and would misread if
+    the identifier were ever written back explicitly ('{', '}', '(', ')').
+    Balanced removal of both open and close brackets keeps the set symmetric.
+    Newlines are also stripped.  Spaces are preserved.
+    """
+    return ''.join(c for c in text if c not in ':^{}()\n\r')
+
 
 # This parses an LTAC line with a regex, and pulls out relevant pieces.
 # Compiled regexes perform well in Python.
@@ -471,6 +484,11 @@ class LTACParser:
         ref = (m.group('ref') or '').strip()
         options = parse_options(m.group('options') or '')
 
+        id_inferred = False
+        if not identifier and nodetype not in ('Link', 'Connector'):
+            identifier = _infer_id(text)
+            id_inferred = True
+
         diagram_id = make_mermaid_id(identifier, self._id_counter)
 
         node = Node(
@@ -485,6 +503,7 @@ class LTACParser:
             parent=None,
             link_target=None,
             diagram_id=diagram_id,
+            id_inferred=id_inferred,
         )
         self.node_count += 1
         return node
@@ -2375,6 +2394,19 @@ structure and update your document files in Markdown/HTML with graphics,
 hyperlinks, and other material. The document files' marked regions will
 be updated, but *only* those regions.
 
+In the LTAC file format: each line is one element, indented two spaces/level:
+  - TYPE [^][ID]: text [{options}] [(reference)]
+
+Types: Claim (goal/assertion), Strategy (argument pattern), Evidence
+(supporting artifact), Justification (rationale), Context (background
+information), Assumption (accepted-as-true claim), Relation (explicit
+relationship), Link ID (citation of an already-defined element).
+IDs are optional but strongly recommended; external IDs begin with '^'
+(and must match the sole defining ID without a beginning '^').
+If the ID is omitted, the text is the ID (after stripping ^{}()\\n\\r).
+Options are a comma-separated list (e.g. {needssupport, metaclaim}).
+Reference is a file path, URL, or anchor (e.g. (report.pdf)).
+
 By default the program treats the LTAC file strictly as an input and
 it will *not* modify the LTAC file. However, the options --update,
 --rename, --restate, --detach, --move, --missing, and --start *may* modify the LTAC file.
@@ -2937,7 +2969,10 @@ def _write_ltac_node(node: 'Node', lines: list) -> None:
     """Append LTAC lines for *node* and all its descendants to *lines*."""
     indent = '  ' * node.depth
     line = f'{indent}- {node.node_type}'
-    if node.identifier or node.is_cited:
+    write_id = (node.identifier or node.is_cited) and not (
+        node.id_inferred and _infer_id(node.text) == node.identifier
+    )
+    if write_id:
         line += ' '
         if node.is_cited:
             line += '^'

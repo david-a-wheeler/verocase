@@ -35,17 +35,17 @@ Each element occupies exactly one line, indented with two spaces per level.
 ### LTAC Line syntax
 
 ```
-INDENT - TYPE [^][IDENTIFIER][: statement text] [(ext_ref)] [{options}]
+INDENT - TYPE [^][IDENTIFIER]: statement text [{options}] [(ext_ref)]
 ```
 
 - **`INDENT`** — two spaces per level; the root element of each package has no indentation.
-- **`-`** — the bullet marker (hyphens `-` and asterisks `*` are both accepted).
+- **`-`** — the bullet marker (only hyphens `-` are accepted).
 - **`TYPE`** — one of the types in the table above, or `Link`.
 - **`^`** — when present, marks this as a *citation* of an element declared elsewhere (another package).
-- **`IDENTIFIER`** — optional; must be unique across the entire LTAC file (except for `Link` entries, which re-use an existing identifier).  Any characters except `:` and `^` are permitted.
-- **`: statement text`** — optional descriptive text following the colon.  Text may contain colons.
-- **`(ext_ref)`** — optional external reference in parentheses, such as a filename or URL.  Used as a hyperlink target in diagram output.
+- **`IDENTIFIER`** — optional; must be unique across the entire LTAC file (except for `Link` entries, which re-use an existing identifier).  Any characters except `:` and `^` are permitted.  If omitted, the identifier is inferred from the statement text (see [Identifiers](#identifiers)).
+- **`: statement text`** — required; the colon separates the identifier (if any) from the descriptive text.  Text may contain colons.
 - **`{options}`** — optional comma-separated list of modifier keywords (see [Options](#options) below).
+- **`(ext_ref)`** — optional external reference in parentheses, such as a filename or URL.  Used as a hyperlink target in diagram output.
 
 A `Link` line has a simpler form — just the type keyword and the identifier, with no colon or text:
 
@@ -76,13 +76,31 @@ Note that space is a legal character in identifiers.
 There is no mandated identifier convention; meaningful names like
 `AuthnClaim` are encouraged alongside traditional GSN-style names like `G1`.
 
+If `IDENTIFIER` is omitted from an element line, caseproc infers it from
+the statement text by stripping characters that are illegal in identifiers
+per the LTAC spec (`:`, `^`) or that the parser uses as delimiters and
+would misread if the identifier were ever written back explicitly
+(`{`, `}`, `(`, `)`).  For example:
+
+```
+- Claim: The system is safe
+```
+
+is treated as if it were written `- Claim The system is safe: The system is safe`,
+so the element can be referenced in diagrams and via `Link`.
+When caseproc writes the LTAC file back out, it omits the identifier again
+if it can still be recovered from the text — giving a clean round-trip.
+If the statement is later changed (e.g. via `--restate`) so that the text
+no longer matches the inferred identifier, the identifier is written out
+explicitly to preserve it.
+
 ### Cross-package citations
 
 An element in one package may cite a claim from another package using
 the `^` prefix:
 
 ```
-- Claim ^OtherTop
+- Claim ^OtherTop: The other system is safe
 ```
 
 The bare form `^ID` resolves to the declared element with identifier `ID`

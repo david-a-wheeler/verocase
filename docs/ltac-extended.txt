@@ -4,7 +4,7 @@ Argevide and David A. Wheeler
 Original: https://www.argevide.com/documents/ltac.txt
 
 NOTE: This "Extended LTAC" is based on LTAC v1.1.2, 26.02.2026 but
-has many extensions.
+has many extensions developed by David A. Wheeler.
 
 1. LTAC is a text format for representing assurance case arguments regardless of the notation originally used. LTAC can be mapped to GSN, CAE, TRUST-IT, and SACM notations. An LTAC package contains a set of elements, each presented in a separate line.
 2. LTAC defines its own element types that can be mapped to GSN, CAE, TRUST-IT, and SACM. LTAC defines its own syntax described below which is different from the rules of GSN, CAE, TRUST-IT, or SACM. Only the rules described below apply to LTAC.

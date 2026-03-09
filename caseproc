@@ -2461,14 +2461,19 @@ Validations on the LTAC file (always):
   - Citing identifiers (^ID) must have a matching declaration
   - Element type must be consistent across all uses of the same identifier
   - Statement text must be consistent across all uses of the same identifier
-    (use --update to make LTAC statements consistent with their declaration)
+    (use --update to make LTAC citations consistent with their declaration)
   - Each element must carry at *most* one assertion status option
     (needsSupport, axiomatic, defeated, assumed); see SACM spec section 11
   - All generated anchor names (e.g., "claim-x-is-secure") must be unique
+  - No two siblings may share the same identifier (whether declared or cited)
+  - Cross-package citations (^ID) should have type Claim or Justification
+  - References that look like parenthetical comments (no '.' and no '#') are
+    flagged as possibly dubious (when warn_dubious_reference is true)
 
 Additional checks when document files are provided:
   - Every declared LTAC element should have a corresponding 'element' selector
-    in the document (used to generate the element's heading and cross-references).
+    in a document (used to generate the element's heading and cross-references;
+    use --missing to fix this)
 
 Configuration keys (--config FILE, JSON object):
   base_url           base URL for hyperlinks in sacm/gsn mermaid output (default: "")

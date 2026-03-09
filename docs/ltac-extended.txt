@@ -19,10 +19,10 @@ NOTE: This "Extended LTAC" is based on LTAC v1.1.2, 26.02.2026 from Argevide but
   - Relation R1
   - Link C4
   - Claim ^C22
-6. If an element is to be used more than once, it should be defined once only and other occurrences should be defined as links. A Link entry is a citation of previously defined element (often evidence or context) without repeating it.
+6. If an element is to be used more than once, it should be defined once only and other occurrences should be defined as links or citations. A Link entry is a citation of previously defined element (often evidence or context) without repeating it.
 7. Identifiers are optional, but when specified, they should be unique within the package except links. Links are citations of existing elements and they use existing identifiers within the package.
   - Identifiers G1, G2 can be used for claims, or Cxt1, Cxt2 can be used for context elements. Any letters, digits and other characters except ':' can be used in identifiers. Identifiers’ prefixes other than presented in point 1 and "^" are acceptable.
-  - An identifier beginning with "^" is an external reference that refers to an element in another package. LTAC identifiers are globally unique, so no package qualifier is needed. Implementations may use this information to generate hyperlinks. External references should only be Claims or Justifications.
+  - An identifier beginning with "^" is an external reference that refers to an element declared elsewhere (normally in another package). LTAC identifiers are globally unique, so no package qualifier is needed. Implementations may use this information to generate hyperlinks. External references should only be Claims or Justifications.
 8. After the identifier, a colon (':') separates it from the descriptive text, the element name. The text cannot contain new line characters. The text can contain colons (':'). An example of a correct element definition:
 ```
   - Claim C1: System is sufficiently safe

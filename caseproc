@@ -2248,6 +2248,7 @@ def process_document_stream(
     seen_element_ids: set,
     doc_format: str = 'markdown',
     add_missing: bool = False,
+    strip: bool = False,
 ) -> None:
     """Process a document file line by line, replacing ltac selector regions.
 
@@ -2259,6 +2260,9 @@ def process_document_stream(
     declared LTAC element not yet seen via an 'element' selector.  In HTML
     documents the injection happens immediately before the first `</body>` tag;
     in Markdown documents (or HTML without `</body>`) it happens at EOF.
+
+    When `strip` is True, generated content is omitted from all selector
+    regions except 'warning', leaving the markers in place with empty bodies.
     """
     _doc_state = DocState(doc_format=doc_format, seen_element_ids=seen_element_ids)
     filename = getattr(f, 'name', '<stream>')
@@ -2305,9 +2309,12 @@ def process_document_stream(
         if m:
             selector = m.group(1)
             found_end = _consume_region(line_iter, filename, lineno, selector)
-            rendered = render_selector(selector, registry, all_roots, config, id_info,
-                                       doc_format=doc_format, state=_doc_state)
-            rendered = _maybe_inject_mermaid_js(rendered, config, _doc_state)
+            if strip and selector.strip() != 'warning':
+                rendered = ''
+            else:
+                rendered = render_selector(selector, registry, all_roots, config, id_info,
+                                           doc_format=doc_format, state=_doc_state)
+                rendered = _maybe_inject_mermaid_js(rendered, config, _doc_state)
             out.write(text + '\n')
             if found_end:
                 if rendered:
@@ -2518,6 +2525,17 @@ For full details see docs/design-spec.md.""",
     parser.add_argument(
         '--stats', action='store_true', default=False,
         help='after processing, print statistics about the LTAC structure and documents',
+    )
+    parser.add_argument(
+        '--strip', action='store_true', default=False,
+        help=(
+            'regenerate documents with empty selector regions '
+            '(only "warning" content is preserved); '
+            'useful for reviewing document structure without generated content, '
+            'especially for AI tools reading the document; '
+            'combine with --stdout to write the stripped result to stdout '
+            'without modifying the files'
+        ),
     )
     parser.add_argument(
         '--update', action='store_true',
@@ -2845,6 +2863,7 @@ def _process_files(
     config: dict,
     id_info: Dict[str, dict],
     seen_element_ids: set,
+    strip: bool = False,
 ) -> None:
     """Open each file and call process_document_stream; fall back to stdin if none given."""
     if files:
@@ -2852,12 +2871,13 @@ def _process_files(
             try:
                 with open(path) as f:
                     process_document_stream(f, out, registry, all_roots, config, id_info,
-                                            seen_element_ids, detect_doc_format(path))
+                                            seen_element_ids, detect_doc_format(path),
+                                            strip=strip)
             except OSError as e:
                 error(f"cannot open {path!r}: {e}")
     else:
         process_document_stream(sys.stdin, out, registry, all_roots, config, id_info,
-                                seen_element_ids, 'markdown')
+                                seen_element_ids, 'markdown', strip=strip)
 
 
 
@@ -3317,6 +3337,7 @@ def _inline_rewrite_file(
     id_info: Dict[str, dict],
     seen_element_ids: set,
     add_missing: bool = False,
+    strip: bool = False,
 ) -> Optional[Tuple[str, str]]:
     """Process a single document file, writing updated content to a temp file.
 
@@ -3338,7 +3359,7 @@ def _inline_rewrite_file(
     with io.StringIO(original_lf) as src:
         process_document_stream(src, buf, registry, all_roots, config, id_info,
                                 seen_element_ids, detect_doc_format(path),
-                                add_missing=add_missing)
+                                add_missing=add_missing, strip=strip)
     if _had_error and not error_before:
         # Errors occurred while processing this file; leave it untouched.
         return None
@@ -3488,7 +3509,7 @@ def main() -> None:
     elif args.validate:
         if document_files:
             seen_element_ids: set = set()
-            _process_files(document_files, io.StringIO(), registry, all_roots, config, id_info, seen_element_ids)
+            _process_files(document_files, io.StringIO(), registry, all_roots, config, id_info, seen_element_ids, strip=args.strip)
             _check_element_coverage(registry, seen_element_ids)
         if ltac_pair:
             commit_updates([ltac_pair])
@@ -3496,7 +3517,7 @@ def main() -> None:
         if not document_files:
             panic(_NO_FILES_MSG)
         seen_element_ids: set = set()
-        _process_files(document_files, sys.stdout, registry, all_roots, config, id_info, seen_element_ids)
+        _process_files(document_files, sys.stdout, registry, all_roots, config, id_info, seen_element_ids, strip=args.strip)
         _check_element_coverage(registry, seen_element_ids)
         if ltac_pair:
             commit_updates([ltac_pair])
@@ -3531,7 +3552,7 @@ def main() -> None:
         seen_element_ids: set = set()
         pairs = ([ltac_pair] if ltac_pair else [])
         for path in document_files:
-            pair = _inline_rewrite_file(path, registry, all_roots, config, id_info, seen_element_ids)
+            pair = _inline_rewrite_file(path, registry, all_roots, config, id_info, seen_element_ids, strip=args.strip)
             if pair is not None:
                 pairs.append(pair)
         if pairs:

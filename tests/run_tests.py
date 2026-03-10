@@ -2,10 +2,16 @@
 
 """Test suite for caseproc.
 
-Run with:
-    python3 tests/run_tests.py
-or:
-    python3 -m unittest tests.run_tests
+This test suite uses only Python's standard-library 'unittest' module so that
+no third-party packages (e.g. pytest) are required.  This keeps caseproc
+dependency-free and makes CI straightforward on any Python 3 installation.
+
+To run tests (from the project root), do one of these:
+    tests/run_tests.py                       # directly (executable bit set)
+    python3 -m unittest tests.run_tests -v   # via unittest runner (CI-friendly)
+
+The two forms are equivalent.  The '-v' flag prints one line per test; omit
+it for the compact dot-per-test output.
 
 When a test result differs from the expected fixture it is saved to
 tests/results/ with the same filename as the fixture.  Results that
@@ -1595,6 +1601,41 @@ class TestWarningSelector(unittest.TestCase):
             content = read_file(doc_path)
             self.assertIn('DO NOT EDIT', content)
             self.assertNotIn('stale warning', content)
+        finally:
+            os.unlink(ltac_path)
+            os.unlink(doc_path)
+
+    def test_strip_empties_regions_but_keeps_warning(self):
+        """--strip --stdout empties all selector regions except 'warning'."""
+        import tempfile, os
+        ltac = '- Claim Root: Root claim\n'
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.ltac', delete=False) as f:
+            f.write(ltac)
+            ltac_path = f.name
+        doc = (
+            '<!-- caseproc warning -->\n'
+            '<!-- end caseproc -->\n'
+            '\n'
+            '<!-- caseproc package * -->\n'
+            '<!-- end caseproc -->\n'
+            '\n'
+            '<!-- caseproc element Root -->\n'
+            '<!-- end caseproc -->\n'
+        )
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.md', delete=False) as f:
+            f.write(doc)
+            doc_path = f.name
+        try:
+            r = run('--ltac', ltac_path, '--strip', '--stdout', doc_path)
+            self.assertEqual(r.returncode, 0)
+            # warning selector: content preserved
+            self.assertIn('DO NOT EDIT', r.stdout)
+            # package and element selectors: markers present but bodies empty
+            lines = r.stdout.splitlines()
+            pkg_idx = next(i for i, l in enumerate(lines) if 'caseproc package' in l)
+            self.assertEqual(lines[pkg_idx + 1], '<!-- end caseproc -->')
+            elem_idx = next(i for i, l in enumerate(lines) if 'caseproc element Root' in l)
+            self.assertEqual(lines[elem_idx + 1], '<!-- end caseproc -->')
         finally:
             os.unlink(ltac_path)
             os.unlink(doc_path)

@@ -197,6 +197,9 @@ def make_mermaid_id(identifier: str, counter: list) -> str:
     return result
 
 
+_HTML_ESCAPE_TABLE = str.maketrans({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'})
+
+
 def escape_html(text: str) -> str:
     """Escape text for safe embedding in mermaid HTML labels.
 
@@ -209,11 +212,7 @@ def escape_html(text: str) -> str:
     >>> escape_html("a & b & c")
     'a &amp; b &amp; c'
     """
-    text = text.replace('&', '&amp;')
-    text = text.replace('<', '&lt;')
-    text = text.replace('>', '&gt;')
-    text = text.replace('"', '&quot;')
-    return text
+    return text.translate(_HTML_ESCAPE_TABLE)
 
 
 def escape_html_content(text: str) -> str:
@@ -683,18 +682,6 @@ def load_ltac_file(path: str, all_roots: List[Node], registry: Dict[str, Node],
 # Renderers
 # ---------------------------------------------------------------------------
 
-def _node_heading(node: Node, pkg_label: str) -> str:
-    """Return the expected document heading text for a node.
-
-    Root nodes (depth 0) use '{pkg_label}ID'; all others use 'Type ID: text'.
-    """
-    if node.depth == 0:
-        return f"{pkg_label}{node.identifier}"
-    heading = f"{node.node_type} {node.identifier}"
-    if node.text:
-        heading += f": {node.text}"
-    return heading
-
 
 def _node_anchor_url(node: Node, base_url: str, pkg_label: str) -> str:
     """Return the anchor URL for a node: base_url + '#' + GitHub fragment.
@@ -986,6 +973,14 @@ def _insert_connectors_for_overflow(
         parent.children.insert(first_pos, connector)
 
 
+def _get_width_config(config: dict) -> tuple:
+    """Return (max_mermaid_children, narrowed_mermaid_children) from config."""
+    return (
+        config.get('max_mermaid_children', DEFAULT_CONFIG['max_mermaid_children']),
+        config.get('narrowed_mermaid_children', DEFAULT_CONFIG['narrowed_mermaid_children']),
+    )
+
+
 def _apply_sacm_width_transform(roots: List['Node'], config: dict,
                                 counter: list) -> None:
     """Narrow SACM inference groups that exceed max_mermaid_children.
@@ -995,10 +990,7 @@ def _apply_sacm_width_transform(roots: List['Node'], config: dict,
     that nested over-wide groups are narrowed too.
     counter is a one-element list [int] used to generate unique Connector IDs.
     """
-    max_ch: int = config.get('max_mermaid_children',
-                             DEFAULT_CONFIG['max_mermaid_children'])
-    narrowed: int = config.get('narrowed_mermaid_children',
-                               DEFAULT_CONFIG['narrowed_mermaid_children'])
+    max_ch, narrowed = _get_width_config(config)
     if max_ch == 0:
         return
 
@@ -1027,10 +1019,7 @@ def _apply_gsn_width_transform(roots: List['Node'], config: dict,
     Operates in-place on the deep-copied forest.
     counter is a one-element list [int] used to generate unique Connector IDs.
     """
-    max_ch: int = config.get('max_mermaid_children',
-                             DEFAULT_CONFIG['max_mermaid_children'])
-    narrowed: int = config.get('narrowed_mermaid_children',
-                               DEFAULT_CONFIG['narrowed_mermaid_children'])
+    max_ch, narrowed = _get_width_config(config)
     if max_ch == 0:
         return
 
@@ -1116,6 +1105,25 @@ def _sacm_assertion_suffix(node_type: str, options: List[str]) -> str:
         return ''
 
 
+def _build_inner_label(eid: str, etxt: str, suffix: str,
+                       decorator: str = '') -> str:
+    """Build the inner HTML label for a Mermaid node.
+
+    eid       — escaped identifier (may be empty)
+    etxt      — escaped statement text (may be empty)
+    suffix    — assertion suffix from _sacm/_gsn_assertion_suffix (may be '')
+    decorator — optional type badge inserted after the bold ID (e.g. '&nbsp;Ⓐ')
+    """
+    if eid and etxt:
+        return f'<b>{eid}</b>{decorator}<br>{etxt}{suffix}'
+    elif eid:
+        return f'<b>{eid}</b>{decorator}{suffix}'
+    elif etxt:
+        return f'{etxt}{suffix}'
+    else:
+        return suffix.removeprefix('<br>') if suffix else ''
+
+
 def _sacm_node_decl(node: 'Node') -> str:
     """Return the mermaid node-declaration line for a single LTAC node.
 
@@ -1137,24 +1145,11 @@ def _sacm_node_decl(node: 'Node') -> str:
 
     # Evidence and Context use the cylinder shape with a &nbsp;↗ after the ID.
     if node.node_type in ('Evidence', 'Context'):
-        if eid and etxt:
-            inner = f'<b>{eid}</b>&nbsp;↗<br>{etxt}{suffix}'
-        elif eid:
-            inner = f'<b>{eid}</b>&nbsp;↗{suffix}'
-        else:
-            inner = f'&nbsp;↗<br>{etxt}{suffix}' if etxt else f'&nbsp;↗{suffix}'
+        inner = _build_inner_label(eid, etxt, suffix, decorator='&nbsp;↗')
         shape = f'[("{inner}")]'
     else:
         # Claim, Strategy, Assumption, Justification
-        if eid and etxt:
-            inner = f'<b>{eid}</b><br>{etxt}{suffix}'
-        elif eid:
-            inner = f'<b>{eid}</b>{suffix}'
-        elif etxt:
-            inner = f'{etxt}{suffix}'
-        else:
-            inner = suffix.removeprefix('<br>') if suffix else ''
-
+        inner = _build_inner_label(eid, etxt, suffix)
         if node.node_type == 'Strategy':
             shape = f'[/"{inner}"/]'
         elif node.is_cited:
@@ -1468,14 +1463,7 @@ def _gsn_node_decl(node: 'Node') -> str:
         decorator = ''
 
     # Build inner label.
-    if eid and etxt:
-        inner = f'<b>{eid}</b>{decorator}<br>{etxt}{suffix}'
-    elif eid:
-        inner = f'<b>{eid}</b>{decorator}{suffix}'
-    elif etxt:
-        inner = f'{etxt}{suffix}'
-    else:
-        inner = suffix.removeprefix('<br>') if suffix else ''
+    inner = _build_inner_label(eid, etxt, suffix, decorator)
 
     # Shape mapping.
     if eff_type in ('Assumption', 'Justification'):
@@ -1774,6 +1762,18 @@ def _element_anchor_url(node_type: str, ident: str, config: dict) -> str:
     return base_url + '#' + anchor
 
 
+def _linked_list(pairs: List[tuple], fmt: str, bold_first: bool = True) -> str:
+    """Format (label, url) pairs as a comma-joined string of hyperlinks.
+
+    If bold_first is True (the default), the first link is wrapped in bold.
+    """
+    links = []
+    for i, (label, url) in enumerate(pairs):
+        link = hyperlink(label, url, fmt)
+        links.append(bold(link, fmt) if (bold_first and i == 0) else link)
+    return ', '.join(links)
+
+
 def _find_citation_parents(ident: str, all_roots: List[Node]) -> List[Node]:
     """Return parent nodes of all citations of ident across all packages."""
     parents = []
@@ -1797,13 +1797,8 @@ def render_referenced_by(node: Node, all_roots: List[Node],
             pkg_ids.append(cid)
     if not pkg_ids:
         return ''
-    links = []
-    for i, pid in enumerate(pkg_ids):
-        label = f'Package {pid}'
-        url = _pkg_anchor_url(pid, config)
-        link = hyperlink(label, url, fmt)
-        links.append(bold(link, fmt) if i == 0 else link)
-    return 'Referenced by: ' + ', '.join(links)
+    pairs = [(f'Package {pid}', _pkg_anchor_url(pid, config)) for pid in pkg_ids]
+    return 'Referenced by: ' + _linked_list(pairs, fmt)
 
 
 def render_supported_by(node: Node, config: dict, fmt: str) -> str:
@@ -1812,39 +1807,35 @@ def render_supported_by(node: Node, config: dict, fmt: str) -> str:
                 or c.link_target is not None]
     if not children:
         return ''
-    links = []
-    for i, child in enumerate(children):
+    pairs = []
+    for child in children:
         target = child.link_target if child.node_type == 'Link' else child
         if target is None or not target.identifier:
             continue
-        label = f'{target.node_type} {target.identifier}'
-        url = _element_anchor_url(target.node_type, target.identifier, config)
-        link = hyperlink(label, url, fmt)
-        links.append(bold(link, fmt) if i == 0 else link)
-    if not links:
+        pairs.append((f'{target.node_type} {target.identifier}',
+                      _element_anchor_url(target.node_type, target.identifier, config)))
+    if not pairs:
         return ''
-    return 'Supported by: ' + ', '.join(links)
+    return 'Supported by: ' + _linked_list(pairs, fmt)
 
 
 def render_supports(node: Node, all_roots: List[Node],
                     config: dict, fmt: str) -> str:
     """Render 'Supports: ...' line or '' if no parents at all."""
-    entries = []
-    if node.parent is not None:
+    pairs = []
+    has_direct_parent = node.parent is not None
+    if has_direct_parent:
         p = node.parent
-        label = f'{p.node_type} {p.identifier}'
-        url = _element_anchor_url(p.node_type, p.identifier, config)
-        entries.append((hyperlink(label, url, fmt), True))
+        pairs.append((f'{p.node_type} {p.identifier}',
+                      _element_anchor_url(p.node_type, p.identifier, config)))
     for parent in _find_citation_parents(node.identifier, all_roots):
         if not parent.identifier:
             continue
-        label = f'{parent.node_type} {parent.identifier}'
-        url = _element_anchor_url(parent.node_type, parent.identifier, config)
-        entries.append((hyperlink(label, url, fmt), False))
-    if not entries:
+        pairs.append((f'{parent.node_type} {parent.identifier}',
+                      _element_anchor_url(parent.node_type, parent.identifier, config)))
+    if not pairs:
         return ''
-    links = [bold(link, fmt) if is_bold else link for link, is_bold in entries]
-    return 'Supports: ' + ', '.join(links)
+    return 'Supports: ' + _linked_list(pairs, fmt, bold_first=has_direct_parent)
 
 
 def render_pkg_defines(pkg_root: Node, id_info: Dict[str, dict],
@@ -1858,13 +1849,10 @@ def render_pkg_defines(pkg_root: Node, id_info: Dict[str, dict],
             defined.append(node)
     if not defined:
         return ''
-    links = []
-    for i, node in enumerate(defined):
-        label = f'{node.node_type} {node.identifier}'
-        url = _element_anchor_url(node.node_type, node.identifier, config)
-        link = hyperlink(label, url, fmt)
-        links.append(bold(link, fmt) if i == 0 else link)
-    return 'Defines: ' + ', '.join(links)
+    pairs = [(f'{node.node_type} {node.identifier}',
+              _element_anchor_url(node.node_type, node.identifier, config))
+             for node in defined]
+    return 'Defines: ' + _linked_list(pairs, fmt)
 
 
 def render_pkg_citing(pkg_root: Node, id_info: Dict[str, dict],
@@ -1895,12 +1883,8 @@ def render_pkg_cited(pkg_root: Node, all_roots: List[Node],
                     citing_pkgs.append(cpid)
     if not citing_pkgs:
         return ''
-    links = []
-    for cpid in citing_pkgs:
-        label = f'Package {cpid}'
-        url = _pkg_anchor_url(cpid, config)
-        links.append(hyperlink(label, url, fmt))
-    return 'Cited by: ' + ', '.join(links)
+    pairs = [(f'Package {cpid}', _pkg_anchor_url(cpid, config)) for cpid in citing_pkgs]
+    return 'Cited by: ' + _linked_list(pairs, fmt, bold_first=False)
 
 
 def render_representation(pkg_root: Node, all_roots: List[Node],
@@ -1924,6 +1908,20 @@ def render_representation(pkg_root: Node, all_roots: List[Node],
     else:
         error(f"unsupported representation {selector!r}")
         return ''
+
+
+def _make_heading(anchor: str, level: int, heading_text: str, fmt: str) -> str:
+    """Return a format-appropriate heading string with an HTML anchor.
+
+    For markdown: an '<a id=...>' anchor line followed by a '#'-prefixed heading.
+    For HTML: a single '<hN id=...>...</hN>' element.
+    Returns a single string (lines joined with newline for markdown).
+    """
+    if fmt == 'markdown':
+        return '\n'.join([f'<a id="{anchor}"></a>',
+                          '#' * level + ' ' + heading_text])
+    else:
+        return f'<h{level} id="{anchor}">{escape_html_content(heading_text)}</h{level}>'
 
 
 def _apply_selections(selections: List[str], render_map: Dict[str, callable],
@@ -1963,11 +1961,6 @@ def render_element_selector(node_id: str, registry: Dict[str, Node],
         heading_text += f': {stmt}'
     fmt = state.doc_format
 
-    if fmt == 'markdown':
-        heading_lines = [f'<a id="{anchor}"></a>', '#' * level + ' ' + heading_text]
-    else:
-        heading_lines = [f'<h{level} id="{anchor}">{escape_html_content(heading_text)}</h{level}>']
-
     sel_names = [s.strip() for s in
                  config.get('element_selections', 'referenced_by,supported_by,supports')
                  .split(',') if s.strip()]
@@ -1978,7 +1971,7 @@ def render_element_selector(node_id: str, registry: Dict[str, Node],
     }
     selections_out = _apply_selections(sel_names, render_map, config, fmt)
 
-    parts = ['\n'.join(heading_lines)]
+    parts = [_make_heading(anchor, level, heading_text, fmt)]
     if selections_out:
         parts.append(selections_out)
     return '\n\n'.join(parts)
@@ -1996,11 +1989,6 @@ def _render_single_package(pkg_root: Node, all_roots: List[Node],
     if stmt:
         heading_text += f': {stmt}'
 
-    if fmt == 'markdown':
-        heading_lines = [f'<a id="{anchor}"></a>', '#' * level + ' ' + heading_text]
-    else:
-        heading_lines = [f'<h{level} id="{anchor}">{escape_html_content(heading_text)}</h{level}>']
-
     sel_names = [s.strip() for s in
                  config.get('package_selections',
                             'representation,pkg_defines,pkg_citing,pkg_cited')
@@ -2013,7 +2001,7 @@ def _render_single_package(pkg_root: Node, all_roots: List[Node],
     }
     selections_out = _apply_selections(sel_names, render_map, config, fmt)
 
-    parts = ['\n'.join(heading_lines)]
+    parts = [_make_heading(anchor, level, heading_text, fmt)]
     if selections_out:
         parts.append(selections_out)
     return '\n\n'.join(parts)
@@ -3058,6 +3046,23 @@ def commit_updates(pairs: List[Tuple[str, str]]) -> None:
             panic(f"cannot update {final!r}: {e}")
 
 
+def _get_pkg_root(node: Node) -> Node:
+    """Walk parent links to return the package root of node."""
+    while node.parent is not None:
+        node = node.parent
+    return node
+
+
+def _update_pkg_id_for_subtree(node: Node, old_pkg_id: str, new_pkg_id: str,
+                                id_info: Dict[str, dict]) -> None:
+    """Update decl_pkg_id in id_info for node and all its descendants."""
+    for n in _all_nodes([node]):
+        if n.identifier and n.identifier in id_info:
+            info = id_info[n.identifier]
+            if info.get('decl_pkg_id') == old_pkg_id:
+                info['decl_pkg_id'] = new_pkg_id
+
+
 def apply_rename(roots: List[Node], registry: Dict[str, Node],
                  id_info: Dict[str, dict], old: str, new: str) -> None:
     """Rename identifier old to new throughout the LTAC forest.
@@ -3135,18 +3140,11 @@ def apply_detach(roots: List[Node], registry: Dict[str, Node],
     # Update id_info: the new package root ID for node and all descendants.
     new_pkg_id = node.identifier
     old_pkg_id = id_info.get(node.identifier, {}).get('decl_pkg_id')
-    for n in _all_nodes([node]):
-        if n.identifier and n.identifier in id_info:
-            info = id_info[n.identifier]
-            if info.get('decl_pkg_id') == old_pkg_id:
-                info['decl_pkg_id'] = new_pkg_id
+    _update_pkg_id_for_subtree(node, old_pkg_id, new_pkg_id, id_info)
 
     # Record the new citation under the original package.
     id_info[target_id]['citations'] = id_info[target_id].get('citations', 0) + 1
-    pkg_root = cited
-    while pkg_root.parent is not None:
-        pkg_root = pkg_root.parent
-    citing_pkg = pkg_root.identifier
+    citing_pkg = _get_pkg_root(cited).identifier
     if citing_pkg and citing_pkg not in id_info[target_id].get('citing_pkg_ids', []):
         id_info[target_id].setdefault('citing_pkg_ids', []).append(citing_pkg)
 
@@ -3200,15 +3198,8 @@ def apply_move(roots: List[Node], registry: Dict[str, Node],
     _recalc_depths(node, dest.depth + 1)
 
     # Update decl_pkg_id for node and all its descendants.
-    dest_pkg_root = dest
-    while dest_pkg_root.parent is not None:
-        dest_pkg_root = dest_pkg_root.parent
-    new_pkg_id = dest_pkg_root.identifier
-    for n in _all_nodes([node]):
-        if n.identifier and n.identifier in id_info:
-            info = id_info[n.identifier]
-            if info.get('decl_pkg_id') == old_pkg_id:
-                info['decl_pkg_id'] = new_pkg_id
+    new_pkg_id = _get_pkg_root(dest).identifier
+    _update_pkg_id_for_subtree(node, old_pkg_id, new_pkg_id, id_info)
 
 
 def _make_temp(path: str, content: str, line_ending: str = '\n') -> Optional[str]:

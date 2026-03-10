@@ -21,6 +21,9 @@ An assurance case is "a body of evidence organized into an argument demonstratin
 property, such as safety, security, privacy, or reliability."
 ([NIST Special Publication 800-53A Revision 5](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53Ar5.pdf)).
 
+The [tutorial](docs/tutorial.md) explains how to use the tool.
+The [reference manual](docs/reference.md) explains tool use in detail.
+
 ## Background
 
 Large assurance cases are often maintained using specialized tools that

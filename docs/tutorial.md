@@ -19,77 +19,420 @@ smaller claims that together demonstrate that the claim holds.
 The problem is that as they get large, they can be painful to follow
 or maintain if you just maintain a document.
 
-## TL;DR: Quick start using caseproc
+`caseproc` splits the work into two parts:
 
-Create an empty directory (e.g., `mkdir demo; cd demo`).
-Now create a starter sample with the `--start` option:
+- A compact **LTAC file** (`case.ltac`) holds the argument structure —
+  the claims, strategies, evidence, and how they relate.
+- One or more **document files** (`case.md` etc.) hold the narrative detail
+  and context — everything you'd want to say *about* each element.
 
-~~~~sh
+`caseproc` reads the LTAC file and regenerates the structured portions
+of the document automatically (diagrams, headings, cross-reference links).
+You write the free-form prose; `caseproc` takes care of the boilerplate.
+
+---
+
+## Quick start
+
+Create an empty directory and run `--start`:
+
+```sh
+mkdir demo && cd demo
 caseproc --start
-~~~~
+```
 
-This creates a `case.ltac` and a `case.md` file.
+This creates two files:
 
-The `case.ltac` file is a simple file that shows basic structure
-of the assurance case, with repeatedly indented elements,
-in [Extended LTAC format specification](ltac-extended.txt) format.
+- `case.ltac` — a tiny starter argument (three elements)
+- `case.md` — a Markdown document with placeholder regions
 
-Here's what the file `case.ltac' might look like:
+Open `case.ltac` in your editor. It looks something like this:
 
-~~~~ltac
-- Claim Secure: The system is secure
+```ltac
+- Claim Top: Top level claim
   - Claim G2: G2 is true {needssupport}
   - Claim G3: G3 is true {needssupport}
-~~~~
+```
 
-Every non-blank line expresses an `element` of the case by starting with indentation (2 spaces per level) and `-`. There are several types of elements such as `Claim`, `Strategy`, `Assumption`, and `Evidence`. A `Claim` is a true-or-false claim. The element type is usually followed by its ID, which is usually short and *may* have spaces.
+Open `case.md`. Near the top you'll see:
 
-Strictly speaking, the ID is syntactically optional. If you don't specify an ID, the text is used as an ID (keeping spaces but removing a few characters like parentheses and curly braces). That said, we strongly encourage assigning an ID to each element; assigning IDs makes things easier.
-
-Every element in an assurance case has an ID (either stated directly or inferred from the text after the colon). Each ID is required to be globally unique.
-
-This type and optional ID is followed by colon, space, and the textual statement(in this case, the true/false statement of the claim).
-
-You can insert a blank line and start another "package" of elements,
-starting again from the top (0 indents). You can cite an element, instead of
-defining it, by using "^" in front of its ID.
-You can cite an element as many times as you want, but you can only define it
-(use with with a leading "^") once in assurance case.
-Citations make it easy to break down a complicated assurance case into
-a number of smaller packages.
-
-The file `case.md` contains markdown with all the details.
-It's a document you can edit.
-However, every region between these two markers will be updated
-by `caseproc`, so don't edit between any of them:
-
-~~~~markdown
-<!-- caseproc ... -->
+```markdown
+<!-- caseproc warning -->
+<!-- WARNING: DO NOT EDIT text within caseproc SELECTOR ... end caseproc. -->
+<!-- Those regions are regenerated. -->
 <!-- end caseproc -->
-~~~~
+```
 
-The sample starter creates the region `<!-- caseproc package * -->`;
-this will insert headings for every package, and for every package it
-will generate graphics and various useful hyperlinks.
+and further down:
 
-Whenever you run `caseproc` without any arguments, the tool will check
-to see if `case.ltac` is valid (and tell you if it isn't), and will
-update `case.md` (or whatever your documents are).
-This updating includes creating diagrams, hyperlinks, and so on.
+```markdown
+<!-- caseproc package * -->
+… generated diagram and index …
+<!-- end caseproc -->
 
-The `caseproc` tool has various options that can be used to
-ease maintenance of the assurance case. Normally the tool never updates
-the LTAC file, only the documentation file(s), but some options
-*do* change the LTAC file. This includes:
+<!-- caseproc element Top -->
+### Claim Top: Top level claim
+…
+<!-- end caseproc -->
 
-* `--update`: update the LTAC file to synchronize citation
-   statements with their declarations
-* `--rename OLD NEW`: rename identifier OLD to NEW in LTAC and document files.
-  If an identifier includes a space, be sure to surround the identifier
-  with "..." or '...' when invoking this command from the shell
-* `--restate LABEL STATEMENT`: update the statement for LABEL in LTAC
-  and document files.
-  If the identifier or statement includes a space, be sure to surround
-  them with "..." or '...' when invoking this command from the shell
-* `--missing`: re-render document files and insert element selectors
-  for missing elements; also flags leaf elements with needsSupport in the LTAC
+… more element regions …
+```
+
+Everything between a `<!-- caseproc … -->` marker and `<!-- end caseproc -->`
+is managed by `caseproc` — **don't edit inside those regions**.
+Everything *outside* them is yours to write freely.
+
+Now run `caseproc` (no arguments) to regenerate:
+
+```sh
+caseproc
+```
+
+It finds `case.ltac` and `case.md` automatically, validates the LTAC,
+and rewrites `case.md` with fresh generated content.
+The original `case.md` is backed up to `.backup/case.md` before any change.
+
+---
+
+## The LTAC file
+
+### Element syntax
+
+Every non-blank line in an LTAC file defines or cites one *element*:
+
+```
+INDENT - TYPE [^][IDENTIFIER]: statement text [{options}] [(ext_ref)]
+```
+
+- **`INDENT`** — two spaces per nesting level (root elements have none).
+- **`-`** — the bullet marker.
+- **`TYPE`** — the kind of element (see table below).
+- **`^`** — if present, this is a *citation* of an element declared elsewhere.
+- **`IDENTIFIER`** — a short name for the element, unique across the whole file.
+  Identifiers may contain spaces and most printable characters (but not `:` or `^`).
+  If omitted, the identifier is inferred from the statement text.
+- **`: statement text`** — what this element asserts or describes.
+- **`{options}`** — optional modifiers (see [Options](#options) below).
+- **`(ext_ref)`** — optional URL or filename used as the click-target
+  in diagrams.
+
+One or more blank lines ends one *package* and begins the next.
+
+### Element types
+
+| Type | Purpose |
+|---|---|
+| `Claim` | A true-or-false statement asserted to hold |
+| `Strategy` | An argument explaining how sub-claims or evidence collectively support a parent claim |
+| `Evidence` | An artifact (document, test result, …) cited in support |
+| `Context` | Background information or scope constraint for the parent element |
+| `Assumption` | A claim accepted as true without further argument |
+| `Justification` | A rationale or side-claim supporting a strategy |
+| `Link` | A back-reference to an element already defined earlier in the same package |
+
+The most common types are `Claim`, `Strategy`, and `Evidence`.
+`Context` and `Assumption` add background or preconditions.
+
+Here's a richer example:
+
+```ltac
+- Claim Secure: The system is adequately secure
+  - Strategy SecStrategy: Argue by examining all attack vectors
+    - Claim NetworkSafe: Network attacks are mitigated (network-analysis.pdf)
+      - Evidence PenTest: Penetration test results (pentest-2024.pdf)
+    - Claim AuthSafe: Authentication is robust
+      - Evidence Authn: Authentication design review (authn-review.md)
+    - Context Threat: Threat model is moderate adversary (threat-model.md)
+```
+
+### Options
+
+Options appear in `{...}` near the end of a line and modify the element:
+
+| Option | Meaning |
+|---|---|
+| `needssupport` | Placeholder; this claim still needs to be developed further |
+| `assumed` | Accepted without proof; flags it visually in diagrams |
+| `axiomatic` | Treated as a foundational axiom |
+| `defeated` | No longer believed to hold |
+
+The most useful option for active development is `needssupport`:
+it flags leaves that aren't finished yet.
+`--missing` adds `{needssupport}` automatically to any leaf claims.
+
+### Identifiers
+
+Identifiers must be unique across the entire LTAC file.
+Use short, memorable names — `AuthnClaim`, `G2`, `PenTest`.
+Spaces are legal: `- Claim Login Safe: Login is safe` works.
+If you omit the identifier entirely the text becomes the identifier,
+but explicit identifiers are easier to work with.
+
+---
+
+## The document file
+
+### Marked regions
+
+The document file is ordinary Markdown.
+You can write whatever you like — headings, paragraphs, tables, images —
+with one constraint: content between these two comment markers is owned
+by `caseproc`:
+
+```markdown
+<!-- caseproc SELECTOR -->
+…generated content (do not edit)…
+<!-- end caseproc -->
+```
+
+Each time you run `caseproc`, it replaces everything between the markers
+with freshly generated content for that `SELECTOR`.
+Write your narrative *outside* these regions.
+
+### Common selectors
+
+| Region | What it generates |
+|---|---|
+| `<!-- caseproc warning -->` | A "do not edit" reminder comment |
+| `<!-- caseproc package * -->` | Heading + diagram + index for every package |
+| `<!-- caseproc element ID -->` | Heading + cross-references for one element |
+| `<!-- caseproc sacm/mermaid ID -->` | SACM diagram for one package |
+| `<!-- caseproc gsn/mermaid * -->` | GSN diagrams for all packages |
+| `<!-- caseproc ltac/markdown * -->` | Full LTAC as a Markdown bullet list |
+| `<!-- caseproc statement ID -->` | Single-line statement text for ID |
+
+See [reference.md](reference.md) for the full selector table.
+
+### A typical document structure
+
+```markdown
+# My Assurance Case
+
+<!-- caseproc warning -->
+<!-- end caseproc -->
+
+## Summary diagrams
+
+<!-- caseproc package * -->
+<!-- end caseproc -->
+
+---
+
+## Claim: The system is adequately secure {#claim-secure}
+
+<!-- caseproc element Secure -->
+<!-- end caseproc -->
+
+Write your detailed narrative about this claim here.
+Explain the threat model, scope, and any caveats.
+This text is yours — caseproc never touches it.
+
+## Claim: Network attacks are mitigated
+
+<!-- caseproc element NetworkSafe -->
+<!-- end caseproc -->
+
+More narrative here …
+```
+
+The `element` selector generates a stable heading and cross-reference
+links (what supports this element, what it supports, where it's cited).
+Your prose goes immediately after the `<!-- end caseproc -->` line.
+
+### Using `--missing` to scaffold element regions
+
+If your LTAC has many elements, adding all the `element` regions by hand
+is tedious. `--missing` does it for you:
+
+```sh
+caseproc --missing
+```
+
+This re-renders all existing regions *and* appends a skeleton
+`element` region for every LTAC element that has no region yet.
+It also marks every leaf claim with `{needssupport}` if it lacks one.
+
+After running `--missing`, open `case.md` and rearrange the appended
+regions into the order you want. Move them next to the appropriate sections,
+add your narrative after each `<!-- end caseproc -->`, and run
+`caseproc` to regenerate.
+
+---
+
+## Running caseproc
+
+### Day-to-day workflow
+
+The typical loop is:
+
+1. Edit `case.ltac` — add/remove elements, change statements, restructure.
+2. Edit `case.md` — add or revise narrative text *outside* the marked regions.
+3. Run `caseproc` — it validates the LTAC and regenerates all marked regions.
+4. Review the updated document (diagrams, headings, cross-references).
+4. In a few cases you may want to run special `caseproc` commands, e.g.,
+   `--move` will move an LTAC element from one place to another.
+   You can also do this by directly editing the LTAC file, but it's
+   sometimes easier to let the tool do it for you.
+5. Repeat.
+
+```sh
+# Edit files, then:
+caseproc
+```
+
+`caseproc` exits with code 0 on success and 1 if any error occurs.
+Warnings (non-fatal issues) are printed to stderr but do not affect the exit
+code unless you pass `--error`.
+
+### Previewing without modifying files
+
+Use `--stdout` to see what `caseproc` would produce without changing anything:
+
+```sh
+caseproc --stdout
+```
+
+This is useful for reviewing output or piping it into another tool.
+
+For AI tools or any situation where you want to read the *document structure*
+without wading through generated diagrams, use `--strip --stdout`:
+
+```sh
+caseproc --strip --stdout
+```
+
+This produces the document with all selector regions emptied out (except
+`warning`), making it much easier to read the outline and your prose.
+
+### Validation only
+
+To check the LTAC for errors without modifying any files:
+
+```sh
+caseproc --validate
+```
+
+This is useful in CI pipelines — it exits non-zero if the LTAC is invalid
+or if any declared element lacks an `element` selector in the documents.
+
+---
+
+## Multi-package cases
+
+Once an assurance case grows large, a single flat list becomes hard to
+navigate. Split it into *packages*: separate each top-level tree with a
+blank line.
+
+```ltac
+- Claim Secure: The system is adequately secure
+  - Claim ^NetworkSafe:
+  - Claim ^AuthSafe:
+
+- Claim NetworkSafe: Network attacks are mitigated
+  - Evidence PenTest: Penetration test results (pentest-2024.pdf)
+
+- Claim AuthSafe: Authentication is robust
+  - Strategy AuthnStrategy: Argue by design and testing
+    - Evidence AuthnDesign: Authentication design review
+    - Evidence AuthnTest: Authentication test results
+```
+
+Each top-level `Claim` (with no indentation) begins a new package.
+The `^` prefix on `^NetworkSafe` and `^AuthSafe` means those are
+*citations* — references to elements defined in other packages.
+Citations are how you connect packages together.
+
+All packages must be reachable from the first element of the first package
+by following children and citations. An isolated package is an error.
+
+When you run `caseproc package *`, each package gets its own section with
+a diagram. Citations appear in the diagram as double-bracketed nodes
+(SACM notation) or subroutine-box nodes (GSN notation), with links that
+navigate to the package where the cited element is defined.
+
+For more on packages and citations, see [reference.md](reference.md).
+
+---
+
+## Keeping things in sync
+
+### Renaming an element
+
+To rename an element everywhere (LTAC file and all document files):
+
+```sh
+caseproc --rename OldId NewId
+```
+
+Identifiers with spaces need quoting:
+
+```sh
+caseproc --rename "Login Safe" LoginSafe
+```
+
+### Updating a statement
+
+To change an element's statement text everywhere, you can edit the
+LTAC file and regenerate the document.
+
+However, if you know the ID, you can use `--restate` like this:
+
+```sh
+caseproc --restate AuthSafe "Authentication mechanisms are robust and tested"
+```
+
+You can also use `--update` (next).
+
+### Syncing citation text
+
+When you update a declaration's statement, any citations (`^ID: old text`)
+become out of date. If you edit the declaration, you can
+run `--update` to resync them:
+
+```sh
+caseproc --update
+```
+
+This rewrites any citation whose text doesn't match its declaration.
+Without `--update`, a mismatch produces a warning suggesting you run it.
+
+---
+
+## Tips
+
+**Keep the LTAC focused on the argument.**
+The LTAC file expresses the logical structure — claims, strategies, evidence.
+Explanatory prose belongs in the document, outside the marked regions.
+
+**Use meaningful identifiers.**
+`AuthnClaim` is easier to work with than `G17`, especially for AI tools
+that read the document. However, if you really prefer conventional
+GSN naming conventions, you *can* use those conventions.
+
+**Put `<!-- caseproc warning -->` near the top.**
+It reminds readers (and automated tools) that certain regions are generated.
+
+**Use `--validate` in CI.**
+A quick `caseproc --validate` in your CI pipeline catches errors before
+they reach reviewers.
+
+**Use `--strip --stdout` to share the document with AI tools.**
+Running `caseproc --strip --stdout` produces a version of the document that
+omits the bulky generated diagrams and boilerplate, leaving just the
+document structure, your prose, and the LTAC markers.
+This makes it much easier for an AI to understand and reason about your case.
+
+---
+
+## Where to go from here
+
+- **[Reference manual](reference.md)** — complete documentation of all
+  options, selectors, element types, configuration keys, diagram formats,
+  validations, and file handling.
+- **[Extended LTAC format](ltac-extended.txt)** — the formal specification
+  of the LTAC file format.
+- **[SACM notation in Mermaid](sacm-mermaid.md)** — how SACM concepts map
+  to Mermaid shapes.
+- **[GSN notation in Mermaid](gsn-in-mermaid.md)** — how GSN concepts map
+  to Mermaid shapes.
+- **[README](../README.md)** — project overview and installation.

@@ -1,21 +1,25 @@
 # verocase README
 
-`verocase` is a simple open source software tool
+`verocase` is an open source software (OSS) tool
 that makes it *easy* and *efficient*
-to create and maintain a small or moderately-sized assurance case,
+to create and maintain an assurance case,
 e.g., for justifying why a system is secure against attack.
+The name verocase is derived from the Latin *vero*
+(meaning "in truth" or "truly") and *case*,
+(representing the tool's core mission to manage an assurance case and
+ensure it is a faithful and verified representation of its underlying data).
 
-More specifically, `verocase` is a simple open source software (OSS)
-Python3 script that reads a file written in our extended version of the simple
+The `verocase` program reads a file written
+in our extended version of the simple
 [Lightweight Text Assurance Case (LTAC) format](docs/ltac-extended.txt)
-and updates related markdown or HTML documentation.
+and updates all related markdown or HTML documentation.
 The result is an easily read and easily modified assurance case.
-The script automatically generates graphics
+The program can automatically generate graphics
 for both Structured Assurance Case Metamodel (SACM) and
-Goal Structuring Notation (GSN), and generates many hyperlinks
-to make it easy navigate an assurance case.
-Because these are simple text files, they're easily read and easily modified
-both by humans and by AI.
+Goal Structuring Notation (GSN), and it generates many hyperlinks
+to make it easy to navigate an assurance case.
+Because the inputs are simple text files,
+they're easily read and easily modified both by humans and by AI.
 
 An assurance case is "a body of evidence organized into an argument demonstrating that some claim about a system holds (i.e., is assured). An assurance case is needed when it is important to show that a system exhibits some complex
 property, such as safety, security, privacy, or reliability."
@@ -33,10 +37,11 @@ Examples include
 [Argevide PREMIS](https://www.argevide.com/assurance-case/).
 These specialized tools allow people to edit
 diagrams that flexibly present the information graphically.
-For large assurance cases these tools can be quite helpful.
+For large assurance cases where maximum flexibility is critical,
+these tools can be quite helpful.
 
 However, these sophisticated tools seem excessive for
-smaller assurance cases.
+smaller and medium-sized assurance cases.
 They require installation, learning to use them, and committing to
 storing all data in a database that can only be managed by a complex tool.
 I was looking for an alternative.
@@ -45,6 +50,7 @@ An obvious alternative to these sophisticated tools
 is to write an assurance case entirely as a traditional document.
 That's possible, and traditional document editing tools make it easy to
 edit a document.
+I've done this for a while.
 However, this approach doesn't provide *any* support for the
 structure of an assurance case.
 Maintaining an assurance case
@@ -62,7 +68,7 @@ the Object Management Group's
 [Structured Assurance Case Metamodel (SACM)](https://www.omg.org/spec/SACM),
 [Goal Structuring Notation (GSN)](https://scsc.uk/gsn-standard), and
 [Claims Arguments Evidence (CAE)](https://claimsargumentsevidence.org/notations/claims-arguments-evidence-cae/).
-Hand-maintaining them can be burdensome, involving carefully placing
+Hand-maintaining the graphics can be burdensome, involving carefully placing
 all the symbols, and moving and updating them as information changes.
 An AI can help, but it's error-prone for humans to maintain them,
 and AI can make the same mistakes.
@@ -84,14 +90,12 @@ This tool, `verocase`, takes a completely different approach:
   (default file `case.[md,html]` in `./` or `docs/`).
   Note that it *automatically* generates graphical notation in SACM or
   GSN notation - you don't need to fiddle with the graphics at all.
-  It also automatically generates a number of hypertext links, making it
+  It also automatically generates many hypertext links, making it
   easy to navigate the assurance case.
   The expectation is that humans and AIs would edit these documents to
-  provide all the details (aka "content").
-  In contrast, `verocase` updates the document to
-  keep all information easily in sync.
+  provide all the details (aka SACM "content").
 
-Just run `verocase` and the output documents will be updated based on the
+Just run `verocase` and the document files will be updated based on the
 input LTAC file.
 
 Currently the tool can generate both SACM and GSN notation in mermaid format.
@@ -167,24 +171,27 @@ that a pure document approach does not.
 The big con of this approach is that to make it work, we are intentionally
 imposing various limits:
 
-* The hierarchical representation of LTAC forces a hierarchy that GSN and SACM
-  don't natively require. Instead, we require that an assurance case
-  be grouped into multiple packages (modules).
-  Each package must have
-  a single top claim and it must be hierarchically decomposed.
-  We name the package after that top claim, and we also
-  require that any claim only be defined in one package.
-  However, a claim may be *referenced* in many packages, and "Links" allow
-  references to an element already in use.
-  These abilities mean that these restrictions aren't
-  a serious problem in practice.
+* We require that the assurance case be organized as a set of packages,
+  where each package is a hierarchy.
+  This restriction is required by our extended LTAC input form.
+  This restriction is allowed but not strictly required by widely-used
+  assurance case notations like GSN, SACM, and CAE.
+  This is key to our approach; this restriction greatly simplifies expression
+  the assurance case, as a package can now be represented as
+  clearly indented information.
+  Each package must have a single top claim or justification, as
+  we name the package after that top element.
+  This restriction is not a problem in practice, because
+  a claim or justification may be *referenced* in any package,
+  and "Links" allow references to an element already in use in a package.
 * We generate graphics automatically, and we currently
   use `mermaid` because it's
   directly support by GitHub's built-in markdown processor.
-  Mermaid is quite limited in what it can do. This isn't too bad if you
-  limit your packages to smaller numbers of elements, but it's definitely
-  a limitation. You can have as many packages as you want; we suggest
-  limiting package size. That's easier for humans to follow, too.
+  Mermaid is limited in what it can do, but this isn't a serious problem if
+  your packages don't have too many elements.
+  You can have as many packages as you want, so we suggest
+  limiting the size of each package. Smaller packages are
+  easier for humans to follow, too.
 * This is not a database, it's a way to make it easier to manage documents.
   If you want a database, this tool
   isn't it. So if you are managing a large

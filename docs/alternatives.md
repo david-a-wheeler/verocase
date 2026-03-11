@@ -3,7 +3,8 @@
 `verocase` occupies a largely unique niche:
 plain text LTAC input, in-place markdown/HTML output,
 auto-generated Mermaid SACM/GSN diagrams, and no external dependencies.
-It was formerly named `ltacproc`.
+It was formerly named `ltacproc` and then `caseproc`;
+names are hard.
 
 The tools below are alternative tools for managing assurance cases
 according to CoPilot.

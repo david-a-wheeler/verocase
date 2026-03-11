@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
-"""Test suite for caseproc.
+"""Test suite for verocase.
 
 This test suite uses only Python's standard-library 'unittest' module so that
-no third-party packages (e.g. pytest) are required.  This keeps caseproc
+no third-party packages (e.g. pytest) are required.  This keeps verocase
 dependency-free and makes CI straightforward on any Python 3 installation.
 
 To run tests (from the project root), do one of these:
@@ -48,21 +48,21 @@ import sys
 import tempfile
 import unittest
 
-# Locate caseproc relative to this file so tests work from any directory.
+# Locate verocase relative to this file so tests work from any directory.
 # Use abspath to normalise away any leading ./ that Python adds to __file__
 # when the script is invoked as ./run_tests.py from the tests/ directory.
 _HERE    = os.path.dirname(os.path.abspath(__file__))
-LTACPROC = [sys.executable, os.path.join(_HERE, '..', 'caseproc.py')]
+LTACPROC = [sys.executable, os.path.join(_HERE, '..', 'verocase.py')]
 FIXTURES = os.path.join(_HERE, 'fixtures')
 RESULTS  = os.path.join(_HERE, 'results')
 
 
 def run(*args):
-    """Run caseproc with the given arguments and return the CompletedProcess.
+    """Run verocase with the given arguments and return the CompletedProcess.
 
     Runs in the FIXTURES directory so that stray case.md / case.ltac files in
     the project root are never auto-discovered during testing.  All paths
-    passed to caseproc are already absolute (via fixture()), so this is safe.
+    passed to verocase are already absolute (via fixture()), so this is safe.
     """
     return subprocess.run(
         LTACPROC + list(args), capture_output=True, text=True, encoding='utf-8',
@@ -310,8 +310,8 @@ class TestDubiousReference(unittest.TestCase):
         json.dump({'warn_dubious_reference': False}, cfg)
         cfg.close()
         md = tempfile.NamedTemporaryFile(mode='w', suffix='.md', delete=False)
-        md.write('<!-- caseproc package * -->\n<!-- end caseproc -->\n')
-        md.write('<!-- caseproc element C1 -->\n<!-- end caseproc -->\n')
+        md.write('<!-- verocase package * -->\n<!-- end verocase -->\n')
+        md.write('<!-- verocase element C1 -->\n<!-- end verocase -->\n')
         md.close()
         try:
             r = run('--ltac', ltac, '--config', cfg.name, '--validate', md.name)
@@ -324,7 +324,7 @@ class TestDubiousReference(unittest.TestCase):
 
 class TestDefaultMode(unittest.TestCase):
     def test_filter_mode_output(self):
-        """--stdout replaces stale caseproc regions and passes other lines through."""
+        """--stdout replaces stale verocase regions and passes other lines through."""
         result = run('--ltac', fixture('simple.ltac'),
                      '--config', fixture('doc-simple.config'),
                      '--stdout', fixture('doc-simple-input.md'))
@@ -735,7 +735,7 @@ class TestMermaidHtml(unittest.TestCase):
 
     def test_sacm_html_produces_pre_block(self):
         """sacm/mermaid/html produces <pre class="mermaid"> inside an HTML file."""
-        content = '<!-- caseproc sacm/mermaid/html -->\n<!-- end caseproc -->\n'
+        content = '<!-- verocase sacm/mermaid/html -->\n<!-- end verocase -->\n'
         tmp = self._tmp_html(content)
         try:
             result = run('--ltac', fixture('simple.ltac'), tmp)
@@ -747,7 +747,7 @@ class TestMermaidHtml(unittest.TestCase):
 
     def test_sacm_html_injects_mermaid_js(self):
         """First sacm/mermaid/html region gets a <script> block prepended."""
-        content = '<!-- caseproc sacm/mermaid/html -->\n<!-- end caseproc -->\n'
+        content = '<!-- verocase sacm/mermaid/html -->\n<!-- end verocase -->\n'
         tmp = self._tmp_html(content)
         try:
             result = run('--ltac', fixture('simple.ltac'), tmp)
@@ -765,7 +765,7 @@ class TestMermaidHtml(unittest.TestCase):
         """Setting mermaid_js_url to '' disables script injection."""
         import json, tempfile
         fd, cfg = tempfile.mkstemp(suffix='.json')
-        content = '<!-- caseproc sacm/mermaid/html -->\n<!-- end caseproc -->\n'
+        content = '<!-- verocase sacm/mermaid/html -->\n<!-- end verocase -->\n'
         tmp = self._tmp_html(content)
         try:
             with os.fdopen(fd, 'w') as f:
@@ -784,8 +784,8 @@ class TestLineEndings(unittest.TestCase):
         """A CRLF document file is updated and written back with CRLF line endings."""
         # Build a minimal CRLF document with an inline region.
         crlf_content = (
-            '<!-- caseproc ltac/markdown -->\r\n'
-            '<!-- end caseproc -->\r\n'
+            '<!-- verocase ltac/markdown -->\r\n'
+            '<!-- end verocase -->\r\n'
         )
         os.makedirs(RESULTS, exist_ok=True)
         tmp = os.path.join(RESULTS, 'crlf-test.md')
@@ -1325,10 +1325,10 @@ class TestWriteLTAC(unittest.TestCase):
         """write_ltac round-trips a simple LTAC file without loss."""
         with open(fixture('simple.ltac'), encoding='utf-8') as f:
             original = f.read()
-        # Run caseproc --selftest to check doctest; for round-trip we use --select
+        # Run verocase --selftest to check doctest; for round-trip we use --select
         # with a write-ltac selector not yet available, so we test indirectly by
         # parsing the file, serialising, re-parsing and checking --select output matches.
-        # (Full write_ltac unit tests live in the doctest embedded in caseproc itself.)
+        # (Full write_ltac unit tests live in the doctest embedded in verocase itself.)
         r1 = run('--ltac', fixture('simple.ltac'), '--select', 'ltac/markdown')
         self.assertEqual(r1.returncode, 0)
         # Write serialised LTAC to a temp file, then round-trip it.
@@ -1355,11 +1355,11 @@ class TestCommitUpdates(unittest.TestCase):
             final = os.path.join(tmpdir, 'out.md')
             with open(final, 'w') as f:
                 f.write('old content\n')
-            # Create a "new" temp file in the same dir (as caseproc does).
+            # Create a "new" temp file in the same dir (as verocase does).
             fd, tmp = _tf.mkstemp(dir=tmpdir)
             with os.fdopen(fd, 'w') as f:
                 f.write('new content\n')
-            # Run caseproc in default mode on a file that needs updating.
+            # Run verocase in default mode on a file that needs updating.
             # We test commit_updates behaviour indirectly: after a default-mode
             # run that changes a file, verify .backup/ exists and final is updated.
             src = fixture('inline-input.md')
@@ -1396,9 +1396,9 @@ class TestMissingOption(unittest.TestCase):
             self.assertEqual(r.returncode, 0)
             content = read_file(tmp_doc)
             # AR1, C2, E1, C3, A1, X1 were not in the document; they should be added.
-            self.assertIn('<!-- caseproc element AR1 -->', content)
-            self.assertIn('<!-- caseproc element C2 -->', content)
-            self.assertIn('<!-- caseproc element C1 -->', content)  # was already there
+            self.assertIn('<!-- verocase element AR1 -->', content)
+            self.assertIn('<!-- verocase element C2 -->', content)
+            self.assertIn('<!-- verocase element C1 -->', content)  # was already there
         finally:
             os.unlink(tmp_doc)
             os.unlink(tmp_ltac)
@@ -1471,7 +1471,7 @@ class TestMissingOption(unittest.TestCase):
 
 class TestCaseprocConfig(unittest.TestCase):
     def test_config_directive_changes_level(self):
-        """<!-- caseproc-config element_level = 2 --> changes heading level for element regions."""
+        """<!-- verocase-config element_level = 2 --> changes heading level for element regions."""
         r = run('--ltac', fixture('simple.ltac'), '--stdout', fixture('element-selector-input.md'),
                 '--config', fixture('doc-simple.config'))
         self.assertEqual(r.returncode, 0)
@@ -1480,9 +1480,9 @@ class TestCaseprocConfig(unittest.TestCase):
         # Now with a doc that overrides element_level via directive
         import tempfile, os
         with tempfile.NamedTemporaryFile(mode='w', suffix='.md', delete=False) as f:
-            f.write('<!-- caseproc-config element_level = 2 -->\n')
-            f.write('<!-- caseproc element C1 -->\n')
-            f.write('<!-- end caseproc -->\n')
+            f.write('<!-- verocase-config element_level = 2 -->\n')
+            f.write('<!-- verocase element C1 -->\n')
+            f.write('<!-- end verocase -->\n')
             tmp = f.name
         try:
             r2 = run('--ltac', fixture('simple.ltac'), '--stdout', tmp)
@@ -1492,10 +1492,10 @@ class TestCaseprocConfig(unittest.TestCase):
             os.unlink(tmp)
 
     def test_config_directive_invalid_key_warns(self):
-        """An unknown key in caseproc-config produces a warning."""
+        """An unknown key in verocase-config produces a warning."""
         import tempfile, os
         with tempfile.NamedTemporaryFile(mode='w', suffix='.md', delete=False) as f:
-            f.write('<!-- caseproc-config no_such_key = value -->\n')
+            f.write('<!-- verocase-config no_such_key = value -->\n')
             tmp = f.name
         try:
             r = run('--ltac', fixture('simple.ltac'), '--stdout', tmp)
@@ -1505,10 +1505,10 @@ class TestCaseprocConfig(unittest.TestCase):
             os.unlink(tmp)
 
     def test_config_directive_invalid_value_warns(self):
-        """An out-of-range value in caseproc-config produces a warning."""
+        """An out-of-range value in verocase-config produces a warning."""
         import tempfile, os
         with tempfile.NamedTemporaryFile(mode='w', suffix='.md', delete=False) as f:
-            f.write('<!-- caseproc-config element_level = 9 -->\n')
+            f.write('<!-- verocase-config element_level = 9 -->\n')
             tmp = f.name
         try:
             r = run('--ltac', fixture('simple.ltac'), '--stdout', tmp)
@@ -1518,12 +1518,12 @@ class TestCaseprocConfig(unittest.TestCase):
             os.unlink(tmp)
 
     def test_config_directive_persists_across_regions(self):
-        """A caseproc-config directive affects all subsequent element regions in the file."""
+        """A verocase-config directive affects all subsequent element regions in the file."""
         import tempfile, os
         with tempfile.NamedTemporaryFile(mode='w', suffix='.md', delete=False) as f:
-            f.write('<!-- caseproc-config element_level = 1 -->\n')
-            f.write('<!-- caseproc element C1 -->\n')
-            f.write('<!-- end caseproc -->\n')
+            f.write('<!-- verocase-config element_level = 1 -->\n')
+            f.write('<!-- verocase element C1 -->\n')
+            f.write('<!-- end verocase -->\n')
             tmp = f.name
         try:
             r = run('--ltac', fixture('simple.ltac'), '--stdout', tmp)
@@ -1535,16 +1535,16 @@ class TestCaseprocConfig(unittest.TestCase):
             os.unlink(tmp)
 
     def test_config_wrong_syntax_is_error(self):
-        """'<!-- caseproc config KEY = VALUE -->' (wrong form) produces an error."""
+        """'<!-- verocase config KEY = VALUE -->' (wrong form) produces an error."""
         import tempfile, os
         with tempfile.NamedTemporaryFile(mode='w', suffix='.md', delete=False) as f:
-            f.write('<!-- caseproc config element_level = 2 -->\n')
-            f.write('<!-- end caseproc -->\n')
+            f.write('<!-- verocase config element_level = 2 -->\n')
+            f.write('<!-- end verocase -->\n')
             tmp = f.name
         try:
             r = run('--ltac', fixture('simple.ltac'), '--stdout', tmp)
             self.assertNotEqual(r.returncode, 0)
-            self.assertIn('caseproc-config', r.stderr)
+            self.assertIn('verocase-config', r.stderr)
         finally:
             os.unlink(tmp)
 
@@ -1565,12 +1565,12 @@ class TestWarningSelector(unittest.TestCase):
         self.assertIn('no parameters', r.stderr)
 
     def test_warning_region_rendered(self):
-        """A <!-- caseproc warning --> region is filled with the warning text."""
+        """A <!-- verocase warning --> region is filled with the warning text."""
         import tempfile, os
         with tempfile.NamedTemporaryFile(mode='w', suffix='.md', delete=False) as f:
-            f.write('<!-- caseproc warning -->\n')
+            f.write('<!-- verocase warning -->\n')
             f.write('stale content\n')
-            f.write('<!-- end caseproc -->\n')
+            f.write('<!-- end verocase -->\n')
             tmp = f.name
         try:
             r = run('--ltac', fixture('simple.ltac'), '--stdout', tmp)
@@ -1588,12 +1588,12 @@ class TestWarningSelector(unittest.TestCase):
             f.write(ltac)
             ltac_path = f.name
         doc = (
-            '<!-- caseproc warning -->\n'
+            '<!-- verocase warning -->\n'
             'stale warning\n'
-            '<!-- end caseproc -->\n'
+            '<!-- end verocase -->\n'
             '\n'
-            '<!-- caseproc element Root -->\n'
-            '<!-- end caseproc -->\n'
+            '<!-- verocase element Root -->\n'
+            '<!-- end verocase -->\n'
         )
         with tempfile.NamedTemporaryFile(mode='w', suffix='.md', delete=False) as f:
             f.write(doc)
@@ -1616,14 +1616,14 @@ class TestWarningSelector(unittest.TestCase):
             f.write(ltac)
             ltac_path = f.name
         doc = (
-            '<!-- caseproc warning -->\n'
-            '<!-- end caseproc -->\n'
+            '<!-- verocase warning -->\n'
+            '<!-- end verocase -->\n'
             '\n'
-            '<!-- caseproc package * -->\n'
-            '<!-- end caseproc -->\n'
+            '<!-- verocase package * -->\n'
+            '<!-- end verocase -->\n'
             '\n'
-            '<!-- caseproc element Root -->\n'
-            '<!-- end caseproc -->\n'
+            '<!-- verocase element Root -->\n'
+            '<!-- end verocase -->\n'
         )
         with tempfile.NamedTemporaryFile(mode='w', suffix='.md', delete=False) as f:
             f.write(doc)
@@ -1635,10 +1635,10 @@ class TestWarningSelector(unittest.TestCase):
             self.assertIn('DO NOT EDIT', r.stdout)
             # package and element selectors: markers present but bodies empty
             lines = r.stdout.splitlines()
-            pkg_idx = next(i for i, l in enumerate(lines) if 'caseproc package' in l)
-            self.assertEqual(lines[pkg_idx + 1], '<!-- end caseproc -->')
-            elem_idx = next(i for i, l in enumerate(lines) if 'caseproc element Root' in l)
-            self.assertEqual(lines[elem_idx + 1], '<!-- end caseproc -->')
+            pkg_idx = next(i for i, l in enumerate(lines) if 'verocase package' in l)
+            self.assertEqual(lines[pkg_idx + 1], '<!-- end verocase -->')
+            elem_idx = next(i for i, l in enumerate(lines) if 'verocase element Root' in l)
+            self.assertEqual(lines[elem_idx + 1], '<!-- end verocase -->')
         finally:
             os.unlink(ltac_path)
             os.unlink(doc_path)
@@ -1674,9 +1674,9 @@ class TestStartOption(unittest.TestCase):
             # Doc: warning region filled
             self.assertIn('DO NOT EDIT', doc_content)
             # Doc: element regions for all three nodes appended
-            self.assertIn('<!-- caseproc element Top -->', doc_content)
-            self.assertIn('<!-- caseproc element G2 -->', doc_content)
-            self.assertIn('<!-- caseproc element G3 -->', doc_content)
+            self.assertIn('<!-- verocase element Top -->', doc_content)
+            self.assertIn('<!-- verocase element G2 -->', doc_content)
+            self.assertIn('<!-- verocase element G3 -->', doc_content)
         finally:
             shutil.rmtree(workdir, ignore_errors=True)
 
@@ -1707,7 +1707,7 @@ class TestNormalPath(unittest.TestCase):
     """Tests that verify auto-discovery of case.ltac and case.md in CWD.
 
     Each test creates a temporary working directory, copies fixtures into it
-    as 'case.ltac' / 'case.md', and runs caseproc as a subprocess with that
+    as 'case.ltac' / 'case.md', and runs verocase as a subprocess with that
     directory as the CWD — exactly how a real user would use the tool.
     """
 
@@ -1717,7 +1717,7 @@ class TestNormalPath(unittest.TestCase):
         return tempfile.mkdtemp(dir=base)
 
     def _run_in(self, workdir, *args):
-        """Run caseproc in workdir with the given arguments."""
+        """Run verocase in workdir with the given arguments."""
         return subprocess.run(
             LTACPROC + list(args),
             capture_output=True, text=True, encoding='utf-8',
@@ -1725,7 +1725,7 @@ class TestNormalPath(unittest.TestCase):
         )
 
     def test_autodiscover_ltac(self):
-        """caseproc discovers case.ltac automatically when --ltac is omitted."""
+        """verocase discovers case.ltac automatically when --ltac is omitted."""
         workdir = self._make_workdir()
         try:
             shutil.copy(fixture('simple.ltac'), os.path.join(workdir, 'case.ltac'))
@@ -1740,7 +1740,7 @@ class TestNormalPath(unittest.TestCase):
             shutil.rmtree(workdir, ignore_errors=True)
 
     def test_autodiscover_doc(self):
-        """caseproc discovers case.md automatically when no document file is given."""
+        """verocase discovers case.md automatically when no document file is given."""
         workdir = self._make_workdir()
         try:
             shutil.copy(fixture('simple.ltac'), os.path.join(workdir, 'case.ltac'))
@@ -1754,7 +1754,7 @@ class TestNormalPath(unittest.TestCase):
             shutil.rmtree(workdir, ignore_errors=True)
 
     def test_autodiscover_both(self):
-        """caseproc with no arguments discovers both case.ltac and case.md."""
+        """verocase with no arguments discovers both case.ltac and case.md."""
         workdir = self._make_workdir()
         try:
             shutil.copy(fixture('simple.ltac'), os.path.join(workdir, 'case.ltac'))
@@ -1812,12 +1812,12 @@ class TestNormalPath(unittest.TestCase):
             shutil.copy(fixture('simple.ltac'), os.path.join(workdir, 'case.ltac'))
             # A minimal doc with no element regions so --missing adds stubs.
             with open(os.path.join(workdir, 'case.md'), 'w', encoding='utf-8') as f:
-                f.write('# Test\n\n<!-- caseproc package * -->\n<!-- end caseproc -->\n')
+                f.write('# Test\n\n<!-- verocase package * -->\n<!-- end verocase -->\n')
             r = self._run_in(workdir, '--missing')
             self.assertEqual(r.returncode, 0, r.stderr)
             content = read_file(os.path.join(workdir, 'case.md'))
             # --missing appends element regions for undocumented nodes
-            self.assertIn('<!-- caseproc element', content)
+            self.assertIn('<!-- verocase element', content)
         finally:
             shutil.rmtree(workdir, ignore_errors=True)
 
@@ -1875,7 +1875,7 @@ class TestMermaidWidthConfig(unittest.TestCase):
         return '\n'.join(lines) + '\n'
 
     def _run_with_config(self, ltac_text, cfg, selector='sacm/mermaid'):
-        """Write temp LTAC + config, run caseproc --select selector, return result."""
+        """Write temp LTAC + config, run verocase --select selector, return result."""
         import json
         fd_l, ltac_path = tempfile.mkstemp(suffix='.ltac')
         fd_c, cfg_path = tempfile.mkstemp(suffix='.json')
@@ -1962,7 +1962,7 @@ class TestMermaidWidthConfig(unittest.TestCase):
         self.assertIn('C1', r.stdout)
 
     def test_config_directive_sets_max(self):
-        """caseproc-config directives can set max/narrowed_mermaid_children."""
+        """verocase-config directives can set max/narrowed_mermaid_children."""
         ltac_text = self._wide_ltac(10)
         fd_l, ltac_path = tempfile.mkstemp(suffix='.ltac')
         fd_d, doc_path = tempfile.mkstemp(suffix='.md')
@@ -1971,10 +1971,10 @@ class TestMermaidWidthConfig(unittest.TestCase):
                 f.write(ltac_text)
             # Set narrowed first to avoid transient invariant failure
             with os.fdopen(fd_d, 'w', encoding='utf-8') as f:
-                f.write('<!-- caseproc-config narrowed_mermaid_children = 2 -->\n')
-                f.write('<!-- caseproc-config max_mermaid_children = 4 -->\n')
-                f.write('<!-- caseproc sacm/mermaid -->\n')
-                f.write('<!-- end caseproc -->\n')
+                f.write('<!-- verocase-config narrowed_mermaid_children = 2 -->\n')
+                f.write('<!-- verocase-config max_mermaid_children = 4 -->\n')
+                f.write('<!-- verocase sacm/mermaid -->\n')
+                f.write('<!-- end verocase -->\n')
             r = run('--ltac', ltac_path, '--stdout', doc_path)
             self.assertEqual(r.returncode, 0, r.stderr)
             self.assertIn('SynConnect_', r.stdout)

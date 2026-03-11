@@ -7,9 +7,9 @@ Usage:
 Transforms each FILE in-place:
 - Removes stale <a id="TYPE-id..."></a> anchor lines.
 - Replaces LTAC-shaped markdown headers with element/package selector regions.
-  '# Package ID'       -> <!-- caseproc package ID -->\\n<!-- end caseproc -->
-  '## Claim ID: text'  -> <!-- caseproc element ID -->\\n<!-- end caseproc -->
-- Adds explicit element IDs to <!-- caseproc SELECTOR --> regions that have no
+  '# Package ID'       -> <!-- verocase package ID -->\\n<!-- end verocase -->
+  '## Claim ID: text'  -> <!-- verocase element ID -->\\n<!-- end verocase -->
+- Adds explicit element IDs to <!-- verocase SELECTOR --> regions that have no
   ID, using the ID from the most recently seen LTAC header.
 """
 
@@ -34,9 +34,9 @@ _ANCHOR_RE = re.compile(
     re.IGNORECASE,
 )
 
-# Matches a caseproc region start with no element ID (selector only, no ID).
+# Matches a verocase region start with no element ID (selector only, no ID).
 _REGION_NO_ID_RE = re.compile(
-    r'^<!--\s*caseproc\s+(statement|references|info|sacm/mermaid|gsn/mermaid'
+    r'^<!--\s*verocase\s+(statement|references|info|sacm/mermaid|gsn/mermaid'
     r'|ltac/markdown|ltac/html)\s*-->\s*$'
 )
 
@@ -70,13 +70,13 @@ def migrate(text: str) -> str:
                 ident = pm.group(2)
                 if type_str == 'Package':
                     current_id = ident
-                    out.append(f'<!-- caseproc package {ident} -->\n')
-                    out.append('<!-- end caseproc -->\n')
+                    out.append(f'<!-- verocase package {ident} -->\n')
+                    out.append('<!-- end verocase -->\n')
                     continue
                 elif type_str in _ELEMENT_TYPE_NAMES:
                     current_id = ident
-                    out.append(f'<!-- caseproc element {ident} -->\n')
-                    out.append('<!-- end caseproc -->\n')
+                    out.append(f'<!-- verocase element {ident} -->\n')
+                    out.append('<!-- end verocase -->\n')
                     continue
 
         # Add explicit ID to selectors that are missing one, if we know the current element.
@@ -84,7 +84,7 @@ def migrate(text: str) -> str:
             rm = _REGION_NO_ID_RE.match(stripped)
             if rm:
                 selector = rm.group(1)
-                out.append(f'<!-- caseproc {selector} {current_id} -->\n')
+                out.append(f'<!-- verocase {selector} {current_id} -->\n')
                 continue
 
         out.append(line)

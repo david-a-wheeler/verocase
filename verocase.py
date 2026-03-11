@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""caseproc - process assurance case LTAC file and update Markdown/HTML
+"""verocase - process assurance case LTAC file and update Markdown/HTML
 
-(C) Copyright David A. Wheeler and caseproc contributors
+(C) Copyright David A. Wheeler and verocase contributors
 
 SPDX-License-Identifier: MIT
 """
@@ -45,14 +45,14 @@ _strict = False # If true, turn warnings into errors
 
 def panic(msg: str) -> None:
     """Print a fatal error to stderr and exit immediately."""
-    print(f"caseproc: fatal: {msg}", file=sys.stderr)
+    print(f"verocase: fatal: {msg}", file=sys.stderr)
     sys.exit(1)
 
 
 def error(msg: str) -> None:
     """Print an error to stderr and set the error flag."""
     global _had_error
-    print(f"caseproc: error: {msg}", file=sys.stderr)
+    print(f"verocase: error: {msg}", file=sys.stderr)
     _had_error = True
 
 
@@ -61,12 +61,12 @@ def warn(msg: str) -> None:
     if _strict:
         error(msg)
     else:
-        print(f"caseproc: warning: {msg}", file=sys.stderr)
+        print(f"verocase: warning: {msg}", file=sys.stderr)
 
 
 def notify(msg: str) -> None:
     """Print an informational notification to stderr."""
-    print(f"caseproc: {msg}", file=sys.stderr)
+    print(f"verocase: {msg}", file=sys.stderr)
 
 
 DEFAULT_CONFIG = {
@@ -1755,7 +1755,7 @@ _VALID_DISPLAY_TYPES = {
     'statement',
     'element', 'package',
     'warning',
-    'config',  # recognized to give a helpful error directing users to caseproc-config
+    'config',  # recognized to give a helpful error directing users to verocase-config
     'referenced_by', 'supported_by', 'supports',
     'representation', 'pkg_defines', 'pkg_citing', 'pkg_cited',
 }
@@ -2120,7 +2120,7 @@ def render_package_selector(pkg_id_or_star: str, all_roots: List[Node],
 
 
 _WARNING_TEXT = (
-    '<!-- WARNING: DO NOT EDIT text within caseproc SELECTOR ... end caseproc. -->\n'
+    '<!-- WARNING: DO NOT EDIT text within verocase SELECTOR ... end verocase. -->\n'
     '<!-- Those regions are regenerated. -->'
 )
 
@@ -2151,7 +2151,7 @@ def render_selector(
     display_type, element_id = parse_selector(selector, doc_format, config)
 
     if display_type == 'config':
-        error("use '<!-- caseproc-config KEY = VALUE -->' (not '<!-- caseproc config ...-->')")
+        error("use '<!-- verocase-config KEY = VALUE -->' (not '<!-- verocase config ...-->')")
         return ''
     elif display_type == 'warning':
         return render_warning(element_id)
@@ -2234,11 +2234,11 @@ def _maybe_inject_mermaid_js(rendered: str, config: dict, state: 'DocState') -> 
     return script + rendered
 
 
-# Matches '<!-- caseproc SELECTOR -->' lines (SELECTOR is captured in group 1).
-_CASEPROC_REGION_RE = re.compile(r'^<!--\s*caseproc\s+(.+?)\s*-->\s*$')
+# Matches '<!-- verocase SELECTOR -->' lines (SELECTOR is captured in group 1).
+_CASEPROC_REGION_RE = re.compile(r'^<!--\s*verocase\s+(.+?)\s*-->\s*$')
 
-# Matches '<!-- caseproc-config KEY = VALUE -->' directives.
-_CASEPROC_CONFIG_RE = re.compile(r'^<!--\s*caseproc-config\s+(\S+)\s*=\s*(.*?)\s*-->\s*$')
+# Matches '<!-- verocase-config KEY = VALUE -->' directives.
+_CASEPROC_CONFIG_RE = re.compile(r'^<!--\s*verocase-config\s+(\S+)\s*=\s*(.*?)\s*-->\s*$')
 
 # Allowed dynamically-settable config keys and their validation patterns.
 _ALLOWED_CONFIG_VALUES = {
@@ -2278,16 +2278,16 @@ def config_invariant_checker(config: dict,
 
 def apply_config_directive(key: str, value: str, config: dict,
                            filename: str, lineno: int) -> None:
-    """Apply a caseproc-config directive, warning on invalid key or value."""
+    """Apply a verocase-config directive, warning on invalid key or value."""
     if key not in DEFAULT_CONFIG:
-        warn(f"{filename}:{lineno}: caseproc-config: unknown key {key!r}")
+        warn(f"{filename}:{lineno}: verocase-config: unknown key {key!r}")
         return
     pattern = _ALLOWED_CONFIG_VALUES.get(key)
     if pattern is None:
-        warn(f"{filename}:{lineno}: caseproc-config: key {key!r} is not dynamically settable")
+        warn(f"{filename}:{lineno}: verocase-config: key {key!r} is not dynamically settable")
         return
     elif not pattern.match(value):
-        warn(f"{filename}:{lineno}: caseproc-config: invalid value {value!r} for {key!r}")
+        warn(f"{filename}:{lineno}: verocase-config: invalid value {value!r} for {key!r}")
         return
     if key in ('element_level', 'package_level',
                'max_mermaid_children', 'narrowed_mermaid_children'):
@@ -2299,14 +2299,14 @@ def apply_config_directive(key: str, value: str, config: dict,
 
 
 def _consume_region(line_iter, filename: str, start_lineno: int, selector: str) -> bool:
-    """Consume lines from line_iter until '<!-- end caseproc -->', return True if found.
+    """Consume lines from line_iter until '<!-- end verocase -->', return True if found.
 
     If EOF is reached before finding the end marker, calls error() and returns False.
     """
     for _, line in line_iter:
-        if line.strip() == '<!-- end caseproc -->':
+        if line.strip() == '<!-- end verocase -->':
             return True
-    error(f"{filename}:{start_lineno}: unclosed '<!-- caseproc {selector} -->' region")
+    error(f"{filename}:{start_lineno}: unclosed '<!-- verocase {selector} -->' region")
     return False
 
 
@@ -2357,9 +2357,9 @@ def process_document_stream(
         out.write('\n')
         for ident in missing:
             rendered = render_element_selector(ident, registry, [], id_info, config, inj_state)
-            out.write(f'<!-- caseproc element {ident} -->\n')
+            out.write(f'<!-- verocase element {ident} -->\n')
             out.write(rendered + '\n')
-            out.write('<!-- end caseproc -->\n')
+            out.write('<!-- end verocase -->\n')
             out.write('\n')
 
     line_iter = enumerate(f, 1)
@@ -2391,7 +2391,7 @@ def process_document_stream(
             if found_end:
                 if rendered:
                     out.write(rendered + '\n')
-                out.write('<!-- end caseproc -->\n')
+                out.write('<!-- end verocase -->\n')
             continue
 
         out.write(text + '\n')
@@ -2415,13 +2415,13 @@ _START_DOC = """\
 
 This is a sample assurance case for you to edit.
 
-<!-- caseproc warning -->
-<!-- end caseproc -->
+<!-- verocase warning -->
+<!-- end verocase -->
 
 ## Packages
 
-<!-- caseproc package * -->
-<!-- end caseproc -->
+<!-- verocase package * -->
+<!-- end verocase -->
 
 ## Elements
 """
@@ -2477,14 +2477,14 @@ class _MutationAction(argparse.Action):
 def parse_args() -> argparse.Namespace:
     """Build the argument parser, define all flags, and parse the command line."""
     parser = argparse.ArgumentParser(
-        prog='caseproc',
+        prog='verocase',
         description='Process assurance case LTAC file and update documentation files (Markdown/HTML)',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""\
 This program normally reads an LTAC file and then updates (modifies)
 document file(s) in Markdown/HTML to update them: their headers that involve
 assurance case elements or packages, their HTML anchors, and all text regions
-inside the markers <!-- caseproc SELECTOR --> ... <!-- end caseproc -->.
+inside the markers <!-- verocase SELECTOR --> ... <!-- end verocase -->.
 
 The intended normal use is that you simply edit the LTAC file for the
 high-level argument and the document file(s) in Markdown/HTML for all details
@@ -2973,7 +2973,7 @@ def _scan_doc_stats(path: str) -> dict:
             i += 1
             while i < len(lines):
                 t = lines[i].rstrip('\r\n')
-                if t.strip() == '<!-- end caseproc -->':
+                if t.strip() == '<!-- end verocase -->':
                     if in_elem_region:
                         after_end = True
                     in_elem_region = False
@@ -2998,7 +2998,7 @@ def _scan_doc_stats(path: str) -> dict:
 
 def _print_stats(ltac_stats: dict, doc_stats: Optional[dict]) -> None:
     """Print a statistics report to stdout."""
-    print('=== caseproc statistics ===')
+    print('=== verocase statistics ===')
     print()
     print('LTAC structure:')
     print('  Elements by type:')

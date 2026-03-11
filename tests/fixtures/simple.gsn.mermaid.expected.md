@@ -20,13 +20,13 @@ flowchart TD
     C2["<b>C2</b><br>All hazards have been identified"]
     C3["<b>C3</b><br>All hazards have been mitigated"]
     E1(("<b>E1</b><br>Hazard analysis"))
-    click C1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/simple.gsn.mermaid.expected.md#claim-c1"
-    click AR1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/simple.gsn.mermaid.expected.md#strategy-ar1"
-    click A1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/simple.gsn.mermaid.expected.md#assumption-a1"
-    click X1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/release-notes.md"
-    click C2 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/simple.gsn.mermaid.expected.md#claim-c2"
-    click C3 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/simple.gsn.mermaid.expected.md#claim-c3"
-    click E1 "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/hara.pdf"
+    click C1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/simple.gsn.mermaid.expected.md#claim-c1"
+    click AR1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/simple.gsn.mermaid.expected.md#strategy-ar1"
+    click A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/simple.gsn.mermaid.expected.md#assumption-a1"
+    click X1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/release-notes.md"
+    click C2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/simple.gsn.mermaid.expected.md#claim-c2"
+    click C3 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/simple.gsn.mermaid.expected.md#claim-c3"
+    click E1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/hara.pdf"
 
     E1 ~~~ BottomPadding[ ]:::invisible
     A1 ~~~ BottomPadding

@@ -1,6 +1,6 @@
-# Alternatives to caseproc
+# Alternatives to verocase
 
-`caseproc` occupies a largely unique niche:
+`verocase` occupies a largely unique niche:
 plain text LTAC input, in-place markdown/HTML output,
 auto-generated Mermaid SACM/GSN diagrams, and no external dependencies.
 It was formerly named `ltacproc`.

@@ -27,17 +27,17 @@ flowchart BT
     Maintenance[["<b>Maintenance</b><br>The maintenance process maintains security"]]
     Dot1((" ")):::sacmDot
     Dot2((" ")):::sacmDot
-    click Top "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#claim-top"
-    click Processes "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#strategy-processes"
-    click Technical "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#claim-technical"
-    click NonTechnical "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#package-nontechnical"
-    click Controls "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#package-controls"
-    click Requirements "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#package-requirements"
-    click Design "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#package-design"
-    click Implementation "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#package-implementation"
-    click Verification "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#package-verification"
-    click Deployment "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#package-deployment"
-    click Maintenance "https://github.com/david-a-wheeler/caseproc/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#package-maintenance"
+    click Top "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#claim-top"
+    click Processes "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#strategy-processes"
+    click Technical "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#claim-technical"
+    click NonTechnical "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#package-nontechnical"
+    click Controls "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#package-controls"
+    click Requirements "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#package-requirements"
+    click Design "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#package-design"
+    click Implementation "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#package-implementation"
+    click Verification "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#package-verification"
+    click Deployment "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#package-deployment"
+    click Maintenance "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/badgeapp-top.sacm.mermaid.expected.md#package-maintenance"
 
     BottomPadding[ ]:::invisible ~~~ Requirements
     Requirements --- Dot1

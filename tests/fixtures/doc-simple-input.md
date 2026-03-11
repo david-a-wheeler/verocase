@@ -1,15 +1,15 @@
-<!-- caseproc package C1 -->
-<!-- end caseproc -->
+<!-- verocase package C1 -->
+<!-- end verocase -->
 
-<!-- caseproc element C1 -->
-<!-- end caseproc -->
+<!-- verocase element C1 -->
+<!-- end verocase -->
 
-<!-- caseproc statement C1 -->
+<!-- verocase statement C1 -->
 Statement: The software is acceptably safe
-<!-- end caseproc -->
+<!-- end verocase -->
 
-<!-- caseproc sacm/mermaid C1 -->
+<!-- verocase sacm/mermaid C1 -->
 ```mermaid
 stale content
 ```
-<!-- end caseproc -->
+<!-- end verocase -->

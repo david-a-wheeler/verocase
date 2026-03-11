@@ -3,7 +3,7 @@ requires = ["flit_core>=3.2"]
 build-backend = "flit_core.buildapi"
 
 [project]
-name = "caseproc"
+name = "verocase"
 dynamic = ["version", "description"]
 readme = "README.md"
 license = {file = "LICENSE.md", text = "MIT"}
@@ -11,7 +11,7 @@ requires-python = ">=3.8"
 authors = [{name = "David A. Wheeler"}]
 
 [project.scripts]
-caseproc = "caseproc:main"
+verocase = "verocase:main"
 
 [tool.flit.sdist]
 exclude = ["docs/archive"]

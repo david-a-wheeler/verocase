@@ -1,8 +1,8 @@
-caseproc: warning: Implementation: cited but never declared
-caseproc: warning: Verification: cited but never declared
-caseproc: warning: Deployment: cited but never declared
-caseproc: warning: Maintenance: cited but never declared
-caseproc: warning: NonTechnical: cited but never declared
-caseproc: warning: Controls: cited but never declared
-caseproc: warning: element 'Processes' has no 'element' selector in any processed file
-caseproc: warning: element 'Technical' has no 'element' selector in any processed file
+verocase: warning: Implementation: cited but never declared
+verocase: warning: Verification: cited but never declared
+verocase: warning: Deployment: cited but never declared
+verocase: warning: Maintenance: cited but never declared
+verocase: warning: NonTechnical: cited but never declared
+verocase: warning: Controls: cited but never declared
+verocase: warning: element 'Processes' has no 'element' selector in any processed file
+verocase: warning: element 'Technical' has no 'element' selector in any processed file

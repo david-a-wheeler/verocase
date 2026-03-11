@@ -1,7 +1,7 @@
-# caseproc Tutorial
+# verocase Tutorial
 
-This is the tutorial for `caseproc`.
-`caseproc` is a simple open source software tool
+This is the tutorial for `verocase`.
+`verocase` is a simple open source software tool
 that makes it *easy* and *efficient*
 to create and maintain a small or moderately-sized assurance case,
 e.g., for justifying why a system is secure against attack.
@@ -19,16 +19,16 @@ smaller claims that together demonstrate that the claim holds.
 The problem is that as they get large, they can be painful to follow
 or maintain if you just maintain a document.
 
-`caseproc` splits the work into two parts:
+`verocase` splits the work into two parts:
 
 - A compact **LTAC file** (`case.ltac`) holds the argument structure —
   the claims, strategies, evidence, and how they relate.
 - One or more **document files** (`case.md` etc.) hold the narrative detail
   and context — everything you'd want to say *about* each element.
 
-`caseproc` reads the LTAC file and regenerates the structured portions
+`verocase` reads the LTAC file and regenerates the structured portions
 of the document automatically (diagrams, headings, cross-reference links).
-You write the free-form prose; `caseproc` takes care of the boilerplate.
+You write the free-form prose; `verocase` takes care of the boilerplate.
 
 ---
 
@@ -38,7 +38,7 @@ Create an empty directory and run `--start`:
 
 ```sh
 mkdir demo && cd demo
-caseproc --start
+verocase --start
 ```
 
 This creates two files:
@@ -57,35 +57,35 @@ Open `case.ltac` in your editor. It looks something like this:
 Open `case.md`. Near the top you'll see:
 
 ```markdown
-<!-- caseproc warning -->
-<!-- WARNING: DO NOT EDIT text within caseproc SELECTOR ... end caseproc. -->
+<!-- verocase warning -->
+<!-- WARNING: DO NOT EDIT text within verocase SELECTOR ... end verocase. -->
 <!-- Those regions are regenerated. -->
-<!-- end caseproc -->
+<!-- end verocase -->
 ```
 
 and further down:
 
 ```markdown
-<!-- caseproc package * -->
+<!-- verocase package * -->
 … generated diagram and index …
-<!-- end caseproc -->
+<!-- end verocase -->
 
-<!-- caseproc element Top -->
+<!-- verocase element Top -->
 ### Claim Top: Top level claim
 …
-<!-- end caseproc -->
+<!-- end verocase -->
 
 … more element regions …
 ```
 
-Everything between a `<!-- caseproc … -->` marker and `<!-- end caseproc -->`
-is managed by `caseproc` — **don't edit inside those regions**.
+Everything between a `<!-- verocase … -->` marker and `<!-- end verocase -->`
+is managed by `verocase` — **don't edit inside those regions**.
 Everything *outside* them is yours to write freely.
 
-Now run `caseproc` (no arguments) to regenerate:
+Now run `verocase` (no arguments) to regenerate:
 
 ```sh
-caseproc
+verocase
 ```
 
 It finds `case.ltac` and `case.md` automatically, validates the LTAC,
@@ -177,15 +177,15 @@ but explicit identifiers are easier to work with.
 The document file is ordinary Markdown.
 You can write whatever you like — headings, paragraphs, tables, images —
 with one constraint: content between these two comment markers is owned
-by `caseproc`:
+by `verocase`:
 
 ```markdown
-<!-- caseproc SELECTOR -->
+<!-- verocase SELECTOR -->
 …generated content (do not edit)…
-<!-- end caseproc -->
+<!-- end verocase -->
 ```
 
-Each time you run `caseproc`, it replaces everything between the markers
+Each time you run `verocase`, it replaces everything between the markers
 with freshly generated content for that `SELECTOR`.
 Write your narrative *outside* these regions.
 
@@ -193,13 +193,13 @@ Write your narrative *outside* these regions.
 
 | Region | What it generates |
 |---|---|
-| `<!-- caseproc warning -->` | A "do not edit" reminder comment |
-| `<!-- caseproc package * -->` | Heading + diagram + index for every package |
-| `<!-- caseproc element ID -->` | Heading + cross-references for one element |
-| `<!-- caseproc sacm/mermaid ID -->` | SACM diagram for one package |
-| `<!-- caseproc gsn/mermaid * -->` | GSN diagrams for all packages |
-| `<!-- caseproc ltac/markdown * -->` | Full LTAC as a Markdown bullet list |
-| `<!-- caseproc statement ID -->` | Single-line statement text for ID |
+| `<!-- verocase warning -->` | A "do not edit" reminder comment |
+| `<!-- verocase package * -->` | Heading + diagram + index for every package |
+| `<!-- verocase element ID -->` | Heading + cross-references for one element |
+| `<!-- verocase sacm/mermaid ID -->` | SACM diagram for one package |
+| `<!-- verocase gsn/mermaid * -->` | GSN diagrams for all packages |
+| `<!-- verocase ltac/markdown * -->` | Full LTAC as a Markdown bullet list |
+| `<!-- verocase statement ID -->` | Single-line statement text for ID |
 
 See [reference.md](reference.md) for the full selector table.
 
@@ -208,36 +208,36 @@ See [reference.md](reference.md) for the full selector table.
 ```markdown
 # My Assurance Case
 
-<!-- caseproc warning -->
-<!-- end caseproc -->
+<!-- verocase warning -->
+<!-- end verocase -->
 
 ## Summary diagrams
 
-<!-- caseproc package * -->
-<!-- end caseproc -->
+<!-- verocase package * -->
+<!-- end verocase -->
 
 ---
 
 ## Claim: The system is adequately secure {#claim-secure}
 
-<!-- caseproc element Secure -->
-<!-- end caseproc -->
+<!-- verocase element Secure -->
+<!-- end verocase -->
 
 Write your detailed narrative about this claim here.
 Explain the threat model, scope, and any caveats.
-This text is yours — caseproc never touches it.
+This text is yours — verocase never touches it.
 
 ## Claim: Network attacks are mitigated
 
-<!-- caseproc element NetworkSafe -->
-<!-- end caseproc -->
+<!-- verocase element NetworkSafe -->
+<!-- end verocase -->
 
 More narrative here …
 ```
 
 The `element` selector generates a stable heading and cross-reference
 links (what supports this element, what it supports, where it's cited).
-Your prose goes immediately after the `<!-- end caseproc -->` line.
+Your prose goes immediately after the `<!-- end verocase -->` line.
 
 ### Using `--missing` to scaffold element regions
 
@@ -245,7 +245,7 @@ If your LTAC has many elements, adding all the `element` regions by hand
 is tedious. `--missing` does it for you:
 
 ```sh
-caseproc --missing
+verocase --missing
 ```
 
 This re-renders all existing regions *and* appends a skeleton
@@ -254,12 +254,12 @@ It also marks every leaf claim with `{needssupport}` if it lacks one.
 
 After running `--missing`, open `case.md` and rearrange the appended
 regions into the order you want. Move them next to the appropriate sections,
-add your narrative after each `<!-- end caseproc -->`, and run
-`caseproc` to regenerate.
+add your narrative after each `<!-- end verocase -->`, and run
+`verocase` to regenerate.
 
 ---
 
-## Running caseproc
+## Running verocase
 
 ### Day-to-day workflow
 
@@ -267,9 +267,9 @@ The typical loop is:
 
 1. Edit `case.ltac` — add/remove elements, change statements, restructure.
 2. Edit `case.md` — add or revise narrative text *outside* the marked regions.
-3. Run `caseproc` — it validates the LTAC and regenerates all marked regions.
+3. Run `verocase` — it validates the LTAC and regenerates all marked regions.
 4. Review the updated document (diagrams, headings, cross-references).
-4. In a few cases you may want to run special `caseproc` commands, e.g.,
+4. In a few cases you may want to run special `verocase` commands, e.g.,
    `--move` will move an LTAC element from one place to another.
    You can also do this by directly editing the LTAC file, but it's
    sometimes easier to let the tool do it for you.
@@ -277,19 +277,19 @@ The typical loop is:
 
 ```sh
 # Edit files, then:
-caseproc
+verocase
 ```
 
-`caseproc` exits with code 0 on success and 1 if any error occurs.
+`verocase` exits with code 0 on success and 1 if any error occurs.
 Warnings (non-fatal issues) are printed to stderr but do not affect the exit
 code unless you pass `--error`.
 
 ### Previewing without modifying files
 
-Use `--stdout` to see what `caseproc` would produce without changing anything:
+Use `--stdout` to see what `verocase` would produce without changing anything:
 
 ```sh
-caseproc --stdout
+verocase --stdout
 ```
 
 This is useful for reviewing output or piping it into another tool.
@@ -298,7 +298,7 @@ For AI tools or any situation where you want to read the *document structure*
 without wading through generated diagrams, use `--strip --stdout`:
 
 ```sh
-caseproc --strip --stdout
+verocase --strip --stdout
 ```
 
 This produces the document with all selector regions emptied out (except
@@ -309,7 +309,7 @@ This produces the document with all selector regions emptied out (except
 To check the LTAC for errors without modifying any files:
 
 ```sh
-caseproc --validate
+verocase --validate
 ```
 
 This is useful in CI pipelines — it exits non-zero if the LTAC is invalid
@@ -345,7 +345,7 @@ Citations are how you connect packages together.
 All packages must be reachable from the first element of the first package
 by following children and citations. An isolated package is an error.
 
-When you run `caseproc package *`, each package gets its own section with
+When you run `verocase package *`, each package gets its own section with
 a diagram. Citations appear in the diagram as double-bracketed nodes
 (SACM notation) or subroutine-box nodes (GSN notation), with links that
 navigate to the package where the cited element is defined.
@@ -361,13 +361,13 @@ For more on packages and citations, see [reference.md](reference.md).
 To rename an element everywhere (LTAC file and all document files):
 
 ```sh
-caseproc --rename OldId NewId
+verocase --rename OldId NewId
 ```
 
 Identifiers with spaces need quoting:
 
 ```sh
-caseproc --rename "Login Safe" LoginSafe
+verocase --rename "Login Safe" LoginSafe
 ```
 
 ### Updating a statement
@@ -378,7 +378,7 @@ LTAC file and regenerate the document.
 However, if you know the ID, you can use `--restate` like this:
 
 ```sh
-caseproc --restate AuthSafe "Authentication mechanisms are robust and tested"
+verocase --restate AuthSafe "Authentication mechanisms are robust and tested"
 ```
 
 You can also use `--update` (next).
@@ -390,7 +390,7 @@ become out of date. If you edit the declaration, you can
 run `--update` to resync them:
 
 ```sh
-caseproc --update
+verocase --update
 ```
 
 This rewrites any citation whose text doesn't match its declaration.
@@ -409,15 +409,15 @@ Explanatory prose belongs in the document, outside the marked regions.
 that read the document. However, if you really prefer conventional
 GSN naming conventions, you *can* use those conventions.
 
-**Put `<!-- caseproc warning -->` near the top.**
+**Put `<!-- verocase warning -->` near the top.**
 It reminds readers (and automated tools) that certain regions are generated.
 
 **Use `--validate` in CI.**
-A quick `caseproc --validate` in your CI pipeline catches errors before
+A quick `verocase --validate` in your CI pipeline catches errors before
 they reach reviewers.
 
 **Use `--strip --stdout` to share the document with AI tools.**
-Running `caseproc --strip --stdout` produces a version of the document that
+Running `verocase --strip --stdout` produces a version of the document that
 omits the bulky generated diagrams and boilerplate, leaving just the
 document structure, your prose, and the LTAC markers.
 This makes it much easier for an AI to understand and reason about your case.

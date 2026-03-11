@@ -1,11 +1,11 @@
-# caseproc Reference Manual
+# verocase Reference Manual
 
-`caseproc` reads an assurance case written in
+`verocase` reads an assurance case written in
 [Extended LTAC format](ltac-extended.txt)
 and updates one or more Markdown or HTML documentation files with
 automatically generated graphics, hyperlinks, and cross-references.
 You edit the LTAC file for the argument structure and the document files
-for the supporting detail; `caseproc` keeps them in sync.
+for the supporting detail; `verocase` keeps them in sync.
 
 ---
 
@@ -76,7 +76,7 @@ Note that space is a legal character in identifiers.
 There is no mandated identifier convention; meaningful names like
 `AuthnClaim` are encouraged alongside traditional GSN-style names like `G1`.
 
-If `IDENTIFIER` is omitted from an element line, caseproc infers it from
+If `IDENTIFIER` is omitted from an element line, verocase infers it from
 the statement text by stripping characters that are illegal in identifiers
 per the LTAC spec (`:`, `^`) or that the parser uses as delimiters and
 would misread if the identifier were ever written back explicitly
@@ -88,7 +88,7 @@ would misread if the identifier were ever written back explicitly
 
 is treated as if it were written `- Claim The system is safe: The system is safe`,
 so the element can be referenced in diagrams and via `Link`.
-When caseproc writes the LTAC file back out, it omits the identifier again
+When verocase writes the LTAC file back out, it omits the identifier again
 if it can still be recovered from the text — giving a clean round-trip.
 If the statement is later changed (e.g. via `--restate`) so that the text
 no longer matches the inferred identifier, the identifier is written out
@@ -210,16 +210,16 @@ Not every combination is valid.  The following relationships are permitted
 `Context`, or `Assumption`.
 Additionally, a claim supported by `Evidence` should not also be supported
 by `Justification`, `Assumption`, or `Strategy`
-(though `caseproc` warns rather than refusing).
+(though `verocase` warns rather than refusing).
 
 ---
 
-## Running caseproc
+## Running verocase
 
 ### Synopsis
 
 ```
-caseproc [--config FILE] [--error] [--update]
+verocase [--config FILE] [--error] [--update]
          [--rename OLD NEW] [--restate LABEL STATEMENT]
          [--ltac FILENAME]
          [--validate | --select SELECTOR | --stdout | --selftest | --missing | --start]
@@ -228,14 +228,14 @@ caseproc [--config FILE] [--error] [--update]
 
 ### Normal mode (default)
 
-With no mode flag, `caseproc` updates the listed document files in place.
+With no mode flag, `verocase` updates the listed document files in place.
 It validates the LTAC, renders fresh content for all marked regions, and
 writes the changes back atomically.
 If no files are given, it tries the document auto-discovery sequence
 (see [Auto-discovery](#auto-discovery)).
 
 This is the intended day-to-day workflow: edit `case.ltac` and your
-document files, then run `caseproc` to resync everything.
+document files, then run `verocase` to resync everything.
 
 ### --validate
 
@@ -267,7 +267,7 @@ Exit code is 0 if all tests pass, 1 if any fail.
 Re-renders all marked regions in the document files (the same way normal
 mode does) and, for every declared LTAC element that has no corresponding
 `element` selector, appends a skeleton
-`<!-- caseproc element ID -->…<!-- end caseproc -->` region.
+`<!-- verocase element ID -->…<!-- end verocase -->` region.
 In HTML documents the appended regions are inserted immediately before
 `</body>`; in Markdown documents they are appended at EOF.
 
@@ -294,7 +294,7 @@ After `--start`:
 - `case.ltac` has `{needsSupport}` added to all leaf claims.
 
 `--start` is intended as a quick on-ramp for new projects and tutorials.
-Edit the generated files and run `caseproc` (normal mode) to continue.
+Edit the generated files and run `verocase` (normal mode) to continue.
 
 ### --ltac FILENAME
 
@@ -307,7 +307,7 @@ Loads configuration from a JSON file (an object of key/value pairs).
 See [Configuration](#configuration) for the full list of keys.
 Unknown keys produce a warning and are ignored.
 
-`caseproc` also auto-discovers a config file if `--config` is not given:
+`verocase` also auto-discovers a config file if `--config` is not given:
 it checks for `case.config` in the current directory, then `docs/case.config`.
 
 ### --error
@@ -407,14 +407,14 @@ All keys are optional; unrecognized keys produce a warning.
 | `default_renderer` | `"mermaid"` | Renderer used when expanding the `sacm` and `gsn` shorthand selectors.  Currently only `"mermaid"` is supported. |
 | `default_representation` | `"sacm"` | Diagram notation used by the `package` selector.  Accepts `"sacm"` or `"gsn"`. |
 | `document_files` | `[]` | List of document files to process; equivalent to listing them on the command line.  Command-line files take priority. |
-| `element_level` | `3` | Markdown/HTML heading level (1–6) used by the `element` selector.  Can also be set per-document with `caseproc-config`. |
+| `element_level` | `3` | Markdown/HTML heading level (1–6) used by the `element` selector.  Can also be set per-document with `verocase-config`. |
 | `element_selections` | `"referenced_by,supported_by,supports"` | Comma-separated list of sub-sections rendered inside each `element` region.  Valid values: `referenced_by`, `supported_by`, `supports`. |
 | `ltac_file` | `""` | Path to the LTAC file; overridden by `--ltac`. |
 | `markdown_base_url` | `""` | Base URL for hyperlinks in `ltac/markdown` and `ltac/html` output. |
 | `max_mermaid_children` | `8` | Maximum number of visual children a node may have before the width-management transform splits the overflow into a synthetic `Connector`.  Set to `0` to disable the transform entirely. |
 | `mermaid_js_url` | CDN URL | URL of the Mermaid JS script injected into HTML output.  Set to `""` to disable injection. |
-| `narrowed_mermaid_children` | `6` | Number of children retained (left + right combined) when the width-management transform splits a wide node; the middle overflow becomes a `Connector`.  Must satisfy `narrowed_mermaid_children >= 2` and `narrowed_mermaid_children < max_mermaid_children` (when `max_mermaid_children > 0`).  Can also be set per-document with `caseproc-config`. |
-| `package_level` | `3` | Heading level (1–6) used by the `package` selector.  Can also be set per-document with `caseproc-config`. |
+| `narrowed_mermaid_children` | `6` | Number of children retained (left + right combined) when the width-management transform splits a wide node; the middle overflow becomes a `Connector`.  Must satisfy `narrowed_mermaid_children >= 2` and `narrowed_mermaid_children < max_mermaid_children` (when `max_mermaid_children > 0`).  Can also be set per-document with `verocase-config`. |
+| `package_level` | `3` | Heading level (1–6) used by the `package` selector.  Can also be set per-document with `verocase-config`. |
 | `package_selections` | `"representation,pkg_defines,pkg_citing,pkg_cited"` | Comma-separated list of sub-sections rendered inside each `package` region.  Valid values: `representation`, `pkg_defines`, `pkg_citing`, `pkg_cited`. |
 | `pkg_header_prefix` | `"### "` | String prepended to each package header when rendering `*` with `ltac/*` selectors. |
 | `pkg_header_suffix` | `"\n"` | String appended after each package header when rendering `*` with `ltac/*` selectors (a newline by default, producing a blank separator line). |
@@ -430,12 +430,12 @@ All keys are optional; unrecognized keys produce a warning.
 Anywhere in a Markdown or HTML document, the pair:
 
 ```
-<!-- caseproc SELECTOR -->
+<!-- verocase SELECTOR -->
 …stale content…
-<!-- end caseproc -->
+<!-- end verocase -->
 ```
 
-marks a region whose content `caseproc` replaces with freshly rendered
+marks a region whose content `verocase` replaces with freshly rendered
 output for `SELECTOR`.
 The opening and closing comment lines are preserved; only the content
 between them is replaced.
@@ -450,34 +450,34 @@ A common document structure might look like this:
 ```markdown
 # Assurance case introduction
 
-<!-- caseproc warning -->
-<!-- end caseproc -->
+<!-- verocase warning -->
+<!-- end verocase -->
 
 ## Introduction
 
 Some introductory text
 
 ## Packages
-<!-- caseproc package * -->
-<!-- end caseproc -->
+<!-- verocase package * -->
+<!-- end verocase -->
 
-<!-- caseproc element C1 -->
-<!-- end caseproc -->
+<!-- verocase element C1 -->
+<!-- end verocase -->
 ... information about C1 ...
 
-<!-- caseproc element C2 -->
-<!-- end caseproc -->
+<!-- verocase element C2 -->
+<!-- end verocase -->
 ... information about C2 ...
 ```
 
 But you not limited to that. Other examples:
 
 ```markdown
-<!-- caseproc sacm/mermaid * -->
-<!-- caseproc gsn/mermaid * -->
-<!-- caseproc ltac/markdown * -->
-<!-- caseproc sacm/mermaid C1 -->
-<!-- caseproc statement C1 -->
+<!-- verocase sacm/mermaid * -->
+<!-- verocase gsn/mermaid * -->
+<!-- verocase ltac/markdown * -->
+<!-- verocase sacm/mermaid C1 -->
+<!-- verocase statement C1 -->
 ```
 
 ### element and package selectors
@@ -486,7 +486,7 @@ The `element` and `package` selectors generate structured headings and
 cross-reference sub-sections, providing a stable home for each piece of
 the assurance case in the document.
 
-**`<!-- caseproc element ID -->`** generates:
+**`<!-- verocase element ID -->`** generates:
 
 - A heading at the level specified by `element_level` (default: `###`),
   using the element's type and identifier as its text, with a stable
@@ -496,7 +496,7 @@ the assurance case in the document.
   - `supported_by` — lists the element's direct supporting children.
   - `supports` — lists what this element directly supports.
 
-**`<!-- caseproc package [ID|*] -->`** generates:
+**`<!-- verocase package [ID|*] -->`** generates:
 
 - A heading at the level specified by `package_level` (default: `###`),
   with a stable HTML anchor.
@@ -508,17 +508,17 @@ the assurance case in the document.
 
 `*` renders all packages in order.
 
-`caseproc` warns if a declared LTAC element has no corresponding `element`
+`verocase` warns if a declared LTAC element has no corresponding `element`
 selector in any processed document.  Use `--missing` to scaffold the
 missing regions automatically.
 
 ### Per-document configuration
 
 A document may override selected configuration keys for itself using
-`caseproc-config` directives:
+`verocase-config` directives:
 
 ```
-<!-- caseproc-config KEY = VALUE -->
+<!-- verocase-config KEY = VALUE -->
 ```
 
 The directive takes effect from that point in the document onward.
@@ -538,11 +538,11 @@ Set them in the `--config` JSON file instead.
 Example — use level-2 headings for packages and level-3 for elements:
 
 ```markdown
-<!-- caseproc-config package_level = 2 -->
-<!-- caseproc-config element_level = 3 -->
+<!-- verocase-config package_level = 2 -->
+<!-- verocase-config element_level = 3 -->
 ```
 
-Do **not** use `<!-- caseproc config ... -->` (without the hyphen); that
+Do **not** use `<!-- verocase config ... -->` (without the hyphen); that
 syntax is recognized and produces a helpful error directing you to the
 correct form.
 
@@ -705,7 +705,7 @@ Errors cause a non-zero exit; warnings do not (unless `--error` is given).
 
 ## Updating the LTAC file
 
-By default, `caseproc` treats the LTAC file as read-only.
+By default, `verocase` treats the LTAC file as read-only.
 Several options cause it to write an updated LTAC file.
 All of them use the same safe backup mechanism (see [File handling](#file-handling)).
 
@@ -747,7 +747,7 @@ with all mutations applied.
 
 ### Auto-discovery
 
-If no `--ltac` option and no `ltac_file` config key are given, `caseproc`
+If no `--ltac` option and no `ltac_file` config key are given, `verocase`
 looks for `case.ltac` in the current directory, then `docs/case.ltac`.
 If neither exists, it exits with an error.
 
@@ -777,7 +777,7 @@ If a serious error occurs during processing, the file is left unchanged.
 
 ### The `.backup/` directory
 
-Each directory that contains files updated by `caseproc` gets a `.backup/`
+Each directory that contains files updated by `verocase` gets a `.backup/`
 subdirectory holding the immediately previous version of each updated file.
 Only the most recent backup for each filename is kept.
 Add `.backup/` to `.gitignore` if you do not want these files tracked.

@@ -1,6 +1,6 @@
-# caseproc AGENTS.md
+# verocase AGENTS.md
 
-The script `caseproc` is a Python3 script for processing
+The script `verocase` is a Python3 script for processing
 our extended version of Lightweight Text Assurance Case (LTAC) format
 and generating useful results to enable easy documentation and revision
 of assurance cases.
@@ -9,16 +9,16 @@ To run our test suite, run:
 
 > tests/run_tests.py
 
-Run `./caseproc --help` to see how to execute it.
+Run `./verocase --help` to see how to execute it.
 
 If you're running on Linux or MacOS, don't add a `python3` or `python`
-prefix to run `tests/run_tests.py` or `caseproc`, that's not necessary.
+prefix to run `tests/run_tests.py` or `verocase`, that's not necessary.
 
 See README.md for more.
 
 ## Key architecture notes for AI assistants
 
-`caseproc` is a **single Python3 script**. All logic lives there.
+`verocase` is a **single Python3 script**. All logic lives there.
 We intentionally avoid adding any dependencies not built into Python to
 simplify deployment.
 

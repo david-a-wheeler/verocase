@@ -2,8 +2,8 @@
 
 This document describes the assurance case for the software.
 
-<!-- caseproc element C1 -->
-<!-- end caseproc -->
+<!-- verocase element C1 -->
+<!-- end verocase -->
 
-<!-- caseproc ltac/markdown C1 -->
-<!-- end caseproc -->
+<!-- verocase ltac/markdown C1 -->
+<!-- end verocase -->

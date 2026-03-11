@@ -1,11 +1,11 @@
-# caseproc README
+# verocase README
 
-`caseproc` is a simple open source software tool
+`verocase` is a simple open source software tool
 that makes it *easy* and *efficient*
 to create and maintain a small or moderately-sized assurance case,
 e.g., for justifying why a system is secure against attack.
 
-More specifically, `caseproc` is a simple open source software (OSS)
+More specifically, `verocase` is a simple open source software (OSS)
 Python3 script that reads a file written in our extended version of the simple
 [Lightweight Text Assurance Case (LTAC) format](docs/ltac-extended.txt)
 and updates related markdown or HTML documentation.
@@ -69,7 +69,7 @@ and AI can make the same mistakes.
 
 ## Our approach
 
-This tool, `caseproc`, takes a completely different approach:
+This tool, `verocase`, takes a completely different approach:
 
 * As input, it reads a simple text file (default file `case.ltac`
   in `./` or `docs/`). This file is written in our
@@ -88,10 +88,10 @@ This tool, `caseproc`, takes a completely different approach:
   easy to navigate the assurance case.
   The expectation is that humans and AIs would edit these documents to
   provide all the details (aka "content").
-  In contrast, `caseproc` updates the document to
+  In contrast, `verocase` updates the document to
   keep all information easily in sync.
 
-Just run `caseproc` and the output documents will be updated based on the
+Just run `verocase` and the output documents will be updated based on the
 input LTAC file.
 
 Currently the tool can generate both SACM and GSN notation in mermaid format.

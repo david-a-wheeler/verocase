@@ -5,50 +5,50 @@ arguing that it is adequately secure against moderate threats.
 
 ## Packages
 
-<!-- caseproc sacm/mermaid * -->
+<!-- verocase sacm/mermaid * -->
 stale content
-<!-- end caseproc -->
+<!-- end verocase -->
 
 ## Context Details
 
 Additional context and evidence packages supporting the argument.
 
-<!-- caseproc element Security -->
-<!-- end caseproc -->
+<!-- verocase element Security -->
+<!-- end verocase -->
 
 This is the top-level claim for the entire assurance case.
 
-<!-- caseproc element Requirements -->
-<!-- end caseproc -->
+<!-- verocase element Requirements -->
+<!-- end verocase -->
 
 The security requirements are documented and verified against the implementation.
 
-<!-- caseproc element Design -->
-<!-- end caseproc -->
+<!-- verocase element Design -->
+<!-- end verocase -->
 
 The system design incorporates security from the ground up.
 
-<!-- caseproc element ReqSpec -->
-<!-- end caseproc -->
+<!-- verocase element ReqSpec -->
+<!-- end verocase -->
 
 See the full requirements document for details.
 
-<!-- caseproc element TestCoverage -->
-<!-- end caseproc -->
+<!-- verocase element TestCoverage -->
+<!-- end verocase -->
 
 All security tests pass with full coverage of requirements.
 
-<!-- caseproc element DesignDoc -->
-<!-- end caseproc -->
+<!-- verocase element DesignDoc -->
+<!-- end verocase -->
 
 The architecture has been reviewed by the security team.
 
-<!-- caseproc element ThreatModel -->
-<!-- end caseproc -->
+<!-- verocase element ThreatModel -->
+<!-- end verocase -->
 
 Threats are systematically identified and mitigated.
 
-<!-- caseproc element ReqScope -->
-<!-- end caseproc -->
+<!-- verocase element ReqScope -->
+<!-- end verocase -->
 
 Defines the scope of the requirements coverage.

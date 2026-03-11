@@ -1,2 +1,2 @@
-<!-- caseproc package * -->
-<!-- end caseproc -->
+<!-- verocase package * -->
+<!-- end verocase -->

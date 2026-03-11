@@ -1,4 +1,4 @@
-<!-- caseproc element C1 -->
-<!-- end caseproc -->
-<!-- caseproc ltac/markdown C1 -->
-<!-- end caseproc -->
+<!-- verocase element C1 -->
+<!-- end verocase -->
+<!-- verocase ltac/markdown C1 -->
+<!-- end verocase -->

@@ -6,8 +6,7 @@ to create and maintain an assurance case,
 e.g., for justifying why a system is secure against attack.
 The name verocase is derived from the Latin *vero*
 (meaning "in truth" or "truly") and *case*,
-(representing the tool's core mission to manage an assurance case and
-ensure it is a faithful and verified representation of its underlying data).
+(representing the tool's purpose to manage an assurance case).
 
 The `verocase` program reads a file written
 in our extended version of the simple

@@ -1,7 +1,7 @@
 # verocase Tutorial
 
 This is the tutorial for `verocase`.
-`verocase` is a simple open source software tool
+`verocase` is a simple open source software (OSS) tool
 that makes it *easy* and *efficient*
 to create and maintain a small or moderately-sized assurance case,
 e.g., for justifying why a system is secure against attack.

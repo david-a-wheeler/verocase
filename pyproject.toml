@@ -12,3 +12,6 @@ authors = [{name = "David A. Wheeler"}]
 
 [project.scripts]
 caseproc = "caseproc:main"
+
+[tool.flit.sdist]
+exclude = ["docs/archive"]

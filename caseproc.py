@@ -451,6 +451,7 @@ class LTACParser:
         """
         self._warn_dubious_reference: bool = (config or {}).get('warn_dubious_reference', True)
         self.registry: Dict[str, Node] = {}
+        self._anchor_seen: Dict[str, str] = {}  # anchor id -> first label that claimed it
         # id_info[ident] = {
         #   'declarations': int,       count of non-cited nodes with this ID
         #   'citations':    int,       count of cited (^) nodes with this ID
@@ -608,6 +609,13 @@ class LTACParser:
                     info['decl_lineno'] = lineno
                     info['decl_pkg_id'] = pkg_root_id
                     self.registry[node.identifier] = node
+                    anchor = _component_anchor_id(node.node_type, node.identifier)
+                    label = f"{node.node_type} {node.identifier}"
+                    if anchor in self._anchor_seen:
+                        error(f"line {lineno}: anchor id collision on {anchor!r}:"
+                              f" {self._anchor_seen[anchor]!r} and {label!r}")
+                    else:
+                        self._anchor_seen[anchor] = label
                 info['declarations'] += 1
                 # Track empty/non-empty statements for declarations that
                 # normally carry a statement (not Relation, not Link).
@@ -2716,23 +2724,6 @@ def check_id_info(id_info: Dict[str, dict]) -> None:
             warn(f"{ident}: cited but never declared")
 
 
-def check_anchor_uniqueness(registry: Dict[str, Node]) -> None:
-    """Error if any two declared identifiers produce the same HTML anchor id.
-
-    GitHub-style anchors strip punctuation and collapse case, so LTAC
-    identifiers that differ only in punctuation or capitalisation can
-    collide (e.g. 'Claim Foo < 0' and 'Claim foo > 0' both become
-    'claim-foo--0'). Report all conflicting LTAC ids for each colliding anchor.
-    """
-    short_to_ltac: Dict[str, List[str]] = {}
-    for ident, node in registry.items():
-        label = f"{node.node_type} {ident}"
-        short = _component_anchor_id(node.node_type, ident)
-        if short in short_to_ltac:
-            error(f"anchor id collision on {short!r}: "
-                  + ", ".join(repr(x) for x in short_to_ltac[short] + [label]))
-        short_to_ltac.setdefault(short, []).append(label)
-
 
 def check_circularities(registry: Dict[str, Node], all_roots: List[Node]) -> None:
     """Panic if any circular dependency exists in the LTAC model.
@@ -3412,7 +3403,6 @@ def main() -> None:
 
     # LTAC pase complete. Perform validations needing all LTAC data
     check_id_info(id_info)
-    check_anchor_uniqueness(registry)
     check_circularities(registry, all_roots)
     check_reachability(all_roots, registry)
 
@@ -3437,7 +3427,7 @@ def main() -> None:
             elif op == 'move':
                 apply_move(all_roots, registry, id_info, a, b)
         check_id_info(id_info)
-        check_anchor_uniqueness(registry)
+
         check_circularities(registry, all_roots)
         check_reachability(all_roots, registry)
         if _had_error:

@@ -2412,13 +2412,32 @@ def process_document_stream(
 # ---------------------------------------------------------------------------
 
 _START_LTAC = """\
-- Claim Top: Top level claim
-  - Claim G2: G2 is true
-  - Claim G3: G3 is true
+- Claim Security: The system is adequately secure against moderate threats
+  - Strategy Processes: Security is argued by examining lifecycle processes
+    - Claim ^Requirements
+    - Claim ^Design
+    - Claim ^Implementation
+    - Claim ^Verification
+
+- Claim Requirements: Security requirements are identified and met
+  - Strategy SecTriad: Security triad (CIA) and access control address the requirements
+    - Claim Confidentiality: Confidentiality is maintained
+    - Claim Integrity: Integrity is maintained
+    - Claim Availability: Availability is maintained
+    - Claim AccessControl: Access control is in place
+
+- Claim Design: Security is implemented in design
+  - Claim SimpleDesign: Economy of mechanism: simple design is used
+  - Claim STRIDE: STRIDE threat model has been analyzed
+  - Claim DesignPrinciples: Secure design principles are applied
+
+- Claim Implementation: Implementation is secure
+
+- Claim Verification: System verified as being secure
 """
 
 _START_DOC = """\
-# Stub Assurance Case
+# Sample Assurance Case
 
 This is a sample assurance case for you to edit.
 
@@ -2500,13 +2519,20 @@ structure and update your document files in Markdown/HTML with graphics,
 hyperlinks, and other material. The document files' marked regions will
 be updated, but *only* those regions.
 
-In the LTAC file format: each line is one element, indented two spaces/level:
-  - TYPE [^][ID]: text [{options}] [(reference)]
+The LTAC input file format contains a series of 1+ packages.
+A package begins with an un-indented line defining its top element,
+followed by 0+ lines defining its sub-elements. Each line defines
+an element, indented two spaces/level:
+- TYPE [^][ID]: text [{options}] [(reference)]
 
 Types: Claim (goal/assertion), Strategy (argument pattern), Evidence
 (supporting artifact), Justification (rationale), Context (background
 information), Assumption (accepted-as-true claim), Relation (explicit
 relationship), Link ID (citation of an already-defined element).
+The critical type is "Claim"; its text should be a true/false statement
+that you would like to be true. Packages let you organize groups of
+elements so you aren't trying to deal with "everything at once".
+
 IDs are optional but strongly recommended; external IDs begin with '^'
 (and must match the sole defining ID without a beginning '^').
 If the ID is omitted, the text is the ID (after stripping ^{}()\\n\\r).
@@ -2589,8 +2615,7 @@ Configuration keys (--config FILE, JSON object):
   package_selections comma-separated list for package sub-sections (default: representation,pkg_defines,pkg_citing,pkg_cited)
   pkg_label          word used to identify packages in output (default: "Package ")
   warn_dubious_reference  warn when a reference looks like a parenthetical comment (default: true)
-
-For full details see docs/design-spec.md.""",
+""",
     )
     parser.add_argument(
         '--version', action='version', version=__version__,

@@ -46,12 +46,31 @@ This creates two files:
 - `case.ltac`: a tiny starter argument (three elements)
 - `case.md`: a Markdown document with placeholder regions
 
-Open `case.ltac` in your editor. It looks something like this:
+Open `case.ltac` in your editor. It should look something like this:
 
 ```ltac
-- Claim Top: Top level claim
-  - Claim G2: G2 is true {needssupport}
-  - Claim G3: G3 is true {needssupport}
+- Claim Security: The system is adequately secure against moderate threats
+  - Strategy Processes: Security is argued by examining lifecycle processes
+    - Claim ^Requirements
+    - Claim ^Design
+    - Claim ^Implementation
+    - Claim ^Verification
+
+- Claim Requirements: Security requirements are identified and met
+  - Strategy SecTriad: Security triad (CIA) and access control address the requirements
+    - Claim Confidentiality: Confidentiality is maintained
+    - Claim Integrity: Integrity is maintained
+    - Claim Availability: Availability is maintained
+    - Claim AccessControl: Access control is in place
+
+- Claim Design: Security is implemented in design
+  - Claim SimpleDesign: Economy of mechanism: simple design is used
+  - Claim STRIDE: STRIDE threat model has been analyzed
+  - Claim DesignPrinciples: Secure design principles are applied
+
+- Claim Implementation: Implementation is secure
+
+- Claim Verification: System verified as being secure
 ```
 
 Open `case.md`. Near the top you'll see:

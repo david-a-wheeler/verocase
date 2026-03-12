@@ -2712,7 +2712,7 @@ Configuration keys (--config FILE, JSON object):
     mode.add_argument(
         '--missing', action='store_true',
         help='re-render document files and insert element selectors for missing elements; '
-             'also flags leaf elements with needsSupport in the LTAC',
+             'may modify the LTAC to add needsSupport to some leaf elements',
     )
     mode.add_argument(
         '--start', action='store_true',

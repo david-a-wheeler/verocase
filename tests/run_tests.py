@@ -2676,8 +2676,10 @@ class TestReadOnly(unittest.TestCase):
         fd, self.doc_path = tempfile.mkstemp(suffix='.md')
         with os.fdopen(fd, 'w', encoding='utf-8') as f:
             f.write(doc)
-        self.ltac_orig = open(self.ltac_path, encoding='utf-8').read()
-        self.doc_orig = open(self.doc_path, encoding='utf-8').read()
+        with open(self.ltac_path, encoding='utf-8') as f:
+            self.ltac_orig = f.read()
+        with open(self.doc_path, encoding='utf-8') as f:
+            self.doc_orig = f.read()
 
     def tearDown(self):
         for p in (self.ltac_path, self.doc_path):
@@ -2800,6 +2802,55 @@ class TestReadOnly(unittest.TestCase):
         with open(self.doc_path, encoding='utf-8') as f:
             self.assertEqual(f.read(), self.doc_orig)
 
+    # --- --read-only flag ---
+
+    def test_read_only_does_not_modify_files(self):
+        """--read-only suppresses the default document-update pass."""
+        self._assert_files_unchanged(
+            '--ltac', self.ltac_path, '--read-only', self.doc_path)
+
+    def test_read_only_with_stats_does_not_modify_files(self):
+        """--read-only --stats reports stats without rewriting document files."""
+        r = run('--ltac', self.ltac_path, '--read-only', '--stats', self.doc_path)
+        self.assertEqual(r.returncode, 0, f'non-zero exit: {r.stderr}')
+        self.assertIn('Package', r.stdout)  # stats output contains package info
+        with open(self.ltac_path, encoding='utf-8') as f:
+            self.assertEqual(f.read(), self.ltac_orig)
+        with open(self.doc_path, encoding='utf-8') as f:
+            self.assertEqual(f.read(), self.doc_orig)
+
+    def test_read_only_with_analysis_options(self):
+        """--read-only can be combined with analysis options."""
+        r = run('--ltac', self.ltac_path, '--read-only', '--leaves', self.doc_path)
+        self.assertEqual(r.returncode, 0, f'non-zero exit: {r.stderr}')
+        with open(self.doc_path, encoding='utf-8') as f:
+            self.assertEqual(f.read(), self.doc_orig)
+
+    def test_read_only_blocked_with_fixmissing(self):
+        """--read-only cannot be combined with --fixmissing."""
+        r = run('--ltac', self.ltac_path, '--read-only', '--fixmissing', self.doc_path)
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn('cannot be combined', r.stderr)
+
+    def test_read_only_blocked_with_fixmisplaced(self):
+        """--read-only cannot be combined with --fixmisplaced."""
+        r = run('--ltac', self.ltac_path, '--read-only', '--fixmisplaced', self.doc_path)
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn('cannot be combined', r.stderr)
+
+    def test_read_only_blocked_with_update(self):
+        """--read-only cannot be combined with --update."""
+        r = run('--ltac', self.ltac_path, '--read-only', '--update', self.doc_path)
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn('cannot be combined', r.stderr)
+
+    def test_read_only_blocked_with_rename(self):
+        """--read-only cannot be combined with --rename."""
+        r = run('--ltac', self.ltac_path, '--read-only',
+                '--rename', 'Root', 'NewRoot', self.doc_path)
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn('cannot be combined', r.stderr)
+
     # --- Help annotation ---
 
     def test_help_marks_readonly_options(self):
@@ -2807,6 +2858,12 @@ class TestReadOnly(unittest.TestCase):
         r = run('--help')
         self.assertEqual(r.returncode, 0)
         self.assertIn('[READ-ONLY]', r.stdout)
+
+    def test_help_mentions_read_only_flag(self):
+        """--help mentions --read-only in the read-only options section."""
+        r = run('--help')
+        self.assertEqual(r.returncode, 0)
+        self.assertIn('--read-only', r.stdout)
 
 
 if __name__ == '__main__':

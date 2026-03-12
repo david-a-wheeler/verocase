@@ -2618,6 +2618,8 @@ Use --fixmissing to scaffold element regions for elements not yet in the documen
 Read-only options (marked [READ-ONLY] in --help; never modify any stored file):
   --validate, --select, --info, --descendants, --stdout
   --missing, --empty, --orphans, --misplaced, --leaves, --packages
+  --read-only (suppresses the default document-update pass; use with --stats
+    or any read-only option to avoid triggering document rewrites)
   (--stats does not itself modify files but combines with any mode)
 
 File-modifying options (modify document files, LTAC, or both):
@@ -2728,7 +2730,8 @@ Configuration keys (--config FILE, JSON object):
     parser.add_argument(
         '--stats', action='store_true', default=False,
         help='print statistics about the LTAC structure and documents; '
-             'may be combined with any mode (does not itself modify files)',
+             'may be combined with any mode (does not itself modify files; '
+             'combine with --read-only if you *only* want to see stats)',
     )
     parser.add_argument(
         '--strip', action='store_true', default=False,
@@ -2872,6 +2875,15 @@ Configuration keys (--config FILE, JSON object):
         '--packages', action='store_true', default=False,
         help='[READ-ONLY] list each package with element counts and the direct children '
              'of its root',
+    )
+    parser.add_argument(
+        '--read-only', action='store_true', default=False, dest='read_only',
+        help='[READ-ONLY] suppress the default document-update pass; load and validate only. '
+             'Useful for combining with --stats or analysis options without '
+             'triggering document rewrites. '
+             'Cannot be combined with any file-modifying mode '
+             '(--fixmissing, --fixmisplaced, --start, --update, '
+             '--rename, --restate, --detach, --move).',
     )
 
     return parser.parse_args()
@@ -4436,6 +4448,16 @@ def main() -> None:
             panic("analysis options cannot be combined with --rename/--restate/--detach/--move "
                   "(which modify the LTAC file)")
 
+    if args.read_only:
+        _file_modifying_modes = ('fixmissing', 'fixmisplaced', 'start')
+        if any(getattr(args, f, False) for f in _file_modifying_modes):
+            panic("--read-only cannot be combined with file-modifying modes "
+                  "(--fixmissing, --fixmisplaced, --start)")
+        if args.update:
+            panic("--read-only cannot be combined with --update")
+        if getattr(args, 'mutations', []):
+            panic("--read-only cannot be combined with --rename/--restate/--detach/--move")
+
     if args.update:
         changed = apply_ltac_update(all_roots, registry)
         if changed:
@@ -4611,6 +4633,15 @@ def main() -> None:
             pairs.append(ltac_pair)
         if pairs:
             commit_updates(pairs, ltac_path, config, config_path)
+    elif args.read_only:
+        # --read-only: load, validate, and optionally report stats, but do not
+        # rewrite any document files.  Any ltac_pair from mutations is also
+        # suppressed (mutations are already blocked above, so ltac_pair is None
+        # here; the guard is kept for clarity).
+        if document_files:
+            seen_element_ids: set = set()
+            _process_files(document_files, io.StringIO(), registry, all_roots, config, id_info, seen_element_ids, strip=args.strip)
+            _check_element_coverage(registry, seen_element_ids)
     else:
         # Default mode: rewrite document files in place.
         if not document_files and not ltac_pair:

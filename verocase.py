@@ -8,10 +8,12 @@ SPDX-License-Identifier: MIT
 
 import argparse
 import copy
+import datetime
 import io
 import json
 import os
 import re
+import shutil
 import sys
 import tempfile
 from collections import deque
@@ -87,6 +89,7 @@ DEFAULT_CONFIG = {
     'pkg_header_prefix': '### ',
     'pkg_header_suffix': '\n',
     'pkg_label': 'Package ',
+    'max_backups': 20,
     'stats': False,
     'warn_dubious_reference': True,
 }
@@ -116,6 +119,10 @@ def load_config(config_path: str) -> dict:
             warn(f"unknown config key: {key!r}")
     config = dict(DEFAULT_CONFIG)
     config.update({k: v for k, v in parsed.items() if k in DEFAULT_CONFIG})
+    mb = config.get('max_backups')
+    if not isinstance(mb, int) or mb < 0:
+        warn(f"invalid value for max_backups: {mb!r}; using default {DEFAULT_CONFIG['max_backups']}")
+        config['max_backups'] = DEFAULT_CONFIG['max_backups']
     return config
 
 
@@ -2518,9 +2525,11 @@ they appear on the command line. Order matters: for example,
 then moves C2 under C1.
 
 All file updates are done carefully. The updated files are generated
-first as temporary files, then the originals are moved to .backup/,
-and only then are the generated files moved to their final destinations.
-If you don't want to perform an in-place update of the files, use --stdout.
+first as temporary files, then a timestamped backup snapshot is created
+under .backups/ next to the LTAC file, and only then are the generated
+files moved to their final destinations. Old snapshots are automatically
+rotated (max_backups in config, default 20). Use --stdout to skip
+in-place updates entirely.
 
 Selectors are of format `KIND [ID | *]`, where KIND is:
   ltac/markdown  ID|*   render as an indented Markdown bullet list
@@ -3080,23 +3089,80 @@ def write_ltac(roots: List['Node']) -> str:
     return '\n'.join(lines)
 
 
-def commit_updates(pairs: List[Tuple[str, str]]) -> None:
+def make_backup(pairs: List[Tuple[str, str]], ltac_path: str,
+                config: dict, config_path: Optional[str]) -> None:
+    """Create a timestamped backup snapshot of files about to be modified.
+
+    Backs up all final_path files from *pairs*, the LTAC file, and the config
+    file (if any) into a single timestamped subdirectory under .backups/ next
+    to the LTAC file.  Directory structure relative to the LTAC directory is
+    preserved.  Files outside the LTAC directory are stored under absolute/.
+
+    Old snapshots are silently rotated when the count exceeds max_backups.
+    Setting max_backups to 0 disables backups entirely.
+    """
+    max_backups = config.get('max_backups', DEFAULT_CONFIG['max_backups'])
+    if max_backups <= 0:
+        return
+
+    now = datetime.datetime.now()
+    centiseconds = now.microsecond // 10000
+    ts = now.strftime('%Y-%m-%dT%H%M%S') + f'.{centiseconds:02d}'
+
+    ltac_dir = os.path.dirname(os.path.abspath(ltac_path))
+    backups_dir = os.path.join(ltac_dir, '.backups')
+    snapshot_dir = os.path.join(backups_dir, ts)
+
+    files_to_backup: Set[str] = set()
+    for _, final in pairs:
+        files_to_backup.add(os.path.abspath(final))
+    files_to_backup.add(os.path.abspath(ltac_path))
+    if config_path:
+        files_to_backup.add(os.path.abspath(config_path))
+
+    try:
+        os.makedirs(snapshot_dir, exist_ok=True)
+    except OSError:
+        return  # best-effort: skip backup if snapshot dir can't be created
+
+    for src in sorted(files_to_backup):
+        try:
+            rel = os.path.relpath(src, ltac_dir)
+            if rel.startswith('..'):
+                # File is outside the LTAC directory: store under absolute/.
+                rel = os.path.join('absolute', src.lstrip(os.sep))
+            dst = os.path.join(snapshot_dir, rel)
+            dst_dir = os.path.dirname(dst)
+            if dst_dir:
+                os.makedirs(dst_dir, exist_ok=True)
+            shutil.copy2(src, dst)
+        except OSError:
+            pass  # best-effort: skip files that can't be read or written
+
+    # Rotate: silently remove oldest snapshots when over the limit.
+    try:
+        snapshots = sorted(
+            e for e in os.listdir(backups_dir)
+            if os.path.isdir(os.path.join(backups_dir, e))
+        )
+        while len(snapshots) > max_backups:
+            shutil.rmtree(os.path.join(backups_dir, snapshots.pop(0)),
+                          ignore_errors=True)
+    except OSError:
+        pass
+
+
+def commit_updates(pairs: List[Tuple[str, str]], ltac_path: str,
+                   config: dict, config_path: Optional[str]) -> None:
     """Atomically update files by backing up originals and moving in new versions.
 
-    *pairs* is a list of (tmp_path, final_path).  Originals are moved to a
-    per-directory .backup/ subdirectory, then the temp files are moved to
-    their final locations.  This minimises the window when files are absent.
+    *pairs* is a list of (tmp_path, final_path).  A timestamped backup snapshot
+    is first created under .backups/ next to the LTAC file, then the temp files
+    are moved to their final locations.  This minimises the window when files
+    are absent.
     """
     notify("Updating " + " ".join(os.path.basename(fp) for _, fp in pairs))
-    for _, final in pairs:
-        dir_ = os.path.dirname(os.path.abspath(final))
-        backup_dir = os.path.join(dir_, '.backup')
-        os.makedirs(backup_dir, exist_ok=True)
-        backup_path = os.path.join(backup_dir, os.path.basename(final))
-        try:
-            os.replace(final, backup_path)
-        except OSError as e:
-            panic(f"cannot back up {final!r}: {e}")
+    make_backup(pairs, ltac_path, config, config_path)
     for tmp, final in pairs:
         try:
             os.replace(tmp, final)
@@ -3412,7 +3478,7 @@ def main() -> None:
             tmp = _make_temp(ltac_path, write_ltac(all_roots), ltac_line_ending)
             if tmp is None:
                 panic("cannot write updated LTAC file")
-            commit_updates([(tmp, ltac_path)])
+            commit_updates([(tmp, ltac_path)], ltac_path, config, config_path)
 
     # Apply ordered mutations (--rename / --restate).
     ltac_pair: Optional[Tuple[str, str]] = None
@@ -3460,7 +3526,7 @@ def main() -> None:
         if result:
             print(result)
         if ltac_pair:
-            commit_updates([ltac_pair])
+            commit_updates([ltac_pair], ltac_path, config, config_path)
     elif args.validate:
         if document_files:
             seen_element_ids: set = set()
@@ -3468,7 +3534,7 @@ def main() -> None:
             # This validation requires that we read all document files
             _check_element_coverage(registry, seen_element_ids)
         if ltac_pair:
-            commit_updates([ltac_pair])
+            commit_updates([ltac_pair], ltac_path, config, config_path)
     elif args.stdout:
         if not document_files:
             panic(_NO_FILES_MSG)
@@ -3476,7 +3542,7 @@ def main() -> None:
         _process_files(document_files, sys.stdout, registry, all_roots, config, id_info, seen_element_ids, strip=args.strip)
         _check_element_coverage(registry, seen_element_ids)
         if ltac_pair:
-            commit_updates([ltac_pair])
+            commit_updates([ltac_pair], ltac_path, config, config_path)
     elif args.missing or args.start:
         if not document_files:
             panic(_NO_FILES_MSG)
@@ -3500,7 +3566,7 @@ def main() -> None:
         if ltac_pair:
             pairs.append(ltac_pair)
         if pairs:
-            commit_updates(pairs)
+            commit_updates(pairs, ltac_path, config, config_path)
     else:
         # Default mode: rewrite document files in place.
         if not document_files and not ltac_pair:
@@ -3512,7 +3578,7 @@ def main() -> None:
             if pair is not None:
                 pairs.append(pair)
         if pairs:
-            commit_updates(pairs)
+            commit_updates(pairs, ltac_path, config, config_path)
         if document_files:
             _check_element_coverage(registry, seen_element_ids)
 

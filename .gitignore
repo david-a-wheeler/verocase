@@ -1,6 +1,7 @@
 # These exclusions must be kept in sync with [tool.flit.sdist] in pyproject.toml.
 tests/results/
 tests/fixtures/.backup/
+.backups/
 __pycache__/
 *.pyc
 bp-docs/

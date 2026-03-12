@@ -315,6 +315,23 @@ verocase --validate
 This is useful in CI pipelines: it exits non-zero if the LTAC is invalid
 or if any declared element lacks an `element` selector in the documents.
 
+### Automatic backups
+
+**You won't lose work.** Every time verocase modifies any file it first
+saves a complete snapshot of the state *before* the change: the document
+files it is about to update, the LTAC file, and the config file (if any).
+Snapshots are stored in a `.backups/` directory next to your LTAC file,
+each in a timestamped subdirectory such as `2026-03-11T142305.07/`.
+
+Up to 20 snapshots are kept; older ones are automatically deleted to
+keep the directory tidy.  If you ever edit text inside a marked region
+by mistake and verocase overwrites it, look in `.backups/` for the most
+recent snapshot — your text will be there.
+
+You can adjust the number of snapshots kept with the `max_backups` config
+key, or set it to `0` to disable backups entirely.
+See the [reference manual](reference.md) for details.
+
 ---
 
 ## Multi-package cases

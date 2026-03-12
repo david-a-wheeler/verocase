@@ -1346,36 +1346,35 @@ class TestWriteLTAC(unittest.TestCase):
 
 class TestCommitUpdates(unittest.TestCase):
     def test_backup_created(self):
-        """commit_updates moves the original to .backup/ and the temp to final."""
+        """commit_updates creates a timestamped snapshot in .backups/ next to the LTAC."""
         import shutil as _shutil
         import tempfile as _tf
         tmpdir = _tf.mkdtemp()
         try:
-            # Create an "original" content file.
-            final = os.path.join(tmpdir, 'out.md')
-            with open(final, 'w') as f:
-                f.write('old content\n')
-            # Create a "new" temp file in the same dir (as verocase does).
-            fd, tmp = _tf.mkstemp(dir=tmpdir)
-            with os.fdopen(fd, 'w') as f:
-                f.write('new content\n')
-            # Run verocase in default mode on a file that needs updating.
-            # We test commit_updates behaviour indirectly: after a default-mode
-            # run that changes a file, verify .backup/ exists and final is updated.
-            src = fixture('inline-input.md')
-            fd2, content_file = _tf.mkstemp(dir=tmpdir, suffix='.md')
-            os.close(fd2)
-            _shutil.copy(src, content_file)
-            r = run('--ltac', fixture('simple.ltac'), content_file)
+            # Copy LTAC and doc into tmpdir so .backups/ lands there.
+            ltac = os.path.join(tmpdir, 'case.ltac')
+            doc = os.path.join(tmpdir, 'case.md')
+            _shutil.copy(fixture('simple.ltac'), ltac)
+            _shutil.copy(fixture('inline-input.md'), doc)
+            original_content = read_file(doc)
+            r = run('--ltac', ltac, doc)
             self.assertEqual(r.returncode, 0)
-            backup_dir = os.path.join(tmpdir, '.backup')
-            self.assertTrue(os.path.isdir(backup_dir),
-                            ".backup/ directory was not created")
-            backup_file = os.path.join(backup_dir, os.path.basename(content_file))
-            self.assertTrue(os.path.exists(backup_file),
-                            "original file was not moved to .backup/")
-            with open(backup_file) as bf:
-                self.assertEqual(bf.read(), read_file(src))
+            backups_dir = os.path.join(tmpdir, '.backups')
+            self.assertTrue(os.path.isdir(backups_dir),
+                            ".backups/ directory was not created")
+            snapshots = os.listdir(backups_dir)
+            self.assertEqual(len(snapshots), 1, "expected exactly one snapshot")
+            snapshot = os.path.join(backups_dir, snapshots[0])
+            # The doc file should be backed up in the snapshot.
+            backed_up_doc = os.path.join(snapshot, 'case.md')
+            self.assertTrue(os.path.exists(backed_up_doc),
+                            "doc file was not backed up in snapshot")
+            with open(backed_up_doc) as bf:
+                self.assertEqual(bf.read(), original_content)
+            # The LTAC file should also be backed up even though it didn't change.
+            backed_up_ltac = os.path.join(snapshot, 'case.ltac')
+            self.assertTrue(os.path.exists(backed_up_ltac),
+                            "LTAC file was not backed up in snapshot")
         finally:
             _shutil.rmtree(tmpdir)
 

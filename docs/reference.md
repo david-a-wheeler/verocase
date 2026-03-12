@@ -411,6 +411,7 @@ All keys are optional; unrecognized keys produce a warning.
 | `element_selections` | `"referenced_by,supported_by,supports"` | Comma-separated list of sub-sections rendered inside each `element` region.  Valid values: `referenced_by`, `supported_by`, `supports`. |
 | `ltac_file` | `""` | Path to the LTAC file; overridden by `--ltac`. |
 | `markdown_base_url` | `""` | Base URL for hyperlinks in `ltac/markdown` and `ltac/html` output. |
+| `max_backups` | `20` | Number of backup snapshots to keep in `.backups/` next to the LTAC file.  Each time verocase modifies any file it saves a complete snapshot (all modified files, the LTAC, and the config) in a timestamped subdirectory before making changes.  Older snapshots are silently rotated out.  Set to `0` to disable backups entirely.  Cannot be set per-document with `verocase-config`. |
 | `max_mermaid_children` | `8` | Maximum number of visual children a node may have before the width-management transform splits the overflow into a synthetic `Connector`.  Set to `0` to disable the transform entirely. |
 | `mermaid_js_url` | CDN URL | URL of the Mermaid JS script injected into HTML output.  Set to `""` to disable injection. |
 | `narrowed_mermaid_children` | `6` | Number of children retained (left + right combined) when the width-management transform splits a wide node; the middle overflow becomes a `Connector`.  Must satisfy `narrowed_mermaid_children >= 2` and `narrowed_mermaid_children < max_mermaid_children` (when `max_mermaid_children > 0`).  Can also be set per-document with `verocase-config`. |

@@ -2506,6 +2506,68 @@ def _write_start_stubs() -> None:
     notify("created case.ltac and case.md")
 
 
+_HELP_VALIDATIONS = """\
+Validations on the LTAC file (always):
+  - There must be no circularities (this prevents circular reasoning)
+  - All elements must be reachable from the first node of the first package
+  - Each package must start with a Claim or Justification (per LTAC spec rule 3)
+  - Claim/Strategy must not appear under Evidence, Context, or Assumption
+  - Each identifier must be declared (no ^ prefix) exactly once
+  - Citing identifiers (^ID) must have a matching declaration (usually to
+    a different package, but this is not required)
+  - Element type must be consistent across all uses of the same identifier
+  - Statement text must be consistent across all uses of the same identifier
+    (use --update to make LTAC citations consistent with their declaration)
+  - Each element must carry at *most* one assertion status option
+    (needsSupport, axiomatic, defeated, assumed); see SACM spec section 11
+  - All generated anchor names (e.g., "claim-x-is-secure") must be unique
+  - No two siblings may share the same identifier (declared, cited, or Link)
+  - Cross-package citations (^ID) should have type Claim or Justification
+  - Evidence nodes must not have children (Evidence is a leaf)
+  - Elements with neither an identifier nor a statement are reported as errors
+  - Declarations missing a statement give warnings if any declaration has one
+  - References that look like parenthetical comments (no '.' and no '#') are
+    flagged as possibly dubious (disable with warn_dubious_reference=false in
+    the --config file); add a `()` afterwards to escape a closing parenthetical
+
+Additional checks when document files are provided:
+  - Every declared LTAC element should have a corresponding 'element' selector
+    in a document (used to generate the element's heading and cross-references;
+    use --fixmissing to fix this)
+"""
+
+_HELP_CONFIGURATION = """\
+Configuration keys (--config FILE, JSON object):
+  document_files     list of document file paths to process (default: auto-discover)
+  ltac_file          LTAC file path (alternative to --ltac; default: auto-discover)
+  max_backups        number of timestamped backup snapshots to keep (default: 20)
+  base_url           base URL for hyperlinks in sacm/gsn mermaid output (default: "")
+  markdown_base_url  base URL for hyperlinks in ltac/markdown and ltac/html output (default: "")
+  default_renderer   renderer for 'sacm'/'gsn' shorthands: "mermaid" (default)
+  default_representation  content for 'package' selector: "sacm" (default)
+  element_level      heading level (1-6) for 'element' selector (default: 3)
+  element_selections comma-separated list for element sub-sections (default: referenced_by,supported_by,supports)
+  max_mermaid_children      max visual children before width narrowing (default: 8; 0 disables)
+  mermaid_js_url     URL for Mermaid JS script in HTML output (default: CDN URL; "" disables)
+  narrowed_mermaid_children children kept (left+right) when narrowing (default: 6; must be >=2 and <max)
+  package_level      heading level (1-6) for 'package' selector (default: 3)
+  package_selections comma-separated list for package sub-sections (default: representation,pkg_defines,pkg_citing,pkg_cited)
+  pkg_label          word used to identify packages in output (default: "Package ")
+  warn_dubious_reference  warn when a reference looks like a parenthetical comment (default: true)
+"""
+
+
+class _HelpTopicAction(argparse.Action):
+    """Custom action for --help-validations / --help-config: print topic and exit."""
+    def __init__(self, option_strings, dest, text='', **kwargs):
+        super().__init__(option_strings, dest, nargs=0, default=argparse.SUPPRESS, **kwargs)
+        self._text = text
+
+    def __call__(self, parser, namespace, values, option_string=None):
+        print(self._text, end='')
+        parser.exit()
+
+
 class _MutationAction(argparse.Action):
     """Accumulate --rename/--restate/--detach/--move operations as ordered tuples.
 
@@ -2668,56 +2730,27 @@ Shortcuts for common selectors:
   --info ID          same as --select "info ID"
   --descendants ID   same as --select "ltac/txt ID"
 
-Validations on the LTAC file (always):
-  - There must be no circularities (this prevents circular reasoning)
-  - All elements must be reachable from the first node of the first package
-  - Each package must start with a Claim or Justification (per LTAC spec rule 3)
-  - Claim/Strategy must not appear under Evidence, Context, or Assumption
-  - Each identifier must be declared (no ^ prefix) exactly once
-  - Citing identifiers (^ID) must have a matching declaration (usually to
-    a different package, but this is not required)
-  - Element type must be consistent across all uses of the same identifier
-  - Statement text must be consistent across all uses of the same identifier
-    (use --update to make LTAC citations consistent with their declaration)
-  - Each element must carry at *most* one assertion status option
-    (needsSupport, axiomatic, defeated, assumed); see SACM spec section 11
-  - All generated anchor names (e.g., "claim-x-is-secure") must be unique
-  - No two siblings may share the same identifier (declared, cited, or Link)
-  - Cross-package citations (^ID) should have type Claim or Justification
-  - Evidence nodes must not have children (Evidence is a leaf)
-  - Elements with neither an identifier nor a statement are reported as errors
-  - Declarations missing a statement give warnings if any declaration has one
-  - References that look like parenthetical comments (no '.' and no '#') are
-    flagged as possibly dubious (disable with warn_dubious_reference=false in
-    the --config file); add a `()` afterwards to escape a closing parenthetical
+By default a number of validations are run. For example, they ensure
+that there are no circularities, that all elements are reachable from the
+first node of the first package, that a package must start with
+Claim or Justification, and that each identifier must be declared
+(no ^ prefix) exactly once.
 
-Additional checks when document files are provided:
-  - Every declared LTAC element should have a corresponding 'element' selector
-    in a document (used to generate the element's heading and cross-references;
-    use --fixmissing to fix this)
-
-Configuration keys (--config FILE, JSON object):
-  document_files     list of document file paths to process (default: auto-discover)
-  ltac_file          LTAC file path (alternative to --ltac; default: auto-discover)
-  max_backups        number of timestamped backup snapshots to keep (default: 20)
-  base_url           base URL for hyperlinks in sacm/gsn mermaid output (default: "")
-  markdown_base_url  base URL for hyperlinks in ltac/markdown and ltac/html output (default: "")
-  default_renderer   renderer for 'sacm'/'gsn' shorthands: "mermaid" (default)
-  default_representation  content for 'package' selector: "sacm" (default)
-  element_level      heading level (1-6) for 'element' selector (default: 3)
-  element_selections comma-separated list for element sub-sections (default: referenced_by,supported_by,supports)
-  max_mermaid_children      max visual children before width narrowing (default: 8; 0 disables)
-  mermaid_js_url     URL for Mermaid JS script in HTML output (default: CDN URL; "" disables)
-  narrowed_mermaid_children children kept (left+right) when narrowing (default: 6; must be >=2 and <max)
-  package_level      heading level (1-6) for 'package' selector (default: 3)
-  package_selections comma-separated list for package sub-sections (default: representation,pkg_defines,pkg_citing,pkg_cited)
-  pkg_label          word used to identify packages in output (default: "Package ")
-  warn_dubious_reference  warn when a reference looks like a parenthetical comment (default: true)
+Run --help-validations for the full list of LTAC and document validations.
+Run --help-config for the full list of configuration keys.
 """,
     )
     parser.add_argument(
         '--version', action='version', version=__version__,
         help='print version and exit',
+    )
+    parser.add_argument(
+        '--help-validations', action=_HelpTopicAction, text=_HELP_VALIDATIONS,
+        help='print full list of LTAC and document validations, then exit',
+    )
+    parser.add_argument(
+        '--help-config', action=_HelpTopicAction, text=_HELP_CONFIGURATION,
+        help='print full list of configuration keys, then exit',
     )
     parser.add_argument(
         '--config', type=str, metavar='FILE',

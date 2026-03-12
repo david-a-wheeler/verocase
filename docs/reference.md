@@ -350,6 +350,19 @@ verocase --missing --empty --orphans --misplaced
 Specifies the LTAC file to load.
 Overrides `ltac_file` in the config and the auto-discovery sequence.
 
+### --help-validations
+
+Prints the full list of LTAC structure and document validations that verocase
+performs, then exits.  The regular `--help` output summarizes the most
+important information; use this flag when you want to see exactly what
+verocase checks.
+
+### --help-config
+
+Prints the full list of configuration keys recognised in the JSON config file,
+then exits.  Equivalent to reading the [Configuration](#configuration) section
+of this reference.
+
 ### --config FILE
 
 Loads configuration from a JSON file (an object of key/value pairs).

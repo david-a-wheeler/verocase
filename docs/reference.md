@@ -38,16 +38,16 @@ Each element occupies exactly one line, indented with two spaces per level.
 INDENT - TYPE [^][IDENTIFIER]: statement text [{options}] [(ext_ref)]
 ```
 
-- **`INDENT`** — two spaces per level; the root element of each package has no indentation.
-- **`-`** — the bullet marker (only hyphens `-` are accepted).
-- **`TYPE`** — one of the types in the table above, or `Link`.
-- **`^`** — when present, marks this as a *citation* of an element declared elsewhere (another package).
-- **`IDENTIFIER`** — optional; must be unique across the entire LTAC file (except for `Link` entries, which re-use an existing identifier).  Any characters except `:` and `^` are permitted.  If omitted, the identifier is inferred from the statement text (see [Identifiers](#identifiers)).
-- **`: statement text`** — required; the colon separates the identifier (if any) from the descriptive text.  Text may contain colons.
-- **`{options}`** — optional comma-separated list of modifier keywords (see [Options](#options) below).
-- **`(ext_ref)`** — optional external reference in parentheses, such as a filename or URL.  Used as a hyperlink target in diagram output.
+- **`INDENT`**: two spaces per level; the root element of each package has no indentation.
+- **`-`**: the bullet marker (only hyphens `-` are accepted).
+- **`TYPE`**: one of the types in the table above, or `Link`.
+- **`^`**: when present, marks this as a *citation* of an element declared elsewhere (another package).
+- **`IDENTIFIER`**: optional; must be unique across the entire LTAC file (except for `Link` entries, which re-use an existing identifier).  Any characters except `:` and `^` are permitted.  If omitted, the identifier is inferred from the statement text (see [Identifiers](#identifiers)).
+- **`: statement text`**: required; the colon separates the identifier (if any) from the descriptive text.  Text may contain colons.
+- **`{options}`**: optional comma-separated list of modifier keywords (see [Options](#options) below).
+- **`(ext_ref)`**: optional external reference in parentheses, such as a filename or URL.  Used as a hyperlink target in diagram output.
 
-A `Link` line has a simpler form — just the type keyword and the identifier, with no colon or text:
+A `Link` line has a simpler form: just the type keyword and the identifier, with no colon or text:
 
 ```
     - Link ExistingId
@@ -89,7 +89,7 @@ would misread if the identifier were ever written back explicitly
 is treated as if it were written `- Claim The system is safe: The system is safe`,
 so the element can be referenced in diagrams and via `Link`.
 When verocase writes the LTAC file back out, it omits the identifier again
-if it can still be recovered from the text — giving a clean round-trip.
+if it can still be recovered from the text: giving a clean round-trip.
 If the statement is later changed (e.g. via `--restate`) so that the text
 no longer matches the inferred identifier, the identifier is written out
 explicitly to preserve it.
@@ -106,7 +106,7 @@ optional:
 - Claim ^OtherTop: The other system is safe
 ```
 
-The first form is a placeholder — the identifier is required but the text
+The first form is a placeholder: the identifier is required but the text
 may be left empty and filled in by `--update`.  When text is present it
 must match the declared element's text; `--update` will correct it if not.
 
@@ -196,7 +196,7 @@ Setting `base_url` to the GitHub URL of the output document therefore
 resolves relative references like `hara.pdf` to the correct full URL
 alongside the document.
 
-### Permitted parent–child relationships
+### Permitted parent-child relationships
 
 Not every combination is valid.  The following relationships are permitted
 (`->` means "may have as a child"):
@@ -407,14 +407,14 @@ All keys are optional; unrecognized keys produce a warning.
 | `default_renderer` | `"mermaid"` | Renderer used when expanding the `sacm` and `gsn` shorthand selectors.  Currently only `"mermaid"` is supported. |
 | `default_representation` | `"sacm"` | Diagram notation used by the `package` selector.  Accepts `"sacm"` or `"gsn"`. |
 | `document_files` | `[]` | List of document files to process; equivalent to listing them on the command line.  Command-line files take priority. |
-| `element_level` | `3` | Markdown/HTML heading level (1–6) used by the `element` selector.  Can also be set per-document with `verocase-config`. |
+| `element_level` | `3` | Markdown/HTML heading level (1-6) used by the `element` selector.  Can also be set per-document with `verocase-config`. |
 | `element_selections` | `"referenced_by,supported_by,supports"` | Comma-separated list of sub-sections rendered inside each `element` region.  Valid values: `referenced_by`, `supported_by`, `supports`. |
 | `ltac_file` | `""` | Path to the LTAC file; overridden by `--ltac`. |
 | `markdown_base_url` | `""` | Base URL for hyperlinks in `ltac/markdown` and `ltac/html` output. |
 | `max_mermaid_children` | `8` | Maximum number of visual children a node may have before the width-management transform splits the overflow into a synthetic `Connector`.  Set to `0` to disable the transform entirely. |
 | `mermaid_js_url` | CDN URL | URL of the Mermaid JS script injected into HTML output.  Set to `""` to disable injection. |
 | `narrowed_mermaid_children` | `6` | Number of children retained (left + right combined) when the width-management transform splits a wide node; the middle overflow becomes a `Connector`.  Must satisfy `narrowed_mermaid_children >= 2` and `narrowed_mermaid_children < max_mermaid_children` (when `max_mermaid_children > 0`).  Can also be set per-document with `verocase-config`. |
-| `package_level` | `3` | Heading level (1–6) used by the `package` selector.  Can also be set per-document with `verocase-config`. |
+| `package_level` | `3` | Heading level (1-6) used by the `package` selector.  Can also be set per-document with `verocase-config`. |
 | `package_selections` | `"representation,pkg_defines,pkg_citing,pkg_cited"` | Comma-separated list of sub-sections rendered inside each `package` region.  Valid values: `representation`, `pkg_defines`, `pkg_citing`, `pkg_cited`. |
 | `pkg_header_prefix` | `"### "` | String prepended to each package header when rendering `*` with `ltac/*` selectors. |
 | `pkg_header_suffix` | `"\n"` | String appended after each package header when rendering `*` with `ltac/*` selectors (a newline by default, producing a blank separator line). |
@@ -492,19 +492,19 @@ the assurance case in the document.
   using the element's type and identifier as its text, with a stable
   HTML anchor for deep-linking.
 - Sub-sections controlled by `element_selections`:
-  - `referenced_by` — lists packages that reference this element.
-  - `supported_by` — lists the element's direct supporting children.
-  - `supports` — lists what this element directly supports.
+  - `referenced_by`: lists packages that reference this element.
+  - `supported_by`: lists the element's direct supporting children.
+  - `supports`: lists what this element directly supports.
 
 **`<!-- verocase package [ID|*] -->`** generates:
 
 - A heading at the level specified by `package_level` (default: `###`),
   with a stable HTML anchor.
 - Sub-sections controlled by `package_selections`:
-  - `representation` — the default diagram (SACM or GSN per `default_representation`).
-  - `pkg_defines` — lists elements defined in this package.
-  - `pkg_citing` — lists elements from other packages cited here.
-  - `pkg_cited` — lists elements from this package cited elsewhere.
+  - `representation`: the default diagram (SACM or GSN per `default_representation`).
+  - `pkg_defines`: lists elements defined in this package.
+  - `pkg_citing`: lists elements from other packages cited here.
+  - `pkg_cited`: lists elements from this package cited elsewhere.
 
 `*` renders all packages in order.
 
@@ -526,16 +526,16 @@ Currently supported keys:
 
 | Key | Accepted values |
 |---|---|
-| `element_level` | `1`–`6` |
+| `element_level` | `1`-`6` |
 | `max_mermaid_children` | non-negative integer |
 | `narrowed_mermaid_children` | non-negative integer |
-| `package_level` | `1`–`6` |
+| `package_level` | `1`-`6` |
 
 Keys that affect LTAC parsing (such as `warn_dubious_reference`) cannot be
 set per-document because LTAC is parsed before documents are read.
 Set them in the `--config` JSON file instead.
 
-Example — use level-2 headings for packages and level-3 for elements:
+Example: use level-2 headings for packages and level-3 for elements:
 
 ```markdown
 <!-- verocase-config package_level = 2 -->
@@ -607,7 +607,7 @@ This matches the SACM graphical notation from Annex C of the SACM specification.
 not grouped into a sacmDot.
 
 When there is exactly one inferential child (and no metaClaim), the
-unreified form is used — a direct arrow from child to parent with no dot.
+unreified form is used: a direct arrow from child to parent with no dot.
 
 #### Click links in SACM diagrams
 
@@ -662,37 +662,37 @@ Errors cause a non-zero exit; warnings do not (unless `--error` is given).
 
 **Fatal errors:**
 
-- **Circular reasoning** — following children and citations must never form
+- **Circular reasoning**: following children and citations must never form
   a loop.  The full cycle is reported, e.g., `C2 -> C4 -> C2`.
 
-- **Unreachable package** — in a multi-package file, each package root must
+- **Unreachable package**: in a multi-package file, each package root must
   be reachable from the first element of the first package
   (following structural children, citation declarations, and Link targets).
 
-- **Unresolved citation** — a `^ID` citation with no matching declaration.
+- **Unresolved citation**: a `^ID` citation with no matching declaration.
 
-- **Duplicate declaration** — an identifier declared (without `^`) more than once.
+- **Duplicate declaration**: an identifier declared (without `^`) more than once.
 
-- **Anchor collision** — two identifiers that generate the same HTML anchor
+- **Anchor collision**: two identifiers that generate the same HTML anchor
   id (e.g., `Foo < 0` and `foo > 0` both produce `foo--0`).
 
 **Warnings:**
 
-- **Structural violation** — `Claim` or `Strategy` as a direct child of
+- **Structural violation**: `Claim` or `Strategy` as a direct child of
   `Evidence`, `Context`, or `Assumption`.
 
-- **Inconsistent type** — the same identifier used with different element types.
+- **Inconsistent type**: the same identifier used with different element types.
 
-- **Inconsistent statement** — statement text that differs between the
+- **Inconsistent statement**: statement text that differs between the
   declaration and a citation or Link (use `--update` to fix).
 
-- **Multiple assertion statuses** — more than one of `needsSupport`,
+- **Multiple assertion statuses**: more than one of `needsSupport`,
   `assumed`, `axiomatic`, `defeated`, `asCited` on the same element.
 
-- **Wrong citation package** — `^[PkgName] ID` where `PkgName` does not
+- **Wrong citation package**: `^[PkgName] ID` where `PkgName` does not
   match the package that declares `ID`.
 
-- **Cited but undeclared** — an identifier cited but never declared
+- **Cited but undeclared**: an identifier cited but never declared
   (distinct from "unresolved": the identifier may exist in an unloaded file).
 
 **Additional checks when document files are processed:**
@@ -796,7 +796,7 @@ Add `.backup/` to `.gitignore` if you do not want these files tracked.
 ## See also
 
 - [Extended LTAC format specification](ltac-extended.txt)
-- [SACM notation in Mermaid — conventions](sacm-mermaid.md)
-- [GSN notation in Mermaid — conventions](gsn-in-mermaid.md)
+- [SACM notation in Mermaid: conventions](sacm-mermaid.md)
+- [GSN notation in Mermaid: conventions](gsn-in-mermaid.md)
 - [Design specification](design-spec.md)
 - [README](../README.md)

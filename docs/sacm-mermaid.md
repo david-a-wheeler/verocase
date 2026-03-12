@@ -201,7 +201,7 @@ is the statement/declaration.
 The `^` prefix is stripped when producing the mermaid node id.
 The `^` was chosen because:
 
-- It visually suggests "pointing upward or outward" — the definition is elsewhere.
+- It visually suggests "pointing upward or outward": the definition is elsewhere.
 - It is easy to type and clearly distinct from normal identifier characters.
 - It does not conflict with LTAC's existing syntax (parentheses, colons, brackets).
 
@@ -558,7 +558,7 @@ Declared without any supporting evidence or argumentation.
 Mermaid cannot render the SACM spec's notation at all.
 So we instead add the word `ASSUMED`, which is at least clear.
 
-**Approach** — a required `ASSUMED` suffix on its own line:
+**Approach**: a required `ASSUMED` suffix on its own line:
 
 ```
 C1["<b>C1</b><br>Assumed statement<br>ASSUMED"]
@@ -581,7 +581,7 @@ flowchart BT
     C1["<b>C1</b><br>statement<br>ASSUMED"]
 ```
 
-**Alternative** — we originally had
+**Alternative**: we originally had
 rounded rectangles or pills, to make it obvious that this was different
 from other claims, and we used a small suffix indicator `~`.
 However, if we use a "normal" rectangle for all other claims, and
@@ -785,9 +785,9 @@ that relates one or more Claims (premises) to another Claim
 ArgumentReasoning can be used to provide further description of the
 reasoning involved." Analogous to a "Strategy" node in GSN.
 
-**Annex C notation**: An open-left-bracket shape — only the right
+**Annex C notation**: An open-left-bracket shape: only the right
 vertical side and two short horizontal lines are drawn, forming a
-`]` bracket — containing name and statement.
+`]` bracket: containing name and statement.
 
 **Mermaid**: Mermaid has nothing like this shape available.
 So we will use a parallelogram `[/..../]`. This is a somewhat similar shape,
@@ -922,7 +922,7 @@ Future syntax using extended nodes:
  }`
 ~~~~
 
-### AssertedRelationship (C.8–C.12)
+### AssertedRelationship (C.8-C.12)
 
 An AssertedRelation shows the relationship between
 ArgumentAssets (such as Claims).
@@ -1201,13 +1201,13 @@ as to the Dot→Tgt edge in the reified form.
 ### +metaClaim reference (C.5)
 
 **SACM §11.10 (p. 39)**: The +metaClaim is an association on
-Assertion: "metaClaim:Claim[0..*] — references Claims concerning
+Assertion: "metaClaim:Claim[0..*]: references Claims concerning
 (i.e., about) the Assertion (e.g., regarding the confidence in the
 Assertion)." It allows any Assertion (a Claim or a relationship)
 to have Claims attached to it as commentary or meta-level observation.
 
 **Annex C notation**: A horizontal line with an open left-pointing
-arrowhead (`——<`), used to attach a Claim that comments on an
+arrowhead (`--<`), used to attach a Claim that comments on an
 Assertion (e.g., expressing confidence in the assertion itself).
 
 **Mermaid**: A directed edge labelled `+metaClaim`, as this is clear
@@ -1281,7 +1281,7 @@ Metamodel." ArgumentPackages contain structured arguments composed of
 ArgumentAssets and can be nested.
 
 **Annex C notation**: A bordered rectangular container with a tab
-header and a side panel — a named grouping of argument elements.
+header and a side panel: a named grouping of argument elements.
 
 #### ArgumentPackageInterface (C.2)
 
@@ -1291,7 +1291,7 @@ between users." It declares which ArgumentAssets inside a package
 are visible to other packages. Distinguished from ArgumentPackageBinding
 (C.3), which joins packages together using those interfaces.
 
-**Annex C notation**: Like ArgumentPackage but with a lollipop (○—)
+**Annex C notation**: Like ArgumentPackage but with a lollipop (○-)
 symbol in the side panel, indicating an interface through which the
 package exposes elements to other packages.
 
@@ -1359,7 +1359,7 @@ flowchart BT
     Inf1 --> G11
 ```
 
-### Figure D1 — Example of Claim Assumptions
+### Figure D1: Example of Claim Assumptions
 
 **Source**: Figure D1, SACM v2.3 Annex D (informative), p. 67.
 
@@ -1433,7 +1433,7 @@ flowchart BT
     Inf2 --> G1
 ```
 
-### Figure D9 — ArtifactReference Citation via AssertedEvidence
+### Figure D9: ArtifactReference Citation via AssertedEvidence
 
 **Source**: Figure D9, SACM v2.3 Annex D (informative), p. 74.
 
@@ -1594,7 +1594,7 @@ Implementation, Integration & Verification, Transition & Operation, and
 Maintenance) support the Technical sub-claim via a second AssertedInference.
 An ArgumentReasoning ("Process organization") explains why dividing the
 argument into Technical, Non-Technical, and Certifications & Controls is
-an appropriate strategy — the system is organized by lifecycle processes.
+an appropriate strategy: the system is organized by lifecycle processes.
 
 **Mapping notes**:
 

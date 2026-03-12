@@ -570,7 +570,7 @@ class LTACParser:
             label = f"{nodetype} {identifier}" if identifier else nodetype
             warn(f"line {lineno}: {label}: dubious reference ({ref!r}):"
                  f" has no '.' and doesn't start with '#'"
-                 f" — looks like a parenthetical comment;"
+                 f" (looks like a parenthetical comment);"
                  f" use {{}} escape if intended")
 
         return node
@@ -1162,7 +1162,7 @@ def _edge_line(src_id: str, tgt_id: str, is_context: bool,
 # SACM/mermaid renderer (step 9)
 # ---------------------------------------------------------------------------
 
-# Hair space (U+200A) — required inside sacmDot and Connector nodes.
+# Hair space (U+200A): required inside sacmDot and Connector nodes.
 _HAIR_SPACE = '\u200a'
 
 
@@ -1202,10 +1202,10 @@ def _build_inner_label(eid: str, etxt: str, suffix: str,
                        decorator: str = '') -> str:
     """Build the inner HTML label for a Mermaid node.
 
-    eid       — escaped identifier (may be empty)
-    etxt      — escaped statement text (may be empty)
-    suffix    — assertion suffix from _sacm/_gsn_assertion_suffix (may be '')
-    decorator — optional type badge inserted after the bold ID (e.g. '&nbsp;Ⓐ')
+    eid:       escaped identifier (may be empty)
+    etxt:      escaped statement text (may be empty)
+    suffix:    assertion suffix from _sacm/_gsn_assertion_suffix (may be '')
+    decorator: optional type badge inserted after the bold ID (e.g. '&nbsp;Ⓐ')
     """
     if eid and etxt:
         return f'<b>{eid}</b>{decorator}<br>{etxt}{suffix}'
@@ -2642,7 +2642,7 @@ For full details see docs/design-spec.md.""",
             "ID may be anywhere in the tree (top-level or nested). "
             "If ^ID is already a direct child of DESTINATION it is replaced by "
             "the definition; otherwise the definition is appended as the last child. "
-            "No citation is left at the original location — to leave one behind, "
+            "No citation is left at the original location; to leave one behind, "
             "run --detach ID first, then --move ID DESTINATION. "
             "Panics if ID or DESTINATION is not defined. "
             "Joins the shared mutation queue with --rename, --restate, and --detach."

@@ -21,10 +21,10 @@ or maintain if you just maintain a document.
 
 `verocase` splits the work into two parts:
 
-- A compact **LTAC file** (`case.ltac`) holds the argument structure —
+- A compact **LTAC file** (`case.ltac`) holds the argument structure:
   the claims, strategies, evidence, and how they relate.
 - One or more **document files** (`case.md` etc.) hold the narrative detail
-  and context — everything you'd want to say *about* each element.
+  and context: everything you'd want to say *about* each element.
 
 `verocase` reads the LTAC file and regenerates the structured portions
 of the document automatically (diagrams, headings, cross-reference links).
@@ -43,8 +43,8 @@ verocase --start
 
 This creates two files:
 
-- `case.ltac` — a tiny starter argument (three elements)
-- `case.md` — a Markdown document with placeholder regions
+- `case.ltac`: a tiny starter argument (three elements)
+- `case.md`: a Markdown document with placeholder regions
 
 Open `case.ltac` in your editor. It looks something like this:
 
@@ -79,7 +79,7 @@ and further down:
 ```
 
 Everything between a `<!-- verocase … -->` marker and `<!-- end verocase -->`
-is managed by `verocase` — **don't edit inside those regions**.
+is managed by `verocase`: **don't edit inside those regions**.
 Everything *outside* them is yours to write freely.
 
 Now run `verocase` (no arguments) to regenerate:
@@ -104,16 +104,16 @@ Every non-blank line in an LTAC file defines or cites one *element*:
 INDENT - TYPE [^][IDENTIFIER]: statement text [{options}] [(ext_ref)]
 ```
 
-- **`INDENT`** — two spaces per nesting level (root elements have none).
-- **`-`** — the bullet marker.
-- **`TYPE`** — the kind of element (see table below).
-- **`^`** — if present, this is a *citation* of an element declared elsewhere.
-- **`IDENTIFIER`** — a short name for the element, unique across the whole file.
+- **`INDENT`**: two spaces per nesting level (root elements have none).
+- **`-`**: the bullet marker.
+- **`TYPE`**: the kind of element (see table below).
+- **`^`**: if present, this is a *citation* of an element declared elsewhere.
+- **`IDENTIFIER`**: a short name for the element, unique across the whole file.
   Identifiers may contain spaces and most printable characters (but not `:` or `^`).
   If omitted, the identifier is inferred from the statement text.
-- **`: statement text`** — what this element asserts or describes.
-- **`{options}`** — optional modifiers (see [Options](#options) below).
-- **`(ext_ref)`** — optional URL or filename used as the click-target
+- **`: statement text`**: what this element asserts or describes.
+- **`{options}`**: optional modifiers (see [Options](#options) below).
+- **`(ext_ref)`**: optional URL or filename used as the click-target
   in diagrams.
 
 One or more blank lines ends one *package* and begins the next.
@@ -163,7 +163,7 @@ it flags leaves that aren't finished yet.
 ### Identifiers
 
 Identifiers must be unique across the entire LTAC file.
-Use short, memorable names — `AuthnClaim`, `G2`, `PenTest`.
+Use short, memorable names: `AuthnClaim`, `G2`, `PenTest`.
 Spaces are legal: `- Claim Login Safe: Login is safe` works.
 If you omit the identifier entirely the text becomes the identifier,
 but explicit identifiers are easier to work with.
@@ -175,7 +175,7 @@ but explicit identifiers are easier to work with.
 ### Marked regions
 
 The document file is ordinary Markdown.
-You can write whatever you like — headings, paragraphs, tables, images —
+You can write whatever you like (headings, paragraphs, tables, images),
 with one constraint: content between these two comment markers is owned
 by `verocase`:
 
@@ -225,7 +225,7 @@ See [reference.md](reference.md) for the full selector table.
 
 Write your detailed narrative about this claim here.
 Explain the threat model, scope, and any caveats.
-This text is yours — verocase never touches it.
+This text is yours: verocase never touches it.
 
 ## Claim: Network attacks are mitigated
 
@@ -265,9 +265,9 @@ add your narrative after each `<!-- end verocase -->`, and run
 
 The typical loop is:
 
-1. Edit `case.ltac` — add/remove elements, change statements, restructure.
-2. Edit `case.md` — add or revise narrative text *outside* the marked regions.
-3. Run `verocase` — it validates the LTAC and regenerates all marked regions.
+1. Edit `case.ltac`: add/remove elements, change statements, restructure.
+2. Edit `case.md`: add or revise narrative text *outside* the marked regions.
+3. Run `verocase`: it validates the LTAC and regenerates all marked regions.
 4. Review the updated document (diagrams, headings, cross-references).
 4. In a few cases you may want to run special `verocase` commands, e.g.,
    `--move` will move an LTAC element from one place to another.
@@ -312,7 +312,7 @@ To check the LTAC for errors without modifying any files:
 verocase --validate
 ```
 
-This is useful in CI pipelines — it exits non-zero if the LTAC is invalid
+This is useful in CI pipelines: it exits non-zero if the LTAC is invalid
 or if any declared element lacks an `element` selector in the documents.
 
 ---
@@ -339,7 +339,7 @@ blank line.
 
 Each top-level `Claim` (with no indentation) begins a new package.
 The `^` prefix on `^NetworkSafe` and `^AuthSafe` means those are
-*citations* — references to elements defined in other packages.
+*citations*: references to elements defined in other packages.
 Citations are how you connect packages together.
 
 All packages must be reachable from the first element of the first package
@@ -401,7 +401,7 @@ Without `--update`, a mismatch produces a warning suggesting you run it.
 ## Tips
 
 **Keep the LTAC focused on the argument.**
-The LTAC file expresses the logical structure — claims, strategies, evidence.
+The LTAC file expresses the logical structure: claims, strategies, evidence.
 Explanatory prose belongs in the document, outside the marked regions.
 
 **Use meaningful identifiers.**
@@ -426,13 +426,13 @@ This makes it much easier for an AI to understand and reason about your case.
 
 ## Where to go from here
 
-- **[Reference manual](reference.md)** — complete documentation of all
+- **[Reference manual](reference.md)**: complete documentation of all
   options, selectors, element types, configuration keys, diagram formats,
   validations, and file handling.
-- **[Extended LTAC format](ltac-extended.txt)** — the formal specification
+- **[Extended LTAC format](ltac-extended.txt)**: the formal specification
   of the LTAC file format.
-- **[SACM notation in Mermaid](sacm-mermaid.md)** — how SACM concepts map
+- **[SACM notation in Mermaid](sacm-mermaid.md)**: how SACM concepts map
   to Mermaid shapes.
-- **[GSN notation in Mermaid](gsn-in-mermaid.md)** — how GSN concepts map
+- **[GSN notation in Mermaid](gsn-in-mermaid.md)**: how GSN concepts map
   to Mermaid shapes.
-- **[README](../README.md)** — project overview and installation.
+- **[README](../README.md)**: project overview and installation.

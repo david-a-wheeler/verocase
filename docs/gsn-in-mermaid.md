@@ -142,7 +142,7 @@ For Assumption and Justification, the identifier is followed by a
 * `&nbsp;`**Ⓙ** (U+24BF, Circled Latin Capital Letter J) for Justification
 
 The non-breaking space (`&nbsp;`) prevents the decorator from wrapping onto
-its own line — a single circled letter on a separate line would waste
+its own line: a single circled letter on a separate line would waste
 significant vertical space in an already-constrained diagram.
 
 These circled letters are the closest mermaid-compatible approximation to
@@ -424,7 +424,7 @@ A1("<b>A1</b>&nbsp;Ⓐ<br>Accepted without argument")
 
 On **any other element type** (Strategy, Evidence, Context, Justification),
 there is no equivalent GSN shape transformation, so `{assumed}` falls back
-to appending an `ASSUMED` text suffix — the same text used by SACM/mermaid.
+to appending an `ASSUMED` text suffix: the same text used by SACM/mermaid.
 This is rare in practice but preserves the information from the LTAC source.
 
 ```
@@ -451,7 +451,7 @@ GSN has no equivalent element type; this concept is foreign to GSN notation.
 
 We render it as a Goal (rectangle) with a `METACLAIM` text suffix.
 The Goal shape is used because a metaClaim is still a proposition that
-could be true or false — not a Context, Justification, or other GSN type.
+could be true or false: not a Context, Justification, or other GSN type.
 The `METACLAIM` suffix makes the non-standard nature explicit to GSN readers
 who would otherwise have no way to know this node has a different semantic role.
 

@@ -255,7 +255,7 @@ class TestSpecialChars(unittest.TestCase):
             self.assertIn('Foo (really a foo)', r2.stdout)
             # C2: text ends with '}', escape {} was needed
             self.assertIn('Bar {really a bar}', r2.stdout)
-            # C3: text ends with ')', but has real options — no escape needed
+            # C3: text ends with ')', but has real options (no escape needed)
             self.assertIn('Baz (really a bar)', r2.stdout)
             # C4: real ref, no text-ending issues
             self.assertIn('[fizz.txt](fizz.txt)', r2.stdout)
@@ -1708,7 +1708,7 @@ class TestNormalPath(unittest.TestCase):
 
     Each test creates a temporary working directory, copies fixtures into it
     as 'case.ltac' / 'case.md', and runs verocase as a subprocess with that
-    directory as the CWD — exactly how a real user would use the tool.
+    directory as the CWD, exactly how a real user would use the tool.
     """
 
     def _make_workdir(self):

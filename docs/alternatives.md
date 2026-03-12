@@ -81,7 +81,7 @@ with all GSN elements mapped from the GSN Community Standard v3.
 This enables machine-readable, logic-based quality verification via SWRL
 rules, OWL axioms, and reasoners such as Pellet, as well as SPARQL queries
 for automated CRUD operations and consistency checks.
-It is designed for dynamic, continuously updated assurance cases — for
+It is designed for dynamic, continuously updated assurance cases: for
 example, linking runtime data from autonomous vehicle or AI systems directly
 into the argument structure.
 A higher learning curve than plain-text tools, but offers unique capabilities
@@ -158,7 +158,7 @@ These tools use a proprietary database or web backend and are not
 text-file-based workflows.
 
 **[Astah System Safety](https://astah.net/products/astah-system-safety/gsn-goal-structuring-notation/)**
-(commercial — approx. $550/year per user; academic and trial licenses available):
+(commercial: approx. $550/year per user; academic and trial licenses available):
 A commercial modeling tool from Change Vision (Japan) specifically designed
 for GSN assurance cases and model-based safety engineering.
 Input is a proprietary project file; the tool provides a graphical GSN
@@ -166,8 +166,8 @@ diagram editor with auto-layout, drag-and-drop goal creation,
 and modular assurance case composition using public indicators and
 SupportedBy/InContextOf relationships, compliant with GSN Community Standard v1.0
 and OMG SACM for import/export.
-It integrates tightly with SysML — requirements can be converted to GSN goals
-with synchronized traceability — and a script editor supports custom automation
+It integrates tightly with SysML: requirements can be converted to GSN goals
+with synchronized traceability: and a script editor supports custom automation
 such as checking evidence links or counting goals.
 Outputs include diagram images, exportable model files, and synchronized
 documentation. Team collaboration is supported via model comparison and merge.
@@ -176,7 +176,7 @@ Available on Windows, macOS (including Apple Silicon), and Linux.
 
 **[Adelard ASCE](https://www.adelard.com/asce/)**
 ([datasheet](https://www.adelard.com/media/gqcbmjxh/mk138v11_asce_51_datasheet.pdf),
-commercial — node-locked or floating licenses; evaluation licenses available):
+commercial: node-locked or floating licenses; evaluation licenses available):
 The Assurance and Safety Case Environment from Adelard is a widely adopted
 commercial tool used in defense, nuclear, rail, healthcare, and other
 regulated industries.
@@ -227,13 +227,13 @@ NLI-based approaches in automating the regulatory compliance process."
 
 These are **not** assurance case tools in their own right:
 
-- **SCE (Adelard Safety Case Environment)** — the earlier name for Adelard ASCE
+- **SCE (Adelard Safety Case Environment)**: the earlier name for Adelard ASCE
   (see above); they are the same product line.
-- **NOR-STA** — an earlier product from the company now known as Argevide;
+- **NOR-STA**: an earlier product from the company now known as Argevide;
   it evolved into PREMIS (see above).
-- **AGSN** — not a distinct standalone tool; searches conflate it with the
+- **AGSN**: not a distinct standalone tool; searches conflate it with the
   D-Case Editor project.
-- **AutoFOCUS 3** — a fortiss open-source model-based systems engineering tool
+- **AutoFOCUS 3**: a fortiss open-source model-based systems engineering tool
   ([fortiss.org](https://www.fortiss.org/en/results/software/autofocus-3));
   it is primarily for system architecture modeling and does not provide
   native assurance case authoring.

@@ -1,4 +1,6 @@
 <!-- verocase package C1 -->
+<!-- DO NOT EDIT text from here until "end verocase" -->
+
 <a id="package-c1"></a>
 ### Package C1: The software is acceptably safe
 
@@ -43,6 +45,8 @@ Defines: **[Claim C1](#claim-c1)**, [Context X1](#context-x1), [Assumption A1](#
 <!-- end verocase -->
 
 <!-- verocase element C1 -->
+<!-- DO NOT EDIT text from here until "end verocase" -->
+
 <a id="claim-c1"></a>
 ### Claim C1: The software is acceptably safe
 

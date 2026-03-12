@@ -2087,7 +2087,7 @@ def render_element_selector(node_id: str, registry: Dict[str, Node],
     }
     selections_out = _apply_selections(sel_names, render_map, config, fmt)
 
-    parts = [_make_heading(anchor, level, heading_text, fmt)]
+    parts = [_WARNING_TEXT_SELECTOR, _make_heading(anchor, level, heading_text, fmt)]
     if selections_out:
         parts.append(selections_out)
     return '\n\n'.join(parts)
@@ -2129,7 +2129,7 @@ def render_package_selector(pkg_id_or_star: str, all_roots: List[Node],
                              config: dict, state: 'DocState') -> str:
     """Render heading + sub-selections for one package, or all packages if '*'."""
     if pkg_id_or_star == '*':
-        blocks = []
+        blocks = [_WARNING_TEXT_SELECTOR]
         for root in all_roots:
             state.current_id = root.identifier
             blocks.append(_render_single_package(root, all_roots, id_info, config, state))
@@ -2139,13 +2139,16 @@ def render_package_selector(pkg_id_or_star: str, all_roots: List[Node],
         error(f"package {pkg_id_or_star!r} not found or is not a root element")
         return ''
     state.current_id = pkg_id_or_star
-    return _render_single_package(pkg_root, all_roots, id_info, config, state)
+    return '\n\n'.join([_WARNING_TEXT_SELECTOR,
+                        _render_single_package(pkg_root, all_roots, id_info, config, state)])
 
 
 _WARNING_TEXT = (
     '<!-- WARNING: DO NOT EDIT text within verocase SELECTOR ... end verocase. -->\n'
     '<!-- Those regions are regenerated. -->'
 )
+
+_WARNING_TEXT_SELECTOR = '<!-- DO NOT EDIT text from here until "end verocase" -->'
 
 
 def render_warning(element_id: Optional[str]) -> str:

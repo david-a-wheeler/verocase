@@ -2954,9 +2954,10 @@ def _mark_needs_support(candidate_ids: List[str],
                         registry: Dict[str, Node]) -> int:
     """Add 'needssupport' option to leaf elements with no existing assertion status.
 
-    Only modifies registry nodes that are leaves (no non-Link children) and have
-    no existing assertion status.  Assumption nodes implicitly carry 'assumed' and
-    are skipped.  Returns count of elements modified.
+    Only modifies registry nodes that are leaves (no non-Link children), have no
+    existing assertion status, and have no ext_ref (a non-empty reference is treated
+    as providing support).  Assumption nodes implicitly carry 'assumed' and are
+    skipped.  Returns count of elements modified.
     """
     count = 0
     for ident in candidate_ids:
@@ -2970,6 +2971,9 @@ def _mark_needs_support(candidate_ids: List[str],
         if node.node_type == 'Assumption':
             continue
         if any(o in _ASSERTION_STATUSES for o in node.options):
+            continue
+        # A non-empty reference (ext_ref) provides support; no needssupport needed.
+        if node.ext_ref:
             continue
         node.options.append('needssupport')
         count += 1

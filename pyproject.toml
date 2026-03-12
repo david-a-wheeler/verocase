@@ -43,4 +43,5 @@ Issues = "https://github.com/david-a-wheeler/verocase/issues"
 verocase = "verocase:main"
 
 [tool.flit.sdist]
-exclude = ["docs/archive"]
+include = ["tests/", "docs/"]
+exclude = ["docs/archive", "tests/results", "tests/fixtures/.backup", "tests/**/.backup"]

@@ -1,4 +1,5 @@
 tests/results/
+tests/fixtures/.backup/
 __pycache__/
 *.pyc
 bp-docs/

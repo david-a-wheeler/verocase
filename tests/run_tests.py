@@ -1667,15 +1667,15 @@ class TestStartOption(unittest.TestCase):
             self.assertTrue(os.path.exists(doc_path), 'case.md not created')
             ltac_content = read_file(ltac_path)
             doc_content = read_file(doc_path)
-            # LTAC: G2 and G3 are leaves and should gain {needssupport}
+            # LTAC: leaf claims should gain {needssupport}
             self.assertIn('needssupport', ltac_content)
-            self.assertIn('Top', ltac_content)
+            self.assertIn('Security', ltac_content)
             # Doc: warning region filled
             self.assertIn('DO NOT EDIT', doc_content)
-            # Doc: element regions for all three nodes appended
-            self.assertIn('<!-- verocase element Top -->', doc_content)
-            self.assertIn('<!-- verocase element G2 -->', doc_content)
-            self.assertIn('<!-- verocase element G3 -->', doc_content)
+            # Doc: element regions for starter nodes appended
+            self.assertIn('<!-- verocase element Security -->', doc_content)
+            self.assertIn('<!-- verocase element Requirements -->', doc_content)
+            self.assertIn('<!-- verocase element Design -->', doc_content)
         finally:
             shutil.rmtree(workdir, ignore_errors=True)
 

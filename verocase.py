@@ -2557,15 +2557,26 @@ Configuration keys (--config FILE, JSON object):
 """
 
 
+class _NullWriter:
+    """Write sink that discards all output; equivalent to /dev/null for streams."""
+    def write(self, s): pass
+    def flush(self): pass
+
+
 class _HelpTopicAction(argparse.Action):
-    """Custom action for --help-validations / --help-config: print topic and exit."""
-    def __init__(self, option_strings, dest, text='', **kwargs):
-        super().__init__(option_strings, dest, nargs=0, default=argparse.SUPPRESS, **kwargs)
-        self._text = text
+    """Custom action for --help-validations / --help-config: record that the flag was given.
+
+    All requested help sections are collected during parsing and printed together
+    at the end of parse_args() before exiting, so multiple --help* flags can be
+    freely combined.
+    """
+    def __init__(self, option_strings, dest, **kwargs):
+        kwargs.setdefault('default', False)
+        kwargs.setdefault('nargs', 0)
+        super().__init__(option_strings, dest, **kwargs)
 
     def __call__(self, parser, namespace, values, option_string=None):
-        print(self._text, end='')
-        parser.exit()
+        setattr(namespace, self.dest, True)
 
 
 class _MutationAction(argparse.Action):
@@ -2593,6 +2604,7 @@ def parse_args() -> argparse.Namespace:
         prog='verocase',
         description='Process assurance case LTAC file and update documentation files (Markdown/HTML)',
         formatter_class=argparse.RawDescriptionHelpFormatter,
+        add_help=False,
         epilog="""\
 This program normally reads an LTAC file as input and then updates (modifies)
 corresponding document file(s) in Markdown/HTML within their text regions
@@ -2741,15 +2753,19 @@ Run --help-config for the full list of configuration keys.
 """,
     )
     parser.add_argument(
+        '-h', '--help', action='store_true', default=False, dest='help_main',
+        help='show this help message and exit',
+    )
+    parser.add_argument(
         '--version', action='version', version=__version__,
         help='print version and exit',
     )
     parser.add_argument(
-        '--help-validations', action=_HelpTopicAction, text=_HELP_VALIDATIONS,
+        '--help-validations', action=_HelpTopicAction, default=False, dest='help_validations',
         help='print full list of LTAC and document validations, then exit',
     )
     parser.add_argument(
-        '--help-config', action=_HelpTopicAction, text=_HELP_CONFIGURATION,
+        '--help-config', action=_HelpTopicAction, default=False, dest='help_config',
         help='print full list of configuration keys, then exit',
     )
     parser.add_argument(
@@ -2919,7 +2935,27 @@ Run --help-config for the full list of configuration keys.
              '--rename, --restate, --detach, --move).',
     )
 
-    return parser.parse_args()
+    args = parser.parse_args()
+
+    # Handle --help / --help-validations / --help-config.
+    # All requested sections are printed together so the flags are freely combinable.
+    if args.help_main or args.help_validations or args.help_config:
+        sep = False
+        if args.help_main:
+            parser.print_help()
+            sep = True
+        if args.help_validations:
+            if sep:
+                print()
+            print(_HELP_VALIDATIONS, end='')
+            sep = True
+        if args.help_config:
+            if sep:
+                print()
+            print(_HELP_CONFIGURATION, end='')
+        sys.exit(0)
+
+    return args
 
 
 def find_ltac_file(ltac_arg: Optional[str], config: dict) -> str:
@@ -4607,7 +4643,7 @@ def main() -> None:
     elif args.validate:
         if document_files:
             seen_element_ids: set = set()
-            _process_files(document_files, io.StringIO(), registry, all_roots, config, id_info, seen_element_ids, strip=args.strip)
+            _process_files(document_files, _NullWriter(), registry, all_roots, config, id_info, seen_element_ids, strip=args.strip)
             # This validation requires that we read all document files
             _check_element_coverage(registry, seen_element_ids)
         if ltac_pair:
@@ -4673,7 +4709,7 @@ def main() -> None:
         # here; the guard is kept for clarity).
         if document_files:
             seen_element_ids: set = set()
-            _process_files(document_files, io.StringIO(), registry, all_roots, config, id_info, seen_element_ids, strip=args.strip)
+            _process_files(document_files, _NullWriter(), registry, all_roots, config, id_info, seen_element_ids, strip=args.strip)
             _check_element_coverage(registry, seen_element_ids)
     else:
         # Default mode: rewrite document files in place.

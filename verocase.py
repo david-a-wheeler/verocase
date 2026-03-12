@@ -2360,6 +2360,7 @@ def process_document_stream(
         missing = [ident for ident in all_ids if ident not in _doc_state.seen_element_ids]
         if not missing:
             return
+        notify(f"Adding {len(missing)} formerly missing element(s) to {filename}")
         inj_state = DocState(doc_format=doc_format, seen_element_ids=_doc_state.seen_element_ids)
         out.write('\n')
         for ident in missing:
@@ -2716,7 +2717,9 @@ Configuration keys (--config FILE, JSON object):
     )
     mode.add_argument(
         '--start', action='store_true',
-        help='create starter case.ltac and case.md, then populate them '
+        help='create starter case.ltac and case.md files, then run --missing '
+             'to add missing sections for elements and '
+             'needsSupport markings to the new LTAC file. '
              '(panics if any case file already exists)',
     )
 
@@ -2917,6 +2920,8 @@ def _mark_needs_support(candidate_ids: List[str],
             continue
         node.options.append('needssupport')
         count += 1
+    if count:
+        notify(f"Adding {count} needsSupport marking(s) to leaves in the LTAC file")
     return count
 
 
@@ -3414,6 +3419,7 @@ def _inline_rewrite_file(
     original_lf = original.replace('\r\n', '\n')
     buf = io.StringIO()
     with io.StringIO(original_lf) as src:
+        src.name = path
         process_document_stream(src, buf, registry, all_roots, config, id_info,
                                 seen_element_ids, detect_doc_format(path),
                                 add_missing=add_missing, strip=strip)

@@ -3106,48 +3106,38 @@ def make_backup(pairs: List[Tuple[str, str]], ltac_path: str,
         return
 
     now = datetime.datetime.now()
-    centiseconds = now.microsecond // 10000
-    ts = now.strftime('%Y-%m-%dT%H%M%S') + f'.{centiseconds:02d}'
+    ts = now.strftime('%Y-%m-%dT%H%M%S') + f'.{now.microsecond // 10000:02d}'
 
     ltac_dir = os.path.dirname(os.path.abspath(ltac_path))
     backups_dir = os.path.join(ltac_dir, '.backups')
     snapshot_dir = os.path.join(backups_dir, ts)
 
-    files_to_backup: Set[str] = set()
-    for _, final in pairs:
-        files_to_backup.add(os.path.abspath(final))
-    files_to_backup.add(os.path.abspath(ltac_path))
+    srcs = {os.path.abspath(f) for _, f in pairs} | {os.path.abspath(ltac_path)}
     if config_path:
-        files_to_backup.add(os.path.abspath(config_path))
+        srcs.add(os.path.abspath(config_path))
 
     try:
         os.makedirs(snapshot_dir, exist_ok=True)
     except OSError:
         return  # best-effort: skip backup if snapshot dir can't be created
 
-    for src in sorted(files_to_backup):
+    for src in sorted(srcs):
         try:
             rel = os.path.relpath(src, ltac_dir)
             if rel.startswith('..'):
-                # File is outside the LTAC directory: store under absolute/.
                 rel = os.path.join('absolute', src.lstrip(os.sep))
             dst = os.path.join(snapshot_dir, rel)
-            dst_dir = os.path.dirname(dst)
-            if dst_dir:
-                os.makedirs(dst_dir, exist_ok=True)
+            os.makedirs(os.path.dirname(dst) or '.', exist_ok=True)
             shutil.copy2(src, dst)
         except OSError:
             pass  # best-effort: skip files that can't be read or written
 
     # Rotate: silently remove oldest snapshots when over the limit.
     try:
-        snapshots = sorted(
-            e for e in os.listdir(backups_dir)
-            if os.path.isdir(os.path.join(backups_dir, e))
-        )
-        while len(snapshots) > max_backups:
-            shutil.rmtree(os.path.join(backups_dir, snapshots.pop(0)),
-                          ignore_errors=True)
+        snapshots = sorted(e for e in os.listdir(backups_dir)
+                           if os.path.isdir(os.path.join(backups_dir, e)))
+        for old in snapshots[:-max_backups]:
+            shutil.rmtree(os.path.join(backups_dir, old), ignore_errors=True)
     except OSError:
         pass
 

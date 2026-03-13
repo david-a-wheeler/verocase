@@ -33,29 +33,16 @@ python3 verocase.py --version
 
 ### 2. Update CHANGELOG.md
 
-Ask an AI assistant to summarize the changes since the last release and
-draft the new CHANGELOG.md entry.  Then review and edit the result before
-committing.
+Ask an AI assistant (e.g., GitHub Copilot) to update `CHANGELOG.md` directly,
+then review the result.
 
-**Get the raw material for the AI:**
+Give the AI a prompt along these lines:
 
-```sh
-# Find the previous release tag
-git tag --sort=-version:refname | head -5
-
-# Show commits since that tag (replace v0.1.0 with the actual previous tag)
-git log v0.1.0..HEAD --oneline
-
-# Show the full diff if needed for detail
-git diff v0.1.0..HEAD -- verocase.py
-```
-
-**Prompt to give the AI** (paste the `git log` output after it):
-
-> I am preparing a release of the `verocase` command-line tool.
-> Please draft a CHANGELOG.md entry for the new version following the
-> [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) format.
-> Use these section headings as applicable, in this order, omitting any
+> Please update `CHANGELOG.md` for a new release of `verocase`.
+> The new version is 1.2.3 and today's date is 2025-03-13 (adjust both).
+> Use the git log since the previous release tag to determine what changed.
+> Follow the [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) format,
+> using these section headings as applicable, in this order, omitting any
 > that are empty: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`,
 > `Security`.
 >
@@ -69,21 +56,16 @@ git diff v0.1.0..HEAD -- verocase.py
 > - For `--stats` output changes, describe the new fields shown.
 > - For new validations or error messages, describe what is now checked
 >   and what the user should do to fix it.
-> - Start the entry with a heading in Keep a Changelog format, e.g.:
->   `## [1.2.3] - 2025-03-13`
->
-> Here are the commits since the last release:
-> (paste `git log` output here, and tell the AI the new version number and today's date)
+> - Add the new entry at the top, below any `[Unreleased]` section header
+>   (or replace it if it exists).
+> - Update the comparison link at the bottom of the file, e.g.:
+>   `[1.2.3]: https://github.com/david-a-wheeler/verocase/compare/v1.2.2...v1.2.3`
 
-**After the AI responds:**
+After the AI updates the file, review it:
 
-1. Review every bullet for accuracy; the AI may misread commit messages.
-2. Check that the existing `[Unreleased]` section (if any) is cleared out
-   or promoted to the new version heading.
-3. Make sure the comparison link at the bottom of the file is updated, e.g.:
-   ```markdown
-   [1.2.3]: https://github.com/david-a-wheeler/verocase/compare/v1.2.2...v1.2.3
-   ```
+1. Check every bullet for accuracy; the AI may misread commit messages.
+2. Confirm the version heading and date are correct.
+3. Confirm the comparison link at the bottom is correct.
 
 ### 3. Commit the version bump with CHANGELOG.md
 

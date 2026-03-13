@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to verocase will be documented in this file.
+This file documents the most important user-facing changes to verocode. For detailed change information, see the `git log`.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
@@ -14,7 +14,7 @@ Initial release.
 ### Added
 
 **LTAC file support**
-- Parse the verocase extended LTAC (Lightweight Text Assurance Case) format,
+- Parse our extended LTAC (Lightweight Text Assurance Case) format,
   supporting node types: Claim, Strategy, Evidence, Context, Assumption,
   Justification, Link, Relation, and Connector.
 - Cross-package citations using `^ID` syntax.
@@ -22,7 +22,7 @@ Initial release.
   `abstract`, `counter`.
 - External references in parentheses, e.g. `(hazard-analysis.pdf)`.
 - Identifier inference from statement text when no explicit ID is given.
-- Disambiguation syntax: `()` and `{}` within statement text.
+- Disambiguation syntax: `()` and `{}` at the end of statement text.
 - Auto-discovery of `case.ltac` (and `docs/case.ltac` as fallback); override
   with `--ltac`.
 
@@ -42,22 +42,22 @@ Initial release.
   explicit file arguments.
 
 **Selectors** (used in `<!-- verocase SELECTOR -->` regions and `--select`)
-- `element ID` — generate element heading, statement, and cross-reference
+- `element ID`: generate element heading, statement, and cross-reference
   subsections.
-- `package ID` / `package *` — generate a diagram for one package or all
+- `package ID` / `package *`: generate a diagram for one package or all
   packages.
-- `statement ID` — emit the statement text for an element.
-- `sacm/mermaid`, `gsn/mermaid` — SACM or GSN diagram in Mermaid syntax.
-- `sacm/mermaid/html`, `gsn/mermaid/html` — as above, with a Mermaid JS
+- `statement ID`: emit the statement text for an element.
+- `sacm/mermaid`, `gsn/mermaid`: SACM or GSN diagram in Mermaid syntax.
+- `sacm/mermaid/html`, `gsn/mermaid/html`: as above, with a Mermaid JS
   `<script>` tag injected once per HTML document.
-- `ltac/markdown`, `ltac/html` — LTAC tree as a formatted list.
-- `ltac/txt` — raw LTAC text for an element.
-- `referenced_by`, `supported_by`, `supports` — cross-reference subsections.
-- `pkg_defines`, `pkg_citing`, `pkg_cited` — package relationship sections.
-- `representation` — default representation for a package (configurable).
-- `warning` — emit a warning about elements lacking document coverage.
-- `stop` — stop inserting stubs after this point (`--fixmissing`).
-- `epilogue` — mark the end of main element content.
+- `ltac/markdown`, `ltac/html`: LTAC tree as a formatted list.
+- `ltac/txt`: raw LTAC text for an element.
+- `referenced_by`, `supported_by`, `supports`: cross-reference subsections.
+- `pkg_defines`, `pkg_citing`, `pkg_cited`: package relationship sections.
+- `representation`: default representation for a package (configurable).
+- `warning`: emit a warning about elements lacking document coverage.
+- `stop`: stop inserting stubs after this point (`--fixmissing`).
+- `epilogue`: mark the end of main element content.
 - Shorthand expansions: `sacm` → `sacm/mermaid`, `gsn` → `gsn/mermaid`,
   `ltac` → `ltac/markdown` (renderer determined by `default_renderer` and
   `default_representation` config keys).

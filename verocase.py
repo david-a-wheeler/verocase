@@ -1464,11 +1464,14 @@ def _sacm_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
             out.write('\n')
             out.write(decl)
 
-    # Collect sacmDot declarations via a DFS pass (must precede edge lines in output).
+    # Single DFS pass: collect dot declarations and edge lines together.
+    # Dot declarations must appear before edge lines in the Mermaid output,
+    # so edges are buffered here and written after.
     dot_counter = [1]
     dot_decls: list = []
+    edge_lines: list = []
     for root in roots:
-        _sacm_collect_edges(root, dot_counter, dot_decls, lambda _: None)
+        _sacm_collect_edges(root, dot_counter, dot_decls, edge_lines.append)
     for decl in dot_decls:
         out.write('\n')
         out.write(decl)
@@ -1481,9 +1484,7 @@ def _sacm_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
                 out.write('\n')
                 out.write(f'    click {node.diagram_id} "{url}"')
 
-    # Edges: write blank separator line before the first edge, then
-    # BottomPadding (anchored at the leftmost deepest leaf), then DFS edges.
-    # Both passes use the same starting dot_counter so Dot IDs match declarations.
+    # Edges: BottomPadding first, then DFS edges; blank separator before first edge.
     _first_edge = [True]
 
     def _write_edge(line: str) -> None:
@@ -1497,10 +1498,8 @@ def _sacm_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
         bottom_node = _sacm_leftmost_leaf(roots[0])
         _write_edge(f'    BottomPadding[ ]:::invisible ~~~ {bottom_node.diagram_id}')
 
-    dot_counter2 = [1]
-    dot_decls2: list = []
-    for root in roots:
-        _sacm_collect_edges(root, dot_counter2, dot_decls2, _write_edge)
+    for edge_line in edge_lines:
+        _write_edge(edge_line)
 
 
 def render_sacm(roots: List['Node'], config: dict, out: TextIO) -> bool:

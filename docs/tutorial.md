@@ -529,25 +529,30 @@ and works as-is.
   an Evidence element) are also resolved against `base_url`, so they will
   link correctly to the file alongside the document on GitHub.
 
-`base_url` must be set in the JSON config file.
-It cannot be set via the inline `verocase-config` directive (which only
-supports rendering-time options such as heading levels).
+You can set `base_url` either in the JSON config file (to apply to all
+documents at once) or inline in a specific document with `verocase-config`:
+
+```markdown
+<!-- verocase-config base_url = https://github.com/OWNER/REPO/blob/main/docs/case.md -->
+```
 
 ### Per-document settings with `verocase-config`
 
 For settings that affect how a single document is rendered — heading
-levels, diagram width limits — you can place directives inline anywhere in
-the document:
+levels, diagram width limits, or `base_url` — you can place directives
+inline anywhere in the document:
 
 ```markdown
+<!-- verocase-config base_url = https://github.com/OWNER/REPO/blob/main/docs/case.md -->
 <!-- verocase-config package_level = 2 -->
 <!-- verocase-config element_level = 3 -->
 ```
 
 The directive takes effect from that point onward in the file.
-Supported inline keys are `element_level`, `package_level`,
+Supported inline keys are `base_url`, `element_level`, `package_level`,
 `max_mermaid_children`, and `narrowed_mermaid_children`.
-All other keys (including `base_url`) require the JSON config file.
+Keys that affect LTAC parsing (such as `warn_dubious_reference`) require
+the JSON config file instead.
 
 ---
 

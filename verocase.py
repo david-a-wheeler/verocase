@@ -2385,6 +2385,7 @@ _CASEPROC_CONFIG_RE = re.compile(r'^<!--\s*verocase-config\s+(\S+)\s*=\s*(.*?)\s
 
 # Allowed dynamically-settable config keys and their validation patterns.
 _ALLOWED_CONFIG_VALUES = {
+    'base_url': re.compile(r'.*'),
     'element_level': re.compile(r'^[1-6]$'),
     'package_level': re.compile(r'^[1-6]$'),
     'max_mermaid_children':    re.compile(r'^(0|[1-9][0-9]*)\Z'),

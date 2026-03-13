@@ -696,6 +696,7 @@ Currently supported keys:
 
 | Key | Accepted values |
 |---|---|
+| `base_url` | any string (URL or empty) |
 | `element_level` | `1`-`6` |
 | `max_mermaid_children` | non-negative integer |
 | `narrowed_mermaid_children` | non-negative integer |
@@ -710,6 +711,12 @@ Example: use level-2 headings for packages and level-3 for elements:
 ```markdown
 <!-- verocase-config package_level = 2 -->
 <!-- verocase-config element_level = 3 -->
+```
+
+Example: set `base_url` for GitHub click links in a specific document:
+
+```markdown
+<!-- verocase-config base_url = https://github.com/OWNER/REPO/blob/main/docs/case.md -->
 ```
 
 Do **not** use `<!-- verocase config ... -->` (without the hyphen); that

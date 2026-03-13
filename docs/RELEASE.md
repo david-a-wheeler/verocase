@@ -31,15 +31,73 @@ Verify the version is correct:
 python3 verocase.py --version
 ```
 
-### 2. Commit the version bump
+### 2. Update CHANGELOG.md
+
+Ask an AI assistant to summarize the changes since the last release and
+draft the new CHANGELOG.md entry.  Then review and edit the result before
+committing.
+
+**Get the raw material for the AI:**
+
+```sh
+# Find the previous release tag
+git tag --sort=-version:refname | head -5
+
+# Show commits since that tag (replace v0.1.0 with the actual previous tag)
+git log v0.1.0..HEAD --oneline
+
+# Show the full diff if needed for detail
+git diff v0.1.0..HEAD -- verocase.py
+```
+
+**Prompt to give the AI** (paste the `git log` output after it):
+
+> I am preparing a release of the `verocase` command-line tool.
+> Please draft a CHANGELOG.md entry for the new version following the
+> [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) format.
+> Use these section headings as applicable, in this order, omitting any
+> that are empty: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`,
+> `Security`.
+>
+> Guidelines:
+> - Focus on user-visible changes; omit pure internal refactors unless
+>   they affect behaviour or performance noticeably.
+> - One bullet per logical change; do not repeat the same change under
+>   multiple headings.
+> - Write for a user reading the changelog, not a developer reading diffs;
+>   describe *what changed and why it matters*, not how it was implemented.
+> - For `--stats` output changes, describe the new fields shown.
+> - For new validations or error messages, describe what is now checked
+>   and what the user should do to fix it.
+> - Do not include the version number or date in your output; those will
+>   be filled in separately.
+>
+> Here are the commits since the last release:
+> (paste `git log` output here)
+
+**After the AI responds:**
+
+1. Review every bullet for accuracy; the AI may misread commit messages.
+2. Add the version header and today's date in ISO 8601 format, e.g.:
+   ```markdown
+   ## [1.2.3] - 2025-03-13
+   ```
+3. Check that the existing `[Unreleased]` section (if any) is cleared out
+   or promoted to the new version heading.
+4. Make sure the comparison link at the bottom of the file is updated, e.g.:
+   ```markdown
+   [1.2.3]: https://github.com/david-a-wheeler/verocase/compare/v1.2.2...v1.2.3
+   ```
+
+### 3. Commit the version bump with CHANGELOG.md
 
 ```sh
 VERSION=$(python3 verocase.py --version)
-git add verocase.py
+git add verocase.py CHANGELOG.md
 git commit -m "Bump version to $VERSION"
 ```
 
-### 3. Create and push a signed tag
+### 4. Create and push a signed tag
 
 Tag names must be prefixed with `v`.  Use `--version` to confirm the exact
 string to embed:
@@ -50,7 +108,7 @@ git tag -a "v${VERSION}" -m "Release v${VERSION}"
 git push origin main "v${VERSION}"
 ```
 
-### 4. Create a GitHub Release
+### 5. Create a GitHub Release
 
 1. Go to **Releases** on the GitHub repository page.
 2. Click **Draft a new release**.
@@ -61,28 +119,28 @@ git push origin main "v${VERSION}"
 
 Publishing the release triggers the `publish.yml` workflow automatically.
 
-### 5. Approve the publish workflow (environment gate)
+### 6. Approve the publish workflow (environment gate)
 
 The `publish.yml` workflow runs in the `pypi` GitHub Actions environment,
-which should be configured to require a manual approval before deployment.
+which is configured to require a manual approval before deployment.
 
 1. Go to **Actions** on the GitHub repository page.
 2. Open the **Publish to PyPI** workflow run for your release.
 3. Review and **Approve** the pending deployment to the `pypi` environment.
 
 The workflow then builds the package and publishes it to PyPI without any
-passwords or tokens — authentication is handled entirely by trusted publishing.
+passwords or tokens; authentication is handled entirely by trusted publishing.
 
-### 6. Verify the release
+### 7. Verify the release
 
 ```sh
 pip install --upgrade verocase
 verocase --version
 ```
 
----
+## Background information
 
-## Trusted publishing
+### Trusted publishing
 
 We use [PyPI Trusted Publishing](https://docs.pypi.org/trusted-publishers/)
 (OIDC-based) rather than long-lived API tokens or passwords.
@@ -97,7 +155,7 @@ We use [PyPI Trusted Publishing](https://docs.pypi.org/trusted-publishers/)
   so a compromised fork or unrelated workflow cannot publish.
 - Eliminates the entire class of "stolen API token" supply-chain attacks.
 
-**Configuration (already done; recorded here for reference):**
+### Release configuration
 
 The trusted publisher was registered on PyPI with these values:
 
@@ -112,9 +170,7 @@ See also:
 - [PyPI Trusted Publishers documentation](https://docs.pypi.org/trusted-publishers/)
 - [GitHub OIDC documentation](https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/about-security-hardening-with-openid-connect)
 
----
-
-## Reproducible builds
+### Reproducible builds
 
 Our release builds are reproducible: building from the same source tree
 always produces bit-for-bit identical wheel and sdist archives.
@@ -146,7 +202,8 @@ export SOURCE_DATE_EPOCH=$(git log -1 --format=%ct)
 python -m build
 ```
 
-See also:
+## See also
+
 - [Reproducible Builds project](https://reproducible-builds.org/)
 - [SOURCE_DATE_EPOCH specification](https://reproducible-builds.org/docs/source-date-epoch/)
 - [Python packaging reproducibility](https://packaging.python.org/en/latest/guides/reproducible-builds/)

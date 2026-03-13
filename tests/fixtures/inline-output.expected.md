@@ -28,8 +28,6 @@ flowchart BT
     C3["<b>C3</b><br>All hazards have been mitigated"]
     E1[("<b>E1</b>&nbsp;↗<br>Hazard analysis")]
     Dot1((" ")):::sacmDot
-    click X1 "release-notes.md"
-    click E1 "hara.pdf"
 
     BottomPadding[ ]:::invisible ~~~ E1
     E1 --> C2
@@ -84,8 +82,6 @@ flowchart BT
     C3["<b>C3</b><br>All hazards have been mitigated"]
     E1[("<b>E1</b>&nbsp;↗<br>Hazard analysis")]
     Dot1((" ")):::sacmDot
-    click X1 "release-notes.md"
-    click E1 "hara.pdf"
 
     BottomPadding[ ]:::invisible ~~~ E1
     E1 --> C2

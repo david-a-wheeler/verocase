@@ -783,12 +783,11 @@ unreified form is used: a direct arrow from child to parent with no dot.
 
 Each identified node gets a `click` line.  The URL is determined as:
 
-1. If the node has an `(ext_ref)`: resolved per [External references](#external-references).
-2. If `base_url` is set and the node is a **citation** (`^ID`): links to
+1. If `base_url` is set and the node is a **citation** (`^ID`): links to
    the cited package's section header (`base_url + "#package-ID"`).
-3. If `base_url` is set and the node is **declared**: links to the element's
+2. If `base_url` is set and the node is **declared**: links to the element's
    own content heading (`base_url + "#type-id"`).
-4. Otherwise: no `click` line.
+3. Otherwise: no `click` line.
 
 ### GSN/mermaid
 

@@ -845,6 +845,10 @@ def _node_url(node: Node, base_url: str, pkg_label: str = DEFAULT_CONFIG['pkg_la
     refs are joined with the directory of base_url when base_url is set).
     Otherwise a URL is constructed from base_url and a GitHub-style fragment.
     Returns '' when base_url is empty and no ext_ref is present.
+
+    NOTE: Mermaid click statements use _node_anchor_url directly so that
+    clicking always navigates to the element section, not to its ext_ref.
+    The ext_ref is shown separately in the rendered document text.
     """
     if node.ext_ref:
         return _resolve_ext_ref(node.ext_ref, base_url)
@@ -888,8 +892,9 @@ def _render_markdown_node(node: Node, indent: int, base_url: str,
 def render_markdown(roots: List[Node], config: dict, out: TextIO) -> bool:
     """Write a list of nodes as an indented markdown bullet list with hyperlinks.
 
-    Each item is '- NodeType ID: text' where ID is a hyperlink when a URL
-    is available (from ext_ref, or constructed from base_url + anchor).
+    Each item is '- NodeType ID: text' where the label is a hyperlink to
+    the element's document anchor when base_url is set.  If an ext_ref is
+    present it is shown as an additional parenthetical link.
     Link nodes are skipped.
     """
     base_url = config.get('markdown_base_url', '')
@@ -1478,12 +1483,15 @@ def _sacm_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
         out.write(decl)
 
     # Click lines (BFS); write directly.
-    for node in _collect_bfs(roots):
-        if node.node_type not in ('Relation', 'Link'):
-            url = _node_url(node, base_url, pkg_label)
-            if url:
-                out.write('\n')
-                out.write(f'    click {node.diagram_id} "{url}"')
+    # Link to the element anchor; never directly to ext_ref.
+    # No clicks are generated when base_url is not set.
+    if base_url:
+        for node in _collect_bfs(roots):
+            if node.node_type not in ('Relation', 'Link'):
+                url = _node_anchor_url(node, base_url, pkg_label)
+                if url:
+                    out.write('\n')
+                    out.write(f'    click {node.diagram_id} "{url}"')
 
     # Edges: BottomPadding first, then DFS edges; blank separator before first edge.
     _first_edge = [True]
@@ -1707,12 +1715,15 @@ def _gsn_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
             out.write(decl)
 
     # Click lines (BFS); write directly.
-    for node in _collect_bfs(roots):
-        if node.node_type not in ('Relation', 'Link', 'Connector'):
-            url = _node_url(node, base_url, pkg_label)
-            if url:
-                out.write('\n')
-                out.write(f'    click {node.diagram_id} "{url}"')
+    # Link to the element anchor; never directly to ext_ref.
+    # No clicks are generated when base_url is not set.
+    if base_url:
+        for node in _collect_bfs(roots):
+            if node.node_type not in ('Relation', 'Link', 'Connector'):
+                url = _node_anchor_url(node, base_url, pkg_label)
+                if url:
+                    out.write('\n')
+                    out.write(f'    click {node.diagram_id} "{url}"')
 
     # Edges (DFS pre-order); write directly and collect leaf nodes for BottomPadding.
     leaf_nodes: list = []
@@ -3710,9 +3721,17 @@ def _analysis_missing(all_roots, registry, document_files):
 
 
 def _analysis_empty(document_files, registry):
-    """Print analysis of elements with selector regions but no prose."""
+    """Print analysis of elements with selector regions but no prose.
+
+    Elements that have an ext_ref are not considered empty: their content
+    lives in the external reference.
+    """
     _, elem_info = _scan_document_elements(document_files)
-    empty = [(ident, info) for ident, info in elem_info.items() if not info['has_prose']]
+    empty = [
+        (ident, info) for ident, info in elem_info.items()
+        if not info['has_prose']
+        and not (registry.get(ident) and registry.get(ident).ext_ref)
+    ]
     print("Elements with no prose in the document(s):")
     if not empty:
         print("  (none)")

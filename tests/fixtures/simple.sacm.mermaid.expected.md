@@ -25,10 +25,10 @@ flowchart BT
     click C1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/simple.sacm.mermaid.expected.md#claim-c1"
     click AR1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/simple.sacm.mermaid.expected.md#strategy-ar1"
     click A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/simple.sacm.mermaid.expected.md#assumption-a1"
-    click X1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/release-notes.md"
+    click X1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/simple.sacm.mermaid.expected.md#context-x1"
     click C2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/simple.sacm.mermaid.expected.md#claim-c2"
     click C3 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/simple.sacm.mermaid.expected.md#claim-c3"
-    click E1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/hara.pdf"
+    click E1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/simple.sacm.mermaid.expected.md#evidence-e1"
 
     BottomPadding[ ]:::invisible ~~~ E1
     E1 --> C2

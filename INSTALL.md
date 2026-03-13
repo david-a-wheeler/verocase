@@ -6,6 +6,20 @@
 pip install verocase
 ```
 
+If you get a permissions error, install into your home directory instead:
+
+```sh
+pip install --user verocase
+```
+
+Or use [pipx](https://pipx.pypa.io/), which installs command-line tools into
+isolated environments and puts them on your PATH automatically; a good
+choice for tools like verocase:
+
+```sh
+pipx install verocase
+```
+
 This installs the `verocase` command so you can run it from anywhere.
 You can verify that it works, and see some information about it, by running:
 
@@ -16,7 +30,9 @@ verocase --help
 To upgrade to the latest release:
 
 ```sh
-pip install --upgrade verocase
+pip install --upgrade verocase       # system-wide
+pip install --user --upgrade verocase  # user install
+pipx upgrade verocase                  # pipx install
 ```
 
 ## Single-file installation

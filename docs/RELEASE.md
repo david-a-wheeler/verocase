@@ -69,22 +69,18 @@ git diff v0.1.0..HEAD -- verocase.py
 > - For `--stats` output changes, describe the new fields shown.
 > - For new validations or error messages, describe what is now checked
 >   and what the user should do to fix it.
-> - Do not include the version number or date in your output; those will
->   be filled in separately.
+> - Start the entry with a heading in Keep a Changelog format, e.g.:
+>   `## [1.2.3] - 2025-03-13`
 >
 > Here are the commits since the last release:
-> (paste `git log` output here)
+> (paste `git log` output here, and tell the AI the new version number and today's date)
 
 **After the AI responds:**
 
 1. Review every bullet for accuracy; the AI may misread commit messages.
-2. Add the version header and today's date in ISO 8601 format, e.g.:
-   ```markdown
-   ## [1.2.3] - 2025-03-13
-   ```
-3. Check that the existing `[Unreleased]` section (if any) is cleared out
+2. Check that the existing `[Unreleased]` section (if any) is cleared out
    or promoted to the new version heading.
-4. Make sure the comparison link at the bottom of the file is updated, e.g.:
+3. Make sure the comparison link at the bottom of the file is updated, e.g.:
    ```markdown
    [1.2.3]: https://github.com/david-a-wheeler/verocase/compare/v1.2.2...v1.2.3
    ```

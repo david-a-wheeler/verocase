@@ -1457,7 +1457,7 @@ def _sacm_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
     body_header = _SACM_HEADER[len('```mermaid\n'):]
     out.write(body_header)
 
-    # Node declarations (BFS) — write directly.
+    # Node declarations (BFS); write directly.
     for node in _collect_bfs(roots):
         decl = _sacm_node_decl(node)
         if decl:
@@ -1476,7 +1476,7 @@ def _sacm_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
         out.write('\n')
         out.write(decl)
 
-    # Click lines (BFS) — write directly.
+    # Click lines (BFS); write directly.
     for node in _collect_bfs(roots):
         if node.node_type not in ('Relation', 'Link'):
             url = _node_url(node, base_url, pkg_label)
@@ -1698,14 +1698,14 @@ def _gsn_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
     body_header = _GSN_HEADER[len('```mermaid\n'):]
     out.write(body_header)
 
-    # Node declarations (BFS) — write directly.
+    # Node declarations (BFS); write directly.
     for node in _collect_bfs(roots):
         decl = _gsn_node_decl(node)
         if decl:
             out.write('\n')
             out.write(decl)
 
-    # Click lines (BFS) — write directly.
+    # Click lines (BFS); write directly.
     for node in _collect_bfs(roots):
         if node.node_type not in ('Relation', 'Link', 'Connector'):
             url = _node_url(node, base_url, pkg_label)
@@ -1713,7 +1713,7 @@ def _gsn_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
                 out.write('\n')
                 out.write(f'    click {node.diagram_id} "{url}"')
 
-    # Edges (DFS pre-order) — write directly; collect leaf nodes for BottomPadding.
+    # Edges (DFS pre-order); write directly and collect leaf nodes for BottomPadding.
     leaf_nodes: list = []
     _first_edge = [True]
 
@@ -4560,7 +4560,7 @@ def _inline_rewrite_file(
     """Process a single document file, streaming updated content to a temp file.
 
     Returns a (tmp_path, final_path) pair on success, or None if an error
-    occurred.  Streams directly to a temp file — no whole-document buffer.
+    occurred.  Streams directly to a temp file (no whole-document buffer).
 
     When add_missing is True, uses a single-pass smart-placement algorithm to
     insert new element stubs near their natural LTAC order position.

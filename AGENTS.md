@@ -16,6 +16,11 @@ prefix to run `tests/run_tests.py` or `verocase`, that's not necessary.
 
 See README.md for more.
 
+## Style
+
+Never use em dashes (long dashes); use semicolons or parentheses instead.
+A `--` for CLI long options is of course fine.
+
 ## Key architecture notes for AI assistants
 
 `verocase` is a **single Python3 script**. All logic lives there.

@@ -1484,14 +1484,14 @@ def _sacm_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
 
     # Click lines (BFS); write directly.
     # Link to the element anchor; never directly to ext_ref.
-    # No clicks are generated when base_url is not set.
-    if base_url:
-        for node in _collect_bfs(roots):
-            if node.node_type not in ('Relation', 'Link'):
-                url = _node_anchor_url(node, base_url, pkg_label)
-                if url:
-                    out.write('\n')
-                    out.write(f'    click {node.diagram_id} "{url}"')
+    # When base_url is empty, fragment-only links (#id) are used so that
+    # clicks still work on platforms that resolve them within the same page.
+    for node in _collect_bfs(roots):
+        if node.node_type not in ('Relation', 'Link'):
+            url = _node_anchor_url(node, base_url, pkg_label)
+            if url:
+                out.write('\n')
+                out.write(f'    click {node.diagram_id} "{url}"')
 
     # Edges: BottomPadding first, then DFS edges; blank separator before first edge.
     _first_edge = [True]
@@ -1716,14 +1716,14 @@ def _gsn_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
 
     # Click lines (BFS); write directly.
     # Link to the element anchor; never directly to ext_ref.
-    # No clicks are generated when base_url is not set.
-    if base_url:
-        for node in _collect_bfs(roots):
-            if node.node_type not in ('Relation', 'Link', 'Connector'):
-                url = _node_anchor_url(node, base_url, pkg_label)
-                if url:
-                    out.write('\n')
-                    out.write(f'    click {node.diagram_id} "{url}"')
+    # When base_url is empty, fragment-only links (#id) are used so that
+    # clicks still work on platforms that resolve them within the same page.
+    for node in _collect_bfs(roots):
+        if node.node_type not in ('Relation', 'Link', 'Connector'):
+            url = _node_anchor_url(node, base_url, pkg_label)
+            if url:
+                out.write('\n')
+                out.write(f'    click {node.diagram_id} "{url}"')
 
     # Edges (DFS pre-order); write directly and collect leaf nodes for BottomPadding.
     leaf_nodes: list = []

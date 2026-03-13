@@ -28,6 +28,13 @@ flowchart BT
     C3["<b>C3</b><br>All hazards have been mitigated"]
     E1[("<b>E1</b>&nbsp;↗<br>Hazard analysis")]
     Dot1((" ")):::sacmDot
+    click C1 "#claim-c1"
+    click AR1 "#strategy-ar1"
+    click A1 "#assumption-a1"
+    click X1 "#context-x1"
+    click C2 "#claim-c2"
+    click C3 "#claim-c3"
+    click E1 "#evidence-e1"
 
     BottomPadding[ ]:::invisible ~~~ E1
     E1 --> C2
@@ -82,6 +89,13 @@ flowchart BT
     C3["<b>C3</b><br>All hazards have been mitigated"]
     E1[("<b>E1</b>&nbsp;↗<br>Hazard analysis")]
     Dot1((" ")):::sacmDot
+    click C1 "#claim-c1"
+    click AR1 "#strategy-ar1"
+    click A1 "#assumption-a1"
+    click X1 "#context-x1"
+    click C2 "#claim-c2"
+    click C3 "#claim-c3"
+    click E1 "#evidence-e1"
 
     BottomPadding[ ]:::invisible ~~~ E1
     E1 --> C2

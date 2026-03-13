@@ -2433,10 +2433,21 @@ def _consume_region(line_iter, filename: str, start_lineno: int, selector: str) 
     """Consume lines from line_iter until '<!-- end verocase -->', return True if found.
 
     If EOF is reached before finding the end marker, calls error() and returns False.
+    Panics immediately if a nested directive is found before the end marker.
     """
-    for _, line in line_iter:
-        if line.strip() == '<!-- end verocase -->':
-            return True
+    for lineno, line in line_iter:
+        # Pre-filter: 'verocase' only appears in our directives, so skip the
+        # strip()/startswith() work on the vast majority of prose lines.
+        if 'verocase' in line:
+            stripped = line.strip()
+            if stripped.startswith('<!-- end verocase -->'):
+                return True
+            if stripped.startswith('<!-- verocase'):
+                panic(f"{filename}:{lineno}: directive nested inside "
+                      f"'<!-- verocase {selector} -->' region "
+                      f"(opened at {filename}:{start_lineno}); "
+                      "directives cannot be nested. Check for a missing "
+                      "'<!-- end verocase -->' before this line")
     error(f"{filename}:{start_lineno}: unclosed '<!-- verocase {selector} -->' region")
     return False
 
@@ -2572,6 +2583,13 @@ def process_document_stream(
                 _last_placed_id = _sel_parts[1]
             continue
 
+        if 'verocase' in text and text.lstrip().startswith('<!-- end verocase -->'):
+            panic(f"{filename}:{lineno}: unexpected '<!-- end verocase -->' "
+                  "with no open region; check for a missing "
+                  "'<!-- verocase ...' opener above this line")
+            out.write(text + '\n')
+            continue
+
         out.write(text + '\n')
 
     if add_missing:
@@ -2691,6 +2709,11 @@ Additional checks when document files are provided:
   - Every declared LTAC element should have a corresponding 'element' selector
     in a document (used to generate the element's heading and cross-references;
     use --fixmissing to fix this)
+  - A '<!-- end verocase -->' that appears outside any '<!-- verocase ... -->'
+    region is a fatal error (panic): the document is not updated
+  - A '<!-- verocase ...' or '<!-- verocase-config ...' directive found inside
+    an open '<!-- verocase ... -->' region is a fatal error (panic): directives
+    cannot be nested and the document is not updated
 """
 
 _HELP_CONFIGURATION = """\
@@ -3412,7 +3435,7 @@ def _scan_doc_stats(path: str) -> dict:
             i += 1
             while i < len(lines):
                 t = lines[i].rstrip('\r\n')
-                if t.strip() == '<!-- end verocase -->':
+                if 'verocase' in t and t.lstrip().startswith('<!-- end verocase -->'):
                     if in_elem_region:
                         after_end = True
                     in_elem_region = False
@@ -4014,7 +4037,7 @@ def _fixmisplaced_document(path, all_roots, registry, id_info, config,
                     i += 1
                     while i < len(lines):
                         t = lines[i].rstrip('\r\n')
-                        if t.strip() == '<!-- end verocase -->':
+                        if 'verocase' in t and t.lstrip().startswith('<!-- end verocase -->'):
                             i += 1
                             break
                         i += 1
@@ -4027,7 +4050,7 @@ def _fixmisplaced_document(path, all_roots, registry, id_info, config,
                     i += 1
                     while i < len(lines):
                         t = lines[i].rstrip('\r\n')
-                        if t.strip() == '<!-- end verocase -->':
+                        if 'verocase' in t and t.lstrip().startswith('<!-- end verocase -->'):
                             i += 1
                             break
                         i += 1
@@ -4046,7 +4069,7 @@ def _fixmisplaced_document(path, all_roots, registry, id_info, config,
                 i += 1
                 while i < len(lines):
                     t = lines[i].rstrip('\r\n')
-                    if t.strip() == '<!-- end verocase -->':
+                    if 'verocase' in t and t.lstrip().startswith('<!-- end verocase -->'):
                         i += 1
                         break
                     i += 1
@@ -4060,7 +4083,7 @@ def _fixmisplaced_document(path, all_roots, registry, id_info, config,
             i += 1
             while i < len(lines):
                 t = lines[i].rstrip('\r\n')
-                if t.strip() == '<!-- end verocase -->':
+                if 'verocase' in t and t.lstrip().startswith('<!-- end verocase -->'):
                     if current_ident is not None:
                         after_end = True
                         end_line_idx = i
@@ -4581,6 +4604,12 @@ def _inline_rewrite_file(
             pass
         error(f"error processing {path!r}: {e}")
         return None
+    except BaseException:
+        try:
+            os.unlink(tmp)
+        except OSError:
+            pass
+        raise
 
     if _had_error and not error_before:
         try:

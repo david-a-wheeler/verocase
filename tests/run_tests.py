@@ -719,6 +719,33 @@ class TestInlineMode(unittest.TestCase):
         finally:
             os.unlink(tmp)
 
+    def test_stray_end_marker_panics_and_leaves_file_unchanged(self):
+        """A '<!-- end verocase -->' with no open region is a fatal error; file is not modified."""
+        tmp = self._tmp_copy('stray-end-input.md')
+        try:
+            original = read_fixture('stray-end-input.md')
+            result = run('--ltac', fixture('simple.ltac'), tmp)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertEqual(result.stdout, '')
+            self.assertIn('unexpected', result.stderr)
+            self.assertIn('<!-- end verocase -->', result.stderr)
+            self.assertEqual(read_file(tmp), original)
+        finally:
+            os.unlink(tmp)
+
+    def test_nested_directive_panics_and_leaves_file_unchanged(self):
+        """A '<!-- verocase ...' nested inside an open region is a fatal error; file is not modified."""
+        tmp = self._tmp_copy('nested-directive-input.md')
+        try:
+            original = read_fixture('nested-directive-input.md')
+            result = run('--ltac', fixture('simple.ltac'), tmp)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertEqual(result.stdout, '')
+            self.assertIn('nested', result.stderr)
+            self.assertEqual(read_file(tmp), original)
+        finally:
+            os.unlink(tmp)
+
 
 class TestMermaidHtml(unittest.TestCase):
     def _tmp_html(self, content):

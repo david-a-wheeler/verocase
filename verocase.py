@@ -14,6 +14,7 @@ import json
 import os
 import re
 import shutil
+import statistics
 import sys
 import tempfile
 from collections import deque
@@ -3359,38 +3360,83 @@ def _check_element_coverage(registry: Dict[str, Node], seen_element_ids: set) ->
 # Statistics
 # ---------------------------------------------------------------------------
 
+def _has_claim_descendant(node: Node, registry: Dict[str, Node], seen: set) -> bool:
+    """Return True if node has any Claim descendant, following citations.
+
+    `seen` tracks visited declaration identifiers to avoid re-traversal
+    (circularity has already been checked before stats are computed).
+    """
+    for child in node.children:
+        if child.node_type == 'Claim':
+            return True
+        if child.is_cited and child.identifier:
+            decl = registry.get(child.identifier)
+            if decl is not None and child.identifier not in seen:
+                seen.add(child.identifier)
+                if decl.node_type == 'Claim':
+                    return True  # citation IS a Claim; no need to follow further
+                if _has_claim_descendant(decl, registry, seen):
+                    return True
+        elif not child.is_cited and _has_claim_descendant(child, registry, seen):
+            return True
+    return False
+
+
 def _compute_ltac_stats(all_roots: List['Node'], registry: Dict[str, 'Node'],
                         id_info: Dict[str, dict]) -> dict:
     """Compute statistics from the loaded LTAC forest."""
     from collections import Counter
-    type_counts: Counter = Counter()
+    def_type_counts: Counter = Counter()  # definitions only (no links, no citations)
     option_counts: Counter = Counter()
     total_citations = 0
+    total_links = 0
+    leaf_definitions = 0
     leaf_claims = 0
-    pkg_sizes = []
+    bottommost_claims = 0
+    pkg_sizes_full = []  # (size_full, name) per package including links and citations
 
     for root in all_roots:
-        size = 0
+        size_full = 0
         for node in _all_nodes([root]):
+            size_full += 1
             if node.is_cited:
                 total_citations += 1
+            elif node.node_type == 'Link':
+                total_links += 1
             else:
-                type_counts[node.node_type] += 1
-                size += 1
+                def_type_counts[node.node_type] += 1
                 for opt in node.options:
                     option_counts[opt] += 1
-                if node.node_type == 'Claim' and not node.children:
-                    leaf_claims += 1
-        pkg_sizes.append((size, root.identifier or '(unnamed)'))
+                if not node.children:
+                    leaf_definitions += 1
+                    if node.node_type == 'Claim':
+                        leaf_claims += 1
+                if node.node_type == 'Claim':
+                    seen = {node.identifier} if node.identifier else set()
+                    if not _has_claim_descendant(node, registry, seen):
+                        bottommost_claims += 1
+        pkg_sizes_full.append((size_full, root.identifier or '(unnamed)'))
 
-    largest_pkg = max(pkg_sizes, key=lambda x: x[0]) if pkg_sizes else (0, '')
+    pkg_sizes_sorted = sorted(pkg_sizes_full, key=lambda x: x[0], reverse=True)
+    num_packages = len(pkg_sizes_full)
+    total_full = sum(s for s, _ in pkg_sizes_full)
+    median_per_pkg = statistics.median(s for s, _ in pkg_sizes_full) if pkg_sizes_full else 0
+    avg_per_pkg = total_full / num_packages if num_packages else 0.0
+    total_definitions = sum(def_type_counts.values())
     return {
-        'type_counts':     type_counts,
-        'total_elements':  sum(type_counts.values()),
-        'total_citations': total_citations,
-        'leaf_claims':     leaf_claims,
-        'largest_pkg':     largest_pkg,
-        'option_counts':   option_counts,
+        'num_packages':      num_packages,
+        'pkg_sizes_sorted':  pkg_sizes_sorted,
+        'avg_per_pkg':       avg_per_pkg,
+        'median_per_pkg':    median_per_pkg,
+        'total_full':        total_full,
+        'total_citations':   total_citations,
+        'total_links':       total_links,
+        'total_definitions': total_definitions,
+        'def_type_counts':   def_type_counts,
+        'leaf_definitions':  leaf_definitions,
+        'leaf_claims':       leaf_claims,
+        'bottommost_claims': bottommost_claims,
+        'option_counts':     option_counts,
     }
 
 
@@ -3463,25 +3509,44 @@ def _print_stats(ltac_stats: dict, doc_stats: Optional[dict]) -> None:
     print('=== verocase statistics ===')
     print()
     print('LTAC structure:')
-    print('  Elements by type:')
-    type_counts = ltac_stats['type_counts']
-    if type_counts:
-        max_len = max(len(t) for t in type_counts)
-        for node_type, count in sorted(type_counts.items()):
-            print(f'    {node_type:<{max_len}}  {count}')
-    else:
-        print('    (none)')
-    print(f"  Total elements defined:               {ltac_stats['total_elements']}")
-    print(f"  Total citations:                      {ltac_stats['total_citations']}")
-    print(f"  Leaf Claims (no children, not cited): {ltac_stats['leaf_claims']}")
-    pkg_size, pkg_name = ltac_stats['largest_pkg']
-    print(f'  Largest package: {pkg_name} ({pkg_size} elements)')
+
+    # Packages (sizes include links and citations)
+    pkgs = ltac_stats['pkg_sizes_sorted']
+    num_packages = ltac_stats['num_packages']
+    print('- Packages (element numbers include links and citations)')
+    print(f'  - Number of packages: {num_packages}')
+    if pkgs:
+        print(f'  - Largest package: {pkgs[0][1]} ({pkgs[0][0]} elements)')
+        if num_packages >= 2:
+            print(f'  - Second largest package: {pkgs[1][1]} ({pkgs[1][0]} elements)')
+        if num_packages >= 3:
+            print(f'  - Smallest package: {pkgs[-1][1]} ({pkgs[-1][0]} elements)')
+    print(f"  - Average package size: {ltac_stats['avg_per_pkg']:.1f}")
+    print(f"  - Median package size: {ltac_stats['median_per_pkg']:.1f}")
+
+    # Elements including links and citations
+    print('- Elements including links and citations:')
+    print(f"  - Total all elements including links and citations: {ltac_stats['total_full']}")
+    print(f"  - Total Citations: {ltac_stats['total_citations']}")
+    print(f"  - Total Links: {ltac_stats['total_links']}")
+
+    # Definitions (excluding links and citations)
+    print('- Definitions (excluding links and citations):')
+    print(f"  - Total definitions: {ltac_stats['total_definitions']}")
+    def_type_counts = ltac_stats['def_type_counts']
+    if def_type_counts:
+        print('  - Definitional elements by type:')
+        for node_type, count in sorted(def_type_counts.items()):
+            print(f'    - {node_type}: {count}')
+    print(f"  - Total leaf definitions (no children): {ltac_stats['leaf_definitions']}")
+    print(f"  - Total leaf Claim definitions (no children): {ltac_stats['leaf_claims']}")
+    print(f"  - Total bottommost Claim definitions (no Claim descendants): {ltac_stats['bottommost_claims']}")
     option_counts = ltac_stats['option_counts']
     if option_counts:
-        print('  Elements with each option:')
-        max_opt = max(len(o) for o in option_counts)
+        print('  - Definitions with each option:')
         for opt, count in sorted(option_counts.items()):
-            print(f'    {opt:<{max_opt}}  {count}')
+            print(f'    - {opt}: {count}')
+
     if doc_stats is not None:
         print()
         print('Documents:')

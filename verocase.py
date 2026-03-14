@@ -40,6 +40,9 @@ __all__ = [
     'find_ltac_file',
     'write_ltac',
     'detect_doc_format',
+    # id_info accessors
+    'decl_pkg_id',
+    'statement_for',
     # Tree manipulation
     'copy_forest',
     # Validation (call after loading; set had_error on problems)
@@ -825,7 +828,7 @@ class LTACParser:
         target_id = node.identifier
         if target_id in self.registry:
             node.link_target = self.registry[target_id]
-            canonical = self.id_info.get(target_id, {}).get('statement')
+            canonical = statement_for(self.id_info, target_id)
             if node.text and canonical is not None and node.text != canonical:
                 warn(f"line {lineno}: Link {target_id!r}: statement {node.text!r}"
                      f" differs from declaration; use --update to sync")
@@ -931,6 +934,40 @@ def load_ltac_file(path: str,
     except OSError as e:
         panic(f"cannot open {path!r}: {e}")
     return parse_ltac_lines(lines, config=config)
+
+
+# ---------------------------------------------------------------------------
+# id_info accessors
+# ---------------------------------------------------------------------------
+
+def decl_pkg_id(id_info: Dict[str, dict], ident: str) -> Optional[str]:
+    """Return the package root identifier where ident is declared, or None.
+
+    Looks up ident in id_info and returns its 'decl_pkg_id' value.  Returns
+    None if ident is not in id_info or has no recorded declaring package.
+
+    Example::
+
+        pkg = verocase.decl_pkg_id(id_info, 'SomeClaim')
+        if pkg:
+            print(f'SomeClaim is declared in package {pkg}')
+    """
+    return id_info.get(ident, {}).get('decl_pkg_id')
+
+
+def statement_for(id_info: Dict[str, dict], ident: str) -> Optional[str]:
+    """Return the canonical statement text for ident, or None.
+
+    Looks up ident in id_info and returns its 'statement' value (the first
+    non-empty text seen for that identifier during parsing).  Returns None
+    if ident is not in id_info or no statement was recorded.
+
+    Example::
+
+        stmt = verocase.statement_for(id_info, 'SomeClaim') or '(no statement)'
+        print(f'SomeClaim: {stmt}')
+    """
+    return id_info.get(ident, {}).get('statement')
 
 
 # ---------------------------------------------------------------------------
@@ -2175,7 +2212,7 @@ def render_pkg_defines(pkg_root: Node, id_info: Dict[str, dict],
     defined = []
     for node in all_nodes_fast([pkg_root]):
         if (node.is_definition and node.identifier
-                and id_info.get(node.identifier, {}).get('decl_pkg_id') == pkg_id):
+                and decl_pkg_id(id_info, node.identifier) == pkg_id):
             defined.append(node)
     if not defined:
         return False
@@ -2197,7 +2234,7 @@ def render_pkg_citing(pkg_root: Node, id_info: Dict[str, dict],
         return False
     links = []
     for node in cited_nodes:
-        decl_pkg = id_info.get(node.identifier, {}).get('decl_pkg_id', '')
+        decl_pkg = decl_pkg_id(id_info, node.identifier) or ''
         label = f'{node.node_type} {node.identifier}'
         url = _pkg_anchor_url(decl_pkg, config) if decl_pkg else ''
         links.append(hyperlink(label, url, fmt) if url else label)
@@ -2310,7 +2347,7 @@ def render_element_selector(node_id: str, registry: Dict[str, Node],
 
     level = config.get('element_level', 3)
     anchor = _component_anchor_id(node.node_type, node_id)
-    stmt = id_info.get(node_id, {}).get('statement') or node.text or ''
+    stmt = statement_for(id_info, node_id) or node.text or ''
     heading_text = f'{node.node_type} {node_id}'
     if stmt:
         heading_text += f': {stmt}'
@@ -2341,7 +2378,7 @@ def _render_single_package(pkg_root: Node, all_roots: List[Node],
     fmt = state.doc_format
     level = config.get('package_level', 3)
     anchor = _component_anchor_id('Package', pkg_root.identifier)
-    stmt = id_info.get(pkg_root.identifier, {}).get('statement') or pkg_root.text or ''
+    stmt = statement_for(id_info, pkg_root.identifier) or pkg_root.text or ''
     heading_text = f'Package {pkg_root.identifier}'
     if stmt:
         heading_text += f': {stmt}'
@@ -2999,6 +3036,20 @@ Loading and serialization:
   find_ltac_file(ltac_arg, config)
   write_ltac(all_roots)        serialize forest back to LTAC text
   detect_doc_format(path)      'markdown' or 'html'
+
+id_info accessors (avoid spelling out the double .get() pattern):
+  decl_pkg_id(id_info, ident)  -> Optional[str]; package root ID where ident
+                                  is declared, or None
+  statement_for(id_info, ident) -> Optional[str]; canonical statement text
+                                   for ident, or None
+
+  Example:
+    pkg = verocase.decl_pkg_id(id_info, 'SomeClaim')
+    if pkg:
+        print(f'SomeClaim declared in package {pkg}')
+
+    stmt = verocase.statement_for(id_info, 'SomeClaim') or '(no statement)'
+    print(f'SomeClaim: {stmt}')
 
 Validation (set had_error on problems):
   check_id_info(id_info)
@@ -4833,7 +4884,7 @@ def apply_detach(roots: List[Node], registry: Dict[str, Node],
 
     # Update id_info: the new package root ID for node and all descendants.
     new_pkg_id = node.identifier
-    old_pkg_id = id_info.get(node.identifier, {}).get('decl_pkg_id')
+    old_pkg_id = decl_pkg_id(id_info, node.identifier)
     _update_pkg_id_for_subtree(node, old_pkg_id, new_pkg_id, id_info)
 
     # Record the new citation under the original package.
@@ -4864,7 +4915,7 @@ def apply_move(roots: List[Node], registry: Dict[str, Node],
         panic(f"--move: {dest_id!r} is not defined")
 
     # Remember old decl_pkg_id before detaching.
-    old_pkg_id = id_info.get(target_id, {}).get('decl_pkg_id')
+    old_pkg_id = decl_pkg_id(id_info, target_id)
 
     # Detach node from its current location (no citation left behind).
     if node.parent is None:

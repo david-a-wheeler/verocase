@@ -3139,6 +3139,7 @@ Types:
 
 A node that is neither a citation (^) nor a Link is called a 'definition'.
 Every node is exactly one of: citation, Link, or definition.
+Each ID must have exactly one definition; duplicates and omissions are errors.
 
 Packages organize top-level claims so you can focus on one part at a time.
 

@@ -43,8 +43,19 @@ __version__ = '0.1.0'
 
 # Implement panic/error/warning/notify reports
 
-_had_error = False # If true, we saw an error during processing
-_strict = False # If true, turn warnings into errors
+had_error = False # If true, we saw an error during processing
+strict = False # If true, turn warnings into errors
+
+
+def reset() -> None:
+    """Reset all session state to its initial values.
+
+    Call this before starting a new independent processing session so that
+    state from a previous session (such as had_error) does not carry over.
+    """
+    global had_error, strict
+    had_error = False
+    strict = False
 
 
 class VerocaseError(Exception):
@@ -59,14 +70,14 @@ def panic(msg: str) -> None:
 
 def error(msg: str) -> None:
     """Print an error to stderr and set the error flag."""
-    global _had_error
+    global had_error
     print(f"verocase: error: {msg}", file=sys.stderr)
-    _had_error = True
+    had_error = True
 
 
 def warn(msg: str) -> None:
     """Print a warning to stderr; if --error is active, escalate to error()."""
-    if _strict:
+    if strict:
         error(msg)
     else:
         print(f"verocase: warning: {msg}", file=sys.stderr)
@@ -4667,8 +4678,8 @@ def _inline_rewrite_file(
     When add_missing is True, uses a single-pass smart-placement algorithm to
     insert new element stubs near their natural LTAC order position.
     """
-    global _had_error
-    error_before = _had_error
+    global had_error
+    error_before = had_error
 
     # Detect line endings by scanning only the first chunk (avoids reading all).
     try:
@@ -4713,7 +4724,7 @@ def _inline_rewrite_file(
             pass
         raise
 
-    if _had_error and not error_before:
+    if had_error and not error_before:
         try:
             os.unlink(tmp)
         except OSError:
@@ -4736,7 +4747,7 @@ def run_selftests() -> None:
 
 def main() -> None:
     """Entry point: parse arguments, load configuration and LTAC data, then dispatch."""
-    global _strict
+    reset()
 
     args = parse_args()
 
@@ -4752,7 +4763,7 @@ def main() -> None:
         _write_start_stubs()
 
     if args.error:
-        _strict = True
+        strict = True
 
     # Auto-discover config file if --config not given.
     config_path = args.config
@@ -4830,7 +4841,7 @@ def main() -> None:
 
         check_circularities(registry, all_roots)
         check_reachability(all_roots, registry)
-        if _had_error:
+        if had_error:
             panic("LTAC validation failed after mutations; no files updated")
         tmp = _make_temp(ltac_path, write_ltac(all_roots))
         if tmp is None:
@@ -4894,7 +4905,7 @@ def main() -> None:
             _analysis_packages(all_roots)
             first = False
 
-        if _had_error:
+        if had_error:
             sys.exit(1)
         return
 
@@ -5018,7 +5029,7 @@ def main() -> None:
         else:
             _print_stats(ltac_stats, None)
 
-    if _had_error:
+    if had_error:
         sys.exit(1)
 
 

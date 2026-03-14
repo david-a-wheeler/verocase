@@ -46,7 +46,7 @@ flowchart BT
     X1 --o C1
 ```
 
-Defines: **[Claim C1](#claim-c1)**, [Context X1](#context-x1), [Assumption A1](#assumption-a1), [Strategy AR1](#strategy-ar1), [Claim C3](#claim-c3), [Link E1](#link-e1), [Claim C2](#claim-c2), [Evidence E1](#evidence-e1)
+Defines: **[Claim C1](#claim-c1)**, [Context X1](#context-x1), [Assumption A1](#assumption-a1), [Strategy AR1](#strategy-ar1), [Claim C3](#claim-c3), [Claim C2](#claim-c2), [Evidence E1](#evidence-e1)
 <!-- end verocase -->
 
 <!-- verocase element C1 -->

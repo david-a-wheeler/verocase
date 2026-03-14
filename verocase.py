@@ -46,10 +46,6 @@ __all__ = [
     'statement_for',
     # Tree manipulation
     'copy_forest',
-    # Validation (call after loading; set had_error on problems)
-    'check_id_info',
-    'check_circularities',
-    'check_reachability',
     # Tree traversal
     'all_nodes',
     'all_nodes_fast',
@@ -575,6 +571,18 @@ class Case:
                 if node.parent not in parents:
                     parents.append(node.parent)
         return parents
+
+    def check_id_info(self) -> None:
+        """Validate identifier usage; warn about IDs cited but never declared."""
+        _check_id_info(self)
+
+    def check_circularities(self) -> None:
+        """Panic if any circular dependency exists in the LTAC model."""
+        _check_circularities(self)
+
+    def check_reachability(self) -> None:
+        """Error for any package root unreachable from the first package."""
+        _check_reachability(self)
 
 
 # ---------------------------------------------------------------------------
@@ -3046,9 +3054,9 @@ Typical usage:
   config = verocase.load_config(None)           # or path to case.config
   case = verocase.load_ltac_file('case.ltac', config=config)
 
-  verocase.check_id_info(case)
-  verocase.check_circularities(case)
-  verocase.check_reachability(case)
+  case.check_id_info()
+  case.check_circularities()
+  case.check_reachability()
 
   if verocase.had_error:
       sys.exit(1)
@@ -3107,9 +3115,9 @@ id_info accessors (also available as case methods above):
     print(f'SomeClaim: {stmt}')
 
 Validation (set had_error on problems):
-  check_id_info(case)
-  check_circularities(case)
-  check_reachability(case)
+  case.check_id_info()
+  case.check_circularities()
+  case.check_reachability()
 
 Tree traversal:
   all_nodes(roots)             DFS generator, LTAC written order (prefer this)
@@ -3612,7 +3620,7 @@ def find_ltac_file(ltac_arg: Optional[str], config: dict) -> str:
 # (^ID) implicitly carries AsCited.
 
 
-def check_id_info(case: 'Case') -> None:
+def _check_id_info(case: Case) -> None:
     """Validate identifier usage across the loaded LTAC.
 
     Uses the id_info table built during parsing (see LTACParser) to report:
@@ -3624,7 +3632,7 @@ def check_id_info(case: 'Case') -> None:
 
 
 
-def check_circularities(case: 'Case') -> None:
+def _check_circularities(case: Case) -> None:
     """Panic if any circular dependency exists in the LTAC model.
 
     Performs an iterative DFS over the logical dependency graph.  For each
@@ -3681,7 +3689,7 @@ def check_circularities(case: 'Case') -> None:
             dfs(node)
 
 
-def check_reachability(case: 'Case') -> None:
+def _check_reachability(case: Case) -> None:
     """Error for any package whose root is unreachable from the first element.
 
     Skipped when there is only one package (everything is trivially reachable).
@@ -5189,9 +5197,9 @@ def main() -> bool:
         ltac_line_ending = '\n'
 
     # LTAC parse complete. Perform validations needing all LTAC data
-    check_id_info(case)
-    check_circularities(case)
-    check_reachability(case)
+    case.check_id_info()
+    case.check_circularities()
+    case.check_reachability()
 
     # Detect analysis options early, before any file-modifying operations,
     # so we can reject illegal combinations before any writes happen.
@@ -5238,10 +5246,9 @@ def main() -> bool:
                 apply_detach(case, a)
             elif op == 'move':
                 apply_move(case, a, b)
-        check_id_info(case)
-
-        check_circularities(case)
-        check_reachability(case)
+        case.check_id_info()
+        case.check_circularities()
+        case.check_reachability()
         if had_error:
             panic("LTAC validation failed after mutations; no files updated")
         tmp = _make_temp(ltac_path, write_ltac(case.roots))

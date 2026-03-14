@@ -4726,18 +4726,21 @@ def run_selftests() -> None:
     """
     import doctest
     failures, _ = doctest.testmod(optionflags=doctest.REPORT_NDIFF)
-    sys.exit(0 if failures == 0 else 1)
+    return failures == 0
 
 
-def main() -> None:
-    """Entry point: parse arguments, load configuration and LTAC data, then dispatch."""
+def main() -> bool:
+    """Entry point: parse arguments, load configuration and LTAC data, then dispatch.
+
+    Returns True on clean success, False if any errors were encountered.
+    Raises VerocaseError on fatal errors.
+    """
     reset()
 
     args = parse_args()
 
     if args.selftest:
-        run_selftests()
-        return  # run_selftests() calls sys.exit(); this is a safety net
+        return run_selftests()
 
     # --start must fire before find_ltac_file() because it creates case.ltac.
     # After writing the stubs, execution falls through to the normal LTAC
@@ -4917,9 +4920,7 @@ def main() -> None:
             analysis_packages(all_roots)
             first = False
 
-        if had_error:
-            sys.exit(1)
-        return
+        return not had_error
 
     if args.info:
         wrote = render_selector(f'info {args.info}', registry, all_roots, config, id_info, sys.stdout,
@@ -5041,12 +5042,12 @@ def main() -> None:
         else:
             print_stats(ltac_stats, None)
 
-    if had_error:
-        sys.exit(1)
+    return had_error
 
 
 if __name__ == '__main__':
     try:
-        main()
+        if not main():
+            sys.exit(1)
     except VerocaseError:
         sys.exit(1)

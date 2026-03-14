@@ -104,8 +104,10 @@ check_reachability(all_roots, registry)
 
 ```python
 # Generators (yield Node)
-all_nodes_forward(roots)        # DFS, LTAC written order (first child first)
-all_nodes(roots)                # DFS, reversed children (faster, order varies)
+all_nodes(roots)       # DFS, LTAC written order (first child first) — prefer this
+all_nodes_fast(roots)  # DFS, consistent but not LTAC order; ~2-3x faster;
+                       # use only when order doesn't matter; do not depend on
+                       # the specific order produced
 
 # Returns list
 collect_bfs(roots)              # BFS, roots first
@@ -196,11 +198,11 @@ A `List[Node]` where each entry is a package root (depth 0).
 
 ```python
 # LTAC written order — use for ordered reports and document comparison
-for node in verocase.all_nodes_forward(all_roots):
+for node in verocase.all_nodes(all_roots):
     print(node.node_type, node.identifier, node.text)
 
 # Unordered — slightly faster
-for node in verocase.all_nodes(all_roots):
+for node in verocase.all_nodes_fast(all_roots):
     ...
 
 # BFS — useful for level-by-level processing (diagrams, etc.)
@@ -212,7 +214,7 @@ Common filters:
 
 ```python
 # All declared (non-citation), non-Link elements in LTAC order:
-elements = [n for n in all_nodes_forward(all_roots)
+elements = [n for n in all_nodes(all_roots)
             if not n.is_citation and n.node_type != 'Link']
 
 # Leaf claims:

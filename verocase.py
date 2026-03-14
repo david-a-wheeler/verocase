@@ -3137,6 +3137,9 @@ Types:
   Link ID      non-hierarchical cross-reference to element ID; does not
                affect the argument hierarchy
 
+A node that is neither a citation (^) nor a Link is called a 'definition'.
+Every node is exactly one of: citation, Link, or definition.
+
 Packages organize top-level claims so you can focus on one part at a time.
 
 IDs are optional but strongly recommended. A bare ID (no `^` prefix) declares

@@ -16,6 +16,7 @@ import shutil
 import statistics
 import sys
 import tempfile
+import types
 from collections import deque
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Set, TextIO, Tuple
@@ -101,7 +102,7 @@ _DEFAULT_PACKAGE_SELECTIONS = 'representation,pkg_defines,pkg_citing,pkg_cited'
 
 # Default configuration values.  load_config() merges a JSON file over these.
 # Pass to functions that accept a config dict when no config file is needed.
-DEFAULT_CONFIG = {
+DEFAULT_CONFIG = types.MappingProxyType({
     'base_url': '',
     'bottom_padding': True,
     'default_renderer': 'mermaid',
@@ -122,7 +123,7 @@ DEFAULT_CONFIG = {
     'max_backups': 20,
     'stats': False,
     'warn_dubious_reference': True,
-}
+})
 
 
 def load_config(config_path: Optional[str]) -> dict:
@@ -944,6 +945,23 @@ class Case:
         """Serialize the full forest to LTAC text, writing to out."""
         write_ltac(self.roots, out)
 
+    def save_ltac(self, path: Optional[str] = None) -> None:
+        """Write the LTAC forest to disk using the safe backup+atomic-replace mechanism.
+
+        If path is given, writes to that path; otherwise writes to self.ltac_path.
+        Panics if no path is available.  On success, clears self.modified.
+        """
+        target = path or self.ltac_path
+        if target is None:
+            self.panic("save_ltac: no path given and case.ltac_path is not set")
+        buf = io.StringIO()
+        self.write_ltac(buf)
+        tmp = _make_temp(target, buf.getvalue())
+        if tmp is None:
+            return  # error already reported
+        commit_updates([(tmp, target)], target, self.config, self.config_path)
+        self.modified = False
+
     # ------------------------------------------------------------------
     # Analysis — data-returning
     # ------------------------------------------------------------------
@@ -1100,19 +1118,33 @@ class Case:
     # Analysis — output-printing
     # ------------------------------------------------------------------
 
-    def print_packages(self, out: 'TextIO' = sys.stdout) -> None:
+    def packages(self) -> List[dict]:
+        """Return a list of dicts, one per package root.
+
+        Each dict has keys: 'root' (the Node), 'total' (root.subtree_count),
+        'children' (list of root.children).
+        """
+        return [
+            {'root': root, 'total': root.subtree_count, 'children': list(root.children)}
+            for root in self.roots
+        ]
+
+    def render_packages(self, out: 'TextIO' = sys.stdout) -> None:
         """Print package structure with element counts to out."""
         print("Packages:", file=out)
-        for root in self.roots:
-            pkg_count = root.subtree_count
+        for pkg in self.packages():
+            root = pkg['root']
+            pkg_count = pkg['total']
             root_line = root.to_ltac_line(depth_offset=0)
             print(f"Package {root.identifier} ({pkg_count} elements)", file=out)
             print(root_line, file=out)
-            for child in root.children:
+            for child in pkg['children']:
                 child_count = child.subtree_count
                 child_line = child.to_ltac_line(depth_offset=0)
                 print(f"{child_line} ({child_count} elements)", file=out)
             print(file=out)
+
+    print_packages = render_packages
 
     # ------------------------------------------------------------------
     # Info rendering
@@ -1396,11 +1428,11 @@ class Case:
                 self.error("'element' selector requires an explicit ID")
                 return False
             _state = state or DocState(doc_format=doc_format)
-            return self.render_element_selector(element_id, _state, out)
+            return self.render_element(element_id, out, state=_state)
         elif display_type == 'package':
             _state = state or DocState(doc_format=doc_format)
             pkg_id = element_id if element_id is not None else '*'
-            return self.render_package_selector(pkg_id, _state, out)
+            return self.render_package(pkg_id, out, state=_state)
         else:
             if element_id == '*':
                 self.error(f"'*' is not valid with the '{display_type}' selector")
@@ -1414,8 +1446,8 @@ class Case:
                 return True
             return False
 
-    def render_element_selector(self, node_id: str, state: 'DocState',
-                                out: 'TextIO', sep: str = '') -> bool:
+    def render_element(self, node_id: str, out: 'TextIO', *,
+                       state: 'DocState' = None, sep: str = '') -> bool:
         """Write a full element section (heading + configured sub-selections) to out.
 
         Renders the element heading and any sub-selections listed in
@@ -1423,6 +1455,8 @@ class Case:
         state.seen_element_ids as a side-effect.
         Returns False and calls error() if node_id is not in registry.
         """
+        if state is None:
+            state = DocState()
         node = self.registry.get(node_id)
         if node is None:
             self.error(f"element {node_id!r} not found")
@@ -1446,13 +1480,17 @@ class Case:
                    _ELEMENT_RENDER_MAP, node, self, self.config, fmt, out, pending_sep='\n\n')
         return True
 
-    def render_package_selector(self, pkg_id_or_star: str, state: 'DocState',
-                                out: 'TextIO') -> bool:
+    render_element_selector = render_element
+
+    def render_package(self, pkg_id_or_star: str, out: 'TextIO', *,
+                       state: 'DocState' = None) -> bool:
         """Write a full package section (heading + diagram + sub-selections) to out.
 
         pkg_id_or_star is either a package root identifier or ``'*'`` to render
         all packages in sequence. Returns True if anything was written.
         """
+        if state is None:
+            state = DocState()
         if pkg_id_or_star == '*':
             out.write(_WARNING_TEXT_SELECTOR)
             pending_sep = '\n\n'
@@ -1471,11 +1509,13 @@ class Case:
         _render_single_package(pkg_root, self, self.config, state, out)
         return True
 
-    def process_document_stream(self, f, out, seen_element_ids: set,
-                                doc_format: str = 'markdown',
-                                add_missing: bool = False,
-                                strip: bool = False,
-                                existing_ids: Optional[set] = None) -> None:
+    render_package_selector = render_package
+
+    def process_document(self, f, out, seen_element_ids: set,
+                         doc_format: str = 'markdown',
+                         add_missing: bool = False,
+                         strip: bool = False,
+                         existing_ids: Optional[set] = None) -> None:
         """Process a document file line by line, replacing LTAC selector regions.
 
         Writes all output to `out`. Updates `seen_element_ids` with identifiers
@@ -1510,7 +1550,7 @@ class Case:
 
             def _write_stub(ident: str) -> None:
                 out.write('\n<!-- verocase element ' + ident + ' -->\n')
-                _stub_case.render_element_selector(ident, _inj_state, out)
+                _stub_case.render_element(ident, out, state=_inj_state)
                 out.write('\n<!-- end verocase -->\n')
                 _stubs_added[0] += 1
 
@@ -1599,6 +1639,8 @@ class Case:
             _emit_all_remaining()
             if _stubs_added[0]:
                 self.notify(f"Added {_stubs_added[0]} missing element(s) to {filename}")
+
+    process_document_stream = process_document
 
     def render_ltac_txt(self, node_list, out: 'TextIO', sep: str = '') -> bool:
         """Write node_list as raw LTAC text to out, normalizing indentation to depth 0.
@@ -3451,7 +3493,7 @@ def render_element_selector(node_id: str, case: 'Case',
                              config: dict, state: 'DocState',
                              out: TextIO, sep: str = '') -> bool:
     """Write a full element section (heading + configured sub-selections) to out."""
-    return case.render_element_selector(node_id, state, out, sep)
+    return case.render_element(node_id, out, state=state, sep=sep)
 
 
 def _render_single_package(pkg_root: Node, case: 'Case',
@@ -3477,7 +3519,7 @@ def render_package_selector(pkg_id_or_star: str, case: 'Case',
                              config: dict, state: 'DocState',
                              out: TextIO) -> bool:
     """Write a full package section (heading + diagram + sub-selections) to out."""
-    return case.render_package_selector(pkg_id_or_star, state, out)
+    return case.render_package(pkg_id_or_star, out, state=state)
 
 _WARNING_TEXT = (
     '<!-- WARNING: DO NOT EDIT text within verocase SELECTOR ... end verocase. -->\n'
@@ -3674,8 +3716,8 @@ def process_document_stream(
     existing_ids: Optional[set] = None,
 ) -> None:
     """Process a document file line by line, replacing ltac selector regions."""
-    case.process_document_stream(f, out, seen_element_ids, doc_format,
-                                 add_missing, strip, existing_ids)
+    case.process_document(f, out, seen_element_ids, doc_format,
+                          add_missing, strip, existing_ids)
 
 
 # ---------------------------------------------------------------------------
@@ -3901,7 +3943,7 @@ Data types:
     case.misplaced()         -> list        (requires document_files)
     case.stats()             -> dict
     # Analysis — output-printing
-    case.print_packages(out=sys.stdout)
+    case.render_packages(out=sys.stdout)
     # Info rendering
     case.render_info(eid, out, sep='')  -> bool
     # Mutations
@@ -3913,11 +3955,11 @@ Data types:
     # Rendering (use self.config; no need to pass config separately)
     case.render_selector(selector, out, current_element=None,
                          doc_format='markdown', state=None)  -> bool
-    case.render_element_selector(node_id, state, out, sep='')  -> bool
-    case.render_package_selector(pkg_id_or_star, state, out)   -> bool
-    case.process_document_stream(src, out, seen_element_ids,
-                                 doc_format='markdown',
-                                 add_missing=False, strip=False)
+    case.render_element(node_id, out, *, state=None, sep='')  -> bool
+    case.render_package(pkg_id_or_star, out, *, state=None)   -> bool
+    case.process_document(src, out, seen_element_ids,
+                          doc_format='markdown',
+                          add_missing=False, strip=False)
     case.render_ltac_txt(node_list, out, sep='')               -> bool
   @dataclass DocState   per-document rendering state
   DEFAULT_CONFIG: dict  default configuration values
@@ -3955,6 +3997,7 @@ Rendering (write to caller-supplied out: TextIO; return True if written):
   process_document_stream(src, out, case, config,
                           seen_element_ids, doc_format='markdown',
                           add_missing=False, strip=False)
+  (New names: render_element, render_package, process_document on Case)
 
 main():
   success: bool = main()   # parses sys.argv, runs full CLI pipeline
@@ -4597,12 +4640,12 @@ def _process_files(
         for path in files:
             try:
                 with open(path, newline='') as f:
-                    case.process_document_stream(f, out, seen_element_ids,
-                                                 detect_doc_format(path), strip=strip)
+                    case.process_document(f, out, seen_element_ids,
+                                          detect_doc_format(path), strip=strip)
             except OSError as e:
                 case.error(f"cannot open {path!r}: {e}")
     else:
-        case.process_document_stream(sys.stdin, out, seen_element_ids, 'markdown', strip=strip)
+        case.process_document(sys.stdin, out, seen_element_ids, 'markdown', strip=strip)
 
 
 
@@ -4971,7 +5014,7 @@ def needs_support(nodes) -> List['Node']:
 
 def _analysis_packages(case, out: TextIO = sys.stdout) -> None:
     """Print package structure with element counts to out (default stdout)."""
-    case.print_packages(out)
+    case.render_packages(out)
 
 
 def render_ltac_txt(node_list, config, out: TextIO, sep: str = '') -> bool:
@@ -5515,7 +5558,7 @@ def _inline_rewrite_file(
         nl = '\r\n' if line_ending == '\r\n' else ''
         with os.fdopen(fd, 'w', encoding='utf-8', newline=nl, buffering=_DOC_IO_BUFSIZE) as out_f:
             with open(path, encoding='utf-8', newline='', buffering=_DOC_IO_BUFSIZE) as src_f:
-                case.process_document_stream(
+                case.process_document(
                     src_f, out_f,
                     seen_element_ids, doc_format,
                     add_missing=add_missing, strip=strip,
@@ -5735,7 +5778,7 @@ def main() -> bool:
         if args.packages:
             if not first:
                 print()
-            case.print_packages()
+            case.render_packages()
             first = False
 
         return not case.had_error

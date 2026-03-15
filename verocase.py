@@ -591,8 +591,11 @@ class Case:
                                      Set by the caller after loading; defaults to [].
     config         : dict            Configuration dict used to load this case.
                                      Populated by load_ltac_file() and parse_ltac_lines().
-                                     Pass to render_selector(), process_document_stream(),
-                                     and other rendering functions that need it.
+                                     Used automatically by the Case rendering methods
+                                     (render_selector, render_element_selector,
+                                     render_package_selector, process_document_stream,
+                                     render_ltac_txt), so callers need not pass it
+                                     separately when using those methods.
     """
     roots:          List['Node']
     registry:       Dict[str, 'Node']
@@ -739,6 +742,59 @@ class Case:
     def sync_citations(self) -> int:
         """Update cited/Link node text to match declaration text; return count changed."""
         return _apply_ltac_update(self)
+
+    # ------------------------------------------------------------------
+    # Rendering — shims that use self.config so callers need not pass it
+    # ------------------------------------------------------------------
+
+    def render_selector(self, selector: str, out: 'TextIO',
+                        current_element: Optional['Node'] = None,
+                        doc_format: str = 'markdown',
+                        state: 'DocState' = None) -> bool:
+        """Parse selector and write rendered output to out; return True if anything written.
+
+        Uses self.config.  Equivalent to render_selector(selector, case, case.config, out, ...).
+        See render_selector() for the full selector syntax reference.
+        """
+        return render_selector(selector, self, self.config, out,
+                               current_element, doc_format, state)
+
+    def render_element_selector(self, node_id: str, state: 'DocState',
+                                out: 'TextIO', sep: str = '') -> bool:
+        """Write a full element section (heading + sub-selections) to out.
+
+        Uses self.config.  Equivalent to render_element_selector(node_id, case, case.config, ...).
+        """
+        return render_element_selector(node_id, self, self.config, state, out, sep)
+
+    def render_package_selector(self, pkg_id_or_star: str, state: 'DocState',
+                                out: 'TextIO') -> bool:
+        """Write a full package section (heading + diagram + sub-selections) to out.
+
+        Uses self.config.  Equivalent to render_package_selector(pkg_id_or_star, case, case.config, ...).
+        pkg_id_or_star is a package root identifier or ``'*'`` for all packages.
+        """
+        return render_package_selector(pkg_id_or_star, self, self.config, state, out)
+
+    def process_document_stream(self, f, out, seen_element_ids: set,
+                                doc_format: str = 'markdown',
+                                add_missing: bool = False,
+                                strip: bool = False,
+                                existing_ids: Optional[set] = None) -> None:
+        """Process a document file line by line, replacing LTAC selector regions.
+
+        Uses self.config.  Equivalent to process_document_stream(f, out, case, case.config, ...).
+        See process_document_stream() for full parameter documentation.
+        """
+        process_document_stream(f, out, self, self.config, seen_element_ids,
+                                doc_format, add_missing, strip, existing_ids)
+
+    def render_ltac_txt(self, node_list, out: 'TextIO', sep: str = '') -> bool:
+        """Write node_list as raw LTAC text to out, normalizing indentation to depth 0.
+
+        Uses self.config.  Equivalent to render_ltac_txt(node_list, case.config, out, sep).
+        """
+        return render_ltac_txt(node_list, self.config, out, sep)
 
 
 # ---------------------------------------------------------------------------
@@ -3197,12 +3253,14 @@ Typical usage (simple):
   case = verocase.load_case()   # auto-discovers config, LTAC, and documents
   if verocase.had_error:
       sys.exit(1)
-  # case.config holds the loaded configuration; pass it to render_selector(),
-  # process_document_stream(), etc. when needed.
 
   buf = io.StringIO()
   case.render_info('SomeClaim', buf)
   print(buf.getvalue())
+
+  # Render to a stream using self.config automatically:
+  import sys
+  case.render_selector('element SomeClaim', sys.stdout)
 
   # Walk the tree to collect (identifier, statement) tuples for definitions
   # (not citations or Links) that are Claims and have no children:
@@ -3277,11 +3335,20 @@ Data types:
     case.detach_id(target_id)
     case.move_id(moving_id, dest_id)
     case.sync_citations()    -> int
+    # Rendering (use self.config; no need to pass config separately)
+    case.render_selector(selector, out, current_element=None,
+                         doc_format='markdown', state=None)  -> bool
+    case.render_element_selector(node_id, state, out, sep='')  -> bool
+    case.render_package_selector(pkg_id_or_star, state, out)   -> bool
+    case.process_document_stream(src, out, seen_element_ids,
+                                 doc_format='markdown',
+                                 add_missing=False, strip=False)
+    case.render_ltac_txt(node_list, out, sep='')               -> bool
   @dataclass DocState   per-document rendering state
   DEFAULT_CONFIG: dict  default configuration values
 
 Loading and initialization:
-  load_case(ltac=None, config=None, documents=None, validate=True) -> Case
+  load_case(ltac=None, config_file=None, documents=None, validate=True) -> Case
     Recommended entry point.  Auto-discovers config, LTAC, and documents;
     calls reset() and (by default) runs all validation.  Override any
     parameter to take explicit control.  Check had_error on return.
@@ -3303,10 +3370,12 @@ Standalone helpers:
   print_stats(ltac_stats, doc_stats, out=sys.stdout)
 
 Rendering (write to caller-supplied out: TextIO; return True if written):
+  Use case.render_selector(...) etc. for the common case (uses case.config).
+  Free functions below accept an explicit config dict for advanced use:
   render_selector(selector, case, config, out,
                   current_element=None, doc_format='markdown', state=None)
-  render_ltac_txt(node_list, config, out)
-  render_element_selector(node_id, case, config, state, out)
+  render_ltac_txt(node_list, config, out, sep='')
+  render_element_selector(node_id, case, config, state, out, sep='')
   render_package_selector(pkg_id_or_star, case, config, state, out)
   process_document_stream(src, out, case, config,
                           seen_element_ids, doc_format='markdown',
@@ -3846,7 +3915,7 @@ def find_document_files(
 
 def load_case(
     ltac: Optional[str] = None,
-    config: Optional[str] = None,
+    config_file: Optional[str] = None,
     documents: Optional[List[str]] = None,
     validate: bool = True,
 ) -> 'Case':
@@ -3864,7 +3933,7 @@ def load_case(
     ----------
     ltac : str, optional
         Path to the LTAC file.  If None, auto-discovered via find_ltac_file().
-    config : str, optional
+    config_file : str, optional
         Path to the JSON config file.  If None, auto-discovered via
         find_config() (case.config → docs/case.config → defaults).
     documents : list of str, optional
@@ -3895,7 +3964,7 @@ def load_case(
 
         case = verocase.load_case(
             ltac='my.ltac',
-            config='my.config',
+            config_file='my.config',
             documents=['a.md', 'b.md'],
         )
 
@@ -3904,7 +3973,7 @@ def load_case(
         case = verocase.load_case(validate=False)
     """
     reset()
-    cfg = load_config(find_config(config))
+    cfg = load_config(find_config(config_file))
     ltac_path = find_ltac_file(ltac, cfg)
     case = load_ltac_file(ltac_path, config=cfg)
     case.document_files = (

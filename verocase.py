@@ -1510,6 +1510,69 @@ class Case:
             'option_counts':     option_counts,
         }
 
+    def _scan_doc_stats(self, path: str) -> dict:
+        """Scan a document file and return document-level statistics."""
+        pkg_regions = 0
+        elem_regions = 0
+        config_stmts = 0
+        empty_elem_regions = 0
+
+        try:
+            with open(path, encoding='utf-8', errors='replace') as f:
+                lines = f.readlines()
+        except OSError:
+            return {}
+
+        i = 0
+        in_elem_region = False
+        after_end = False
+        gap_has_content = False
+
+        while i < len(lines):
+            text = lines[i].rstrip('\r\n')
+            cm = _CASEPROC_CONFIG_RE.match(text)
+            if cm:
+                config_stmts += 1
+                i += 1
+                continue
+            m = _CASEPROC_REGION_RE.match(text)
+            if m:
+                if after_end and not gap_has_content:
+                    empty_elem_regions += 1
+                after_end = False
+                gap_has_content = False
+                selector = m.group(1)
+                kind = selector.split()[0] if selector else ''
+                if kind == 'package':
+                    pkg_regions += 1
+                elif kind == 'element':
+                    elem_regions += 1
+                    in_elem_region = True
+                i += 1
+                while i < len(lines):
+                    t = lines[i].rstrip('\r\n')
+                    if 'verocase' in t and t.lstrip().startswith('<!-- end verocase -->'):
+                        if in_elem_region:
+                            after_end = True
+                        in_elem_region = False
+                        i += 1
+                        break
+                    i += 1
+                continue
+            if after_end and text.strip() and not text.strip().startswith('<!--'):
+                gap_has_content = True
+            i += 1
+
+        if after_end and not gap_has_content:
+            empty_elem_regions += 1
+
+        return {
+            'pkg_regions':        pkg_regions,
+            'elem_regions':       elem_regions,
+            'config_stmts':       config_stmts,
+            'empty_elem_regions': empty_elem_regions,
+        }
+
     def doc_files_stats(self) -> Optional[dict]:
         """Return aggregated document statistics across all self.document_files.
 
@@ -1521,7 +1584,7 @@ class Case:
         totals: dict = {'pkg_regions': 0, 'elem_regions': 0,
                         'config_stmts': 0, 'empty_elem_regions': 0}
         for path in self.document_files:
-            ds = _scan_doc_stats(path)
+            ds = self._scan_doc_stats(path)
             for k in totals:
                 totals[k] += ds.get(k, 0)
         return totals
@@ -4807,69 +4870,6 @@ def _compute_ltac_stats(case: 'Case') -> dict:
     """Compute and return a statistics dict for the loaded LTAC forest."""
     return case.stats()
 
-
-def _scan_doc_stats(path: str) -> dict:
-    """Scan a document file and return document-level statistics."""
-    pkg_regions = 0
-    elem_regions = 0
-    config_stmts = 0
-    empty_elem_regions = 0
-
-    try:
-        with open(path, encoding='utf-8', errors='replace') as f:
-            lines = f.readlines()
-    except OSError:
-        return {}
-
-    i = 0
-    in_elem_region = False
-    after_end = False
-    gap_has_content = False
-
-    while i < len(lines):
-        text = lines[i].rstrip('\r\n')
-        cm = _CASEPROC_CONFIG_RE.match(text)
-        if cm:
-            config_stmts += 1
-            i += 1
-            continue
-        m = _CASEPROC_REGION_RE.match(text)
-        if m:
-            if after_end and not gap_has_content:
-                empty_elem_regions += 1
-            after_end = False
-            gap_has_content = False
-            selector = m.group(1)
-            kind = selector.split()[0] if selector else ''
-            if kind == 'package':
-                pkg_regions += 1
-            elif kind == 'element':
-                elem_regions += 1
-                in_elem_region = True
-            i += 1
-            while i < len(lines):
-                t = lines[i].rstrip('\r\n')
-                if 'verocase' in t and t.lstrip().startswith('<!-- end verocase -->'):
-                    if in_elem_region:
-                        after_end = True
-                    in_elem_region = False
-                    i += 1
-                    break
-                i += 1
-            continue
-        if after_end and text.strip() and not text.strip().startswith('<!--'):
-            gap_has_content = True
-        i += 1
-
-    if after_end and not gap_has_content:
-        empty_elem_regions += 1
-
-    return {
-        'pkg_regions':        pkg_regions,
-        'elem_regions':       elem_regions,
-        'config_stmts':       config_stmts,
-        'empty_elem_regions': empty_elem_regions,
-    }
 
 
 def print_stats(ltac_stats: dict, doc_stats: Optional[dict],

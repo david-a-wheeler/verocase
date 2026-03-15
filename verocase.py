@@ -3192,19 +3192,27 @@ Global session state:
   reset()           clear global session state; call this before each session
 
 Typical usage (simple):
-  import verocase, sys
+  import verocase, sys, io
 
   case = verocase.load_case()   # auto-discovers config, LTAC, and documents
   if verocase.had_error:
       sys.exit(1)
-
-  import io; buf = io.StringIO()
-  case.render_info('SomeClaim', buf)
-  print(buf.getvalue())
   # case.config holds the loaded configuration; pass it to render_selector(),
   # process_document_stream(), etc. when needed.
 
-Typical usage (explicit control):
+  buf = io.StringIO()
+  case.render_info('SomeClaim', buf)
+  print(buf.getvalue())
+
+  # Walk the tree to collect (identifier, statement) tuples for definitions
+  # (not citations or Links) that are Claims and have no children:
+  unsupported = [
+      (node.identifier, node.text)
+      for node in case.all_nodes()
+      if node.is_definition and node.node_type == 'Claim' and not node.children
+  ]
+
+Usage for explicit control over loading:
   import verocase, io, sys
 
   verocase.reset()
@@ -3219,18 +3227,6 @@ Typical usage (explicit control):
 
   if verocase.had_error:
       sys.exit(1)
-
-  buf = io.StringIO()
-  case.render_info('SomeClaim', buf)
-  print(buf.getvalue())
-
-  # Walk the tree to collect (identifier, statement) tuples for leaf Claims
-  # that are definitions (not citations or Links) and have no children:
-  unsupported = [
-      (node.identifier, node.text)
-      for node in case.all_nodes()
-      if node.is_definition and node.node_type == 'Claim' and not node.children
-  ]
 
 Exceptions and session:
   class VerocaseError(Exception)  raised by panic() on fatal errors

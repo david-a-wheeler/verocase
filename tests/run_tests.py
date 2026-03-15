@@ -31,14 +31,15 @@ Only input files carry "input" in their name; all expected files carry
 before running --inline, so the fixture itself is never modified.
 
 Config file naming convention (tests/fixtures/):
-  <prefix>.config   JSON config file passed via --config to a test scenario.
+  <prefix>.toml   TOML config file passed via --config to a test scenario.
   The prefix matches the LTAC base name when one LTAC maps to one scenario
-  (e.g. badgeapp-top.config for badgeapp-top.ltac).  When a single LTAC
+  (e.g. badgeapp-top.toml for badgeapp-top.ltac).  When a single LTAC
   is used for multiple scenarios, the prefix matches the scenario's expected
-  output base name instead (e.g. simple.sacm.mermaid.config,
-  simple.gsn.mermaid.config, doc-simple.config all derive from simple.ltac).
+  output base name instead (e.g. simple.sacm.mermaid.toml,
+  simple.gsn.mermaid.toml, doc-simple.toml all derive from simple.ltac).
   Mermaid tests set base_url to the GitHub URL of their expected output file
   so that diagram nodes link to the correct anchors on GitHub.
+  Config-loading tests are skipped when tomllib/tomli is not available.
 """
 
 import os
@@ -55,6 +56,20 @@ _HERE    = os.path.dirname(os.path.abspath(__file__))
 LTACPROC = [sys.executable, os.path.join(_HERE, '..', 'verocase.py')]
 FIXTURES = os.path.join(_HERE, 'fixtures')
 RESULTS  = os.path.join(_HERE, 'results')
+
+# TOML support check: tests that load config files are skipped when neither
+# tomllib (Python 3.11+) nor the tomli backport is available.
+try:
+    import tomllib as _tomllib
+except ImportError:
+    try:
+        import tomli as _tomllib  # type: ignore[no-redef]
+    except ImportError:
+        _tomllib = None  # type: ignore[assignment]
+
+_TOML_AVAILABLE = _tomllib is not None
+_skip_no_toml = unittest.skipUnless(_TOML_AVAILABLE,
+    "TOML support not available (requires Python 3.11+ or 'pip install tomli')")
 
 
 def run(*args):
@@ -302,12 +317,13 @@ class TestDubiousReference(unittest.TestCase):
         finally:
             os.unlink(path)
 
+    @_skip_no_toml
     def test_warn_dubious_reference_false_suppresses(self):
         """warn_dubious_reference=false in the config file suppresses the warning."""
-        import tempfile, os, json
+        import tempfile, os
         ltac = self._make_ltac('no-dot-here')
-        cfg = tempfile.NamedTemporaryFile(mode='w', suffix='.config', delete=False)
-        json.dump({'warn_dubious_reference': False}, cfg)
+        cfg = tempfile.NamedTemporaryFile(mode='w', suffix='.toml', delete=False)
+        cfg.write('warn_dubious_reference = false\n')
         cfg.close()
         md = tempfile.NamedTemporaryFile(mode='w', suffix='.md', delete=False)
         md.write('<!-- verocase package * -->\n<!-- end verocase -->\n')
@@ -323,10 +339,11 @@ class TestDubiousReference(unittest.TestCase):
 
 
 class TestDefaultMode(unittest.TestCase):
+    @_skip_no_toml
     def test_filter_mode_output(self):
         """--stdout replaces stale verocase regions and passes other lines through."""
         result = run('--ltac', fixture('simple.ltac'),
-                     '--config', fixture('doc-simple.config'),
+                     '--config', fixture('doc-simple.toml'),
                      '--stdout', fixture('doc-simple-input.md'))
         self.assertEqual(result.returncode, 0)
         self.assertEqual(check(result.stdout, 'doc-simple-output.expected.md'),
@@ -457,11 +474,12 @@ class TestLTACValidation(unittest.TestCase):
 
 
 
+@_skip_no_toml
 class TestSelectSacm(unittest.TestCase):
     def test_select_sacm_mermaid(self):
         """sacm/mermaid renders the full SACM mermaid diagram for simple.ltac."""
         result = run('--ltac', fixture('simple.ltac'),
-                     '--config', fixture('simple.sacm.mermaid.config'),
+                     '--config', fixture('simple.sacm.mermaid.toml'),
                      '--select', 'sacm/mermaid')
         self.assertEqual(result.returncode, 0)
         self.assertEqual(check(result.stdout, 'simple.sacm.mermaid.expected.md'),
@@ -471,7 +489,7 @@ class TestSelectSacm(unittest.TestCase):
     def test_badgeapp_top_sacm_mermaid(self):
         """sacm/mermaid renders the badgeapp top-level assurance case correctly."""
         result = run('--ltac', fixture('badgeapp-top.ltac'),
-                     '--config', fixture('badgeapp-top.config'),
+                     '--config', fixture('badgeapp-top.toml'),
                      '--select', 'sacm/mermaid')
         self.assertEqual(result.returncode, 0)
         self.assertEqual(check(result.stdout, 'badgeapp-top.sacm.mermaid.expected.md'),
@@ -482,7 +500,7 @@ class TestSelectSacm(unittest.TestCase):
     def test_filter_mode_with_sacm_region(self):
         """--stdout correctly replaces a sacm/mermaid region in doc-simple-input.md."""
         result = run('--ltac', fixture('simple.ltac'),
-                     '--config', fixture('doc-simple.config'),
+                     '--config', fixture('doc-simple.toml'),
                      '--stdout', fixture('doc-simple-input.md'))
         self.assertEqual(result.returncode, 0)
         self.assertEqual(check(result.stdout, 'doc-simple-output.expected.md'),
@@ -492,24 +510,26 @@ class TestSelectSacm(unittest.TestCase):
 
 
 class TestSelectorExpansion(unittest.TestCase):
+    @_skip_no_toml
     def test_sacm_shorthand_equals_sacm_mermaid(self):
         """'sacm' expands to 'sacm/mermaid/markdown' on a markdown context."""
         r1 = run('--ltac', fixture('simple.ltac'),
-                 '--config', fixture('simple.sacm.mermaid.config'),
+                 '--config', fixture('simple.sacm.mermaid.toml'),
                  '--select', 'sacm')
         r2 = run('--ltac', fixture('simple.ltac'),
-                 '--config', fixture('simple.sacm.mermaid.config'),
+                 '--config', fixture('simple.sacm.mermaid.toml'),
                  '--select', 'sacm/mermaid')
         self.assertEqual(r1.returncode, 0)
         self.assertEqual(r1.stdout, r2.stdout)
 
+    @_skip_no_toml
     def test_gsn_shorthand_equals_gsn_mermaid(self):
         """'gsn' expands to 'gsn/mermaid/markdown' on a markdown context."""
         r1 = run('--ltac', fixture('simple.ltac'),
-                 '--config', fixture('simple.gsn.mermaid.config'),
+                 '--config', fixture('simple.gsn.mermaid.toml'),
                  '--select', 'gsn')
         r2 = run('--ltac', fixture('simple.ltac'),
-                 '--config', fixture('simple.gsn.mermaid.config'),
+                 '--config', fixture('simple.gsn.mermaid.toml'),
                  '--select', 'gsn/mermaid')
         self.assertEqual(r1.returncode, 0)
         self.assertEqual(r1.stdout, r2.stdout)
@@ -521,10 +541,11 @@ class TestSelectorExpansion(unittest.TestCase):
         self.assertIn('Claim', r.stdout)
 
 
+@_skip_no_toml
 class TestSelectGsn(unittest.TestCase):
     def test_select_gsn_mermaid(self):
         r = run('--ltac', fixture('simple.ltac'),
-                '--config', fixture('simple.gsn.mermaid.config'),
+                '--config', fixture('simple.gsn.mermaid.toml'),
                 '--select', 'gsn/mermaid')
         self.assertEqual(r.returncode, 0)
         actual = check(r.stdout, 'simple.gsn.mermaid.expected.md')
@@ -563,12 +584,13 @@ class TestElementPackageSelectors(unittest.TestCase):
         self.assertIn('NoSuchPkg', r.stderr)
 
 
+@_skip_no_toml
 class TestBadgeappDoc(unittest.TestCase):
     def test_badgeapp_doc_filter_mode(self):
         """--stdout renders all three packages via sacm/mermaid * with correct
         BottomPadding targets, click lines for evidence URLs, and context edges."""
         result = run('--ltac', fixture('badgeapp-doc.ltac'),
-                     '--config', fixture('badgeapp-doc.config'),
+                     '--config', fixture('badgeapp-doc.toml'),
                      '--stdout', fixture('badgeapp-doc-input.md'))
         self.assertEqual(result.returncode, 0)
         self.assertEqual(check(result.stdout, 'badgeapp-doc-output.expected.md'),
@@ -577,6 +599,7 @@ class TestBadgeappDoc(unittest.TestCase):
                          read_fixture('badgeapp-doc-stderr.expected.txt'))
 
 
+@_skip_no_toml
 class TestStress(unittest.TestCase):
     def _tmp_copy(self, name):
         """Copy a fixture to tests/results/<name> and return its path."""
@@ -591,7 +614,7 @@ class TestStress(unittest.TestCase):
         tmp = self._tmp_copy('stress-test-input.md')
         try:
             result = run('--ltac', fixture('stress-test.ltac'),
-                         '--config', fixture('stress-test.config'),
+                         '--config', fixture('stress-test.toml'),
                          tmp)
             self.assertEqual(result.returncode, 0)
             self.assertEqual(result.stdout, '')
@@ -604,15 +627,14 @@ class TestStress(unittest.TestCase):
                 os.unlink(tmp)
 
 
+@_skip_no_toml
 class TestConfig(unittest.TestCase):
     def test_config_file_overrides_default(self):
-        """--config FILE merges JSON object keys over defaults."""
-        cfg = {'pkg_label': 'Module '}
-        fd, path = tempfile.mkstemp(suffix='.json')
+        """--config FILE merges TOML keys over defaults."""
+        fd, path = tempfile.mkstemp(suffix='.toml')
         try:
             with os.fdopen(fd, 'w', encoding='utf-8') as f:
-                import json
-                json.dump(cfg, f)
+                f.write('pkg_label = "Module "\n')
             result = run('--ltac', fixture('simple.ltac'), '--config', path,
                          '--select', 'ltac/markdown *')
             self.assertEqual(result.returncode, 0)
@@ -622,44 +644,30 @@ class TestConfig(unittest.TestCase):
 
     def test_config_file_not_found(self):
         """--config with a nonexistent file exits non-zero with an error message."""
-        result = run('--ltac', fixture('simple.ltac'), '--config', '/no/such/file.json',
+        result = run('--ltac', fixture('simple.ltac'), '--config', '/no/such/file.toml',
                      '--select', 'ltac/markdown')
         self.assertNotEqual(result.returncode, 0)
         self.assertIn('not found', result.stderr)
 
-    def test_config_file_not_json_object(self):
-        """--config file containing a JSON array (not object) exits non-zero."""
-        fd, path = tempfile.mkstemp(suffix='.json')
+    def test_config_file_invalid_toml(self):
+        """--config file with invalid TOML exits non-zero."""
+        fd, path = tempfile.mkstemp(suffix='.toml')
         try:
             with os.fdopen(fd, 'w', encoding='utf-8') as f:
-                f.write('[1, 2, 3]')
+                f.write('this is not = valid = toml\n')
             result = run('--ltac', fixture('simple.ltac'), '--config', path,
                          '--select', 'ltac/markdown')
             self.assertNotEqual(result.returncode, 0)
-            self.assertIn('JSON object', result.stderr)
-        finally:
-            os.unlink(path)
-
-    def test_config_file_invalid_json(self):
-        """--config file with invalid JSON exits non-zero."""
-        fd, path = tempfile.mkstemp(suffix='.json')
-        try:
-            with os.fdopen(fd, 'w', encoding='utf-8') as f:
-                f.write('{not valid json}')
-            result = run('--ltac', fixture('simple.ltac'), '--config', path,
-                         '--select', 'ltac/markdown')
-            self.assertNotEqual(result.returncode, 0)
-            self.assertIn('invalid JSON', result.stderr)
+            self.assertIn('invalid TOML', result.stderr)
         finally:
             os.unlink(path)
 
     def test_config_unknown_key_warns(self):
         """--config file with an unknown key produces a warning but still exits 0."""
-        fd, path = tempfile.mkstemp(suffix='.json')
+        fd, path = tempfile.mkstemp(suffix='.toml')
         try:
             with os.fdopen(fd, 'w', encoding='utf-8') as f:
-                import json
-                json.dump({'no_such_key': 'value'}, f)
+                f.write('no_such_key = "value"\n')
             result = run('--ltac', fixture('simple.ltac'), '--config', path,
                          '--select', 'ltac/markdown')
             self.assertEqual(result.returncode, 0)
@@ -783,15 +791,16 @@ class TestMermaidHtml(unittest.TestCase):
         finally:
             os.unlink(tmp)
 
+    @_skip_no_toml
     def test_mermaid_js_url_empty_disables_injection(self):
         """Setting mermaid_js_url to '' disables script injection."""
-        import json, tempfile
-        fd, cfg = tempfile.mkstemp(suffix='.json')
+        import tempfile
+        fd, cfg = tempfile.mkstemp(suffix='.toml')
         content = '<!-- verocase sacm/mermaid/html -->\n<!-- end verocase -->\n'
         tmp = self._tmp_html(content)
         try:
             with os.fdopen(fd, 'w') as f:
-                json.dump({'mermaid_js_url': ''}, f)
+                f.write('mermaid_js_url = ""\n')
             result = run('--ltac', fixture('simple.ltac'), '--config', cfg, tmp)
             self.assertEqual(result.returncode, 0)
             updated = read_file(tmp)
@@ -1518,11 +1527,12 @@ class TestFixMissingOption(unittest.TestCase):
             os.unlink(doc_path)
 
 
+@_skip_no_toml
 class TestCaseprocConfig(unittest.TestCase):
     def test_config_directive_changes_level(self):
         """<!-- verocase-config element_level = 2 --> changes heading level for element regions."""
         r = run('--ltac', fixture('simple.ltac'), '--stdout', fixture('element-selector-input.md'),
-                '--config', fixture('doc-simple.config'))
+                '--config', fixture('doc-simple.toml'))
         self.assertEqual(r.returncode, 0)
         self.assertIn('### Claim C1:', r.stdout)  # default level 3
 
@@ -1913,6 +1923,7 @@ class TestGsnConnectorVisible(unittest.TestCase):
         self.assertNotIn('Root --> C2', r.stdout)
 
 
+@_skip_no_toml
 class TestMermaidWidthConfig(unittest.TestCase):
     """Stage 2+3: max_mermaid_children / narrowed_mermaid_children config and transform."""
 
@@ -1924,15 +1935,18 @@ class TestMermaidWidthConfig(unittest.TestCase):
         return '\n'.join(lines) + '\n'
 
     def _run_with_config(self, ltac_text, cfg, selector='sacm/mermaid'):
-        """Write temp LTAC + config, run verocase --select selector, return result."""
-        import json
+        """Write temp LTAC + config (TOML), run verocase --select selector, return result."""
         fd_l, ltac_path = tempfile.mkstemp(suffix='.ltac')
-        fd_c, cfg_path = tempfile.mkstemp(suffix='.json')
+        fd_c, cfg_path = tempfile.mkstemp(suffix='.toml')
         try:
             with os.fdopen(fd_l, 'w', encoding='utf-8') as f:
                 f.write(ltac_text)
             with os.fdopen(fd_c, 'w', encoding='utf-8') as f:
-                json.dump(cfg, f)
+                for k, v in cfg.items():
+                    if isinstance(v, str):
+                        f.write(f'{k} = {v!r}\n')
+                    else:
+                        f.write(f'{k} = {v}\n')
             return run('--ltac', ltac_path, '--config', cfg_path,
                        '--select', selector)
         finally:

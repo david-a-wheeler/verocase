@@ -10,7 +10,6 @@ import argparse
 import copy
 import datetime
 import io
-import json
 import os
 import re
 import shutil
@@ -20,6 +19,18 @@ import tempfile
 from collections import deque
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Set, TextIO, Tuple
+
+# TOML support: tomllib is in the standard library since Python 3.11.
+# On older Python versions, the third-party 'tomli' package is a drop-in
+# replacement.  If neither is available, config files cannot be loaded, but
+# the module still works fine when no config file is present.
+try:
+    import tomllib
+except ImportError:
+    try:
+        import tomli as tomllib  # type: ignore[no-redef]
+    except ImportError:
+        tomllib = None  # type: ignore[assignment]
 
 __version__ = '0.1.0'
 
@@ -156,25 +167,34 @@ DEFAULT_CONFIG = {
 }
 
 
-def load_config(config_path: str) -> dict:
-    """Load and validate configuration from a JSON file.
+def load_config(config_path: Optional[str]) -> dict:
+    """Load and validate configuration from a TOML file.
 
     If config_path is None, return a copy of DEFAULT_CONFIG.
     Unknown keys produce a warning; known keys are merged over the defaults.
+    Requires tomllib (Python 3.11+) or the third-party tomli package; calls
+    error() and returns DEFAULT_CONFIG if neither is available.
     """
     if config_path is None:
         return dict(DEFAULT_CONFIG)
+    if tomllib is None:
+        error(
+            f"cannot load config file {config_path!r}: "
+            "TOML support requires Python 3.11+ (tomllib) or "
+            "'pip install tomli' for older Python versions"
+        )
+        return dict(DEFAULT_CONFIG)
     try:
-        with open(config_path, encoding='utf-8') as f:
-            parsed = json.load(f)
+        with open(config_path, 'rb') as f:
+            parsed = tomllib.load(f)
     except FileNotFoundError:
-        panic(f"--config file not found: {config_path!r}")
+        panic(f"config file not found: {config_path!r}")
     except PermissionError:
-        panic(f"--config file not readable: {config_path!r}")
-    except json.JSONDecodeError as e:
-        panic(f"invalid JSON in --config file {config_path!r}: {e}")
+        panic(f"config file not readable: {config_path!r}")
+    except Exception as e:
+        panic(f"invalid TOML in config file {config_path!r}: {e}")
     if not isinstance(parsed, dict):
-        panic(f"--config file must contain a JSON object, not {type(parsed).__name__}")
+        panic(f"config file must contain a TOML table, not {type(parsed).__name__}")
     for key in parsed:
         if key not in DEFAULT_CONFIG:
             warn(f"unknown config key: {key!r}")
@@ -3215,7 +3235,7 @@ Additional checks when document files are processed:
 """
 
 _HELP_CONFIGURATION = """\
-Configuration keys (--config FILE, JSON object):
+Configuration keys (--config FILE, TOML file; auto-discovered as verocase.toml):
   document_files     list of document file paths to process (default: auto-discover)
   ltac_file          LTAC file path (alternative to --ltac; default: auto-discover)
   max_backups        number of timestamped backup snapshots to keep (default: 20)
@@ -3349,13 +3369,13 @@ Data types:
 
 Loading and initialization:
   load_case(ltac=None, config_file=None, documents=None, validate=True) -> Case
-    Recommended entry point.  Auto-discovers config, LTAC, and documents;
-    calls reset() and (by default) runs all validation.  Override any
-    parameter to take explicit control.  Check had_error on return.
-  find_config(path=None)       -> Optional[str]  (None if not found)
+    Recommended entry point.  Auto-discovers config (verocase.toml), LTAC,
+    and documents; calls reset() and (by default) runs all validation.
+    Override any parameter to take explicit control.  Check had_error on return.
+  find_config(path=None)       -> Optional[str]  (None if not found; searches verocase.toml)
   find_ltac_file(ltac_arg, config) -> str        (panics if not found)
   find_document_files(config=None, ltac_path=None) -> List[str]  ([] if none)
-  load_config(path_or_None)    -> dict
+  load_config(path_or_None)    -> dict  (reads TOML; requires tomllib/tomli)
   load_ltac_file(path, config=config) -> Case    (document_files=[])
   parse_ltac_lines(lines, config=config)  -> Case
   write_ltac(roots, out)   serialize forest to out; use io.StringIO() for a string
@@ -3626,7 +3646,7 @@ Run --help-api for the public Python API summary (for library use).
     )
     parser.add_argument(
         '--config', type=str, metavar='FILE',
-        help='path to a JSON file containing configuration key/value pairs',
+        help='path to a TOML config file (default: auto-discover verocase.toml)',
     )
     parser.add_argument(
         '--error', action='store_true',
@@ -3846,7 +3866,7 @@ def find_ltac_file(ltac_arg: Optional[str], config: dict) -> str:
 def find_config(path: Optional[str] = None) -> Optional[str]:
     """Find the configuration file path to use, returning None if not found.
 
-    Search order: explicit path → case.config → docs/case.config → None.
+    Search order: explicit path → verocase.toml → docs/verocase.toml → None.
     Unlike find_ltac_file(), returns None rather than panicking when no file
     is found; callers can pass the result directly to load_config(), which
     returns DEFAULT_CONFIG when given None.
@@ -3862,10 +3882,10 @@ def find_config(path: Optional[str] = None) -> Optional[str]:
         if os.path.exists(path):
             return path
         panic(f"config file not found: {path!r}")
-    if os.path.exists('case.config'):
-        return 'case.config'
-    if os.path.exists('docs/case.config'):
-        return 'docs/case.config'
+    if os.path.exists('verocase.toml'):
+        return 'verocase.toml'
+    if os.path.exists('docs/verocase.toml'):
+        return 'docs/verocase.toml'
     return None
 
 
@@ -3934,8 +3954,8 @@ def load_case(
     ltac : str, optional
         Path to the LTAC file.  If None, auto-discovered via find_ltac_file().
     config_file : str, optional
-        Path to the JSON config file.  If None, auto-discovered via
-        find_config() (case.config → docs/case.config → defaults).
+        Path to the TOML config file.  If None, auto-discovered via
+        find_config() (verocase.toml → docs/verocase.toml → defaults).
     documents : list of str, optional
         Document file paths.  If None, auto-discovered via
         find_document_files() (config → adjacent to LTAC → cwd → docs/).

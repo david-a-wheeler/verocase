@@ -1012,6 +1012,39 @@ class Case:
         self.modified = False
 
     # ------------------------------------------------------------------
+    # Document processing
+    # ------------------------------------------------------------------
+
+    def check_element_coverage(self, seen_element_ids: set) -> None:
+        """Warn about every registry element with no corresponding element selector."""
+        for ident in self.registry:
+            if ident not in seen_element_ids:
+                self.warn(f"element {ident!r} has no 'element' selector in any processed file")
+
+    def update_documents(self, add_missing: bool = False,
+                         strip: bool = False) -> bool:
+        """Process all document_files in place with backup+atomic-replace.
+
+        Rewrites each file in self.document_files using the safe temp-file +
+        atomic-replace mechanism, creating a single backup snapshot covering
+        all files.  Warns about any registry element not covered by an element
+        selector.  Returns not self.had_error.
+        """
+        pairs = []
+        seen: set = set()
+        for path in self.document_files:
+            pair, seen = _inline_rewrite_file(path, self, self.config,
+                                              add_missing=add_missing, strip=strip,
+                                              seen_ids=seen)
+            if pair is not None:
+                pairs.append(pair)
+        if pairs:
+            commit_updates(pairs, self.ltac_path, self.config, self.config_path)
+        if self.document_files:
+            self.check_element_coverage(seen)
+        return not self.had_error
+
+    # ------------------------------------------------------------------
     # Analysis — data-returning
     # ------------------------------------------------------------------
 
@@ -3817,6 +3850,9 @@ Data types and examples of their methods/properties:
     case.needs_support() -> List[Node]  (nodes with {needssupport} option)
     case.all_nodes()         DFS generator, LTAC order
     case.all_nodes_fast()    DFS generator, fast order (order unspecified)
+    # Document processing
+    case.update_documents(add_missing=False, strip=False) -> bool
+    case.check_element_coverage(seen_element_ids)  warn about uncovered elements
 
 Standalone helpers:
   print_stats(ltac_stats, doc_stats, out=sys.stdout)
@@ -4341,16 +4377,6 @@ def _mark_needs_support(candidate_ids: List[str],
     return count
 
 
-def _check_element_coverage(registry: Dict[str, Node], seen_element_ids: set,
-                            case: 'Case' = None) -> None:
-    """Warn about every registry element with no corresponding element selector."""
-    for ident in registry:
-        if ident not in seen_element_ids:
-            msg = f"element {ident!r} has no 'element' selector in any processed file"
-            if case is not None:
-                case.warn(msg)
-            else:
-                print(f"verocase: warning: {msg}", file=sys.stderr)
 
 
 # ---------------------------------------------------------------------------
@@ -5388,14 +5414,14 @@ def main() -> bool:
         if document_files:
             seen_element_ids = _process_files(document_files, _NullWriter(), case, config, strip=args.strip)
             # This validation requires that we read all document files
-            _check_element_coverage(case.registry, seen_element_ids, case)
+            case.check_element_coverage(seen_element_ids)
         if ltac_pair:
             commit_updates([ltac_pair], ltac_path, config, config_path)
     elif args.stdout:
         if not document_files:
             panic(_NO_FILES_MSG)
         seen_element_ids = _process_files(document_files, sys.stdout, case, config, strip=args.strip)
-        _check_element_coverage(case.registry, seen_element_ids, case)
+        case.check_element_coverage(seen_element_ids)
         if ltac_pair:
             commit_updates([ltac_pair], ltac_path, config, config_path)
     elif args.fixmissing or args.start:
@@ -5454,23 +5480,15 @@ def main() -> bool:
         # here; the guard is kept for clarity).
         if document_files:
             seen_element_ids = _process_files(document_files, _NullWriter(), case, config, strip=args.strip)
-            _check_element_coverage(case.registry, seen_element_ids, case)
+            case.check_element_coverage(seen_element_ids)
     else:
         # Default mode: rewrite document files in place.
         if not document_files and not ltac_pair:
             panic(_NO_FILES_MSG)
-        seen_element_ids: set = set()
-        pairs = ([ltac_pair] if ltac_pair else [])
-        for path in document_files:
-            pair, seen_element_ids = _inline_rewrite_file(path, case, config,
-                                                           strip=args.strip,
-                                                           seen_ids=seen_element_ids)
-            if pair is not None:
-                pairs.append(pair)
-        if pairs:
-            commit_updates(pairs, ltac_path, config, config_path)
-        if document_files:
-            _check_element_coverage(case.registry, seen_element_ids, case)
+        case.document_files = document_files
+        case.update_documents(strip=args.strip)
+        if ltac_pair:
+            commit_updates([ltac_pair], ltac_path, config, config_path)
 
     if args.stats:
         ltac_stats = case.stats()

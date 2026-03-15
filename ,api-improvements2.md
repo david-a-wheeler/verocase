@@ -3,7 +3,7 @@
 *2026-03-15. Successor to ,api-improvements.md.*
 
 Items 1–5, 8, 9, 19, 20, 21, 27 are done; 17 and 18 were dropped.
-Items A, B, C, D, E, F, H, I, J, N, O, P are also done or dropped (see below).
+Items A, B, C, D, E, F, H, I, J, K, N, O, P are also done or dropped (see below).
 H was implemented as `Case.load_ltac_string()` (a Case method using
 `self.config`).  N is moot: `load_ltac_file` was deleted; `Case.load()`
 validates by default and `load_ltac_string()` intentionally does not.
@@ -12,6 +12,10 @@ callers that need string capture use `io.StringIO()` directly.
 F and J done: `collect_bfs`, `copy_forest`, `write_ltac`, `render_ltac_txt`,
 `render_ext_ref` made private; `render_selector` free function deleted;
 `needs_support` removed from public API and added as `case.needs_support()`.
+K done: `case.update_documents(add_missing=False, strip=False)` added to Case;
+`_check_element_coverage` free function deleted and replaced by
+`case.check_element_coverage(seen_element_ids)` Case method; main()'s
+default mode now delegates to `case.update_documents()`.
 D done: `find_citation_parents(ident)` replaced by two methods:
 `case.citations_and_links(node)` (single full-forest walk returning all
 citation and Link nodes referencing `node`) and `case.parents(nodes)`
@@ -34,32 +38,6 @@ used; current inspection suggests it is not referenced in the body.
 - Consider renaming to `write_ltac_normalized` to distinguish from
   `write_ltac` (which writes the full forest preserving depth).
 - Update `__all__` and `--help-api`.
-
----
-
-## K. Add `case.update_documents()` (was item 23)
-
-**Current state:** No Case method processes all document files in-place with
-the backup+atomic-replace machinery.
-
-**Proposed change:**
-
-```python
-case.update_documents(add_missing=False, strip=False) -> bool
-```
-
-Processes every path in `self.document_files`, writes output to temp files,
-calls `commit_updates` once.  Returns `not self.had_error`.
-
-**Notes:**
-- `_detect_line_ending` (or equivalent) determines CRLF handling per file —
-  grep the file for how `main()` handles this before calling `_make_temp`.
-- `commit_updates` and `_make_temp` are defined late in the file; Python
-  resolves method body names at call time so forward references are fine.
-- Consider also returning the `seen` set (like item A) so callers can
-  check element coverage.
-- This is the most valuable remaining high-level method: it lets library
-  callers do `Case().load()` + `case.update_documents()` to mirror the CLI.
 
 ---
 
@@ -113,6 +91,5 @@ in the same atomic backup.  Option A (Case methods only) is sufficient now.
 | # | Change | Size | Priority |
 |---|--------|------|----------|
 | G | Audit + drop unused `config` param from `render_ltac_txt` | Small | Medium |
-| K | Add `case.update_documents()` | Medium | High |
 | L | Add `case.update_files()` (LTAC + docs atomic) | Medium | High |
 | M | `SafeWriter` context manager | Large | Defer |

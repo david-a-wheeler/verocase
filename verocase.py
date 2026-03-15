@@ -823,16 +823,16 @@ class Case:
         If a list of Nodes is given, returns a deduplicated list of their
         parents, excluding any that have no parent.
         """
-        if isinstance(nodes, list):
+        if isinstance(nodes, Node):
+            if nodes.parent is None:
+                return None
+            return [nodes.parent]
+        else:
             seen: List['Node'] = []
             for n in nodes:
                 if n.parent is not None and n.parent not in seen:
                     seen.append(n.parent)
             return seen
-        else:
-            if nodes.parent is None:
-                return None
-            return [nodes.parent]
 
     def nodes_for(self, element_id: Optional[str],
                   current: Optional['Node'] = None) -> List['Node']:

@@ -1131,7 +1131,29 @@ class Case:
 
         return (tmp, path), seen
 
-    def fix_misplaced_document(self, path: str) -> Optional[Tuple[str, str]]:
+    def fix_misplaced_documents(self) -> bool:
+        """Fix misplaced element regions across all document_files in one commit.
+
+        For each file in self.document_files, moves element regions to their
+        correct LTAC order positions.  All changes (including LTAC if
+        self.ltac_modified) are committed atomically.
+        Returns not self.had_error.
+        """
+        pairs = []
+        for path in self.document_files:
+            pair = self._fix_misplaced_document(path)
+            if pair is not None:
+                pairs.append(pair)
+        if self.ltac_modified and self.ltac_path:
+            tmp = self._make_ltac_temp(self.ltac_path)
+            if tmp is not None:
+                pairs.append((tmp, self.ltac_path))
+        if pairs:
+            commit_updates(pairs, self.ltac_path, self.config, self.config_path)
+            self.ltac_modified = False
+        return not self.had_error
+
+    def _fix_misplaced_document(self, path: str) -> Optional[Tuple[str, str]]:
         """Move misplaced element regions to their correct LTAC order positions.
 
         Returns a (tmp_path, final_path) pair ready for commit_updates, or None
@@ -4191,7 +4213,7 @@ Data types and examples of their methods/properties:
     case.all_nodes()         DFS generator, LTAC order
     case.all_nodes_fast()    DFS generator, fast order (order unspecified)
     # Document processing
-    case.fix_misplaced_document(path) -> Optional[Tuple[str,str]]
+    case.fix_misplaced_documents() -> bool
     case.update_files(add_missing=False, strip=False) -> bool
     case.check_element_coverage(seen_element_ids)  warn about uncovered elements
 
@@ -5417,17 +5439,8 @@ def main() -> bool:
     elif args.fixmisplaced:
         if not document_files:
             panic(_NO_FILES_MSG)
-        pairs = []
-        for path in document_files:
-            pair = case.fix_misplaced_document(path)
-            if pair:
-                pairs.append(pair)
-        if case.ltac_modified:
-            tmp = case._make_ltac_temp(ltac_path)
-            if tmp is not None:
-                pairs.append((tmp, ltac_path))
-        if pairs:
-            commit_updates(pairs, ltac_path, config, config_path)
+        case.document_files = document_files
+        case.fix_misplaced_documents()
     elif args.read_only:
         # --read-only: load, validate, and optionally report stats; no file writes.
         # Mutations are blocked above, so ltac_modified is always False here.

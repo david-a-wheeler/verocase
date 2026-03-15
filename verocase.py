@@ -799,14 +799,31 @@ class Case:
         """Return the canonical statement text for ident, or None."""
         return self.id_info.get(ident, _EMPTY).get('statement')
 
-    def find_citation_parents(self, ident: str) -> List['Node']:
-        """Return all nodes that have a cited child (^ident) anywhere in the forest."""
-        parents = []
-        for node in self.all_nodes_fast():
-            if node.identifier == ident and node.is_citation and node.parent is not None:
-                if node.parent not in parents:
-                    parents.append(node.parent)
-        return parents
+    def citations_and_links(self, node: 'Node') -> List['Node']:
+        """Return all nodes in the forest that are citations of node or Link to node.
+
+        A single full-forest walk collects both:
+        - Citation nodes whose identifier matches node.identifier
+        - Link nodes whose link_target is node
+        """
+        ident = node.identifier
+        result = []
+        for n in self.all_nodes_fast():
+            if (n.is_citation and n.identifier == ident) or \
+               (n.node_type == 'Link' and n.link_target is node):
+                result.append(n)
+        return result
+
+    def parents(self, nodes: List['Node']) -> List['Node']:
+        """Return deduplicated list of parent nodes for the given nodes.
+
+        Nodes without a parent (package roots) are excluded.
+        """
+        seen: List['Node'] = []
+        for n in nodes:
+            if n.parent is not None and n.parent not in seen:
+                seen.append(n.parent)
+        return seen
 
     def nodes_for(self, element_id: Optional[str],
                   current: Optional['Node'] = None) -> List['Node']:
@@ -3249,7 +3266,7 @@ def render_supports(node: Node, case: 'Case',
         p = node.parent
         pairs.append((f'{p.node_type} {p.identifier}',
                       _element_anchor_url(p.node_type, p.identifier, config)))
-    for parent in case.find_citation_parents(node.identifier):
+    for parent in case.parents(case.citations_and_links(node)):
         if not parent.identifier:
             continue
         pairs.append((f'{parent.node_type} {parent.identifier}',
@@ -3795,6 +3812,8 @@ Data types and examples of their methods/properties:
     case.definition_for(ident) -> Optional[Node]  (None if 0 or >1 declarations)
     case.declaring_package_for(ident) -> Optional[Node]
     case.statement_for(ident) -> Optional[str]
+    case.citations_and_links(node) -> List[Node]  (citation + Link nodes referencing node)
+    case.parents(nodes) -> List[Node]  (deduplicated parents of given nodes)
     case.needs_support() -> List[Node]  (nodes with {needssupport} option)
     case.all_nodes()         DFS generator, LTAC order
     case.all_nodes_fast()    DFS generator, fast order (order unspecified)

@@ -3,7 +3,7 @@
 *2026-03-15. Successor to ,api-improvements.md.*
 
 Items 1–5, 8, 9, 19, 20, 21, 27 are done; 17 and 18 were dropped.
-Items A, B, C, E, F, H, I, J, N, O, P are also done or dropped (see below).
+Items A, B, C, D, E, F, H, I, J, N, O, P are also done or dropped (see below).
 H was implemented as `Case.load_ltac_string()` (a Case method using
 `self.config`).  N is moot: `load_ltac_file` was deleted; `Case.load()`
 validates by default and `load_ltac_string()` intentionally does not.
@@ -12,17 +12,13 @@ callers that need string capture use `io.StringIO()` directly.
 F and J done: `collect_bfs`, `copy_forest`, `write_ltac`, `render_ltac_txt`,
 `render_ext_ref` made private; `render_selector` free function deleted;
 `needs_support` removed from public API and added as `case.needs_support()`.
+D done: `find_citation_parents(ident)` replaced by two methods:
+`case.citations_and_links(node)` (single full-forest walk returning all
+citation and Link nodes referencing `node`) and `case.parents(nodes)`
+(deduplicated parents of a list of nodes).  `render_supports` now calls
+`case.parents(case.citations_and_links(node))`.
 This document covers what remains: the items that still apply, updated
 for the current code (Case class, instance methods, new names).
-
----
-
-## D. Rename `find_citation_parents` → `citing_nodes` (was item 11)
-
-**Current state:** `case.find_citation_parents(ident) -> List[Node]`.
-
-**Proposed change:** Rename to `case.citing_nodes(ident)`.
-Keep old name as alias.
 
 ---
 
@@ -116,7 +112,6 @@ in the same atomic backup.  Option A (Case methods only) is sufficient now.
 
 | # | Change | Size | Priority |
 |---|--------|------|----------|
-| D | `find_citation_parents` → `citing_nodes` | Trivial | Low |
 | G | Audit + drop unused `config` param from `render_ltac_txt` | Small | Medium |
 | K | Add `case.update_documents()` | Medium | High |
 | L | Add `case.update_files()` (LTAC + docs atomic) | Medium | High |

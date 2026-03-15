@@ -589,11 +589,16 @@ class Case:
     id_info        : Dict[str, dict] Cross-reference metadata per identifier.
     document_files : List[str]       Document paths associated with this case.
                                      Set by the caller after loading; defaults to [].
+    config         : dict            Configuration dict used to load this case.
+                                     Populated by load_ltac_file() and parse_ltac_lines().
+                                     Pass to render_selector(), process_document_stream(),
+                                     and other rendering functions that need it.
     """
     roots:          List['Node']
     registry:       Dict[str, 'Node']
     id_info:        Dict[str, dict]
     document_files: List[str] = field(default_factory=list)
+    config:         dict       = field(default_factory=lambda: dict(DEFAULT_CONFIG))
 
     # ------------------------------------------------------------------
     # Identifier lookups
@@ -1063,9 +1068,11 @@ def parse_ltac_lines(lines: List[str], config: Optional[dict] = None) -> 'Case':
     Case
         Bundled (roots, registry, id_info); see Case for field descriptions.
     """
+    cfg = config if config is not None else dict(DEFAULT_CONFIG)
     parser = LTACParser()
-    roots = parser.parse(lines, config=config)
-    return Case(roots=roots, registry=parser.registry, id_info=parser.id_info)
+    roots = parser.parse(lines, config=cfg)
+    return Case(roots=roots, registry=parser.registry, id_info=parser.id_info,
+                config=cfg)
 
 
 def all_nodes_fast(roots: List[Node]):
@@ -3194,6 +3201,8 @@ Typical usage (simple):
   import io; buf = io.StringIO()
   case.render_info('SomeClaim', buf)
   print(buf.getvalue())
+  # case.config holds the loaded configuration; pass it to render_selector(),
+  # process_document_stream(), etc. when needed.
 
 Typical usage (explicit control):
   import verocase, io, sys
@@ -3239,6 +3248,7 @@ Data types:
     case.registry       Dict[str, Node] (identifier -> definition node)
     case.id_info        Dict[str, dict] (per-identifier metadata)
     case.document_files List[str] (set by caller after loading)
+    case.config         dict (config used to load; pass to render_selector etc.)
     # Lookups
     case.decl_pkg_id_for(ident)        -> Optional[str]
     case.statement_for(ident)          -> Optional[str]

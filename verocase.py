@@ -994,6 +994,32 @@ class Case:
         """Return all nodes in the forest that carry the {needssupport} option."""
         return [n for n in self.all_nodes_fast() if 'needssupport' in n.options]
 
+    def _make_ltac_temp(self, path: str,
+                        line_ending: str = '\n') -> Optional[str]:
+        """Stream the LTAC forest directly to a temp file next to path.
+
+        Returns the temp file path, or None if an error occurred (already
+        reported via self.error).  line_ending controls CRLF conversion.
+        """
+        dir_ = os.path.dirname(os.path.abspath(path))
+        try:
+            fd, tmp = tempfile.mkstemp(dir=dir_)
+        except OSError as e:
+            self.error(f"cannot create temp file for {path!r}: {e}")
+            return None
+        try:
+            nl = '\r\n' if line_ending == '\r\n' else ''
+            with os.fdopen(fd, 'w', encoding='utf-8', newline=nl) as f:
+                self.write_ltac(f)
+        except Exception as e:
+            try:
+                os.unlink(tmp)
+            except OSError:
+                pass
+            self.error(f"error writing LTAC to {path!r}: {e}")
+            return None
+        return tmp
+
     def save_ltac(self, path: Optional[str] = None) -> None:
         """Write the LTAC forest to disk using the safe backup+atomic-replace mechanism.
 
@@ -1003,9 +1029,7 @@ class Case:
         target = path or self.ltac_path
         if target is None:
             self.panic("save_ltac: no path given and case.ltac_path is not set")
-        buf = io.StringIO()
-        self.write_ltac(buf)
-        tmp = _make_temp(target, buf.getvalue())
+        tmp = self._make_ltac_temp(target)
         if tmp is None:
             return  # error already reported
         commit_updates([(tmp, target)], target, self.config, self.config_path)
@@ -1350,9 +1374,7 @@ class Case:
             if pair is not None:
                 pairs.append(pair)
         if self.ltac_modified and self.ltac_path:
-            buf = io.StringIO()
-            self.write_ltac(buf)
-            tmp = _make_temp(self.ltac_path, buf.getvalue())
+            tmp = self._make_ltac_temp(self.ltac_path)
             if tmp is not None:
                 pairs.append((tmp, self.ltac_path))
         if pairs:
@@ -5229,9 +5251,7 @@ def main() -> bool:
     if args.sync:
         changed = case.sync_citations()
         if changed:
-            buf = io.StringIO()
-            case.write_ltac(buf)
-            tmp = _make_temp(ltac_path, buf.getvalue(), ltac_line_ending)
+            tmp = case._make_ltac_temp(ltac_path, ltac_line_ending)
             if tmp is None:
                 panic("cannot write updated LTAC file")
             commit_updates([(tmp, ltac_path)], ltac_path, config, config_path)
@@ -5389,9 +5409,7 @@ def main() -> bool:
                            if node.is_definition and node.identifier]
         changed = _mark_needs_support(all_ids_ordered, case.registry)
         if changed or case.ltac_modified:
-            buf = io.StringIO()
-            case.write_ltac(buf)
-            tmp = _make_temp(ltac_path, buf.getvalue(), ltac_line_ending)
+            tmp = case._make_ltac_temp(ltac_path, ltac_line_ending)
             if tmp is not None:
                 pairs.append((tmp, ltac_path))
         if pairs:
@@ -5405,9 +5423,7 @@ def main() -> bool:
             if pair:
                 pairs.append(pair)
         if case.ltac_modified:
-            buf = io.StringIO()
-            case.write_ltac(buf)
-            tmp = _make_temp(ltac_path, buf.getvalue())
+            tmp = case._make_ltac_temp(ltac_path)
             if tmp is not None:
                 pairs.append((tmp, ltac_path))
         if pairs:

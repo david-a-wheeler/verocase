@@ -35,26 +35,17 @@ except ImportError:
 __version__ = '0.1.0'
 
 __all__ = [
-    # Exceptions and session state
+    # Exceptions
     'VerocaseError',
-    'had_error',
-    'strict',
-    'reset',
     # Data types
     'Node',
     'Case',
-    'DocState',
     'DEFAULT_CONFIG',
     # Loading, configuration, and serialization
     'load_case',
-    'load_config',
     'load_ltac_file',
     'parse_ltac_lines',
-    'find_config',
-    'find_ltac_file',
-    'find_document_files',
     'write_ltac',
-    'detect_doc_format',
     # Tree manipulation
     'copy_forest',
     # Tree traversal
@@ -68,9 +59,6 @@ __all__ = [
     'render_selector',
     'render_ltac_txt',
     'render_ext_ref',
-    'render_element_selector',
-    'render_package_selector',
-    'process_document_stream',
 ]
 
 # Python version support: we currently support Python 3.8 and later.
@@ -91,22 +79,7 @@ __all__ = [
 # - After the documents are processed (e.g., to report uncovered elements)
 # We want to report problems as soon as we can detect them.
 
-# Implement panic/error/warning/notify reports
-
-had_error = False # If true, we saw an error during processing
-strict = False # If true, turn warnings into errors
-
-
-def reset() -> None:
-    """Reset all session state to its initial values.
-
-    Call this before starting a new independent processing session so that
-    state from a previous session (such as had_error) does not carry over.
-    """
-    global had_error, strict
-    had_error = False
-    strict = False
-
+# Module-level error/reporting
 
 class VerocaseError(Exception):
     """Raised by panic() for fatal errors; catch in main() to exit, or handle in library code."""
@@ -116,21 +89,6 @@ def panic(msg: str) -> None:
     """Print a fatal error to stderr and raise VerocaseError."""
     print(f"verocase: fatal: {msg}", file=sys.stderr)
     raise VerocaseError(msg)
-
-
-def error(msg: str) -> None:
-    """Print an error to stderr and set the error flag."""
-    global had_error
-    print(f"verocase: error: {msg}", file=sys.stderr)
-    had_error = True
-
-
-def warn(msg: str) -> None:
-    """Print a warning to stderr; if --error is active, escalate to error()."""
-    if strict:
-        error(msg)
-    else:
-        print(f"verocase: warning: {msg}", file=sys.stderr)
 
 
 def notify(msg: str) -> None:
@@ -178,10 +136,11 @@ def load_config(config_path: Optional[str]) -> dict:
     if config_path is None:
         return dict(DEFAULT_CONFIG)
     if tomllib is None:
-        error(
-            f"cannot load config file {config_path!r}: "
+        print(
+            f"verocase: error: cannot load config file {config_path!r}: "
             "TOML support requires Python 3.11+ (tomllib) or "
-            "'pip install tomli' for older Python versions"
+            "'pip install tomli' for older Python versions",
+            file=sys.stderr,
         )
         return dict(DEFAULT_CONFIG)
     try:
@@ -197,12 +156,13 @@ def load_config(config_path: Optional[str]) -> dict:
         panic(f"config file must contain a TOML table, not {type(parsed).__name__}")
     for key in parsed:
         if key not in DEFAULT_CONFIG:
-            warn(f"unknown config key: {key!r}")
+            print(f"verocase: warning: unknown config key: {key!r}", file=sys.stderr)
     config = dict(DEFAULT_CONFIG)
     config.update({k: v for k, v in parsed.items() if k in DEFAULT_CONFIG})
     mb = config.get('max_backups')
     if not isinstance(mb, int) or mb < 0:
-        warn(f"invalid value for max_backups: {mb!r}; using default {DEFAULT_CONFIG['max_backups']}")
+        print(f"verocase: warning: invalid value for max_backups: {mb!r}; "
+              f"using default {DEFAULT_CONFIG['max_backups']}", file=sys.stderr)
         config['max_backups'] = DEFAULT_CONFIG['max_backups']
     return config
 
@@ -594,34 +554,237 @@ class Node:
         return line
 
 
-@dataclass
 class Case:
     """A fully loaded LTAC assurance case: the node forest, lookup tables, and documents.
 
-    Produced by load_ltac_file() or parse_ltac_lines().  After loading, set
-    document_files to the list of document paths that present this case before
-    calling document-aware methods (missing(), empty(), orphans(), misplaced()).
+    Construct cheaply with Case(), then call load() to read files:
 
-    Fields
-    ------
-    roots          : List[Node]      Package root nodes in file order.
-    registry       : Dict[str, Node] Maps every declared identifier to its Node.
-    id_info        : Dict[str, dict] Cross-reference metadata per identifier.
-    document_files : List[str]       Document paths associated with this case.
-                                     Set by the caller after loading; defaults to [].
-    config         : dict            Configuration dict used to load this case.
-                                     Populated by load_ltac_file() and parse_ltac_lines().
-                                     Used automatically by the Case rendering methods
-                                     (render_selector, render_element_selector,
-                                     render_package_selector, process_document_stream,
-                                     render_ltac_txt), so callers need not pass it
-                                     separately when using those methods.
+        case = Case().load()                        # auto-discover everything
+        case = Case().load(ltac_file='my.ltac')     # explicit LTAC, auto rest
+        case = Case(stderr=buf).load(validate=False) # redirect errors, skip validation
+
+    Attributes set by __init__ (all have safe defaults; no I/O):
+        roots          List[Node]       Package root nodes in file order.
+        registry       Dict[str,Node]   Maps every declared identifier to its Node.
+        id_info        Dict[str,dict]   Cross-reference metadata per identifier.
+        document_files List[str]        Document paths associated with this case.
+        config         dict             Active configuration dict.
+        had_error      bool             True if any error() was called.
+        strict         bool             True if warnings are escalated to errors.
+        modified       bool             True if any mutation method was called.
+        ltac_path      Optional[str]    Path of the loaded LTAC file.
+        config_path    Optional[str]    Path of the loaded config file.
+        stderr         TextIO           Stream for error/warning/notify output.
     """
-    roots:          List['Node']
-    registry:       Dict[str, 'Node']
-    id_info:        Dict[str, dict]
-    document_files: List[str] = field(default_factory=list)
-    config:         dict       = field(default_factory=lambda: dict(DEFAULT_CONFIG))
+
+    def __init__(self, stderr=None):
+        self.roots:          List['Node']       = []
+        self.registry:       Dict[str, 'Node']  = {}
+        self.id_info:        Dict[str, dict]    = {}
+        self.document_files: List[str]          = []
+        self.config:         dict               = dict(DEFAULT_CONFIG)
+        self.had_error:      bool               = False
+        self.strict:         bool               = False
+        self.modified:       bool               = False
+        self.ltac_path:      Optional[str]      = None
+        self.config_path:    Optional[str]      = None
+        self.stderr:         'TextIO'           = stderr or sys.stderr
+
+    # ------------------------------------------------------------------
+    # Error reporting
+    # ------------------------------------------------------------------
+
+    def error(self, msg: str) -> None:
+        """Print an error to stderr and set the error flag."""
+        print(f"verocase: error: {msg}", file=self.stderr)
+        self.had_error = True
+
+    def warn(self, msg: str) -> None:
+        """Print a warning; if strict mode is on, escalate to error()."""
+        if self.strict:
+            self.error(msg)
+        else:
+            print(f"verocase: warning: {msg}", file=self.stderr)
+
+    def panic(self, msg: str) -> None:
+        """Print a fatal error to stderr and raise VerocaseError."""
+        print(f"verocase: fatal: {msg}", file=self.stderr)
+        raise VerocaseError(msg)
+
+    def notify(self, msg: str) -> None:
+        """Print an informational notification to stderr."""
+        print(f"verocase: {msg}", file=self.stderr)
+
+    # ------------------------------------------------------------------
+    # Construction: load from files
+    # ------------------------------------------------------------------
+
+    def load(self, ltac_file: Optional[str] = None,
+             config_file: Optional[str] = None,
+             document_files: Optional[List[str]] = None,
+             strict: bool = False,
+             validate: bool = True) -> 'Case':
+        """Discover and load config, LTAC, and document files; return self.
+
+        All parameters are optional; with no arguments, auto-discovers
+        verocase.toml, case.ltac, and case.md from well-known paths,
+        mirroring the CLI with no arguments.
+
+        Parameters
+        ----------
+        ltac_file : str, optional
+            Path to the LTAC file; auto-discovered if omitted.
+        config_file : str, optional
+            Path to the TOML config file; auto-discovered if omitted.
+        document_files : list of str, optional
+            Document paths; auto-discovered if omitted.
+        strict : bool, default False
+            When True, warnings are treated as errors.
+        validate : bool, default True
+            When True, run structural validation after loading.
+
+        Returns
+        -------
+        Case
+            self, allowing fluent use: ``case = Case().load(...)``.
+        """
+        self.strict = strict
+        self.config_path = self._find_config(config_file)
+        self.config = self._load_config(self.config_path)
+        ltac_path = self._find_ltac_file(ltac_file)
+        self.ltac_path = ltac_path
+        self._parse_ltac_file(ltac_path)
+        self.document_files = (
+            document_files if document_files is not None
+            else self._find_document_files(ltac_path)
+        )
+        if validate:
+            self.validate_ltac()
+        return self
+
+    def _find_config(self, path: Optional[str] = None) -> Optional[str]:
+        """Return the config file path to use, or None if not found.
+
+        Search order: explicit path → verocase.toml → docs/verocase.toml → None.
+        Panics if an explicit path is given but the file does not exist.
+        """
+        if path is not None:
+            if os.path.exists(path):
+                return path
+            self.panic(f"config file not found: {path!r}")
+        if os.path.exists('verocase.toml'):
+            return 'verocase.toml'
+        if os.path.exists('docs/verocase.toml'):
+            return 'docs/verocase.toml'
+        return None
+
+    def _load_config(self, config_path: Optional[str]) -> dict:
+        """Load and validate a TOML config file; return a config dict.
+
+        Returns DEFAULT_CONFIG copy if config_path is None.
+        """
+        if config_path is None:
+            return dict(DEFAULT_CONFIG)
+        if tomllib is None:
+            self.error(
+                f"cannot load config file {config_path!r}: "
+                "TOML support requires Python 3.11+ (tomllib) or "
+                "'pip install tomli' for older Python versions"
+            )
+            return dict(DEFAULT_CONFIG)
+        try:
+            with open(config_path, 'rb') as f:
+                parsed = tomllib.load(f)
+        except FileNotFoundError:
+            self.panic(f"config file not found: {config_path!r}")
+        except PermissionError:
+            self.panic(f"config file not readable: {config_path!r}")
+        except Exception as e:
+            self.panic(f"invalid TOML in config file {config_path!r}: {e}")
+        if not isinstance(parsed, dict):
+            self.panic(f"config file must contain a TOML table, not {type(parsed).__name__}")
+        for key in parsed:
+            if key not in DEFAULT_CONFIG:
+                self.warn(f"unknown config key: {key!r}")
+        cfg = dict(DEFAULT_CONFIG)
+        cfg.update({k: v for k, v in parsed.items() if k in DEFAULT_CONFIG})
+        mb = cfg.get('max_backups')
+        if not isinstance(mb, int) or mb < 0:
+            self.warn(f"invalid value for max_backups: {mb!r}; using default {DEFAULT_CONFIG['max_backups']}")
+            cfg['max_backups'] = DEFAULT_CONFIG['max_backups']
+        return cfg
+
+    def _find_ltac_file(self, ltac_arg: Optional[str]) -> str:
+        """Return the LTAC file path to load; panics if not found.
+
+        Search order: ltac_arg → config['ltac_file'] → case.ltac → docs/case.ltac.
+        """
+        if ltac_arg:
+            return ltac_arg
+        ltac_from_config = self.config.get('ltac_file', '')
+        if ltac_from_config:
+            return ltac_from_config
+        if os.path.exists('case.ltac'):
+            return 'case.ltac'
+        if os.path.exists('docs/case.ltac'):
+            return 'docs/case.ltac'
+        self.panic("no LTAC file found; use --ltac, set ltac_file in config, or create case.ltac. See --help")
+
+    def _find_document_files(self, ltac_path: Optional[str] = None) -> List[str]:
+        """Find document files associated with this case; return a list.
+
+        Search order: config['document_files'] → adjacent to ltac_path → cwd → docs/.
+        Returns [] if none found.
+        """
+        from_config = list(self.config.get('document_files', []))
+        if from_config:
+            return from_config
+        candidates: List[str] = []
+        if ltac_path:
+            ltac_dir = os.path.dirname(os.path.abspath(ltac_path))
+            cwd = os.path.abspath('.')
+            if ltac_dir != cwd:
+                for ext in ('md', 'markdown', 'html'):
+                    candidates.append(os.path.join(ltac_dir, f'case.{ext}'))
+        for name in ('case.md', 'case.markdown', 'case.html',
+                     'docs/case.md', 'docs/case.markdown', 'docs/case.html'):
+            candidates.append(name)
+        for candidate in candidates:
+            if os.path.exists(candidate):
+                return [candidate]
+        return []
+
+    def _detect_doc_format(self, path: str) -> str:
+        """Return 'markdown' or 'html' based on the file extension; panics on unknown."""
+        low = path.lower()
+        if low == '-' or low.endswith('.md') or low.endswith('.markdown'):
+            return 'markdown'
+        if low.endswith('.html') or low.endswith('.htm'):
+            return 'html'
+        self.panic(f"cannot determine document format from filename {path!r}; "
+                   f"expected .md, .markdown, .html, or .htm")
+
+    def _parse_ltac_file(self, path: str) -> None:
+        """Open path and parse its LTAC content into this Case."""
+        try:
+            with open(path) as f:
+                lines = f.readlines()
+        except OSError as e:
+            self.panic(f"cannot open {path!r}: {e}")
+        LTACParser(self).parse(lines, config=self.config)
+
+    def validate_ltac(self) -> bool:
+        """Run all LTAC structural validation checks; return True if no errors.
+
+        Covers: identifier usage (check_id_info), circular dependencies
+        (check_circularities), and package reachability (check_reachability).
+        Document-level checks (missing(), orphans(), etc.) are separate and
+        require document_files to be set.
+        """
+        self.check_id_info()
+        self.check_circularities()
+        self.check_reachability()
+        return not self.had_error
 
     # ------------------------------------------------------------------
     # Identifier lookups
@@ -661,15 +824,101 @@ class Case:
 
     def check_id_info(self) -> None:
         """Validate identifier usage; warn about IDs cited but never declared."""
-        _check_id_info(self)
+        for ident, info in self.id_info.items():
+            if info['citations'] > 0 and info['declarations'] == 0:
+                self.warn(f"{ident}: cited but never declared")
 
     def check_circularities(self) -> None:
-        """Panic if any circular dependency exists in the LTAC model."""
-        _check_circularities(self)
+        """Panic if any circular dependency exists in the LTAC model.
+
+        Performs an iterative DFS over the logical dependency graph.  For each
+        node, its logical successors are its structural children (non-citation,
+        non-Link), any cited child's declared node (^ID → registry[ID]), and
+        any Link child's link_target.  A node encountered while already on the
+        current DFS path (a back-edge) means circular reasoning is possible.
+        """
+        visiting: Set[int] = set()  # id(node) of nodes on the current DFS path
+        done: Set[int] = set()      # id(node) of fully-explored nodes
+
+        def successors(node: Node):
+            for child in node.children:
+                if child.is_citation:
+                    target = self.registry.get(child.identifier)
+                    if target is not None:
+                        yield target
+                elif child.node_type == 'Link':
+                    if child.link_target is not None:
+                        yield child.link_target
+                else:
+                    yield child
+
+        def dfs(start: Node) -> None:
+            path = [start]
+            visiting.add(id(start))
+            stack = [(start, successors(start))]
+            while stack:
+                node, children = stack[-1]
+                try:
+                    succ = next(children)
+                    key = id(succ)
+                    if key in done:
+                        continue
+                    if key in visiting:
+                        start_idx = next(i for i, n in enumerate(path) if id(n) == key)
+                        cycle = path[start_idx:] + [succ]
+                        trail = ' -> '.join(n.identifier or f'({n.node_type})' for n in cycle)
+                        self.panic(f"circularity detected: {trail}")
+                    visiting.add(key)
+                    path.append(succ)
+                    stack.append((succ, successors(succ)))
+                except StopIteration:
+                    stack.pop()
+                    path.pop()
+                    visiting.discard(id(node))
+                    done.add(id(node))
+
+        for root in self.roots:
+            if id(root) not in done:
+                dfs(root)
+        for node in self.registry.values():
+            if id(node) not in done:
+                dfs(node)
 
     def check_reachability(self) -> None:
-        """Error for any package root unreachable from the first package."""
-        _check_reachability(self)
+        """Error for any package whose root is unreachable from the first element.
+
+        Skipped when there is only one package (everything is trivially reachable).
+        Uses iterative DFS following structural children, citation declarations, and
+        Link targets.  Because all structural children of a reachable node are also
+        reachable, an unreachable package root implies the whole package is
+        unreachable; reporting just the root is sufficient.
+        """
+        if len(self.roots) < 2:
+            return
+
+        reachable: Set[int] = set()
+        stack = [self.roots[0]]
+        while stack:
+            node = stack.pop()
+            if id(node) in reachable:
+                continue
+            reachable.add(id(node))
+            for child in node.children:
+                if child.is_citation:
+                    target = self.registry.get(child.identifier)
+                    if target is not None:
+                        stack.append(target)
+                elif child.node_type == 'Link':
+                    if child.link_target is not None:
+                        stack.append(child.link_target)
+                else:
+                    stack.append(child)
+
+        for root in self.roots[1:]:
+            if id(root) not in reachable:
+                label = f"{root.node_type} {root.identifier}" if root.identifier else root.node_type
+                self.error(f"{label}: package root is unreachable from {self.roots[0].node_type}"
+                           f" {self.roots[0].identifier}")
 
     # ------------------------------------------------------------------
     # Forest traversal
@@ -701,27 +950,151 @@ class Case:
 
     def leaves(self) -> List['Node']:
         """Return all definition nodes with no children, in LTAC order."""
-        return _analysis_leaves(self)
+        return [node for node in all_nodes(self.roots)
+                if node.is_definition and not node.children]
 
     def stats(self) -> dict:
         """Compute and return a statistics dict for the loaded LTAC forest."""
-        return _compute_ltac_stats(self)
+        from collections import Counter
+        def_type_counts: Counter = Counter()
+        option_counts: Counter = Counter()
+        total_citations = 0
+        total_links = 0
+        leaf_definitions = 0
+        leaf_claims = 0
+        bottommost_claims = 0
+        pkg_sizes_full = []
+
+        for root in self.roots:
+            size_full = 0
+            for node in all_nodes_fast([root]):
+                size_full += 1
+                if node.is_citation:
+                    total_citations += 1
+                elif node.node_type == 'Link':
+                    total_links += 1
+                else:
+                    def_type_counts[node.node_type] += 1
+                    for opt in node.options:
+                        option_counts[opt] += 1
+                    if not node.children:
+                        leaf_definitions += 1
+                        if node.node_type == 'Claim':
+                            leaf_claims += 1
+                    if node.node_type == 'Claim':
+                        seen = {node.identifier} if node.identifier else set()
+                        if not _has_claim_descendant(node, self.registry, seen):
+                            bottommost_claims += 1
+            pkg_sizes_full.append((size_full, root.identifier or '(unnamed)'))
+
+        pkg_sizes_sorted = sorted(pkg_sizes_full, key=lambda x: x[0], reverse=True)
+        num_packages = len(pkg_sizes_full)
+        total_full = sum(s for s, _ in pkg_sizes_full)
+        median_per_pkg = statistics.median(s for s, _ in pkg_sizes_full) if pkg_sizes_full else 0
+        avg_per_pkg = total_full / num_packages if num_packages else 0.0
+        total_definitions = sum(def_type_counts.values())
+        return {
+            'num_packages':      num_packages,
+            'pkg_sizes_sorted':  pkg_sizes_sorted,
+            'avg_per_pkg':       avg_per_pkg,
+            'median_per_pkg':    median_per_pkg,
+            'total_full':        total_full,
+            'total_citations':   total_citations,
+            'total_links':       total_links,
+            'total_definitions': total_definitions,
+            'def_type_counts':   def_type_counts,
+            'leaf_definitions':  leaf_definitions,
+            'leaf_claims':       leaf_claims,
+            'bottommost_claims': bottommost_claims,
+            'option_counts':     option_counts,
+        }
 
     def missing(self) -> List['Node']:
         """Return LTAC elements that have no selector region in the document(s)."""
-        return _analysis_missing(self, self.document_files)
+        ordered_ids, _ = _scan_document_elements(self.document_files)
+        seen = {ident for ident, _, _ in ordered_ids}
+        all_ids_ordered = [node for node in all_nodes(self.roots)
+                           if node.is_definition and node.identifier]
+        return [node for node in all_ids_ordered if node.identifier not in seen]
 
     def empty(self) -> List[str]:
         """Return identifiers of elements whose selector region contains no prose."""
-        return _analysis_empty(self.document_files, self)
+        _, elem_info = _scan_document_elements(self.document_files)
+        return [
+            ident for ident, info in elem_info.items()
+            if not info['has_prose']
+            and not (self.registry.get(ident) and self.registry.get(ident).ext_ref)
+        ]
 
     def orphans(self) -> List[str]:
         """Return identifiers of document selector regions not present in the LTAC."""
-        return _analysis_orphans(self.document_files, self)
+        _, elem_info = _scan_document_elements(self.document_files)
+        return [ident for ident in elem_info if ident not in self.registry]
 
     def misplaced(self) -> list:
         """Return elements whose document order differs from LTAC order."""
-        return _analysis_misplaced(self.document_files, self)
+        ltac_order = [node.identifier for node in all_nodes(self.roots)
+                      if node.is_definition and node.identifier]
+        ltac_pos = {ident: i for i, ident in enumerate(ltac_order)}
+
+        ordered_ids, elem_info = _scan_document_elements(self.document_files)
+        doc_entries = [(ident, filepath, lineno) for ident, filepath, lineno in ordered_ids
+                       if ident in self.registry]
+
+        if not doc_entries:
+            return []
+
+        doc_ids = [ident for ident, _, _ in doc_entries]
+        ranks = [ltac_pos.get(ident, -1) for ident in doc_ids]
+        from bisect import bisect_left
+        tails = []
+        tail_idx = []
+        predecessor = [-1] * len(doc_ids)
+
+        for i, r in enumerate(ranks):
+            if r < 0:
+                continue
+            pos = bisect_left(tails, r)
+            if pos == len(tails):
+                tails.append(r)
+                tail_idx.append(i)
+            else:
+                tails[pos] = r
+                tail_idx[pos] = i
+            if pos > 0:
+                predecessor[i] = tail_idx[pos - 1]
+
+        if not tail_idx:
+            lis_indices = set()
+        else:
+            lis_indices = set()
+            idx = tail_idx[-1]
+            while idx >= 0:
+                lis_indices.add(idx)
+                idx = predecessor[idx]
+
+        misplaced_entries = []
+        for i, (ident, filepath, lineno) in enumerate(doc_entries):
+            if i not in lis_indices:
+                misplaced_entries.append((ident, lineno, filepath))
+
+        if not misplaced_entries:
+            return []
+
+        doc_id_to_entry = {ident: (lineno, filepath) for ident, filepath, lineno in doc_entries}
+        result = []
+        for ident, lineno, filepath in misplaced_entries:
+            ltac_idx = ltac_pos.get(ident, -1)
+            pred_ident = None
+            pred_lineno = None
+            for j in range(ltac_idx - 1, -1, -1):
+                candidate = ltac_order[j]
+                if candidate in doc_id_to_entry:
+                    pred_ident = candidate
+                    pred_lineno = doc_id_to_entry[candidate][0]
+                    break
+            result.append((ident, lineno, filepath, pred_ident, pred_lineno))
+        return result
 
     # ------------------------------------------------------------------
     # Analysis — output-printing
@@ -729,72 +1102,374 @@ class Case:
 
     def print_packages(self, out: 'TextIO' = sys.stdout) -> None:
         """Print package structure with element counts to out."""
-        _analysis_packages(self, out)
+        print("Packages:", file=out)
+        for root in self.roots:
+            pkg_count = root.subtree_count
+            root_line = root.to_ltac_line(depth_offset=0)
+            print(f"Package {root.identifier} ({pkg_count} elements)", file=out)
+            print(root_line, file=out)
+            for child in root.children:
+                child_count = child.subtree_count
+                child_line = child.to_ltac_line(depth_offset=0)
+                print(f"{child_line} ({child_count} elements)", file=out)
+            print(file=out)
 
     # ------------------------------------------------------------------
     # Info rendering
     # ------------------------------------------------------------------
 
     def render_info(self, element_id: str, out: 'TextIO', sep: str = '') -> bool:
-        """Write a human-readable context report for element_id to out."""
-        return _render_info(element_id, self, out, sep)
+        """Write a human-readable context report for element_id to out.
+
+        Returns False and calls error() if element_id is not in registry.
+        sep is written before the report when non-empty.
+        """
+        node = self.registry.get(element_id)
+        if node is None:
+            self.error(f"info: element {element_id!r} not found")
+            return False
+
+        out.write(sep)
+
+        header = f"{node.node_type} {node.identifier}"
+        if node.text:
+            header += f": {node.text}"
+        out.write(f"Element: {header}")
+
+        pkg_root = node
+        while pkg_root.parent is not None:
+            pkg_root = pkg_root.parent
+        out.write(f"\nPackage: {pkg_root.identifier or '(unnamed)'}")
+
+        ancestors = []
+        anc = node.parent
+        while anc is not None:
+            ancestors.append(anc)
+            anc = anc.parent
+        ancestors.reverse()
+
+        if not ancestors:
+            out.write("\nAncestors: (package root)")
+        else:
+            out.write("\nAncestors (root first):")
+            for anc in ancestors:
+                out.write("\n  " + anc.to_ltac_line(depth_offset=anc.depth))
+
+        if not node.children:
+            out.write("\nChildren: (none)")
+        else:
+            out.write("\nChildren:")
+            for child in node.children:
+                out.write("\n  " + child.to_ltac_line(depth_offset=child.depth))
+
+        desc_count = node.subtree_count
+        out.write(f"\nDescendants: {desc_count} (including self, all descendants, citations, and links in subtree)")
+
+        info = self.id_info.get(element_id, {})
+        citation_count = info.get('citations', 0)
+        citing_pkg_ids = info.get('citing_pkg_ids', [])
+        out.write(f"\nCitations: {citation_count}")
+        if citation_count > 0:
+            for citing_pkg_id in citing_pkg_ids:
+                citing_root = self.registry.get(citing_pkg_id)
+                if citing_root is None:
+                    continue
+                for n in all_nodes_fast([citing_root]):
+                    if n.is_citation and n.identifier == element_id:
+                        parent_node = n.parent
+                        if parent_node:
+                            parent_desc = f"{parent_node.node_type} {parent_node.identifier}"
+                            citing_pkg_root = parent_node
+                            while citing_pkg_root.parent is not None:
+                                citing_pkg_root = citing_pkg_root.parent
+                            cp_name = citing_pkg_root.identifier or '(unnamed)'
+                            out.write(f"\n  Cited as ^{element_id} by: {parent_desc} (Package {cp_name})")
+                        else:
+                            out.write(f"\n  Cited as ^{element_id} (package root)")
+        return True
 
     # ------------------------------------------------------------------
     # Mutations
     # ------------------------------------------------------------------
 
     def rename_id(self, old: str, new: str) -> None:
-        """Rename identifier old to new throughout the LTAC forest."""
-        _apply_rename(self, old, new)
+        """Rename identifier old to new throughout the LTAC forest.
+
+        Panics if old is not declared or new is already declared.
+        Updates all node identifiers, the registry, id_info, and cross-references.
+        """
+        if old not in self.registry:
+            self.panic(f"--rename: {old!r} is not a declared identifier")
+        if new in self.registry:
+            self.panic(f"--rename: {new!r} is already declared")
+        for node in all_nodes_fast(self.roots):
+            if node.identifier == old:
+                node.identifier = new
+        self.registry[new] = self.registry.pop(old)
+        self.id_info[new] = self.id_info.pop(old)
+        for entry in self.id_info.values():
+            if entry.get('decl_pkg_id') == old:
+                entry['decl_pkg_id'] = new
+            entry['citing_pkg_ids'] = [new if x == old else x
+                                       for x in entry.get('citing_pkg_ids', [])]
+        self.modified = True
 
     def restate_id(self, label: str, stmt: str) -> None:
-        """Update the statement text for label on all nodes and in id_info."""
-        _apply_restate(self, label, stmt)
+        """Update the statement text for label on all nodes and in id_info.
+
+        Panics if label is not declared.
+        """
+        if label not in self.registry:
+            self.panic(f"--restate: {label!r} is not a declared identifier")
+        for node in all_nodes_fast(self.roots):
+            if node.identifier == label:
+                node.text = stmt
+        self.id_info[label]['statement'] = stmt
+        self.modified = True
 
     def detach_id(self, target_id: str) -> None:
-        """Replace target_id's definition with a citation; promote subtree to new package."""
-        _apply_detach(self, target_id)
+        """Replace target_id's definition with a citation; promote subtree to new package.
+
+        Panics if target_id is not defined, or if its definition is already a
+        top-level package root (has no parent).
+        """
+        node = self.registry.get(target_id)
+        if node is None:
+            self.panic(f"--detach: {target_id!r} is not defined")
+        if node.parent is None:
+            self.panic(f"--detach: {target_id!r} is a top-level package root; cannot detach")
+
+        parent = node.parent
+        idx = parent.children.index(node)
+
+        cited = Node(
+            node_type=node.node_type,
+            identifier=node.identifier,
+            text=node.text,
+            ext_ref='',
+            options=[],
+            children=[],
+            is_citation=True,
+            depth=node.depth,
+            parent=parent,
+            link_target=None,
+            diagram_id=None,
+        )
+        parent.children[idx] = cited
+
+        node.parent = None
+        _recalc_depths(node, 0)
+        self.roots.append(node)
+
+        new_pkg_id = node.identifier
+        old_pkg_id = _decl_pkg_id_for(self.id_info, node.identifier)
+        _update_pkg_id_for_subtree(node, old_pkg_id, new_pkg_id, self.id_info)
+
+        self.id_info[target_id]['citations'] = self.id_info[target_id].get('citations', 0) + 1
+        citing_pkg = cited.pkg_root.identifier
+        if citing_pkg and citing_pkg not in self.id_info[target_id].get('citing_pkg_ids', []):
+            self.id_info[target_id].setdefault('citing_pkg_ids', []).append(citing_pkg)
+        self.modified = True
 
     def move_id(self, moving_id: str, dest_id: str) -> None:
-        """Move moving_id's definition to be a child of dest_id."""
-        _apply_move(self, moving_id, dest_id)
+        """Move moving_id's definition to be a child of dest_id.
+
+        ID may be top-level or nested anywhere in the tree. No citation is left
+        at the original location. Panics if moving_id or dest_id is not defined.
+        """
+        node = self.registry.get(moving_id)
+        if node is None:
+            self.panic(f"--move: {moving_id!r} is not defined")
+        dest = self.registry.get(dest_id)
+        if dest is None:
+            self.panic(f"--move: {dest_id!r} is not defined")
+
+        old_pkg_id = _decl_pkg_id_for(self.id_info, moving_id)
+
+        if node.parent is None:
+            self.roots.remove(node)
+        else:
+            node.parent.children.remove(node)
+            node.parent = None
+
+        cited_idx = None
+        for i, child in enumerate(dest.children):
+            if child.is_citation and child.identifier == moving_id:
+                cited_idx = i
+                break
+
+        if cited_idx is not None:
+            dest.children[cited_idx] = node
+            self.id_info[moving_id]['citations'] = max(
+                0, self.id_info[moving_id].get('citations', 1) - 1)
+        else:
+            dest.children.append(node)
+
+        node.parent = dest
+        _recalc_depths(node, dest.depth + 1)
+
+        new_pkg_id = dest.pkg_root.identifier
+        _update_pkg_id_for_subtree(node, old_pkg_id, new_pkg_id, self.id_info)
+        self.modified = True
 
     def sync_citations(self) -> int:
         """Update cited/Link node text to match declaration text; return count changed."""
-        return _apply_ltac_update(self)
+        count = 0
+        for node in all_nodes_fast(self.roots):
+            if not node.identifier or node.is_definition:
+                continue
+            decl = self.registry.get(node.identifier)
+            canonical = decl.text if decl is not None else None
+            if node.text and canonical is not None and node.text != canonical:
+                node.text = canonical
+                count += 1
+        return count
 
     # ------------------------------------------------------------------
-    # Rendering — shims that use self.config so callers need not pass it
+    # Rendering
     # ------------------------------------------------------------------
 
     def render_selector(self, selector: str, out: 'TextIO',
                         current_element: Optional['Node'] = None,
                         doc_format: str = 'markdown',
                         state: 'DocState' = None) -> bool:
-        """Parse selector and write rendered output to out; return True if anything written.
+        """Parse selector and write the rendered output to out; return True if anything written.
 
-        Uses self.config.  Equivalent to render_selector(selector, case, case.config, out, ...).
-        See render_selector() for the full selector syntax reference.
+        selector is a string of the form ``"DISPLAY_TYPE [ID]"``.
+        doc_format must be ``'markdown'`` or ``'html'``.
+        state carries per-document rendering context.
         """
-        return render_selector(selector, self, self.config, out,
-                               current_element, doc_format, state)
+        display_type, element_id = parse_selector(selector, doc_format, self.config)
+
+        if display_type == 'config':
+            self.error("use '<!-- verocase-config KEY = VALUE -->' (not '<!-- verocase config ...-->')")
+            return False
+        elif display_type == 'warning':
+            if element_id is not None:
+                self.error("'warning' selector takes no parameters")
+                return False
+            out.write(_WARNING_TEXT)
+            return True
+        elif display_type == 'stop':
+            if element_id is not None:
+                self.error("'stop' selector takes no parameters")
+                return False
+            out.write("<!-- Content from here is not part of any element's full content "
+                      "and will not be repositioned by --fixmisplaced. -->")
+            return True
+        elif display_type == 'epilogue':
+            if element_id is not None:
+                self.error("'epilogue' selector takes no parameters")
+                return False
+            out.write("<!-- Content from here is epilogue: not part of any element's full content, "
+                      "will not be repositioned by --fixmisplaced, and new element stubs "
+                      "from --fixmissing are inserted before this point. -->")
+            return True
+        elif display_type in ('sacm/mermaid', 'sacm/mermaid/markdown'):
+            return _render_or_all(element_id, self, render_sacm, current_element, self.config, out)
+        elif display_type in ('gsn/mermaid', 'gsn/mermaid/markdown'):
+            return _render_or_all(element_id, self, render_gsn, current_element, self.config, out)
+        elif display_type == 'sacm/mermaid/html':
+            if state is not None:
+                _maybe_inject_mermaid_js(self.config, state, out)
+            return _render_or_all(element_id, self, render_sacm_html, current_element, self.config, out)
+        elif display_type == 'gsn/mermaid/html':
+            if state is not None:
+                _maybe_inject_mermaid_js(self.config, state, out)
+            return _render_or_all(element_id, self, render_gsn_html, current_element, self.config, out)
+        elif display_type == 'ltac/markdown':
+            return _render_or_all(element_id, self, render_markdown, current_element, self.config, out)
+        elif display_type == 'ltac/html':
+            return _render_or_all(element_id, self, render_html, current_element, self.config, out)
+        elif display_type == 'ltac/txt':
+            nodes = _resolve_element(element_id, self, current_element)
+            if not nodes:
+                return False
+            return render_ltac_txt(nodes, self.config, out)
+        elif display_type == 'info':
+            if element_id is None or element_id == '*':
+                self.error("'info' selector requires an explicit element ID")
+                return False
+            return self.render_info(element_id, out)
+        elif display_type == 'element':
+            if element_id is None:
+                self.error("'element' selector requires an explicit ID")
+                return False
+            _state = state or DocState(doc_format=doc_format)
+            return self.render_element_selector(element_id, _state, out)
+        elif display_type == 'package':
+            _state = state or DocState(doc_format=doc_format)
+            pkg_id = element_id if element_id is not None else '*'
+            return self.render_package_selector(pkg_id, _state, out)
+        else:
+            if element_id == '*':
+                self.error(f"'*' is not valid with the '{display_type}' selector")
+                return False
+            nodes = _resolve_element(element_id, self, current_element)
+            if not nodes:
+                return False
+            node = nodes[0]
+            if display_type == 'statement':
+                out.write(render_statement(node))
+                return True
+            return False
 
     def render_element_selector(self, node_id: str, state: 'DocState',
                                 out: 'TextIO', sep: str = '') -> bool:
-        """Write a full element section (heading + sub-selections) to out.
+        """Write a full element section (heading + configured sub-selections) to out.
 
-        Uses self.config.  Equivalent to render_element_selector(node_id, case, case.config, ...).
+        Renders the element heading and any sub-selections listed in
+        config['element_selections']. Updates state.current_id and
+        state.seen_element_ids as a side-effect.
+        Returns False and calls error() if node_id is not in registry.
         """
-        return render_element_selector(node_id, self, self.config, state, out, sep)
+        node = self.registry.get(node_id)
+        if node is None:
+            self.error(f"element {node_id!r} not found")
+            return False
+        state.current_id = node_id
+        state.seen_element_ids.add(node_id)
+
+        level = self.config.get('element_level', 3)
+        anchor = _component_anchor_id(node.node_type, node_id)
+        stmt = self.statement_for(node_id) or node.text or ''
+        heading_text = f'{node.node_type} {node_id}'
+        if stmt:
+            heading_text += f': {stmt}'
+        fmt = state.doc_format
+
+        out.write(sep)
+        out.write(_WARNING_TEXT_SELECTOR)
+        out.write('\n\n')
+        out.write(_make_heading(anchor, level, heading_text, fmt))
+        _apply_sel(self.config.get('element_selections', _DEFAULT_ELEMENT_SELECTIONS),
+                   _ELEMENT_RENDER_MAP, node, self, self.config, fmt, out, pending_sep='\n\n')
+        return True
 
     def render_package_selector(self, pkg_id_or_star: str, state: 'DocState',
                                 out: 'TextIO') -> bool:
         """Write a full package section (heading + diagram + sub-selections) to out.
 
-        Uses self.config.  Equivalent to render_package_selector(pkg_id_or_star, case, case.config, ...).
-        pkg_id_or_star is a package root identifier or ``'*'`` for all packages.
+        pkg_id_or_star is either a package root identifier or ``'*'`` to render
+        all packages in sequence. Returns True if anything was written.
         """
-        return render_package_selector(pkg_id_or_star, self, self.config, state, out)
+        if pkg_id_or_star == '*':
+            out.write(_WARNING_TEXT_SELECTOR)
+            pending_sep = '\n\n'
+            for root in self.roots:
+                state.current_id = root.identifier
+                _render_single_package(root, self, self.config, state, out, pending_sep)
+                pending_sep = '\n\n'
+            return True
+        pkg_root = self.registry.get(pkg_id_or_star)
+        if pkg_root is None or pkg_root.depth != 0:
+            self.error(f"package {pkg_id_or_star!r} not found or is not a root element")
+            return False
+        state.current_id = pkg_id_or_star
+        out.write(_WARNING_TEXT_SELECTOR)
+        out.write('\n\n')
+        _render_single_package(pkg_root, self, self.config, state, out)
+        return True
 
     def process_document_stream(self, f, out, seen_element_ids: set,
                                 doc_format: str = 'markdown',
@@ -803,11 +1478,127 @@ class Case:
                                 existing_ids: Optional[set] = None) -> None:
         """Process a document file line by line, replacing LTAC selector regions.
 
-        Uses self.config.  Equivalent to process_document_stream(f, out, case, case.config, ...).
-        See process_document_stream() for full parameter documentation.
+        Writes all output to `out`. Updates `seen_element_ids` with identifiers
+        of LTAC elements rendered via 'element' selectors. Performs no LTAC parsing.
+
+        When `add_missing` is True, inserts skeleton element regions for every
+        declared LTAC element not yet seen via an 'element' selector.
+        When `strip` is True, generated content is omitted from all selector
+        regions except 'warning', leaving the markers in place with empty bodies.
         """
-        process_document_stream(f, out, self, self.config, seen_element_ids,
-                                doc_format, add_missing, strip, existing_ids)
+        _doc_state = DocState(doc_format=doc_format, seen_element_ids=seen_element_ids)
+        filename = getattr(f, 'name', '<stream>')
+
+        config = dict(self.config)  # local copy so directives don't affect self.config
+
+        if add_missing:
+            _ltac_ordered = [node for node in all_nodes(self.roots)
+                             if node.is_definition and node.identifier]
+            _ltac_index: Dict[str, int] = {n.identifier: i for i, n in enumerate(_ltac_ordered)}
+            _doc_ids = existing_ids if existing_ids is not None else set()
+            _missing_set: set = ({n.identifier for n in _ltac_ordered}
+                                 - _doc_state.seen_element_ids - _doc_ids)
+            _inj_state = DocState(doc_format=doc_format,
+                                  seen_element_ids=_doc_state.seen_element_ids)
+            _last_placed_id: Optional[str] = None
+            _stubs_added = [0]
+
+            _stub_case = Case()
+            _stub_case.registry = self.registry
+            _stub_case.id_info = self.id_info
+            _stub_case.config = config
+
+            def _write_stub(ident: str) -> None:
+                out.write('\n<!-- verocase element ' + ident + ' -->\n')
+                _stub_case.render_element_selector(ident, _inj_state, out)
+                out.write('\n<!-- end verocase -->\n')
+                _stubs_added[0] += 1
+
+            def _emit_stubs_after(placed_id: Optional[str]) -> None:
+                if placed_id is None or placed_id not in _ltac_index:
+                    return
+                for node in _ltac_ordered[_ltac_index[placed_id] + 1:]:
+                    if node.identifier not in _missing_set:
+                        break
+                    _write_stub(node.identifier)
+                    _missing_set.discard(node.identifier)
+
+            def _emit_all_remaining() -> None:
+                if not _missing_set:
+                    return
+                for node in _ltac_ordered:
+                    if node.identifier in _missing_set:
+                        _write_stub(node.identifier)
+                _missing_set.clear()
+
+        line_iter = enumerate(f, 1)
+        for lineno, line in line_iter:
+            text = line.rstrip('\r\n')
+
+            if add_missing and '</body>' in text.lower():
+                _emit_all_remaining()
+                out.write(text + '\n')
+                continue
+
+            cm = _CASEPROC_CONFIG_RE.match(text)
+            if cm:
+                if add_missing:
+                    _emit_stubs_after(_last_placed_id)
+                    _last_placed_id = None
+                apply_config_directive(cm.group(1), cm.group(2), config, filename, lineno)
+                out.write(text + '\n')
+                continue
+
+            m = _CASEPROC_REGION_RE.match(text)
+            if m:
+                selector = m.group(1)
+                _sel_parts = selector.split(None, 1)
+                _sel_kind = _sel_parts[0] if _sel_parts else ''
+                if _sel_kind == 'element' and _doc_state.after_epilogue:
+                    self.error(f"'element' selector found after 'epilogue' in {filename}:{lineno}; "
+                               "element selectors must not appear after an epilogue marker")
+                if _sel_kind == 'epilogue':
+                    _doc_state.after_epilogue = True
+                if add_missing:
+                    if _sel_kind == 'element':
+                        _emit_stubs_after(_last_placed_id)
+                    elif _sel_kind in ('stop', 'epilogue'):
+                        _emit_all_remaining()
+                found_end = _consume_region(line_iter, filename, lineno, selector, self)
+                if strip and selector.strip() not in ('warning', 'stop', 'epilogue'):
+                    out.write(text + '\n')
+                    if found_end:
+                        out.write('<!-- end verocase -->\n')
+                else:
+                    out.write(text + '\n')
+                    if found_end:
+                        _saved_config = self.config
+                        self.config = config
+                        try:
+                            wrote = self.render_selector(selector, out,
+                                                         doc_format=doc_format, state=_doc_state)
+                        finally:
+                            self.config = _saved_config
+                        if wrote:
+                            out.write('\n')
+                        out.write('<!-- end verocase -->\n')
+                if add_missing and _sel_kind == 'element' and len(_sel_parts) == 2:
+                    _last_placed_id = _sel_parts[1]
+                continue
+
+            if 'verocase' in text and text.lstrip().startswith('<!-- end verocase -->'):
+                self.panic(f"{filename}:{lineno}: unexpected '<!-- end verocase -->' "
+                           "with no open region; check for a missing "
+                           "'<!-- verocase ...' opener above this line")
+                out.write(text + '\n')
+                continue
+
+            out.write(text + '\n')
+
+        if add_missing:
+            _emit_all_remaining()
+            if _stubs_added[0]:
+                self.notify(f"Added {_stubs_added[0]} missing element(s) to {filename}")
 
     def render_ltac_txt(self, node_list, out: 'TextIO', sep: str = '') -> bool:
         """Write node_list as raw LTAC text to out, normalizing indentation to depth 0.
@@ -815,6 +1606,26 @@ class Case:
         Uses self.config.  Equivalent to render_ltac_txt(node_list, case.config, out, sep).
         """
         return render_ltac_txt(node_list, self.config, out, sep)
+
+    def _check_no_existing_case_files(self) -> None:
+        """Panic if any well-known case file already exists."""
+        for path in _START_CANDIDATES:
+            if os.path.exists(path):
+                self.panic(f"--start: {path!r} already exists; remove it before using --start")
+
+    def _write_start_stubs(self) -> None:
+        """Write initial case.ltac and case.md stubs for --start."""
+        try:
+            with open('case.ltac', 'w', encoding='utf-8') as f:
+                f.write(_START_LTAC)
+        except OSError as e:
+            self.panic(f"--start: cannot write case.ltac: {e}")
+        try:
+            with open('case.md', 'w', encoding='utf-8') as f:
+                f.write(_START_DOC)
+        except OSError as e:
+            self.panic(f"--start: cannot write case.md: {e}")
+        self.notify("created case.ltac and case.md")
 
 
 # ---------------------------------------------------------------------------
@@ -855,14 +1666,14 @@ _LTAC_LINE_RE = re.compile(
 
 
 class LTACParser:
-    def parse(self, lines: List[str], config: Optional[dict] = None) -> List[Node]:
-        """Parse LTAC lines into a forest (list of root Nodes).
+    def __init__(self, case: 'Case') -> None:
+        self._case = case
 
-        Returns one root Node per package.
-        Also populates self.registry: Dict[str, Node] mapping each
-        non-citation identifier to its Node (for Link resolution), and
-        self.id_info: Dict[str, dict] tracking per-identifier usage
-        stats for post-parse validation.
+    def parse(self, lines: List[str], config: Optional[dict] = None) -> None:
+        """Parse LTAC lines and populate the Case passed to __init__.
+
+        Populates self._case.roots, self._case.registry, self._case.id_info.
+        Also sets self.registry and self.id_info for internal use during parsing.
         """
         self._warn_dubious_reference: bool = (config or {}).get('warn_dubious_reference', True)
         self.registry: Dict[str, Node] = {}
@@ -902,10 +1713,12 @@ class LTACParser:
         # have statements (i.e. the mix is inconsistent; pure-ID demos are ok).
         if self._has_nonempty_decl and self._empty_decl_ids:
             for ident, ln in self._empty_decl_ids:
-                warn(f"line {ln}: {ident!r}: declaration has no statement"
-                     f" (other declarations do)")
+                self._case.warn(f"line {ln}: {ident!r}: declaration has no statement"
+                                f" (other declarations do)")
 
-        return self.results
+        self._case.roots = self.results
+        self._case.registry = self.registry
+        self._case.id_info = self.id_info
 
     def _parse_line(self, lineno: int, line: str) -> None:
         """Process a single LTAC source line, updating parser state."""
@@ -917,13 +1730,13 @@ class LTACParser:
 
         leading = len(line) - len(line.lstrip(' '))
         if leading % 2 != 0:
-            error(f"line {lineno}: indentation must be an even number of spaces"
-                  f" (got {leading}): {line.rstrip()!r}")
+            self._case.error(f"line {lineno}: indentation must be an even number of spaces"
+                             f" (got {leading}): {line.rstrip()!r}")
             return
 
         m = _LTAC_LINE_RE.match(line)
         if not m:
-            error(f"line {lineno}: unrecognized syntax: {line.rstrip()!r}")
+            self._case.error(f"line {lineno}: unrecognized syntax: {line.rstrip()!r}")
             return
 
         node = self._build_node(m, lineno)
@@ -941,12 +1754,12 @@ class LTACParser:
         options = parse_options(m.group('options') or '')
 
         if is_citation and not identifier:
-            error(f"line {lineno}: citation requires an identifier (e.g. '- {nodetype} ^ID:')")
+            self._case.error(f"line {lineno}: citation requires an identifier (e.g. '- {nodetype} ^ID:')")
         elif not is_citation and nodetype not in ('Link', 'Connector') and not has_colon:
-            error(f"line {lineno}: element requires ':' after the identifier (e.g. '- {nodetype} ID: text')")
+            self._case.error(f"line {lineno}: element requires ':' after the identifier (e.g. '- {nodetype} ID: text')")
         elif not is_citation and nodetype not in ('Link', 'Connector') and not identifier and not text:
-            error(f"line {lineno}: {nodetype} element has no identifier and no statement;"
-                  f" cannot contribute to the argument")
+            self._case.error(f"line {lineno}: {nodetype} element has no identifier and no statement;"
+                             f" cannot contribute to the argument")
 
         id_inferred = False
         if not identifier and nodetype not in ('Link', 'Connector'):
@@ -977,16 +1790,16 @@ class LTACParser:
         if is_citation:                 active = active | {'ascited'}
         if len(active) >= 2:
             label = identifier or f'(unnamed {nodetype})'
-            error(f"line {lineno}: {label}: conflicting assertion status:"
-                  f" {', '.join(sorted(active))} (mutually exclusive per SACM spec section 11)")
+            self._case.error(f"line {lineno}: {label}: conflicting assertion status:"
+                             f" {', '.join(sorted(active))} (mutually exclusive per SACM spec section 11)")
 
         # Dubious reference: warn if the reference looks like a parenthetical comment.
         if self._warn_dubious_reference and _is_dubious_reference(ref):
             label = f"{nodetype} {identifier}" if identifier else nodetype
-            warn(f"line {lineno}: {label}: dubious reference ({ref!r}):"
-                 f" has no '.' and doesn't start with '#'"
-                 f" (looks like a parenthetical comment);"
-                 f" use {{}} escape if intended")
+            self._case.warn(f"line {lineno}: {label}: dubious reference ({ref!r}):"
+                            f" has no '.' and doesn't start with '#'"
+                            f" (looks like a parenthetical comment);"
+                            f" use {{}} escape if intended")
 
         return node
 
@@ -1011,15 +1824,15 @@ class LTACParser:
             if info['node_type'] is None:
                 info['node_type'] = node.node_type
             elif info['node_type'] != node.node_type:
-                error(f"line {lineno}: {node.identifier!r}: type {node.node_type!r}"
-                      f" conflicts with earlier use as {info['node_type']!r}")
+                self._case.error(f"line {lineno}: {node.identifier!r}: type {node.node_type!r}"
+                                 f" conflicts with earlier use as {info['node_type']!r}")
             if node.is_citation:
                 info['citations'] += 1
                 if pkg_root_id and pkg_root_id not in info['citing_pkg_ids']:
                     info['citing_pkg_ids'].append(pkg_root_id)
             else:
                 if info['declarations'] > 0:
-                    warn(f"line {lineno}: duplicate declaration {node.identifier!r}")
+                    self._case.warn(f"line {lineno}: duplicate declaration {node.identifier!r}")
                 else:
                     info['decl_lineno'] = lineno
                     info['decl_pkg_id'] = pkg_root_id
@@ -1027,8 +1840,8 @@ class LTACParser:
                     anchor = _component_anchor_id(node.node_type, node.identifier)
                     label = f"{node.node_type} {node.identifier}"
                     if anchor in self._anchor_seen:
-                        error(f"line {lineno}: anchor id collision on {anchor!r}:"
-                              f" {self._anchor_seen[anchor]!r} and {label!r}")
+                        self._case.error(f"line {lineno}: anchor id collision on {anchor!r}:"
+                                         f" {self._anchor_seen[anchor]!r} and {label!r}")
                     else:
                         self._anchor_seen[anchor] = label
                 info['declarations'] += 1
@@ -1044,8 +1857,8 @@ class LTACParser:
                     info['statement'] = node.text
                 elif node.text != info['statement']:
                     hint = "; use --update to sync" if (node.is_citation or info['citations'] > 0) else ""
-                    warn(f"line {lineno}: {node.identifier!r}: statement {node.text!r}"
-                         f" differs from earlier statement {info['statement']!r}{hint}")
+                    self._case.warn(f"line {lineno}: {node.identifier!r}: statement {node.text!r}"
+                                    f" differs from earlier statement {info['statement']!r}{hint}")
 
         # Pop stack until top's depth < current depth
         while self._stack and self._stack[-1][0] >= node.depth:
@@ -1055,18 +1868,18 @@ class LTACParser:
         if self._stack:
             parent_depth = self._stack[-1][0]
             if node.depth > parent_depth + 1:
-                error(f"line {lineno}: indentation jumps from depth {parent_depth}"
-                      f" to depth {node.depth} (increase must be exactly 2 spaces / 1 level)")
+                self._case.error(f"line {lineno}: indentation jumps from depth {parent_depth}"
+                                 f" to depth {node.depth} (increase must be exactly 2 spaces / 1 level)")
         elif node.depth > 0:
-            error(f"line {lineno}: indentation is {node.depth * 2} spaces but"
-                  f" there is no parent node to attach to")
+            self._case.error(f"line {lineno}: indentation is {node.depth * 2} spaces but"
+                             f" there is no parent node to attach to")
 
         if self._stack:
             parent_node = self._stack[-1][1]
             if (node.node_type in ('Claim', 'Strategy')
                     and parent_node.node_type in _NON_INFERENTIAL_TYPES):
-                warn(f"line {lineno}: {node.node_type} should not be"
-                     f" a child of {parent_node.node_type}")
+                self._case.warn(f"line {lineno}: {node.node_type} should not be"
+                                f" a child of {parent_node.node_type}")
             # Evidence is a leaf node; non-metadata children are invalid.
             # Claim and Strategy are excluded here because the _NON_INFERENTIAL_TYPES
             # check above already warns when they appear under Evidence, avoiding
@@ -1074,31 +1887,31 @@ class LTACParser:
             if (parent_node.node_type == 'Evidence'
                     and node.node_type not in ('Claim', 'Strategy',
                                                'Context', 'Relation', 'Link')):
-                warn(f"line {lineno}: {node.node_type} should not be a child of"
-                     f" Evidence (Evidence is a leaf node)")
+                self._case.warn(f"line {lineno}: {node.node_type} should not be a child of"
+                                f" Evidence (Evidence is a leaf node)")
             node.parent = parent_node
             if node.identifier:
                 parent_label = (f" under {parent_node.identifier!r}"
                                 if parent_node.identifier else "")
                 for sib in parent_node.children:
                     if sib.identifier == node.identifier:
-                        warn(f"line {lineno}: duplicate sibling identifier"
-                             f" {node.identifier!r}{parent_label}")
+                        self._case.warn(f"line {lineno}: duplicate sibling identifier"
+                                        f" {node.identifier!r}{parent_label}")
             if node.is_citation and node.node_type not in ('Claim', 'Justification'):
-                warn(f"line {lineno}: external citation ^{node.identifier!r} has type"
-                     f" {node.node_type!r}; only Claim and Justification are"
-                     f" recommended for cross-package citations")
+                self._case.warn(f"line {lineno}: external citation ^{node.identifier!r} has type"
+                                f" {node.node_type!r}; only Claim and Justification are"
+                                f" recommended for cross-package citations")
             parent_node.children.append(node)
         else:
             if self._current_pkg:
-                panic(
+                self._case.panic(
                     f"package starting at line {self._pkg_root_lineno} "
                     f"already has a top-level element; only one allowed"
                 )
             if node.node_type not in ('Claim', 'Justification'):
-                warn(f"line {lineno}: {node.node_type} {node.identifier!r}:"
-                     f" package starts with {node.node_type!r};"
-                     f" expected Claim or Justification")
+                self._case.warn(f"line {lineno}: {node.node_type} {node.identifier!r}:"
+                                f" package starts with {node.node_type!r};"
+                                f" expected Claim or Justification")
             self._current_pkg.append(node)
             self._pkg_root_lineno = lineno
 
@@ -1111,10 +1924,10 @@ class LTACParser:
             node.link_target = self.registry[target_id]
             canonical = _statement_for(self.id_info, target_id)
             if node.text and canonical is not None and node.text != canonical:
-                warn(f"line {lineno}: Link {target_id!r}: statement {node.text!r}"
-                     f" differs from declaration; use --update to sync")
+                self._case.warn(f"line {lineno}: Link {target_id!r}: statement {node.text!r}"
+                                f" differs from declaration; use --update to sync")
         else:
-            warn(f"line {lineno}: Link target {target_id!r} not found")
+            self._case.warn(f"line {lineno}: Link target {target_id!r} not found")
 
     def _finalize_package(self) -> None:
         """Flush the current package's root into results and reset package state."""
@@ -1145,10 +1958,10 @@ def parse_ltac_lines(lines: List[str], config: Optional[dict] = None) -> 'Case':
         Bundled (roots, registry, id_info); see Case for field descriptions.
     """
     cfg = config if config is not None else dict(DEFAULT_CONFIG)
-    parser = LTACParser()
-    roots = parser.parse(lines, config=cfg)
-    return Case(roots=roots, registry=parser.registry, id_info=parser.id_info,
-                config=cfg)
+    case = Case()
+    case.config = cfg
+    LTACParser(case).parse(lines, config=cfg)
+    return case
 
 
 def all_nodes_fast(roots: List[Node]):
@@ -1211,7 +2024,9 @@ def load_ltac_file(path: str,
             lines = f.readlines()
     except OSError as e:
         panic(f"cannot open {path!r}: {e}")
-    return parse_ltac_lines(lines, config=config)
+    case = parse_ltac_lines(lines, config=config)
+    case.ltac_path = path
+    return case
 
 
 # ---------------------------------------------------------------------------
@@ -2236,7 +3051,7 @@ def _resolve_element(
     if element_id is not None:
         node = case.registry.get(element_id)
         if node is None:
-            error(f"element {element_id!r} not found in registry")
+            case.error(f"element {element_id!r} not found in registry")
             return []
         return [node]
     if current_element is not None:
@@ -2337,7 +3152,7 @@ def parse_selector(selector: str, doc_format: str = 'markdown',
     element_id: Optional[str] = parts[1].strip() if len(parts) > 1 else None
     display_type = expand_selector(raw_type, doc_format, config)
     if display_type not in _VALID_DISPLAY_TYPES:
-        error(f"unknown selector type {display_type!r}")
+        print(f"verocase: error: unknown selector type {display_type!r}", file=sys.stderr)
     return display_type, element_id
 
 
@@ -2552,7 +3367,8 @@ def render_pkg_cited(pkg_root: Node, case: 'Case',
 
 def render_representation(pkg_root: Node, all_roots: List[Node],
                           config: dict, fmt: str, out: TextIO,
-                          sep: str = '', state: 'DocState' = None) -> bool:
+                          sep: str = '', state: 'DocState' = None,
+                          case: 'Case' = None) -> bool:
     """Write the default diagram representation for a package to out."""
     notation = config.get('default_representation', 'sacm')
     renderer = config.get('default_renderer', 'mermaid')
@@ -2576,13 +3392,16 @@ def render_representation(pkg_root: Node, all_roots: List[Node],
         out.write(sep)
         return render_html([pkg_root], config, out)
     else:
-        error(f"unsupported representation {selector!r}")
+        if case is not None:
+            case.error(f"unsupported representation {selector!r}")
+        else:
+            print(f"verocase: error: unsupported representation {selector!r}", file=sys.stderr)
         return False
 
 
 # render_pkg_defines/citing/cited now match (primary, case, config, fmt, out, sep); representation needs an adapter.
 _PACKAGE_RENDER_MAP: Dict[str, callable] = {
-    'representation': lambda pkg, case, config, fmt, o, s: render_representation(pkg, case.roots, config, fmt, o, s),
+    'representation': lambda pkg, case, config, fmt, o, s: render_representation(pkg, case.roots, config, fmt, o, s, case=case),
     'pkg_defines':    render_pkg_defines,
     'pkg_citing':     render_pkg_citing,
     'pkg_cited':      render_pkg_cited,
@@ -2605,7 +3424,7 @@ def _apply_sel(sel_str: str, render_map: Dict[str, callable],
             continue
         fn = render_map.get(sel)
         if fn is None:
-            warn(f"unknown selection name {sel!r}")
+            case.warn(f"unknown selection name {sel!r}")
             continue
         if fn(primary, case, config, fmt, out, pending_sep):
             pending_sep = '\n\n'
@@ -2631,35 +3450,8 @@ def _make_heading(anchor: str, level: int, heading_text: str, fmt: str) -> str:
 def render_element_selector(node_id: str, case: 'Case',
                              config: dict, state: 'DocState',
                              out: TextIO, sep: str = '') -> bool:
-    """Write a full element section (heading + configured sub-selections) to out.
-
-    Renders the element heading and any sub-selections listed in
-    config['element_selections'] (e.g. referenced_by, supported_by, supports, ext_ref).
-    Updates state.current_id and state.seen_element_ids as a side-effect.
-    Returns False and calls error() if node_id is not in case.registry.
-    """
-    node = case.registry.get(node_id)
-    if node is None:
-        error(f"element {node_id!r} not found")
-        return False
-    state.current_id = node_id
-    state.seen_element_ids.add(node_id)
-
-    level = config.get('element_level', 3)
-    anchor = _component_anchor_id(node.node_type, node_id)
-    stmt = case.statement_for(node_id) or node.text or ''
-    heading_text = f'{node.node_type} {node_id}'
-    if stmt:
-        heading_text += f': {stmt}'
-    fmt = state.doc_format
-
-    out.write(sep)
-    out.write(_WARNING_TEXT_SELECTOR)
-    out.write('\n\n')
-    out.write(_make_heading(anchor, level, heading_text, fmt))
-    _apply_sel(config.get('element_selections', _DEFAULT_ELEMENT_SELECTIONS),
-               _ELEMENT_RENDER_MAP, node, case, config, fmt, out, pending_sep='\n\n')
-    return True
+    """Write a full element section (heading + configured sub-selections) to out."""
+    return case.render_element_selector(node_id, state, out, sep)
 
 
 def _render_single_package(pkg_root: Node, case: 'Case',
@@ -2684,30 +3476,8 @@ def _render_single_package(pkg_root: Node, case: 'Case',
 def render_package_selector(pkg_id_or_star: str, case: 'Case',
                              config: dict, state: 'DocState',
                              out: TextIO) -> bool:
-    """Write a full package section (heading + diagram + sub-selections) to out.
-
-    pkg_id_or_star is either a package root identifier or ``'*'`` to render
-    all packages in sequence.  Sub-selections are controlled by
-    config['package_selections'] (e.g. representation, pkg_defines,
-    pkg_citing, pkg_cited).  Returns True if anything was written.
-    """
-    if pkg_id_or_star == '*':
-        out.write(_WARNING_TEXT_SELECTOR)
-        pending_sep = '\n\n'
-        for root in case.roots:
-            state.current_id = root.identifier
-            _render_single_package(root, case, config, state, out, pending_sep)
-            pending_sep = '\n\n'
-        return True
-    pkg_root = case.registry.get(pkg_id_or_star)
-    if pkg_root is None or pkg_root.depth != 0:
-        error(f"package {pkg_id_or_star!r} not found or is not a root element")
-        return False
-    state.current_id = pkg_id_or_star
-    out.write(_WARNING_TEXT_SELECTOR)
-    out.write('\n\n')
-    _render_single_package(pkg_root, case, config, state, out)
-    return True
+    """Write a full package section (heading + diagram + sub-selections) to out."""
+    return case.render_package_selector(pkg_id_or_star, state, out)
 
 _WARNING_TEXT = (
     '<!-- WARNING: DO NOT EDIT text within verocase SELECTOR ... end verocase. -->\n'
@@ -2720,7 +3490,7 @@ _WARNING_TEXT_SELECTOR = '<!-- DO NOT EDIT text from here until "end verocase" -
 def render_warning(element_id: Optional[str]) -> str:
     """Render the warning selector.  Refuses any element_id argument."""
     if element_id is not None:
-        error("'warning' selector takes no parameters")
+        print("verocase: error: 'warning' selector takes no parameters", file=sys.stderr)
         return ''
     return _WARNING_TEXT
 
@@ -2734,97 +3504,8 @@ def render_selector(
     doc_format: str = 'markdown',
     state: 'DocState' = None,
 ) -> bool:
-    """Parse selector and write the rendered output to out; return True if anything was written.
-
-    selector is a string of the form ``"DISPLAY_TYPE [ID]"``, for example:
-
-      ``"element MyClaimId"``     (heading + cross-references for one element)
-      ``"package MyPkgId"``       (heading + diagram + cross-references for a package)
-      ``"package *"``             (all packages)
-      ``"ltac/txt MyClaimId"``    (raw LTAC subtree for the element)
-      ``"info MyClaimId"``        (ancestry, children, citation info)
-      ``"sacm/mermaid MyPkgId"``  (SACM Mermaid diagram block)
-      ``"gsn/mermaid MyPkgId"``   (GSN Mermaid diagram block)
-
-    doc_format must be ``'markdown'`` or ``'html'``.
-    state carries per-document rendering context; pass a fresh DocState()
-    when rendering standalone (outside process_document_stream).
-    current_element is used to resolve bare selectors inside a document region.
-    """
-    display_type, element_id = parse_selector(selector, doc_format, config)
-
-    if display_type == 'config':
-        error("use '<!-- verocase-config KEY = VALUE -->' (not '<!-- verocase config ...-->')")
-        return False
-    elif display_type == 'warning':
-        text = render_warning(element_id)
-        if not text:
-            return False
-        out.write(text)
-        return True
-    elif display_type == 'stop':
-        if element_id is not None:
-            error("'stop' selector takes no parameters")
-            return False
-        out.write("<!-- Content from here is not part of any element's full content "
-                  "and will not be repositioned by --fixmisplaced. -->")
-        return True
-    elif display_type == 'epilogue':
-        if element_id is not None:
-            error("'epilogue' selector takes no parameters")
-            return False
-        out.write("<!-- Content from here is epilogue: not part of any element's full content, "
-                  "will not be repositioned by --fixmisplaced, and new element stubs "
-                  "from --fixmissing are inserted before this point. -->")
-        return True
-    elif display_type in ('sacm/mermaid', 'sacm/mermaid/markdown'):
-        return _render_or_all(element_id, case, render_sacm, current_element, config, out)
-    elif display_type in ('gsn/mermaid', 'gsn/mermaid/markdown'):
-        return _render_or_all(element_id, case, render_gsn, current_element, config, out)
-    elif display_type == 'sacm/mermaid/html':
-        if state is not None:
-            _maybe_inject_mermaid_js(config, state, out)
-        return _render_or_all(element_id, case, render_sacm_html, current_element, config, out)
-    elif display_type == 'gsn/mermaid/html':
-        if state is not None:
-            _maybe_inject_mermaid_js(config, state, out)
-        return _render_or_all(element_id, case, render_gsn_html, current_element, config, out)
-    elif display_type == 'ltac/markdown':
-        return _render_or_all(element_id, case, render_markdown, current_element, config, out)
-    elif display_type == 'ltac/html':
-        return _render_or_all(element_id, case, render_html, current_element, config, out)
-    elif display_type == 'ltac/txt':
-        nodes = _resolve_element(element_id, case, current_element)
-        if not nodes:
-            return False
-        return render_ltac_txt(nodes, config, out)
-    elif display_type == 'info':
-        if element_id is None or element_id == '*':
-            error("'info' selector requires an explicit element ID")
-            return False
-        return _render_info(element_id, case, out)
-    elif display_type == 'element':
-        if element_id is None:
-            error("'element' selector requires an explicit ID")
-            return False
-        _state = state or DocState(doc_format=doc_format)
-        return render_element_selector(element_id, case, config, _state, out)
-    elif display_type == 'package':
-        _state = state or DocState(doc_format=doc_format)
-        pkg_id = element_id if element_id is not None else '*'
-        return render_package_selector(pkg_id, case, config, _state, out)
-    else:
-        if element_id == '*':
-            error(f"'*' is not valid with the '{display_type}' selector")
-            return False
-        nodes = _resolve_element(element_id, case, current_element)
-        if not nodes:
-            return False
-        node = nodes[0]
-        if display_type == 'statement':
-            out.write(render_statement(node))
-            return True
-        return False
+    """Parse selector and write the rendered output to out; return True if anything was written."""
+    return case.render_selector(selector, out, current_element, doc_format, state)
 
 # ---------------------------------------------------------------------------
 # Document processor
@@ -2931,14 +3612,14 @@ def apply_config_directive(key: str, value: str, config: dict,
                            filename: str, lineno: int) -> None:
     """Apply a verocase-config directive, warning on invalid key or value."""
     if key not in DEFAULT_CONFIG:
-        warn(f"{filename}:{lineno}: verocase-config: unknown key {key!r}")
+        print(f"verocase: warning: {filename}:{lineno}: verocase-config: unknown key {key!r}", file=sys.stderr)
         return
     pattern = _ALLOWED_CONFIG_VALUES.get(key)
     if pattern is None:
-        warn(f"{filename}:{lineno}: verocase-config: key {key!r} is not dynamically settable")
+        print(f"verocase: warning: {filename}:{lineno}: verocase-config: key {key!r} is not dynamically settable", file=sys.stderr)
         return
     elif not pattern.match(value):
-        warn(f"{filename}:{lineno}: verocase-config: invalid value {value!r} for {key!r}")
+        print(f"verocase: warning: {filename}:{lineno}: verocase-config: invalid value {value!r} for {key!r}", file=sys.stderr)
         return
     if key in ('element_level', 'package_level',
                'max_mermaid_children', 'narrowed_mermaid_children'):
@@ -2949,7 +3630,8 @@ def apply_config_directive(key: str, value: str, config: dict,
         config_invariant_checker(config, filename, lineno)
 
 
-def _consume_region(line_iter, filename: str, start_lineno: int, selector: str) -> bool:
+def _consume_region(line_iter, filename: str, start_lineno: int, selector: str,
+                    case: 'Case' = None) -> bool:
     """Consume lines from line_iter until '<!-- end verocase -->', return True if found.
 
     If EOF is reached before finding the end marker, calls error() and returns False.
@@ -2963,12 +3645,20 @@ def _consume_region(line_iter, filename: str, start_lineno: int, selector: str) 
             if stripped.startswith('<!-- end verocase -->'):
                 return True
             if stripped.startswith('<!-- verocase'):
-                panic(f"{filename}:{lineno}: directive nested inside "
-                      f"'<!-- verocase {selector} -->' region "
-                      f"(opened at {filename}:{start_lineno}); "
-                      "directives cannot be nested. Check for a missing "
-                      "'<!-- end verocase -->' before this line")
-    error(f"{filename}:{start_lineno}: unclosed '<!-- verocase {selector} -->' region")
+                msg = (f"{filename}:{lineno}: directive nested inside "
+                       f"'<!-- verocase {selector} -->' region "
+                       f"(opened at {filename}:{start_lineno}); "
+                       "directives cannot be nested. Check for a missing "
+                       "'<!-- end verocase -->' before this line")
+                if case is not None:
+                    case.panic(msg)
+                else:
+                    panic(msg)
+    msg = f"{filename}:{start_lineno}: unclosed '<!-- verocase {selector} -->' region"
+    if case is not None:
+        case.error(msg)
+    else:
+        print(f"verocase: error: {msg}", file=sys.stderr)
     return False
 
 
@@ -2983,137 +3673,9 @@ def process_document_stream(
     strip: bool = False,
     existing_ids: Optional[set] = None,
 ) -> None:
-    """Process a document file line by line, replacing ltac selector regions.
-
-    Writes all output to `out`.  Updates `seen_element_ids` with identifiers of
-    LTAC elements rendered via 'element' selectors.  Uses case; performs no LTAC parsing.
-
-    When `add_missing` is True, uses a single-pass smart-placement algorithm to
-    insert skeleton element regions for every declared LTAC element not yet seen
-    via an 'element' selector.  Each missing element is inserted immediately
-    after its nearest LTAC predecessor that already has a region in the document;
-    remaining elements are emitted before any epilogue/stop marker or at EOF.
-    In HTML documents, any remaining missing stubs are also emitted before the
-    first `</body>` tag.
-
-    `existing_ids` (optional) is the set of element IDs already present in the
-    document (from a pre-scan).  When provided it primes the placement logic so
-    that newly inserted stubs are placed relative to the correct predecessor even
-    when the element has never been seen by this stream pass.
-
-    When `strip` is True, generated content is omitted from all selector
-    regions except 'warning', leaving the markers in place with empty bodies.
-    """
-    _doc_state = DocState(doc_format=doc_format, seen_element_ids=seen_element_ids)
-    filename = getattr(f, 'name', '<stream>')
-
-    config = dict(config)  # local copy so directives don't affect caller's config
-
-    # --- Smart single-pass missing-element placement setup ---
-    if add_missing:
-        _ltac_ordered = [node for node in all_nodes(case.roots)
-                         if node.is_definition and node.identifier]
-        _ltac_index: Dict[str, int] = {n.identifier: i for i, n in enumerate(_ltac_ordered)}
-        _doc_ids = existing_ids if existing_ids is not None else set()
-        _missing_set: set = ({n.identifier for n in _ltac_ordered}
-                             - _doc_state.seen_element_ids - _doc_ids)
-        _inj_state = DocState(doc_format=doc_format,
-                              seen_element_ids=_doc_state.seen_element_ids)
-        _last_placed_id: Optional[str] = None
-        _stubs_added = [0]
-
-        _stub_case = Case(roots=[], registry=case.registry, id_info=case.id_info)
-
-        def _write_stub(ident: str) -> None:
-            out.write('\n<!-- verocase element ' + ident + ' -->\n')
-            render_element_selector(ident, _stub_case, config, _inj_state, out)
-            out.write('\n<!-- end verocase -->\n')
-            _stubs_added[0] += 1
-
-        def _emit_stubs_after(placed_id: Optional[str]) -> None:
-            """Emit consecutive missing stubs in LTAC order starting right after placed_id."""
-            if placed_id is None or placed_id not in _ltac_index:
-                return
-            for node in _ltac_ordered[_ltac_index[placed_id] + 1:]:
-                if node.identifier not in _missing_set:
-                    break
-                _write_stub(node.identifier)
-                _missing_set.discard(node.identifier)
-
-        def _emit_all_remaining() -> None:
-            """Emit all remaining missing stubs in LTAC order."""
-            if not _missing_set:
-                return
-            for node in _ltac_ordered:
-                if node.identifier in _missing_set:
-                    _write_stub(node.identifier)
-            _missing_set.clear()
-
-    line_iter = enumerate(f, 1)
-    for lineno, line in line_iter:
-        text = line.rstrip('\r\n')
-
-        if add_missing and '</body>' in text.lower():
-            _emit_all_remaining()
-            out.write(text + '\n')
-            continue
-
-        cm = _CASEPROC_CONFIG_RE.match(text)
-        if cm:
-            if add_missing:
-                _emit_stubs_after(_last_placed_id)
-                _last_placed_id = None
-            apply_config_directive(cm.group(1), cm.group(2), config, filename, lineno)
-            out.write(text + '\n')
-            continue
-
-        m = _CASEPROC_REGION_RE.match(text)
-        if m:
-            selector = m.group(1)
-            _sel_parts = selector.split(None, 1)
-            _sel_kind = _sel_parts[0] if _sel_parts else ''
-            if _sel_kind == 'element' and _doc_state.after_epilogue:
-                error(f"'element' selector found after 'epilogue' in {filename}:{lineno}; "
-                      "element selectors must not appear after an epilogue marker")
-            if _sel_kind == 'epilogue':
-                _doc_state.after_epilogue = True
-            # Smart placement: emit stubs before document structure terminators.
-            if add_missing:
-                if _sel_kind == 'element':
-                    _emit_stubs_after(_last_placed_id)
-                elif _sel_kind in ('stop', 'epilogue'):
-                    _emit_all_remaining()
-            found_end = _consume_region(line_iter, filename, lineno, selector)
-            if strip and selector.strip() not in ('warning', 'stop', 'epilogue'):
-                out.write(text + '\n')
-                if found_end:
-                    out.write('<!-- end verocase -->\n')
-            else:
-                out.write(text + '\n')
-                if found_end:
-                    wrote = render_selector(selector, case, config, out,
-                                            doc_format=doc_format, state=_doc_state)
-                    if wrote:
-                        out.write('\n')
-                    out.write('<!-- end verocase -->\n')
-            # Track last placed element ID for smart placement.
-            if add_missing and _sel_kind == 'element' and len(_sel_parts) == 2:
-                _last_placed_id = _sel_parts[1]
-            continue
-
-        if 'verocase' in text and text.lstrip().startswith('<!-- end verocase -->'):
-            panic(f"{filename}:{lineno}: unexpected '<!-- end verocase -->' "
-                  "with no open region; check for a missing "
-                  "'<!-- verocase ...' opener above this line")
-            out.write(text + '\n')
-            continue
-
-        out.write(text + '\n')
-
-    if add_missing:
-        _emit_all_remaining()
-        if _stubs_added[0]:
-            notify(f"Added {_stubs_added[0]} missing element(s) to {filename}")
+    """Process a document file line by line, replacing ltac selector regions."""
+    case.process_document_stream(f, out, seen_element_ids, doc_format,
+                                 add_missing, strip, existing_ids)
 
 
 # ---------------------------------------------------------------------------
@@ -3262,16 +3824,11 @@ constant/regex definitions; there are no file I/O, network calls, or
 environment reads at import time. The if __name__ == '__main__': guard
 is in place. __all__ declares the intended public surface.
 
-Global session state:
-  had_error: bool   set True by error() on any validation problem
-  strict:    bool   if True, warnings auto-escalate to errors (--error flag)
-  reset()           clear global session state; call this before each session
-
 Typical usage (simple):
   import verocase, sys, io
 
   case = verocase.load_case()   # auto-discovers config, LTAC, and documents
-  if verocase.had_error:
+  if case.had_error:
       sys.exit(1)
 
   buf = io.StringIO()
@@ -3293,7 +3850,6 @@ Typical usage (simple):
 Usage for explicit control over loading:
   import verocase, io, sys
 
-  verocase.reset()
   config = verocase.load_config(verocase.find_config())
   ltac_path = verocase.find_ltac_file(None, config)
   case = verocase.load_ltac_file(ltac_path, config=config)
@@ -3303,12 +3859,11 @@ Usage for explicit control over loading:
   case.check_circularities()
   case.check_reachability()
 
-  if verocase.had_error:
+  if case.had_error:
       sys.exit(1)
 
-Exceptions and session:
+Exceptions:
   class VerocaseError(Exception)  raised by panic() on fatal errors
-  had_error, strict, reset()      (see above)
 
 Data types:
   @dataclass Node       one node in the LTAC tree (see docstring for fields)
@@ -3370,8 +3925,8 @@ Data types:
 Loading and initialization:
   load_case(ltac=None, config_file=None, documents=None, validate=True) -> Case
     Recommended entry point.  Auto-discovers config (verocase.toml), LTAC,
-    and documents; calls reset() and (by default) runs all validation.
-    Override any parameter to take explicit control.  Check had_error on return.
+    and documents; (by default) runs all validation.
+    Override any parameter to take explicit control.  Check case.had_error on return.
   find_config(path=None)       -> Optional[str]  (None if not found; searches verocase.toml)
   find_ltac_file(ltac_arg, config) -> str        (panics if not found)
   find_document_files(config=None, ltac_path=None) -> List[str]  ([] if none)
@@ -3404,7 +3959,7 @@ Rendering (write to caller-supplied out: TextIO; return True if written):
 main():
   success: bool = main()   # parses sys.argv, runs full CLI pipeline
   Returns True on clean success, False if errors. Raises VerocaseError
-  on fatal errors. Calls reset() on entry.
+  on fatal errors.
 
 Use --help-api-details to display full docstrings for all public names.
 import verocase; help(verocase) will also display those same docstrings.
@@ -3945,8 +4500,7 @@ def load_case(
     are optional; with no arguments it behaves like the CLI with no flags,
     auto-discovering config, LTAC, and document files from well-known paths.
 
-    Calls reset() before loading so that had_error is clear.  Check
-    verocase.had_error after calling if you need to detect non-fatal problems
+    Check case.had_error after calling if you need to detect non-fatal problems
     found during validation.
 
     Parameters
@@ -3992,19 +4546,8 @@ def load_case(
 
         case = verocase.load_case(validate=False)
     """
-    reset()
-    cfg = load_config(find_config(config_file))
-    ltac_path = find_ltac_file(ltac, cfg)
-    case = load_ltac_file(ltac_path, config=cfg)
-    case.document_files = (
-        documents if documents is not None
-        else find_document_files(cfg, ltac_path)
-    )
-    if validate:
-        case.check_id_info()
-        case.check_circularities()
-        case.check_reachability()
-    return case
+    return Case().load(ltac_file=ltac, config_file=config_file,
+                       document_files=documents, validate=validate)
 
 
 # SACM spec section 11 defines AssertionStatus as a mutually exclusive
@@ -4014,109 +4557,19 @@ def load_case(
 
 
 def _check_id_info(case: Case) -> None:
-    """Validate identifier usage across the loaded LTAC.
-
-    Uses the id_info table built during parsing (see LTACParser) to report:
-    - IDs cited (^) but never declared (may indicate a missing package)
-    """
-    for ident, info in case.id_info.items():
-        if info['citations'] > 0 and info['declarations'] == 0:
-            warn(f"{ident}: cited but never declared")
+    """Validate identifier usage across the loaded LTAC."""
+    case.check_id_info()
 
 
 
 def _check_circularities(case: Case) -> None:
-    """Panic if any circular dependency exists in the LTAC model.
-
-    Performs an iterative DFS over the logical dependency graph.  For each
-    node, its logical successors are its structural children (non-citation,
-    non-Link), any cited child's declared node (^ID → registry[ID]), and
-    any Link child's link_target.  A node encountered while already on the
-    current DFS path (a back-edge) means circular reasoning is possible.
-    """
-    visiting: Set[int] = set()  # id(node) of nodes on the current DFS path
-    done: Set[int] = set()      # id(node) of fully-explored nodes
-
-    def successors(node: Node):
-        for child in node.children:
-            if child.is_citation:
-                target = case.registry.get(child.identifier)
-                if target is not None:
-                    yield target
-            elif child.node_type == 'Link':
-                if child.link_target is not None:
-                    yield child.link_target
-            else:
-                yield child
-
-    def dfs(start: Node) -> None:
-        path = [start]
-        visiting.add(id(start))
-        stack = [(start, successors(start))]
-        while stack:
-            node, children = stack[-1]
-            try:
-                succ = next(children)
-                key = id(succ)
-                if key in done:
-                    continue
-                if key in visiting:
-                    start_idx = next(i for i, n in enumerate(path) if id(n) == key)
-                    cycle = path[start_idx:] + [succ]
-                    trail = ' -> '.join(n.identifier or f'({n.node_type})' for n in cycle)
-                    panic(f"circularity detected: {trail}")
-                visiting.add(key)
-                path.append(succ)
-                stack.append((succ, successors(succ)))
-            except StopIteration:
-                stack.pop()
-                path.pop()
-                visiting.discard(id(node))
-                done.add(id(node))
-
-    for root in case.roots:
-        if id(root) not in done:
-            dfs(root)
-    for node in case.registry.values():
-        if id(node) not in done:
-            dfs(node)
+    """Panic if any circular dependency exists in the LTAC model."""
+    case.check_circularities()
 
 
 def _check_reachability(case: Case) -> None:
-    """Error for any package whose root is unreachable from the first element.
-
-    Skipped when there is only one package (everything is trivially reachable).
-    Uses iterative DFS following structural children, citation declarations, and
-    Link targets.  Because all structural children of a reachable node are also
-    reachable, an unreachable package root implies the whole package is
-    unreachable; reporting just the root is sufficient.
-    """
-    if len(case.roots) < 2:
-        return
-
-    reachable: Set[int] = set()
-    stack = [case.roots[0]]
-    while stack:
-        node = stack.pop()
-        if id(node) in reachable:
-            continue
-        reachable.add(id(node))
-        for child in node.children:
-            if child.is_citation:
-                target = case.registry.get(child.identifier)
-                if target is not None:
-                    stack.append(target)
-            elif child.node_type == 'Link':
-                if child.link_target is not None:
-                    stack.append(child.link_target)
-            else:
-                stack.append(child)
-
-    for root in case.roots[1:]:
-        if id(root) not in reachable:
-            label = f"{root.node_type} {root.identifier}" if root.identifier else root.node_type
-            error(f"{label}: package root is unreachable from {case.roots[0].node_type}"
-                  f" {case.roots[0].identifier}")
+    """Error for any package root unreachable from the first package."""
+    case.check_reachability()
 
 
 def _is_dubious_reference(ref: str) -> bool:
@@ -4144,14 +4597,12 @@ def _process_files(
         for path in files:
             try:
                 with open(path, newline='') as f:
-                    process_document_stream(f, out, case, config,
-                                            seen_element_ids, detect_doc_format(path),
-                                            strip=strip)
+                    case.process_document_stream(f, out, seen_element_ids,
+                                                 detect_doc_format(path), strip=strip)
             except OSError as e:
-                error(f"cannot open {path!r}: {e}")
+                case.error(f"cannot open {path!r}: {e}")
     else:
-        process_document_stream(sys.stdin, out, case, config,
-                                seen_element_ids, 'markdown', strip=strip)
+        case.process_document_stream(sys.stdin, out, seen_element_ids, 'markdown', strip=strip)
 
 
 
@@ -4190,11 +4641,16 @@ def _mark_needs_support(candidate_ids: List[str],
     return count
 
 
-def _check_element_coverage(registry: Dict[str, Node], seen_element_ids: set) -> None:
+def _check_element_coverage(registry: Dict[str, Node], seen_element_ids: set,
+                            case: 'Case' = None) -> None:
     """Warn about every registry element with no corresponding element selector."""
     for ident in registry:
         if ident not in seen_element_ids:
-            warn(f"element {ident!r} has no 'element' selector in any processed file")
+            msg = f"element {ident!r} has no 'element' selector in any processed file"
+            if case is not None:
+                case.warn(msg)
+            else:
+                print(f"verocase: warning: {msg}", file=sys.stderr)
 
 
 # ---------------------------------------------------------------------------
@@ -4224,79 +4680,8 @@ def _has_claim_descendant(node: Node, registry: Dict[str, Node], seen: set) -> b
 
 
 def _compute_ltac_stats(case: 'Case') -> dict:
-    """Compute and return a statistics dict for the loaded LTAC forest.
-
-    The returned dict contains:
-
-    num_packages      int     (number of package roots)
-    pkg_sizes_sorted  list    ([(size, name), ...] sorted largest first,
-                               where size counts all nodes including links
-                               and citations)
-    avg_per_pkg       float   (mean package size)
-    median_per_pkg    float   (median package size)
-    total_full        int     (total nodes including links and citations)
-    total_citations   int     (total citation (^) nodes)
-    total_links       int     (total Link nodes)
-    total_definitions int     (total non-Link, non-citation nodes)
-    def_type_counts   Counter (definition count by node_type)
-    leaf_definitions  int     (definitions with no children)
-    leaf_claims       int     (Claim definitions with no children)
-    bottommost_claims int     (Claims with no Claim descendants)
-    option_counts     Counter (definition count by option keyword)
-    """
-    from collections import Counter
-    def_type_counts: Counter = Counter()  # definitions only (no links, no citations)
-    option_counts: Counter = Counter()
-    total_citations = 0
-    total_links = 0
-    leaf_definitions = 0
-    leaf_claims = 0
-    bottommost_claims = 0
-    pkg_sizes_full = []  # (size_full, name) per package including links and citations
-
-    for root in case.roots:
-        size_full = 0
-        for node in all_nodes_fast([root]):
-            size_full += 1
-            if node.is_citation:
-                total_citations += 1
-            elif node.node_type == 'Link':
-                total_links += 1
-            else:
-                def_type_counts[node.node_type] += 1
-                for opt in node.options:
-                    option_counts[opt] += 1
-                if not node.children:
-                    leaf_definitions += 1
-                    if node.node_type == 'Claim':
-                        leaf_claims += 1
-                if node.node_type == 'Claim':
-                    seen = {node.identifier} if node.identifier else set()
-                    if not _has_claim_descendant(node, case.registry, seen):
-                        bottommost_claims += 1
-        pkg_sizes_full.append((size_full, root.identifier or '(unnamed)'))
-
-    pkg_sizes_sorted = sorted(pkg_sizes_full, key=lambda x: x[0], reverse=True)
-    num_packages = len(pkg_sizes_full)
-    total_full = sum(s for s, _ in pkg_sizes_full)
-    median_per_pkg = statistics.median(s for s, _ in pkg_sizes_full) if pkg_sizes_full else 0
-    avg_per_pkg = total_full / num_packages if num_packages else 0.0
-    total_definitions = sum(def_type_counts.values())
-    return {
-        'num_packages':      num_packages,
-        'pkg_sizes_sorted':  pkg_sizes_sorted,
-        'avg_per_pkg':       avg_per_pkg,
-        'median_per_pkg':    median_per_pkg,
-        'total_full':        total_full,
-        'total_citations':   total_citations,
-        'total_links':       total_links,
-        'total_definitions': total_definitions,
-        'def_type_counts':   def_type_counts,
-        'leaf_definitions':  leaf_definitions,
-        'leaf_claims':       leaf_claims,
-        'bottommost_claims': bottommost_claims,
-        'option_counts':     option_counts,
-    }
+    """Compute and return a statistics dict for the loaded LTAC forest."""
+    return case.stats()
 
 
 def _scan_doc_stats(path: str) -> dict:
@@ -4436,11 +4821,11 @@ def write_ltac(roots: List['Node'], out: 'TextIO') -> None:
     To collect the result as a string, pass an io.StringIO() instance.
 
     >>> import io
-    >>> p = LTACParser()
-    >>> roots = p.parse(['- Claim C1: The software is safe',
-    ...                  '  - Evidence E1: Test results (tests.pdf)'])
+    >>> case = Case()
+    >>> LTACParser(case).parse(['- Claim C1: The software is safe',
+    ...                         '  - Evidence E1: Test results (tests.pdf)'])
     >>> buf = io.StringIO()
-    >>> write_ltac(roots, buf)
+    >>> write_ltac(case.roots, buf)
     >>> buf.getvalue()
     '- Claim C1: The software is safe\\n  - Evidence E1: Test results (tests.pdf)\\n'
     """
@@ -4555,123 +4940,28 @@ def _print_analysis_list(header, items, fmt=str) -> None:
 
 
 def _analysis_missing(case, document_files) -> List['Node']:
-    """Return LTAC elements that have no selector region in the document(s).
-
-    Returns a list of Node objects in LTAC (depth-first) order.
-    """
-    ordered_ids, _ = _scan_document_elements(document_files)
-    seen = {ident for ident, _, _ in ordered_ids}
-    all_ids_ordered = [node for node in all_nodes(case.roots)
-                       if node.is_definition and node.identifier]
-    return [node for node in all_ids_ordered if node.identifier not in seen]
+    """Return LTAC elements that have no selector region in the document(s)."""
+    return case.missing()
 
 
 def _analysis_empty(document_files, case) -> List[str]:
-    """Return identifiers of elements whose selector region contains no prose.
-
-    Elements that have an ext_ref are not considered empty: their content
-    lives in the external reference.
-    """
-    _, elem_info = _scan_document_elements(document_files)
-    return [
-        ident for ident, info in elem_info.items()
-        if not info['has_prose']
-        and not (case.registry.get(ident) and case.registry.get(ident).ext_ref)
-    ]
+    """Return identifiers of elements whose selector region contains no prose."""
+    return case.empty()
 
 
 def _analysis_orphans(document_files, case) -> List[str]:
     """Return identifiers of document selector regions not present in the LTAC."""
-    _, elem_info = _scan_document_elements(document_files)
-    return [ident for ident in elem_info if ident not in case.registry]
+    return case.orphans()
 
 
 def _analysis_misplaced(document_files, case):
-    """Return elements whose document order differs from LTAC order.
-
-    Returns a list of (ident, lineno, filepath, pred_ident, pred_lineno) tuples,
-    where pred_ident and pred_lineno are None if the element should be first.
-    """
-    # LTAC order: depth-first forward order, definitions only
-    ltac_order = [node.identifier for node in all_nodes(case.roots)
-                  if node.is_definition and node.identifier]
-    ltac_pos = {ident: i for i, ident in enumerate(ltac_order)}
-
-    # Document order: only elements that are also in the registry
-    ordered_ids, elem_info = _scan_document_elements(document_files)
-    doc_entries = [(ident, filepath, lineno) for ident, filepath, lineno in ordered_ids
-                   if ident in case.registry]
-
-    if not doc_entries:
-        return []
-
-    # Find misplaced elements: those not in the LCS of LTAC order within document order.
-    # LCS algorithm: find longest subsequence of doc_entries whose LTAC positions are
-    # monotonically increasing.
-    doc_ids = [ident for ident, _, _ in doc_entries]
-
-    # Compute LCS (patience sorting / LIS in LTAC rank space)
-    ranks = [ltac_pos.get(ident, -1) for ident in doc_ids]
-    # Longest increasing subsequence indices
-    from bisect import bisect_left
-    tails = []   # tails[i] = smallest ending rank for an increasing subsequence of length i+1
-    tail_idx = []  # index in doc_entries corresponding to each tail
-    predecessor = [-1] * len(doc_ids)
-
-    for i, r in enumerate(ranks):
-        if r < 0:
-            continue  # skip elements not in LTAC (shouldn't happen since we filter above)
-        pos = bisect_left(tails, r)
-        if pos == len(tails):
-            tails.append(r)
-            tail_idx.append(i)
-        else:
-            tails[pos] = r
-            tail_idx[pos] = i
-        if pos > 0:
-            predecessor[i] = tail_idx[pos - 1]
-
-    # Reconstruct LCS indices
-    if not tail_idx:
-        lis_indices = set()
-    else:
-        lis_indices = set()
-        idx = tail_idx[-1]
-        while idx >= 0:
-            lis_indices.add(idx)
-            idx = predecessor[idx]
-
-    # Misplaced = elements in doc_entries that are NOT in the LIS
-    misplaced_entries = []
-    for i, (ident, filepath, lineno) in enumerate(doc_entries):
-        if i not in lis_indices:
-            misplaced_entries.append((ident, lineno, filepath))
-
-    if not misplaced_entries:
-        return []
-
-    # For each misplaced element, find expected predecessor in LTAC order
-    # (nearest preceding element in LTAC order that has a document entry)
-    doc_id_to_entry = {ident: (lineno, filepath) for ident, filepath, lineno in doc_entries}
-    result = []
-    for ident, lineno, filepath in misplaced_entries:
-        ltac_idx = ltac_pos.get(ident, -1)
-        pred_ident = None
-        pred_lineno = None
-        for j in range(ltac_idx - 1, -1, -1):
-            candidate = ltac_order[j]
-            if candidate in doc_id_to_entry:
-                pred_ident = candidate
-                pred_lineno = doc_id_to_entry[candidate][0]
-                break
-        result.append((ident, lineno, filepath, pred_ident, pred_lineno))
-    return result
+    """Return elements whose document order differs from LTAC order."""
+    return case.misplaced()
 
 
 def _analysis_leaves(case) -> List['Node']:
     """Return all definition nodes with no children, in LTAC order."""
-    return [node for node in all_nodes(case.roots)
-            if node.is_definition and not node.children]
+    return case.leaves()
 
 
 def needs_support(nodes) -> List['Node']:
@@ -4681,17 +4971,7 @@ def needs_support(nodes) -> List['Node']:
 
 def _analysis_packages(case, out: TextIO = sys.stdout) -> None:
     """Print package structure with element counts to out (default stdout)."""
-    print("Packages:", file=out)
-    for root in case.roots:
-        pkg_count = root.subtree_count
-        root_line = root.to_ltac_line(depth_offset=0)
-        print(f"Package {root.identifier} ({pkg_count} elements)", file=out)
-        print(root_line, file=out)
-        for child in root.children:
-            child_count = child.subtree_count
-            child_line = child.to_ltac_line(depth_offset=0)
-            print(f"{child_line} ({child_count} elements)", file=out)
-        print(file=out)
+    case.print_packages(out)
 
 
 def render_ltac_txt(node_list, config, out: TextIO, sep: str = '') -> bool:
@@ -4721,86 +5001,8 @@ def _write_ltac_node_normalized(node, out: TextIO, first: list, depth_offset: in
 
 def _render_info(element_id: str, case: 'Case',
                  out: TextIO, sep: str = '') -> bool:
-    """Write a human-readable context report for element_id to out.
-
-    The report includes the element's type, identifier, and statement;
-    its ancestry chain; its direct children; descendant count; and
-    citation information (which packages declare and cite it).
-    Returns False and calls error() if element_id is not in registry.
-    sep is written before the report when non-empty (used to insert blank
-    lines between consecutive outputs).
-    """
-    node = case.registry.get(element_id)
-    if node is None:
-        error(f"info: element {element_id!r} not found")
-        return False
-
-    out.write(sep)
-
-    # Element header line
-    header = f"{node.node_type} {node.identifier}"
-    if node.text:
-        header += f": {node.text}"
-    out.write(f"Element: {header}")
-
-    # Package
-    pkg_root = node
-    while pkg_root.parent is not None:
-        pkg_root = pkg_root.parent
-    out.write(f"\nPackage: {pkg_root.identifier or '(unnamed)'}")
-
-    # Ancestors
-    ancestors = []
-    anc = node.parent
-    while anc is not None:
-        ancestors.append(anc)
-        anc = anc.parent
-    ancestors.reverse()  # root first
-
-    if not ancestors:
-        out.write("\nAncestors: (package root)")
-    else:
-        out.write("\nAncestors (root first):")
-        for anc in ancestors:
-            out.write("\n  " + anc.to_ltac_line(depth_offset=anc.depth))
-
-    # Children
-    if not node.children:
-        out.write("\nChildren: (none)")
-    else:
-        out.write("\nChildren:")
-        for child in node.children:
-            out.write("\n  " + child.to_ltac_line(depth_offset=child.depth))
-
-    # Descendants count (including self)
-    desc_count = node.subtree_count
-    out.write(f"\nDescendants: {desc_count} (including self, all descendants, citations, and links in subtree)")
-
-    # Citations: how many times this element is cited by others
-    info = case.id_info.get(element_id, {})
-    citation_count = info.get('citations', 0)
-    citing_pkg_ids = info.get('citing_pkg_ids', [])
-    out.write(f"\nCitations: {citation_count}")
-    if citation_count > 0:
-        # Find the actual citing nodes
-        for citing_pkg_id in citing_pkg_ids:
-            citing_root = case.registry.get(citing_pkg_id)
-            if citing_root is None:
-                continue
-            # Walk the citing package to find nodes that cite element_id
-            for n in all_nodes_fast([citing_root]):
-                if n.is_citation and n.identifier == element_id:
-                    parent_node = n.parent
-                    if parent_node:
-                        parent_desc = f"{parent_node.node_type} {parent_node.identifier}"
-                        citing_pkg_root = parent_node
-                        while citing_pkg_root.parent is not None:
-                            citing_pkg_root = citing_pkg_root.parent
-                        cp_name = citing_pkg_root.identifier or '(unnamed)'
-                        out.write(f"\n  Cited as ^{element_id} by: {parent_desc} (Package {cp_name})")
-                    else:
-                        out.write(f"\n  Cited as ^{element_id} (package root)")
-    return True
+    """Write a human-readable context report for element_id to out."""
+    return case.render_info(element_id, out, sep)
 
 
 # ---------------------------------------------------------------------------
@@ -4852,7 +5054,7 @@ def _fixmisplaced_document(path, case, config,
         with open(path, newline='') as f:
             original = f.read()
     except OSError as e:
-        error(f"cannot open {path!r}: {e}")
+        case.error(f"cannot open {path!r}: {e}")
         return None
 
     line_ending = detect_line_ending(original)
@@ -5198,138 +5400,23 @@ def _update_pkg_id_for_subtree(node: Node, old_pkg_id: str, new_pkg_id: str,
 
 
 def _apply_rename(case, old: str, new: str) -> None:
-    """Rename identifier old to new throughout the LTAC forest.
-
-    Panics if old is not declared or new is already declared.
-    Updates all node identifiers, the registry, id_info, and cross-references.
-    """
-    if old not in case.registry:
-        panic(f"--rename: {old!r} is not a declared identifier")
-    if new in case.registry:
-        panic(f"--rename: {new!r} is already declared")
-    for node in all_nodes_fast(case.roots):
-        if node.identifier == old:
-            node.identifier = new
-    case.registry[new] = case.registry.pop(old)
-    case.id_info[new] = case.id_info.pop(old)
-    for entry in case.id_info.values():
-        if entry.get('decl_pkg_id') == old:
-            entry['decl_pkg_id'] = new
-        entry['citing_pkg_ids'] = [new if x == old else x
-                                   for x in entry.get('citing_pkg_ids', [])]
+    """Rename identifier old to new throughout the LTAC forest."""
+    case.rename_id(old, new)
 
 
 def _apply_restate(case, label: str, stmt: str) -> None:
-    """Update the statement text for label on all nodes and in id_info.
-
-    Panics if label is not declared.
-    """
-    if label not in case.registry:
-        panic(f"--restate: {label!r} is not a declared identifier")
-    for node in all_nodes_fast(case.roots):
-        if node.identifier == label:
-            node.text = stmt
-    case.id_info[label]['statement'] = stmt
+    """Update the statement text for label on all nodes and in id_info."""
+    case.restate_id(label, stmt)
 
 
 def _apply_detach(case, target_id: str) -> None:
-    """Replace target_id's definition with a citation; promote subtree to new package.
-
-    Panics if target_id is not defined, or if its definition is already a
-    top-level package root (has no parent).
-    """
-    node = case.registry.get(target_id)
-    if node is None:
-        panic(f"--detach: {target_id!r} is not defined")
-    if node.parent is None:
-        panic(f"--detach: {target_id!r} is a top-level package root; cannot detach")
-
-    parent = node.parent
-    idx = parent.children.index(node)
-
-    # Build a cited replacement node at the same position.
-    cited = Node(
-        node_type=node.node_type,
-        identifier=node.identifier,
-        text=node.text,
-        ext_ref='',
-        options=[],
-        children=[],
-        is_citation=True,
-        depth=node.depth,
-        parent=parent,
-        link_target=None,
-        diagram_id=None,
-    )
-    parent.children[idx] = cited
-
-    # Detach the definition node and make it a new package root.
-    node.parent = None
-    _recalc_depths(node, 0)
-    case.roots.append(node)
-
-    # Update id_info: the new package root ID for node and all descendants.
-    new_pkg_id = node.identifier
-    old_pkg_id = _decl_pkg_id_for(case.id_info, node.identifier)
-    _update_pkg_id_for_subtree(node, old_pkg_id, new_pkg_id, case.id_info)
-
-    # Record the new citation under the original package.
-    case.id_info[target_id]['citations'] = case.id_info[target_id].get('citations', 0) + 1
-    citing_pkg = cited.pkg_root.identifier
-    if citing_pkg and citing_pkg not in case.id_info[target_id].get('citing_pkg_ids', []):
-        case.id_info[target_id].setdefault('citing_pkg_ids', []).append(citing_pkg)
+    """Replace target_id's definition with a citation; promote subtree to new package."""
+    case.detach_id(target_id)
 
 
 def _apply_move(case, moving_id: str, dest_id: str) -> None:
-    """Move moving_id's definition to be a child of dest_id.
-
-    ID may be top-level or nested anywhere in the tree. No citation is left
-    at the original location. If a ^ID citation already exists as a direct
-    child of dest_id it is replaced by the definition (citation count
-    decreases by 1); otherwise the definition is appended as the last child.
-    To leave a citation behind when moving a non-top-level node, run
-    --detach ID first (which creates ^ID in place), then --move ID DESTINATION.
-
-    Panics if moving_id or dest_id is not defined.
-    """
-    node = case.registry.get(moving_id)
-    if node is None:
-        panic(f"--move: {moving_id!r} is not defined")
-    dest = case.registry.get(dest_id)
-    if dest is None:
-        panic(f"--move: {dest_id!r} is not defined")
-
-    # Remember old decl_pkg_id before detaching.
-    old_pkg_id = _decl_pkg_id_for(case.id_info, moving_id)
-
-    # Detach node from its current location (no citation left behind).
-    if node.parent is None:
-        case.roots.remove(node)
-    else:
-        node.parent.children.remove(node)
-        node.parent = None
-
-    # Find a pre-existing ^ID citation among dest's direct children.
-    cited_idx = None
-    for i, child in enumerate(dest.children):
-        if child.is_citation and child.identifier == moving_id:
-            cited_idx = i
-            break
-
-    # Insert node under dest.
-    if cited_idx is not None:
-        dest.children[cited_idx] = node
-        case.id_info[moving_id]['citations'] = max(
-            0, case.id_info[moving_id].get('citations', 1) - 1)
-    else:
-        dest.children.append(node)
-
-    node.parent = dest
-    _recalc_depths(node, dest.depth + 1)
-
-    # Update decl_pkg_id for node and all its descendants.
-    new_pkg_id = dest.pkg_root.identifier
-    _update_pkg_id_for_subtree(node, old_pkg_id, new_pkg_id, case.id_info)
+    """Move moving_id's definition to be a child of dest_id."""
+    case.move_id(moving_id, dest_id)
 
 
 def _make_temp(path: str, content: str, line_ending: str = '\n') -> Optional[str]:
@@ -5353,28 +5440,13 @@ def _make_temp(path: str, content: str, line_ending: str = '\n') -> Optional[str
             raise
         return tmp
     except OSError as e:
-        error(f"cannot write temp file for {path!r}: {e}")
+        print(f"verocase: error: cannot write temp file for {path!r}: {e}", file=sys.stderr)
         return None
 
 
 def _apply_ltac_update(case) -> int:
-    """Update cited/Link node text to match the declaration's statement text.
-
-    Walks all nodes; for any cited or Link node whose text differs from the
-    declaration node's text in registry, replaces it.  Returns the count of
-    nodes changed.  Uses the declaration node (registry) rather than id_info
-    so the authoritative text is always the declaration regardless of parse order.
-    """
-    count = 0
-    for node in all_nodes_fast(case.roots):
-        if not node.identifier or node.is_definition:
-            continue
-        decl = case.registry.get(node.identifier)
-        canonical = decl.text if decl is not None else None
-        if node.text and canonical is not None and node.text != canonical:
-            node.text = canonical
-            count += 1
-    return count
+    """Update cited/Link node text to match the declaration's statement text."""
+    return case.sync_citations()
 
 
 def _collect_document_element_ids(path: str) -> set:
@@ -5417,15 +5489,14 @@ def _inline_rewrite_file(
     When add_missing is True, uses a single-pass smart-placement algorithm to
     insert new element stubs near their natural LTAC order position.
     """
-    global had_error
-    error_before = had_error
+    error_before = case.had_error
 
     # Detect line endings by scanning only the first chunk (avoids reading all).
     try:
         with open(path, 'rb') as bf:
             first_chunk = bf.read(4096)
     except OSError as e:
-        error(f"cannot open {path!r}: {e}")
+        case.error(f"cannot open {path!r}: {e}")
         return None
     line_ending = '\r\n' if b'\r\n' in first_chunk else '\n'
     doc_format = detect_doc_format(path)
@@ -5437,15 +5508,15 @@ def _inline_rewrite_file(
     try:
         fd, tmp = tempfile.mkstemp(dir=dir_)
     except OSError as e:
-        error(f"cannot create temp file for {path!r}: {e}")
+        case.error(f"cannot create temp file for {path!r}: {e}")
         return None
 
     try:
         nl = '\r\n' if line_ending == '\r\n' else ''
         with os.fdopen(fd, 'w', encoding='utf-8', newline=nl, buffering=_DOC_IO_BUFSIZE) as out_f:
             with open(path, encoding='utf-8', newline='', buffering=_DOC_IO_BUFSIZE) as src_f:
-                process_document_stream(
-                    src_f, out_f, case, config,
+                case.process_document_stream(
+                    src_f, out_f,
                     seen_element_ids, doc_format,
                     add_missing=add_missing, strip=strip,
                     existing_ids=existing_ids)
@@ -5454,7 +5525,7 @@ def _inline_rewrite_file(
             os.unlink(tmp)
         except OSError:
             pass
-        error(f"error processing {path!r}: {e}")
+        case.error(f"error processing {path!r}: {e}")
         return None
     except BaseException:
         try:
@@ -5463,7 +5534,7 @@ def _inline_rewrite_file(
             pass
         raise
 
-    if had_error and not error_before:
+    if case.had_error and not error_before:
         try:
             os.unlink(tmp)
         except OSError:
@@ -5490,8 +5561,6 @@ def main() -> bool:
     Returns True on clean success, False if any errors were encountered.
     Raises VerocaseError on fatal errors.
     """
-    reset()
-
     args = parse_args()
 
     if args.selftest:
@@ -5501,20 +5570,22 @@ def main() -> bool:
     # After writing the stubs, execution falls through to the normal LTAC
     # loading below, which will find the newly created case.ltac.
     if args.start:
-        _check_no_existing_case_files()
-        _write_start_stubs()
+        _tmp_case = Case()
+        _tmp_case._check_no_existing_case_files()
+        _tmp_case._write_start_stubs()
 
-    if args.error:
-        global strict
-        strict = True
-
-    # Auto-discover config file if --config not given.
-    config_path = find_config(args.config)
-    config = load_config(config_path)
+    # Load config, discover LTAC, parse LTAC — all via Case().load().
+    case = Case().load(
+        ltac_file=args.ltac,
+        config_file=args.config,
+        strict=args.error,
+        validate=False,  # validate manually below
+    )
+    config = case.config
+    config_path = case.config_path
+    ltac_path = case.ltac_path
     config_invariant_checker(config)
 
-    ltac_path = find_ltac_file(args.ltac, config)
-    case = load_ltac_file(ltac_path, config=config)
     try:
         with open(ltac_path, newline='') as _f:
             ltac_line_ending = detect_line_ending(_f.read())
@@ -5576,7 +5647,7 @@ def main() -> bool:
         case.check_id_info()
         case.check_circularities()
         case.check_reachability()
-        if had_error:
+        if case.had_error:
             panic("LTAC validation failed after mutations; no files updated")
         buf = io.StringIO()
         write_ltac(case.roots, buf)
@@ -5667,7 +5738,7 @@ def main() -> bool:
             case.print_packages()
             first = False
 
-        return not had_error
+        return not case.had_error
 
     if args.info:
         wrote = render_selector(f'info {args.info}', case, config, sys.stdout,
@@ -5695,7 +5766,7 @@ def main() -> bool:
             seen_element_ids: set = set()
             _process_files(document_files, _NullWriter(), case, config, seen_element_ids, strip=args.strip)
             # This validation requires that we read all document files
-            _check_element_coverage(case.registry, seen_element_ids)
+            _check_element_coverage(case.registry, seen_element_ids, case)
         if ltac_pair:
             commit_updates([ltac_pair], ltac_path, config, config_path)
     elif args.stdout:
@@ -5703,7 +5774,7 @@ def main() -> bool:
             panic(_NO_FILES_MSG)
         seen_element_ids: set = set()
         _process_files(document_files, sys.stdout, case, config, seen_element_ids, strip=args.strip)
-        _check_element_coverage(case.registry, seen_element_ids)
+        _check_element_coverage(case.registry, seen_element_ids, case)
         if ltac_pair:
             commit_updates([ltac_pair], ltac_path, config, config_path)
     elif args.fixmissing or args.start:
@@ -5762,7 +5833,7 @@ def main() -> bool:
         if document_files:
             seen_element_ids: set = set()
             _process_files(document_files, _NullWriter(), case, config, seen_element_ids, strip=args.strip)
-            _check_element_coverage(case.registry, seen_element_ids)
+            _check_element_coverage(case.registry, seen_element_ids, case)
     else:
         # Default mode: rewrite document files in place.
         if not document_files and not ltac_pair:
@@ -5776,7 +5847,7 @@ def main() -> bool:
         if pairs:
             commit_updates(pairs, ltac_path, config, config_path)
         if document_files:
-            _check_element_coverage(case.registry, seen_element_ids)
+            _check_element_coverage(case.registry, seen_element_ids, case)
 
     if args.stats:
         ltac_stats = case.stats()
@@ -5791,7 +5862,7 @@ def main() -> bool:
         else:
             print_stats(ltac_stats, None)
 
-    return not had_error
+    return not case.had_error
 
 
 if __name__ == '__main__':

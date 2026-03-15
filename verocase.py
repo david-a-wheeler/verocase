@@ -1021,6 +1021,317 @@ class Case:
             if ident not in seen_element_ids:
                 self.warn(f"element {ident!r} has no 'element' selector in any processed file")
 
+    def _process_document_files(self, files: List[str], out,
+                                 strip: bool = False,
+                                 seen_ids: Optional[set] = None) -> set:
+        """Open each file and call process_document, accumulating seen element IDs."""
+        seen = seen_ids if seen_ids is not None else set()
+        for path in files:
+            try:
+                with open(path, newline='') as f:
+                    seen = self.process_document(f, out, detect_doc_format(path),
+                                                 strip=strip, seen_ids=seen)
+            except OSError as e:
+                self.error(f"cannot open {path!r}: {e}")
+        return seen
+
+    def _rewrite_document_file(
+        self,
+        path: str,
+        add_missing: bool = False,
+        strip: bool = False,
+        seen_ids: Optional[set] = None,
+    ) -> Tuple[Optional[Tuple[str, str]], set]:
+        """Process a single document file, streaming updated content to a temp file.
+
+        Returns a ``(pair, seen)`` tuple where pair is ``(tmp_path, final_path)``
+        or None on error, and seen is the set of element identifiers rendered.
+
+        Streams directly to a temp file (no whole-document buffer).  When
+        add_missing is True, uses a single-pass smart-placement algorithm to
+        insert new element stubs near their natural LTAC order position.
+        """
+        seen = seen_ids if seen_ids is not None else set()
+        error_before = self.had_error
+
+        # Detect line endings by scanning only the first chunk.
+        try:
+            with open(path, 'rb') as bf:
+                first_chunk = bf.read(4096)
+        except OSError as e:
+            self.error(f"cannot open {path!r}: {e}")
+            return None, seen
+        line_ending = '\r\n' if b'\r\n' in first_chunk else '\n'
+        doc_format = detect_doc_format(path)
+
+        # Pre-scan for existing element IDs used by single-pass smart placement.
+        existing_ids = _collect_document_element_ids(path) if add_missing else None
+
+        dir_ = os.path.dirname(os.path.abspath(path))
+        try:
+            fd, tmp = tempfile.mkstemp(dir=dir_)
+        except OSError as e:
+            self.error(f"cannot create temp file for {path!r}: {e}")
+            return None, seen
+
+        try:
+            nl = '\r\n' if line_ending == '\r\n' else ''
+            with os.fdopen(fd, 'w', encoding='utf-8', newline=nl,
+                           buffering=_DOC_IO_BUFSIZE) as out_f:
+                with open(path, encoding='utf-8', newline='',
+                          buffering=_DOC_IO_BUFSIZE) as src_f:
+                    seen = self.process_document(src_f, out_f, doc_format,
+                                                 add_missing=add_missing, strip=strip,
+                                                 existing_ids=existing_ids,
+                                                 seen_ids=seen_ids)
+        except Exception as e:
+            try:
+                os.unlink(tmp)
+            except OSError:
+                pass
+            self.error(f"error processing {path!r}: {e}")
+            return None, seen
+        except BaseException:
+            try:
+                os.unlink(tmp)
+            except OSError:
+                pass
+            raise
+
+        if self.had_error and not error_before:
+            try:
+                os.unlink(tmp)
+            except OSError:
+                pass
+            return None, seen
+
+        return (tmp, path), seen
+
+    def fix_misplaced_document(self, path: str) -> Optional[Tuple[str, str]]:
+        """Move misplaced element regions to their correct LTAC order positions.
+
+        Returns a (tmp_path, final_path) pair ready for commit_updates, or None
+        if no changes are needed or an error occurs.
+        """
+        try:
+            with open(path, newline='') as f:
+                original = f.read()
+        except OSError as e:
+            self.error(f"cannot open {path!r}: {e}")
+            return None
+
+        line_ending = detect_line_ending(original)
+        content = original.replace('\r\n', '\n')
+        lines = content.split('\n')
+        if lines and lines[-1] == '':
+            lines = lines[:-1]
+            had_trailing = True
+        else:
+            had_trailing = False
+
+        # Scan document to find element regions (start line, end line of full region).
+        # A "full region" is from <!-- verocase element X --> through the end of
+        # following prose (up to but not including the next verocase marker).
+        region_map = {}   # ident -> (start_idx, end_idx)
+        region_order = [] # ident in document order
+
+        i = 0
+        current_ident = None
+        region_start = None
+        after_end = False
+
+        while i < len(lines):
+            text = lines[i].rstrip('\r\n')
+
+            if after_end and current_ident is not None:
+                if _is_element_region_terminator(text):
+                    region_map[current_ident] = (region_start, i - 1)
+                    after_end = False
+                    current_ident = None
+                    m2 = _CASEPROC_REGION_RE.match(text)
+                    if m2 and m2.group(1).split(None, 1)[0] in ('stop', 'epilogue'):
+                        i += 1
+                        while i < len(lines):
+                            t = lines[i].rstrip('\r\n')
+                            if 'verocase' in t and t.lstrip().startswith('<!-- end verocase -->'):
+                                i += 1
+                                break
+                            i += 1
+                        continue
+                else:
+                    m = _CASEPROC_REGION_RE.match(text)
+                    if m:
+                        i += 1
+                        while i < len(lines):
+                            t = lines[i].rstrip('\r\n')
+                            if 'verocase' in t and t.lstrip().startswith('<!-- end verocase -->'):
+                                i += 1
+                                break
+                            i += 1
+                        continue
+                    i += 1
+                    continue
+
+            m = _CASEPROC_REGION_RE.match(text)
+            if m:
+                selector = m.group(1)
+                parts = selector.split(None, 1)
+                kind = parts[0] if parts else ''
+                if kind in ('stop', 'epilogue'):
+                    i += 1
+                    while i < len(lines):
+                        t = lines[i].rstrip('\r\n')
+                        if 'verocase' in t and t.lstrip().startswith('<!-- end verocase -->'):
+                            i += 1
+                            break
+                        i += 1
+                    continue
+                if kind == 'element' and len(parts) == 2:
+                    current_ident = parts[1].strip()
+                    region_start = i
+                    region_order.append(current_ident)
+                else:
+                    current_ident = None
+                i += 1
+                while i < len(lines):
+                    t = lines[i].rstrip('\r\n')
+                    if 'verocase' in t and t.lstrip().startswith('<!-- end verocase -->'):
+                        if current_ident is not None:
+                            after_end = True
+                        i += 1
+                        break
+                    i += 1
+                continue
+            i += 1
+
+        if after_end and current_ident is not None:
+            region_map[current_ident] = (region_start, len(lines) - 1)
+
+        # Get LTAC order and find misplaced elements via LIS.
+        ltac_order = [node.identifier for node in self.all_nodes()
+                      if node.is_definition and node.identifier]
+        ltac_pos = {ident: i for i, ident in enumerate(ltac_order)}
+
+        doc_with_regions = [ident for ident in region_order if ident in self.registry]
+        if not doc_with_regions:
+            return None
+
+        ranks = [ltac_pos.get(ident, -1) for ident in doc_with_regions]
+        from bisect import bisect_left
+        tails = []
+        tail_idx = []
+        predecessor = [-1] * len(doc_with_regions)
+
+        for i, r in enumerate(ranks):
+            if r < 0:
+                continue
+            pos = bisect_left(tails, r)
+            if pos == len(tails):
+                tails.append(r)
+                tail_idx.append(i)
+            else:
+                tails[pos] = r
+                tail_idx[pos] = i
+            if pos > 0:
+                predecessor[i] = tail_idx[pos - 1]
+
+        if not tail_idx:
+            lis_indices = set()
+        else:
+            lis_indices = set()
+            idx = tail_idx[-1]
+            while idx >= 0:
+                lis_indices.add(idx)
+                idx = predecessor[idx]
+
+        misplaced = [doc_with_regions[i] for i in range(len(doc_with_regions))
+                     if i not in lis_indices]
+        if not misplaced:
+            return None
+
+        # Process moves in LTAC order: remove from current position, insert after predecessor.
+        result = list(lines)
+
+        def find_region(lines_list, ident):
+            """Find (start_idx, end_idx) of an element region in lines_list."""
+            i = 0
+            while i < len(lines_list):
+                text = lines_list[i].rstrip('\r\n')
+                m = _CASEPROC_REGION_RE.match(text)
+                if m:
+                    selector = m.group(1)
+                    parts = selector.split(None, 1)
+                    kind = parts[0] if parts else ''
+                    if kind == 'element' and len(parts) == 2 and parts[1].strip() == ident:
+                        start = i
+                        i += 1
+                        while i < len(lines_list):
+                            t = lines_list[i].rstrip('\r\n')
+                            if t.strip() == '<!-- end verocase -->':
+                                i += 1
+                                break
+                            i += 1
+                        while i < len(lines_list):
+                            t = lines_list[i].rstrip('\r\n')
+                            if _is_element_region_terminator(t):
+                                break
+                            inner_m = _CASEPROC_REGION_RE.match(t)
+                            if inner_m:
+                                i += 1
+                                while i < len(lines_list):
+                                    inner = lines_list[i].rstrip('\r\n')
+                                    if inner.strip() == '<!-- end verocase -->':
+                                        i += 1
+                                        break
+                                    i += 1
+                                continue
+                            if t.strip() == '<!-- end verocase -->':
+                                break
+                            i += 1
+                        end = i - 1
+                        return start, end
+                i += 1
+            return None, None
+
+        notify(f"Fixing {len(misplaced)} misplaced element region(s) in {path}")
+
+        misplaced_set = set(misplaced)
+        for ltac_ident in ltac_order:
+            if ltac_ident not in misplaced_set:
+                continue
+            ltac_idx = ltac_pos[ltac_ident]
+            pred_ident = None
+            for j in range(ltac_idx - 1, -1, -1):
+                candidate = ltac_order[j]
+                s, e = find_region(result, candidate)
+                if s is not None:
+                    pred_ident = candidate
+                    break
+            start, end = find_region(result, ltac_ident)
+            if start is None:
+                continue
+            region_lines = result[start:end + 1]
+            remove_start = start
+            if remove_start > 0 and result[remove_start - 1].strip() == '':
+                remove_start -= 1
+            del result[remove_start:end + 1]
+            if pred_ident is not None:
+                insert_after = find_region(result, pred_ident)[1]
+                if insert_after is None:
+                    insert_after = len(result) - 1
+            else:
+                insert_after = -1
+            insert_pos = insert_after + 1
+            result[insert_pos:insert_pos] = [''] + region_lines
+
+        new_content = '\n'.join(result)
+        if had_trailing:
+            new_content += '\n'
+        if new_content == content:
+            return None
+        tmp = _make_temp(path, new_content, line_ending)
+        return (tmp, path) if tmp is not None else None
+
     def update_files(self, add_missing: bool = False,
                      strip: bool = False) -> bool:
         """Atomically update document_files and LTAC (if modified) in one commit.
@@ -1034,9 +1345,8 @@ class Case:
         pairs = []
         seen: set = set()
         for path in self.document_files:
-            pair, seen = _inline_rewrite_file(path, self, self.config,
-                                              add_missing=add_missing, strip=strip,
-                                              seen_ids=seen)
+            pair, seen = self._rewrite_document_file(path, add_missing=add_missing,
+                                                     strip=strip, seen_ids=seen)
             if pair is not None:
                 pairs.append(pair)
         if self.ltac_modified and self.ltac_path:
@@ -3859,6 +4169,7 @@ Data types and examples of their methods/properties:
     case.all_nodes()         DFS generator, LTAC order
     case.all_nodes_fast()    DFS generator, fast order (order unspecified)
     # Document processing
+    case.fix_misplaced_document(path) -> Optional[Tuple[str,str]]
     case.update_files(add_missing=False, strip=False) -> bool
     case.check_element_coverage(seen_element_ids)  warn about uncovered elements
 
@@ -4327,26 +4638,6 @@ def _is_dubious_reference(ref: str) -> bool:
 
 
 
-def _process_files(
-    files: List[str],
-    out,
-    case: 'Case',
-    config: dict,
-    strip: bool = False,
-    seen_ids: Optional[set] = None,
-) -> set:
-    """Open each file and call process_document; fall back to stdin if none given."""
-    seen = seen_ids if seen_ids is not None else set()
-    if files:
-        for path in files:
-            try:
-                with open(path, newline='') as f:
-                    seen = case.process_document(f, out, detect_doc_format(path), strip=strip, seen_ids=seen)
-            except OSError as e:
-                case.error(f"cannot open {path!r}: {e}")
-    else:
-        seen = case.process_document(sys.stdin, out, 'markdown', strip=strip, seen_ids=seen)
-    return seen
 
 
 
@@ -4737,279 +5028,6 @@ def _is_element_region_terminator(line: str) -> bool:
     return False
 
 
-def _fixmisplaced_document(path, case, config, doc_format):
-    """Move misplaced element regions to their correct LTAC order positions.
-
-    Returns a (tmp_path, final_path) pair, or None if no changes or error.
-    """
-    try:
-        with open(path, newline='') as f:
-            original = f.read()
-    except OSError as e:
-        case.error(f"cannot open {path!r}: {e}")
-        return None
-
-    line_ending = detect_line_ending(original)
-    content = original.replace('\r\n', '\n')
-    lines = content.split('\n')
-    if lines and lines[-1] == '':
-        lines = lines[:-1]
-        had_trailing = True
-    else:
-        had_trailing = False
-
-    # Scan document to find element regions (start line, end line of full region)
-    # A "full region" is from <!-- verocase element X --> through the end of
-    # following prose (up to but not including the next verocase marker).
-    # Format: ident -> (start_line_idx, end_line_idx)  (0-based, inclusive)
-    region_map = {}   # ident -> (start_idx, end_idx)
-    region_order = [] # ident in document order
-
-    i = 0
-    current_ident = None
-    region_start = None
-    after_end = False
-    end_line_idx = None
-
-    while i < len(lines):
-        text = lines[i].rstrip('\r\n')
-
-        # While in element prose, check whether this line terminates the region
-        # or starts a non-terminating embedded selector to skip over.
-        if after_end and current_ident is not None:
-            if _is_element_region_terminator(text):
-                # Close current element's full region just before this line
-                region_map[current_ident] = (region_start, i - 1)
-                after_end = False
-                current_ident = None
-                # If the terminator is 'stop', scan past its <!-- end verocase -->
-                # then continue the outer loop (do not fall through to normal handling)
-                m2 = _CASEPROC_REGION_RE.match(text)
-                if m2 and m2.group(1).split(None, 1)[0] in ('stop', 'epilogue'):
-                    i += 1
-                    while i < len(lines):
-                        t = lines[i].rstrip('\r\n')
-                        if 'verocase' in t and t.lstrip().startswith('<!-- end verocase -->'):
-                            i += 1
-                            break
-                        i += 1
-                    continue
-                # Fall through: handle this line (may start a new element)
-            else:
-                m = _CASEPROC_REGION_RE.match(text)
-                if m:
-                    # Non-terminating embedded selector in prose: skip over its region
-                    i += 1
-                    while i < len(lines):
-                        t = lines[i].rstrip('\r\n')
-                        if 'verocase' in t and t.lstrip().startswith('<!-- end verocase -->'):
-                            i += 1
-                            break
-                        i += 1
-                    continue
-                i += 1
-                continue
-
-        # Top-level line (not inside element prose)
-        m = _CASEPROC_REGION_RE.match(text)
-        if m:
-            selector = m.group(1)
-            parts = selector.split(None, 1)
-            kind = parts[0] if parts else ''
-            if kind in ('stop', 'epilogue'):
-                # Scan past the stop/epilogue region without starting any element
-                i += 1
-                while i < len(lines):
-                    t = lines[i].rstrip('\r\n')
-                    if 'verocase' in t and t.lstrip().startswith('<!-- end verocase -->'):
-                        i += 1
-                        break
-                    i += 1
-                continue
-            if kind == 'element' and len(parts) == 2:
-                current_ident = parts[1].strip()
-                region_start = i
-                region_order.append(current_ident)
-            else:
-                current_ident = None
-            i += 1
-            while i < len(lines):
-                t = lines[i].rstrip('\r\n')
-                if 'verocase' in t and t.lstrip().startswith('<!-- end verocase -->'):
-                    if current_ident is not None:
-                        after_end = True
-                        end_line_idx = i
-                    i += 1
-                    break
-                i += 1
-            continue
-        i += 1
-
-    if after_end and current_ident is not None:
-        region_map[current_ident] = (region_start, len(lines) - 1)
-
-    # Get LTAC order
-    ltac_order = [node.identifier for node in case.all_nodes()
-                  if node.is_definition and node.identifier]
-    ltac_pos = {ident: i for i, ident in enumerate(ltac_order)}
-
-    # Find elements that are in both LTAC and document
-    doc_with_regions = [ident for ident in region_order if ident in case.registry]
-
-    if not doc_with_regions:
-        return None
-
-    # Find misplaced elements (same LIS algorithm as _analysis_misplaced)
-    ranks = [ltac_pos.get(ident, -1) for ident in doc_with_regions]
-    from bisect import bisect_left
-    tails = []
-    tail_idx = []
-    predecessor = [-1] * len(doc_with_regions)
-
-    for i, r in enumerate(ranks):
-        if r < 0:
-            continue
-        pos = bisect_left(tails, r)
-        if pos == len(tails):
-            tails.append(r)
-            tail_idx.append(i)
-        else:
-            tails[pos] = r
-            tail_idx[pos] = i
-        if pos > 0:
-            predecessor[i] = tail_idx[pos - 1]
-
-    if not tail_idx:
-        lis_indices = set()
-    else:
-        lis_indices = set()
-        idx = tail_idx[-1]
-        while idx >= 0:
-            lis_indices.add(idx)
-            idx = predecessor[idx]
-
-    misplaced = [doc_with_regions[i] for i in range(len(doc_with_regions))
-                 if i not in lis_indices]
-
-    if not misplaced:
-        return None
-
-    # Process moves in LTAC order (forward through LTAC, not document order)
-    # For each misplaced element: remove from current position, insert after predecessor
-    # Work with a mutable list of lines
-    result = list(lines)
-
-    def find_region(lines_list, ident):
-        """Find (start_idx, end_idx) of an element region in lines_list."""
-        i = 0
-        while i < len(lines_list):
-            text = lines_list[i].rstrip('\r\n')
-            m = _CASEPROC_REGION_RE.match(text)
-            if m:
-                selector = m.group(1)
-                parts = selector.split(None, 1)
-                kind = parts[0] if parts else ''
-                if kind == 'element' and len(parts) == 2 and parts[1].strip() == ident:
-                    start = i
-                    i += 1
-                    # Find end verocase
-                    while i < len(lines_list):
-                        t = lines_list[i].rstrip('\r\n')
-                        if t.strip() == '<!-- end verocase -->':
-                            i += 1
-                            break
-                        i += 1
-                    # Consume trailing prose until the next element/stop/config
-                    # terminator.  Non-terminating embedded selectors (info,
-                    # ltac/markdown, etc.) are skipped over and treated as part
-                    # of this element's full content.
-                    while i < len(lines_list):
-                        t = lines_list[i].rstrip('\r\n')
-                        if _is_element_region_terminator(t):
-                            break
-                        inner_m = _CASEPROC_REGION_RE.match(t)
-                        if inner_m:
-                            # Non-terminating selector: skip over its region
-                            i += 1
-                            while i < len(lines_list):
-                                inner = lines_list[i].rstrip('\r\n')
-                                if inner.strip() == '<!-- end verocase -->':
-                                    i += 1
-                                    break
-                                i += 1
-                            continue
-                        if t.strip() == '<!-- end verocase -->':
-                            break  # orphan end marker
-                        i += 1
-                    end = i - 1
-                    return start, end
-            i += 1
-        return None, None
-
-    def find_region_end(lines_list, ident):
-        """Find the last line index of the full region for ident."""
-        start, end = find_region(lines_list, ident)
-        return end
-
-    notify(f"Fixing {len(misplaced)} misplaced element region(s) in {path}")
-
-    # Process misplaced elements in LTAC order
-    misplaced_set = set(misplaced)
-    for ltac_ident in ltac_order:
-        if ltac_ident not in misplaced_set:
-            continue
-
-        # Find predecessor (nearest preceding element in LTAC order with a region)
-        ltac_idx = ltac_pos[ltac_ident]
-        pred_ident = None
-        for j in range(ltac_idx - 1, -1, -1):
-            candidate = ltac_order[j]
-            # Check if this candidate has a region in the current result
-            s, e = find_region(result, candidate)
-            if s is not None:
-                pred_ident = candidate
-                break
-
-        # Extract the full region for ltac_ident
-        start, end = find_region(result, ltac_ident)
-        if start is None:
-            continue
-
-        region_lines = result[start:end + 1]
-
-        # Remove the region from its current location
-        # Also remove a leading blank line before the region if present
-        remove_start = start
-        if remove_start > 0 and result[remove_start - 1].strip() == '':
-            remove_start -= 1
-        del result[remove_start:end + 1]
-
-        # Find the new insertion point
-        if pred_ident is not None:
-            insert_after = find_region_end(result, pred_ident)
-            if insert_after is None:
-                insert_after = len(result) - 1
-        else:
-            insert_after = -1  # insert at beginning
-
-        # Insert: blank line separator + region lines
-        insert_pos = insert_after + 1
-        to_insert = [''] + region_lines
-        result[insert_pos:insert_pos] = to_insert
-
-    new_content = '\n'.join(result)
-    if had_trailing:
-        new_content += '\n'
-
-    if new_content == content:
-        return None
-
-    tmp = _make_temp(path, new_content, line_ending)
-    if tmp is None:
-        return None
-    return (tmp, path)
-
-
 def make_backup(pairs: List[Tuple[str, str]], ltac_path: str,
                 config: dict, config_path: Optional[str]) -> None:
     """Create a timestamped backup snapshot of files about to be modified.
@@ -5128,77 +5146,6 @@ def _collect_document_element_ids(path: str) -> set:
 # This only affects inline rewriting (temp file path); --stdout writes
 # directly to sys.stdout and is not affected.
 _DOC_IO_BUFSIZE = 256 * 1024  # 262144 bytes = 256 KiB
-
-
-def _inline_rewrite_file(
-    path: str,
-    case: 'Case',
-    config: dict,
-    add_missing: bool = False,
-    strip: bool = False,
-    seen_ids: Optional[set] = None,
-) -> Tuple[Optional[Tuple[str, str]], set]:
-    """Process a single document file, streaming updated content to a temp file.
-
-    Returns a ``(pair, seen_ids)`` tuple where pair is ``(tmp_path, final_path)``
-    or None on error, and seen_ids is the set of element identifiers rendered.
-
-    Streams directly to a temp file (no whole-document buffer).
-
-    When add_missing is True, uses a single-pass smart-placement algorithm to
-    insert new element stubs near their natural LTAC order position.
-    """
-    error_before = case.had_error
-
-    # Detect line endings by scanning only the first chunk (avoids reading all).
-    try:
-        with open(path, 'rb') as bf:
-            first_chunk = bf.read(4096)
-    except OSError as e:
-        case.error(f"cannot open {path!r}: {e}")
-        return None, seen_ids if seen_ids is not None else set()
-    line_ending = '\r\n' if b'\r\n' in first_chunk else '\n'
-    doc_format = detect_doc_format(path)
-
-    # Pre-scan for existing element IDs used by single-pass smart placement.
-    existing_ids = _collect_document_element_ids(path) if add_missing else None
-
-    dir_ = os.path.dirname(os.path.abspath(path))
-    try:
-        fd, tmp = tempfile.mkstemp(dir=dir_)
-    except OSError as e:
-        case.error(f"cannot create temp file for {path!r}: {e}")
-        return None, seen_ids if seen_ids is not None else set()
-
-    try:
-        nl = '\r\n' if line_ending == '\r\n' else ''
-        with os.fdopen(fd, 'w', encoding='utf-8', newline=nl, buffering=_DOC_IO_BUFSIZE) as out_f:
-            with open(path, encoding='utf-8', newline='', buffering=_DOC_IO_BUFSIZE) as src_f:
-                seen = case.process_document(src_f, out_f, doc_format,
-                                             add_missing=add_missing, strip=strip,
-                                             existing_ids=existing_ids, seen_ids=seen_ids)
-    except Exception as e:
-        try:
-            os.unlink(tmp)
-        except OSError:
-            pass
-        case.error(f"error processing {path!r}: {e}")
-        return None, seen_ids if seen_ids is not None else set()
-    except BaseException:
-        try:
-            os.unlink(tmp)
-        except OSError:
-            pass
-        raise
-
-    if case.had_error and not error_before:
-        try:
-            os.unlink(tmp)
-        except OSError:
-            pass
-        return None, seen_ids if seen_ids is not None else set()
-
-    return (tmp, path), seen
 
 
 def run_selftests() -> None:
@@ -5413,7 +5360,7 @@ def main() -> bool:
             case.save_ltac()
     elif args.validate:
         if document_files:
-            seen_element_ids = _process_files(document_files, _NullWriter(), case, config, strip=args.strip)
+            seen_element_ids = case._process_document_files(document_files, _NullWriter(), strip=args.strip)
             # This validation requires that we read all document files
             case.check_element_coverage(seen_element_ids)
         if case.ltac_modified:
@@ -5421,7 +5368,7 @@ def main() -> bool:
     elif args.stdout:
         if not document_files:
             panic(_NO_FILES_MSG)
-        seen_element_ids = _process_files(document_files, sys.stdout, case, config, strip=args.strip)
+        seen_element_ids = case._process_document_files(document_files, sys.stdout, strip=args.strip)
         case.check_element_coverage(seen_element_ids)
         if case.ltac_modified:
             case.save_ltac()
@@ -5433,9 +5380,8 @@ def main() -> bool:
         pairs = []
         for i, path in enumerate(document_files):
             is_last = (i == len(document_files) - 1)
-            pair, seen_element_ids = _inline_rewrite_file(path, case, config,
-                                                          add_missing=is_last,
-                                                          seen_ids=seen_element_ids)
+            pair, seen_element_ids = case._rewrite_document_file(path, add_missing=is_last,
+                                                                  seen_ids=seen_element_ids)
             if pair:
                 pairs.append(pair)
         # Mark needsSupport on all leaf elements that lack an assertion status.
@@ -5453,19 +5399,9 @@ def main() -> bool:
     elif args.fixmisplaced:
         if not document_files:
             panic(_NO_FILES_MSG)
-        seen_element_ids: set = set()
-        # First pass: re-render existing regions to get current state
         pairs = []
         for path in document_files:
-            pair, seen_element_ids = _inline_rewrite_file(path, case, config,
-                                                           add_missing=False,
-                                                           seen_ids=seen_element_ids)
-            if pair:
-                pairs.append(pair)
-        # Second pass: fix misplaced regions
-        # Need to work on the current file content (updated or original)
-        for path in document_files:
-            pair = _fixmisplaced_document(path, case, config, detect_doc_format(path))
+            pair = case.fix_misplaced_document(path)
             if pair:
                 pairs.append(pair)
         if case.ltac_modified:
@@ -5480,7 +5416,7 @@ def main() -> bool:
         # --read-only: load, validate, and optionally report stats; no file writes.
         # Mutations are blocked above, so ltac_modified is always False here.
         if document_files:
-            seen_element_ids = _process_files(document_files, _NullWriter(), case, config, strip=args.strip)
+            seen_element_ids = case._process_document_files(document_files, _NullWriter(), strip=args.strip)
             case.check_element_coverage(seen_element_ids)
     else:
         # Default mode: rewrite document files in place (+ LTAC if modified).

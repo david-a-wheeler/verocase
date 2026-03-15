@@ -2269,6 +2269,18 @@ _LTAC_LINE_RE = re.compile(
     r'\s*$'
 )
 
+# SACM spec section 11 defines AssertionStatus as a mutually exclusive
+# enumeration: Asserted (default), NeedsSupport, Assumed, Axiomatic, Defeated,
+# AsCited.  An Assumption node implicitly carries Assumed; a cross-citation
+# (^ID) implicitly carries AsCited.
+
+def _is_dubious_reference(ref: str) -> bool:
+    """Return True if ref is non-empty, has no '.' anywhere, and doesn't start with '#'.
+
+    Such references are likely to be parenthetical comments accidentally parsed
+    as references rather than genuine file paths or URLs.
+    """
+    return bool(ref) and '.' not in ref and not ref.startswith('#')
 
 class _LTACParser:
     def __init__(self, case: 'Case') -> None:
@@ -4782,19 +4794,6 @@ Run --help-api for the public Python API summary (for library use).
 
 
 
-# SACM spec section 11 defines AssertionStatus as a mutually exclusive
-# enumeration: Asserted (default), NeedsSupport, Assumed, Axiomatic, Defeated,
-# AsCited.  An Assumption node implicitly carries Assumed; a cross-citation
-# (^ID) implicitly carries AsCited.
-
-
-def _is_dubious_reference(ref: str) -> bool:
-    """Return True if ref is non-empty, has no '.' anywhere, and doesn't start with '#'.
-
-    Such references are likely to be parenthetical comments accidentally parsed
-    as references rather than genuine file paths or URLs.
-    """
-    return bool(ref) and '.' not in ref and not ref.startswith('#')
 
 
 

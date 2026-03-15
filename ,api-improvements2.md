@@ -3,12 +3,15 @@
 *2026-03-15. Successor to ,api-improvements.md.*
 
 Items 1–5, 8, 9, 19, 20, 21, 27 are done; 17 and 18 were dropped.
-Items A, B, C, E, H, I, N, O, P are also done or dropped (see below).
+Items A, B, C, E, F, H, I, J, N, O, P are also done or dropped (see below).
 H was implemented as `Case.load_ltac_string()` (a Case method using
 `self.config`).  N is moot: `load_ltac_file` was deleted; `Case.load()`
 validates by default and `load_ltac_string()` intentionally does not.
 B and I dropped: `Union[str, bool]` return type is a maintenance headache;
 callers that need string capture use `io.StringIO()` directly.
+F and J done: `collect_bfs`, `copy_forest`, `write_ltac`, `render_ltac_txt`,
+`render_ext_ref` made private; `render_selector` free function deleted;
+`needs_support` removed from public API and added as `case.needs_support()`.
 This document covers what remains: the items that still apply, updated
 for the current code (Case class, instance methods, new names).
 
@@ -20,18 +23,6 @@ for the current code (Case class, instance methods, new names).
 
 **Proposed change:** Rename to `case.citing_nodes(ident)`.
 Keep old name as alias.
-
----
-
-## F. Rename `collect_bfs` → `nodes_bfs` (was item 13)
-
-**Current state:** `collect_bfs(roots) -> List[Node]`; free function and
-Case shim both named `collect_bfs`.
-
-**Proposed change:** Rename to `nodes_bfs` (consistent with `all_nodes`,
-`all_nodes_fast`).  Keep `collect_bfs` as alias and in `__all__`.
-
-**Notes:** Grep `collect_bfs` in verocase.py and tests to find callers.
 
 ---
 
@@ -47,22 +38,6 @@ used; current inspection suggests it is not referenced in the body.
 - Consider renaming to `write_ltac_normalized` to distinguish from
   `write_ltac` (which writes the full forest preserving depth).
 - Update `__all__` and `--help-api`.
-
----
-
-## J. Add `case.needs_support()` Case shim (was item 22)
-
-**Current state:** `needs_support(nodes)` is a public free function; callers
-must write `needs_support(list(case.all_nodes()))`.
-
-**Proposed change:**
-
-```python
-def needs_support(self) -> List['Node']:
-    return needs_support(list(self.all_nodes()))
-```
-
-Trivial shim; free function stays in `__all__`.
 
 ---
 
@@ -142,9 +117,7 @@ in the same atomic backup.  Option A (Case methods only) is sufficient now.
 | # | Change | Size | Priority |
 |---|--------|------|----------|
 | D | `find_citation_parents` → `citing_nodes` | Trivial | Low |
-| F | `collect_bfs` → `nodes_bfs` | Trivial | Low |
 | G | Audit + drop unused `config` param from `render_ltac_txt` | Small | Medium |
-| J | Add `case.needs_support()` shim | Trivial | Low |
 | K | Add `case.update_documents()` | Medium | High |
 | L | Add `case.update_files()` (LTAC + docs atomic) | Medium | High |
 | M | `SafeWriter` context manager | Large | Defer |

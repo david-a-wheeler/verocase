@@ -42,21 +42,11 @@ __all__ = [
     'Node',
     'Case',
     'DEFAULT_CONFIG',
-    # Loading, configuration, and serialization
-    'write_ltac',
-    # Tree manipulation
-    'copy_forest',
     # Tree traversal
     'all_nodes',
     'all_nodes_fast',
-    'collect_bfs',
     # Standalone analysis helpers
-    'needs_support',
     'print_stats',
-    # Rendering to a stream
-    'render_selector',
-    'render_ltac_txt',
-    'render_ext_ref',
 ]
 
 # Python version support: we currently support Python 3.8 and later.
@@ -396,7 +386,7 @@ class Node:
 
     Nodes form a doubly-linked tree via `children` and `parent`.  Every node
     in a loaded forest is reachable by walking `all_roots` recursively, or by
-    iterating with `all_nodes`, `all_nodes_fast`, or `collect_bfs`.
+    iterating with `all_nodes` or `all_nodes_fast`.
 
     Fields
     ------
@@ -952,15 +942,19 @@ class Case:
 
     def collect_bfs(self) -> List['Node']:
         """Return all nodes in the forest in BFS order."""
-        return collect_bfs(self.roots)
+        return _collect_bfs(self.roots)
 
     def copy_forest(self) -> List['Node']:
         """Return a deep copy of the forest; originals are untouched."""
-        return copy_forest(self.roots)
+        return _copy_forest(self.roots)
 
     def write_ltac(self, out: 'TextIO') -> None:
         """Serialize the full forest to LTAC text, writing to out."""
-        write_ltac(self.roots, out)
+        _write_ltac(self.roots, out)
+
+    def needs_support(self) -> List['Node']:
+        """Return all nodes in the forest that carry the {needssupport} option."""
+        return [n for n in all_nodes_fast(self.roots) if 'needssupport' in n.options]
 
     def save_ltac(self, path: Optional[str] = None) -> None:
         """Write the LTAC forest to disk using the safe backup+atomic-replace mechanism.
@@ -1426,7 +1420,7 @@ class Case:
             nodes = _resolve_element(element_id, self, current_element)
             if not nodes:
                 return False
-            return render_ltac_txt(nodes, self.config, out)
+            return _render_ltac_txt(nodes, self.config, out)
         elif display_type == 'info':
             if element_id is None or element_id == '*':
                 self.error("'info' selector requires an explicit element ID")
@@ -1654,9 +1648,9 @@ class Case:
     def render_ltac_txt(self, node_list, out: 'TextIO', sep: str = '') -> bool:
         """Write node_list as raw LTAC text to out, normalizing indentation to depth 0.
 
-        Uses self.config.  Equivalent to render_ltac_txt(node_list, case.config, out, sep).
+        Uses self.config.
         """
-        return render_ltac_txt(node_list, self.config, out, sep)
+        return _render_ltac_txt(node_list, self.config, out, sep)
 
     def _check_no_existing_case_files(self) -> None:
         """Panic if any well-known case file already exists."""
@@ -2246,7 +2240,7 @@ def render_html(roots: List[Node], config: dict, out: TextIO) -> bool:
 # Mermaid diagram shared utilities
 # ---------------------------------------------------------------------------
 
-def copy_forest(roots: List['Node']) -> List['Node']:
+def _copy_forest(roots: List['Node']) -> List['Node']:
     """Return an independent deep copy of the node forest.
 
     Uses copy.deepcopy so all internal back-references (parent, link_target,
@@ -2256,7 +2250,7 @@ def copy_forest(roots: List['Node']) -> List['Node']:
     return copy.deepcopy(roots)
 
 
-def collect_bfs(roots: List['Node']) -> List['Node']:
+def _collect_bfs(roots: List['Node']) -> List['Node']:
     """Return every node in the forest as a list in breadth-first order.
 
     Roots appear first, then their children left-to-right, then
@@ -2742,7 +2736,7 @@ def _sacm_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
     base_url = config.get('base_url', '')
     pkg_label = config.get('pkg_label', DEFAULT_CONFIG['pkg_label'])
     bottom_padding = config.get('bottom_padding', DEFAULT_CONFIG['bottom_padding'])
-    roots = copy_forest(roots)
+    roots = _copy_forest(roots)
     syn_counter = [0]
     _apply_sacm_width_transform(roots, config, syn_counter)
 
@@ -2750,7 +2744,7 @@ def _sacm_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
     out.write(body_header)
 
     # Node declarations (BFS); write directly.
-    for node in collect_bfs(roots):
+    for node in _collect_bfs(roots):
         decl = _sacm_node_decl(node)
         if decl:
             out.write('\n')
@@ -2772,7 +2766,7 @@ def _sacm_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
     # Link to the element anchor; never directly to ext_ref.
     # When base_url is empty, fragment-only links (#id) are used so that
     # clicks still work on platforms that resolve them within the same page.
-    for node in collect_bfs(roots):
+    for node in _collect_bfs(roots):
         if node.node_type not in ('Relation', 'Link'):
             url = _node_anchor_url(node, base_url, pkg_label)
             if url:
@@ -2986,7 +2980,7 @@ def _gsn_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
     base_url = config.get('base_url', '')
     pkg_label = config.get('pkg_label', DEFAULT_CONFIG['pkg_label'])
     bottom_padding = config.get('bottom_padding', DEFAULT_CONFIG['bottom_padding'])
-    roots = copy_forest(roots)
+    roots = _copy_forest(roots)
     syn_counter = [0]
     _apply_gsn_width_transform(roots, config, syn_counter)
 
@@ -2994,7 +2988,7 @@ def _gsn_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
     out.write(body_header)
 
     # Node declarations (BFS); write directly.
-    for node in collect_bfs(roots):
+    for node in _collect_bfs(roots):
         decl = _gsn_node_decl(node)
         if decl:
             out.write('\n')
@@ -3004,7 +2998,7 @@ def _gsn_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
     # Link to the element anchor; never directly to ext_ref.
     # When base_url is empty, fragment-only links (#id) are used so that
     # clicks still work on platforms that resolve them within the same page.
-    for node in collect_bfs(roots):
+    for node in _collect_bfs(roots):
         if node.node_type not in ('Relation', 'Link', 'Connector'):
             url = _node_anchor_url(node, base_url, pkg_label)
             if url:
@@ -3305,7 +3299,7 @@ def render_supports(node: Node, case: 'Case',
     return True
 
 
-def render_ext_ref(node: Node, config: dict, fmt: str,
+def _render_ext_ref(node: Node, config: dict, fmt: str,
                    out: TextIO, sep: str = '') -> bool:
     """Write 'External Reference: <link>' to out; return False if no ext_ref.
 
@@ -3327,7 +3321,7 @@ _ELEMENT_RENDER_MAP: Dict[str, callable] = {
     'referenced_by': render_referenced_by,
     'supported_by':  lambda node, case, config, fmt, o, s: render_supported_by(node, config, fmt, o, s),
     'supports':      render_supports,
-    'ext_ref':       lambda node, case, config, fmt, o, s: render_ext_ref(node, config, fmt, o, s),
+    'ext_ref':       lambda node, case, config, fmt, o, s: _render_ext_ref(node, config, fmt, o, s),
 }
 
 
@@ -3505,18 +3499,6 @@ def render_warning(element_id: Optional[str]) -> str:
     return _WARNING_TEXT
 
 
-def render_selector(
-    selector: str,
-    case: 'Case',
-    config: dict,
-    out: TextIO,
-    current_element: Optional[Node] = None,
-    doc_format: str = 'markdown',
-    state: 'DocState' = None,
-) -> bool:
-    """Parse selector and write the rendered output to out; return True if anything was written."""
-    return case.render_selector(selector, out, current_element, doc_format, state)
-
 # ---------------------------------------------------------------------------
 # Document processor
 # ---------------------------------------------------------------------------
@@ -3526,7 +3508,7 @@ class DocState:
     """Mutable rendering state threaded through a single document processing pass.
 
     Create a fresh instance for each independent rendering pass.  When calling
-    render_selector() outside of process_document(), a default
+    case.render_selector() outside of process_document(), a default
     ``DocState()`` is sufficient for most uses.
 
     Attributes
@@ -3845,19 +3827,17 @@ Data types and examples of their methods/properties:
     node.to_ltac_line(depth_offset=0)  format node as an LTAC source line
   class Case  the full assurance case (LTAC + documents):
     case.document_files List[str] (set by caller after loading)
-    case.config         dict (config used to load; pass to render_selector etc.)
+    case.config         dict (config used to load)
     case.id_info        Dict[str, dict] (per-identifier metadata)
     # Lookups
     case.definition_for(ident) -> Optional[Node]  (None if 0 or >1 declarations)
     case.declaring_package_for(ident) -> Optional[Node]
     case.statement_for(ident) -> Optional[str]
+    case.needs_support() -> List[Node]  (nodes with {needssupport} option)
 
-Standalone helpers:
+Standalone helpers (operate on arbitrary root lists, not just case.roots):
   all_nodes(roots)         DFS generator, LTAC order (also case.all_nodes())
   all_nodes_fast(roots)    DFS generator, fast order  (also case.all_nodes_fast())
-  collect_bfs(roots)       BFS list                   (also case.collect_bfs())
-  copy_forest(roots)       deep copy                  (also case.copy_forest())
-  needs_support(nodes)     -> List[Node] (filter by {needssupport} option)
   print_stats(ltac_stats, doc_stats, out=sys.stdout)
 
 main():
@@ -4553,7 +4533,7 @@ def _write_ltac_node(node: 'Node', out: 'TextIO', first: list) -> None:
         _write_ltac_node(child, out, first)
 
 
-def write_ltac(roots: List['Node'], out: 'TextIO') -> None:
+def _write_ltac(roots: List['Node'], out: 'TextIO') -> None:
     """Serialize a Node forest to LTAC text, writing to out.
 
     Packages are separated by blank lines; the result ends with a newline.
@@ -4564,7 +4544,7 @@ def write_ltac(roots: List['Node'], out: 'TextIO') -> None:
     >>> _LTACParser(case).parse(['- Claim C1: The software is safe',
     ...                         '  - Evidence E1: Test results (tests.pdf)'])
     >>> buf = io.StringIO()
-    >>> write_ltac(case.roots, buf)
+    >>> case.write_ltac(buf)
     >>> buf.getvalue()
     '- Claim C1: The software is safe\\n  - Evidence E1: Test results (tests.pdf)\\n'
     """
@@ -4678,12 +4658,7 @@ def _print_analysis_list(header, items, fmt=str) -> None:
             print(fmt(item))
 
 
-def needs_support(nodes) -> List['Node']:
-    """Return the subset of nodes that carry the {needssupport} option."""
-    return [n for n in nodes if 'needssupport' in n.options]
-
-
-def render_ltac_txt(node_list, config, out: TextIO, sep: str = '') -> bool:
+def _render_ltac_txt(node_list, config, out: TextIO, sep: str = '') -> bool:
     """Write a list of nodes as raw LTAC text to out, normalizing indentation to depth 0.
 
     Each node in node_list is treated as a root; its subtree is rendered
@@ -5303,7 +5278,7 @@ def main() -> bool:
         changed = case.sync_citations()
         if changed:
             buf = io.StringIO()
-            write_ltac(case.roots, buf)
+            case.write_ltac(buf)
             tmp = _make_temp(ltac_path, buf.getvalue(), ltac_line_ending)
             if tmp is None:
                 panic("cannot write updated LTAC file")
@@ -5327,7 +5302,7 @@ def main() -> bool:
         if case.had_error:
             panic("LTAC validation failed after mutations; no files updated")
         buf = io.StringIO()
-        write_ltac(case.roots, buf)
+        case.write_ltac(buf)
         tmp = _make_temp(ltac_path, buf.getvalue())
         if tmp is None:
             panic("cannot write updated LTAC file")
@@ -5398,7 +5373,7 @@ def main() -> bool:
             if not first:
                 print()
             leaves = case.leaves()
-            ns_leaves = needs_support(leaves)
+            ns_leaves = [n for n in leaves if 'needssupport' in n.options]
             print("Leaf elements:")
             if ns_leaves:
                 _print_analysis_list(
@@ -5418,22 +5393,22 @@ def main() -> bool:
         return not case.had_error
 
     if args.info:
-        wrote = render_selector(f'info {args.info}', case, config, sys.stdout,
-                                doc_format='markdown')
+        wrote = case.render_selector(f'info {args.info}', sys.stdout,
+                                     doc_format='markdown')
         if wrote:
             sys.stdout.write('\n')
         if ltac_pair:
             commit_updates([ltac_pair], ltac_path, config, config_path)
     elif args.descendants:
-        wrote = render_selector(f'ltac/txt {args.descendants}', case, config, sys.stdout,
-                                doc_format='markdown')
+        wrote = case.render_selector(f'ltac/txt {args.descendants}', sys.stdout,
+                                     doc_format='markdown')
         if wrote:
             sys.stdout.write('\n')
         if ltac_pair:
             commit_updates([ltac_pair], ltac_path, config, config_path)
     elif args.select:
-        wrote = render_selector(args.select, case, config, sys.stdout,
-                                doc_format='markdown')
+        wrote = case.render_selector(args.select, sys.stdout,
+                                     doc_format='markdown')
         if wrote:
             sys.stdout.write('\n')
         if ltac_pair:
@@ -5471,7 +5446,7 @@ def main() -> bool:
         changed = _mark_needs_support(all_ids_ordered, case.registry)
         if changed:
             buf = io.StringIO()
-            write_ltac(case.roots, buf)
+            case.write_ltac(buf)
             tmp = _make_temp(ltac_path, buf.getvalue(), ltac_line_ending)
             if tmp is not None:
                 pairs.append((tmp, ltac_path))

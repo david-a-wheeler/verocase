@@ -782,7 +782,7 @@ class Case:
         return every declaration node even when the registry only holds the
         first one.  Returns [] when ident is unknown.
         """
-        return [n for n in _all_nodes_fast(self.roots)
+        return [n for n in self.all_nodes_fast()
                 if n.identifier == ident and n.is_definition]
 
     def declaring_package_for(self, ident: str) -> Optional['Node']:
@@ -802,7 +802,7 @@ class Case:
     def find_citation_parents(self, ident: str) -> List['Node']:
         """Return all nodes that have a cited child (^ident) anywhere in the forest."""
         parents = []
-        for node in _all_nodes_fast(self.roots):
+        for node in self.all_nodes_fast():
             if node.identifier == ident and node.is_citation and node.parent is not None:
                 if node.parent not in parents:
                     parents.append(node.parent)
@@ -925,21 +925,41 @@ class Case:
     # Forest traversal
     # ------------------------------------------------------------------
 
-    def all_nodes(self):
-        """Yield every node in the forest in LTAC written order (DFS, first child first)."""
-        return _all_nodes(self.roots)
+    def all_nodes(self, root: Optional['Node'] = None):
+        """Yield every node in LTAC written order (DFS, first child first).
 
-    def all_nodes_fast(self):
-        """Yield every node in the forest faster than all_nodes(), in arbitrary DFS order.
+        If root is given, traverse only that node's subtree; otherwise
+        traverse the full forest (self.roots).
+        """
+        stack = list(reversed([root] if root is not None else self.roots))
+        while stack:
+            node = stack.pop()
+            yield node
+            stack.extend(reversed(node.children))
+
+    def all_nodes_fast(self, root: Optional['Node'] = None):
+        """Yield every node faster than all_nodes(), in arbitrary DFS order.
+
+        If root is given, traverse only that node's subtree; otherwise
+        traverse the full forest (self.roots).
 
         Children are pushed in forward order onto a list-stack and popped in
-        reverse, so the traversal order differs from LTAC written order but
-        is fully deterministic.  Prefer all_nodes() when order matters;
-        use this when building lookup sets or computing aggregates.
-        See the _all_nodes_fast() implementation for the full performance
-        rationale (reversed() vs C-level extend).
+        reverse, so the traversal order is not LTAC written order but is
+        fully deterministic.  Use when order does not matter (building lookup
+        sets, computing aggregates) and throughput is a concern.
+
+        **Why faster than all_nodes():** all_nodes() calls
+        ``stack.extend(reversed(node.children))``, which creates a Python-level
+        iterator that extend() consumes element-by-element.  This method calls
+        ``stack.extend(node.children)`` — a C-level bulk copy — roughly 2-3x
+        faster.  Storing children in reverse order or using a deque do not help
+        (see git log for the full analysis).
         """
-        return _all_nodes_fast(self.roots)
+        stack = [root] if root is not None else list(self.roots)
+        while stack:
+            node = stack.pop()
+            yield node
+            stack.extend(node.children)
 
     def collect_bfs(self) -> List['Node']:
         """Return all nodes in the forest in BFS order."""
@@ -955,7 +975,7 @@ class Case:
 
     def needs_support(self) -> List['Node']:
         """Return all nodes in the forest that carry the {needssupport} option."""
-        return [n for n in _all_nodes_fast(self.roots) if 'needssupport' in n.options]
+        return [n for n in self.all_nodes_fast() if 'needssupport' in n.options]
 
     def save_ltac(self, path: Optional[str] = None) -> None:
         """Write the LTAC forest to disk using the safe backup+atomic-replace mechanism.
@@ -980,7 +1000,7 @@ class Case:
 
     def leaves(self) -> List['Node']:
         """Return all definition nodes with no children, in LTAC order."""
-        return [node for node in _all_nodes(self.roots)
+        return [node for node in self.all_nodes()
                 if node.is_definition and not node.children]
 
     def stats(self) -> dict:
@@ -997,7 +1017,7 @@ class Case:
 
         for root in self.roots:
             size_full = 0
-            for node in _all_nodes_fast([root]):
+            for node in self.all_nodes_fast(root):
                 size_full += 1
                 if node.is_citation:
                     total_citations += 1
@@ -1043,7 +1063,7 @@ class Case:
         """Return LTAC elements that have no selector region in the document(s)."""
         ordered_ids, _ = _scan_document_elements(self.document_files)
         seen = {ident for ident, _, _ in ordered_ids}
-        all_ids_ordered = [node for node in _all_nodes(self.roots)
+        all_ids_ordered = [node for node in self.all_nodes()
                            if node.is_definition and node.identifier]
         return [node for node in all_ids_ordered if node.identifier not in seen]
 
@@ -1063,7 +1083,7 @@ class Case:
 
     def misplaced(self) -> list:
         """Return elements whose document order differs from LTAC order."""
-        ltac_order = [node.identifier for node in _all_nodes(self.roots)
+        ltac_order = [node.identifier for node in self.all_nodes()
                       if node.is_definition and node.identifier]
         ltac_pos = {ident: i for i, ident in enumerate(ltac_order)}
 
@@ -1213,7 +1233,7 @@ class Case:
                 citing_root = self.definition_for(citing_pkg_id)
                 if citing_root is None:
                     continue
-                for n in _all_nodes_fast([citing_root]):
+                for n in self.all_nodes_fast(citing_root):
                     if n.is_citation and n.identifier == element_id:
                         parent_node = n.parent
                         if parent_node:
@@ -1238,7 +1258,7 @@ class Case:
             self.panic(f"--rename: {old!r} is not a declared identifier")
         if new in self.registry:
             self.panic(f"--rename: {new!r} is already declared")
-        for node in _all_nodes_fast(self.roots):
+        for node in self.all_nodes_fast():
             if node.identifier == old:
                 node.identifier = new
         self.registry[new] = self.registry.pop(old)
@@ -1257,7 +1277,7 @@ class Case:
         """
         if label not in self.registry:
             self.panic(f"--restate: {label!r} is not a declared identifier")
-        for node in _all_nodes_fast(self.roots):
+        for node in self.all_nodes_fast():
             if node.identifier == label:
                 node.text = stmt
         self.id_info[label]['statement'] = stmt
@@ -1299,7 +1319,7 @@ class Case:
 
         new_pkg_id = node.identifier
         old_pkg_id = _decl_pkg_id_for(self.id_info, node.identifier)
-        _update_pkg_id_for_subtree(node, old_pkg_id, new_pkg_id, self.id_info)
+        self._update_pkg_id_for_subtree(node, old_pkg_id, new_pkg_id)
 
         self.id_info[target_id]['citations'] = self.id_info[target_id].get('citations', 0) + 1
         citing_pkg = cited.pkg_root.identifier
@@ -1345,13 +1365,22 @@ class Case:
         _recalc_depths(node, dest.depth + 1)
 
         new_pkg_id = dest.pkg_root.identifier
-        _update_pkg_id_for_subtree(node, old_pkg_id, new_pkg_id, self.id_info)
+        self._update_pkg_id_for_subtree(node, old_pkg_id, new_pkg_id)
         self.modified = True
+
+    def _update_pkg_id_for_subtree(self, node: 'Node', old_pkg_id: str,
+                                   new_pkg_id: str) -> None:
+        """Update decl_pkg_id in id_info for node and all its descendants."""
+        for n in self.all_nodes_fast(node):
+            if n.identifier and n.identifier in self.id_info:
+                info = self.id_info[n.identifier]
+                if info.get('decl_pkg_id') == old_pkg_id:
+                    info['decl_pkg_id'] = new_pkg_id
 
     def sync_citations(self) -> int:
         """Update cited/Link node text to match declaration text; return count changed."""
         count = 0
-        for node in _all_nodes_fast(self.roots):
+        for node in self.all_nodes_fast():
             if not node.identifier or node.is_definition:
                 continue
             decl = self.definition_for(node.identifier)
@@ -1536,7 +1565,7 @@ class Case:
         config = dict(self.config)  # local copy so directives don't affect self.config
 
         if add_missing:
-            _ltac_ordered = [node for node in _all_nodes(self.roots)
+            _ltac_ordered = [node for node in self.all_nodes()
                              if node.is_definition and node.identifier]
             _ltac_index: Dict[str, int] = {n.identifier: i for i, n in enumerate(_ltac_ordered)}
             _doc_ids = existing_ids if existing_ids is not None else set()
@@ -1984,59 +2013,6 @@ class _LTACParser:
 
 
 
-def _all_nodes_fast(roots: List[Node]):
-    """Yield every node in the forest faster than _all_nodes(), but not in LTAC order.
-
-    Traversal is DFS with children pushed in forward order onto a list-stack,
-    so they are popped and visited in reverse order (last child first, recursively).
-    The order is fully deterministic for a given tree; it is simply not the order
-    a reader would expect from the LTAC source file.
-
-    Do not write code that depends on this specific order; a future implementation
-    may change it.  Use only when order does not matter (e.g. building a lookup
-    set, computing aggregate counts) and throughput is a concern.
-
-    **Why this is a separate function, not a flag on _all_nodes():**
-
-    _all_nodes() visits children in LTAC written order (first child first) using
-    ``stack.extend(reversed(node.children))``.  The ``reversed()`` call creates a
-    Python-level iterator that extend() must consume element-by-element, incurring
-    per-element interpreter overhead.  _all_nodes_fast() instead calls
-    ``stack.extend(node.children)`` — a direct list-to-list bulk copy at the C
-    level — which is roughly 2-3x faster.
-
-    The obvious fixes do not work:
-    - Storing children in reverse order would make _all_nodes_fast() correct but
-      break every caller that reads node.children[0] as the first child.
-    - Using a deque with popleft() still requires reversed() for first-child-first
-      order, and deque has worse cache locality than a list for this workload.
-    - An iterator-stack approach (push iter(node.children) rather than the children
-      themselves) eliminates reversed() but replaces it with per-element iter()/
-      next() overhead — a wash at best, and more complex.
-
-    The speed difference is therefore fundamental to storing children in natural
-    order and wanting correct DFS order.  _all_nodes_fast() accepts the trade-off:
-    arbitrary (but deterministic) order in exchange for maximum throughput.
-    """
-    stack = list(roots)
-    while stack:
-        node = stack.pop()
-        yield node
-        stack.extend(node.children)
-
-
-def _all_nodes(roots: List[Node]):
-    """Yield every node in the forest in LTAC written order (depth-first, first child first).
-
-    Nodes appear in the same order as their declarations in the LTAC file.
-    Prefer this generator by default; use _all_nodes_fast() only when order
-    genuinely does not matter and throughput is a concern.
-    """
-    stack = list(reversed(roots))
-    while stack:
-        node = stack.pop()
-        yield node
-        stack.extend(reversed(node.children))
 
 
 def _recalc_depths(node: 'Node', new_depth: int) -> None:
@@ -3222,21 +3198,6 @@ def _linked_list(pairs: List[tuple], fmt: str, bold_first: bool = True) -> str:
     return ', '.join(links)
 
 
-def _find_citation_parents(ident: str, all_roots: List[Node]) -> List[Node]:
-    """Return all nodes that have a cited child (^ident) anywhere in the forest.
-
-    A "citation parent" is a node whose direct children include a Node with
-    is_citation=True and identifier==ident.  The same parent appears at most
-    once; multiple packages may each contribute a parent.
-    """
-    parents = []
-    for node in _all_nodes_fast(all_roots):
-        if node.identifier == ident and node.is_citation and node.parent is not None:
-            if node.parent not in parents:
-                parents.append(node.parent)
-    return parents
-
-
 def render_referenced_by(node: Node, case: 'Case',
                          config: dict, fmt: str,
                          out: TextIO, sep: str = '') -> bool:
@@ -3332,7 +3293,7 @@ def render_pkg_defines(pkg_root: Node, case: 'Case',
     """Write 'Defines: ...' list for a package to out."""
     pkg_id = pkg_root.identifier
     defined = []
-    for node in _all_nodes_fast([pkg_root]):
+    for node in case.all_nodes_fast(pkg_root):
         if (node.is_definition and node.identifier
                 and _decl_pkg_id_for(case.id_info, node.identifier) == pkg_id):
             defined.append(node)
@@ -3350,7 +3311,7 @@ def render_pkg_citing(pkg_root: Node, case: 'Case',
                       config: dict, fmt: str,
                       out: TextIO, sep: str = '') -> bool:
     """Write 'Citing: ...' list for a package to out; return False if none."""
-    cited_nodes = [n for n in _all_nodes_fast([pkg_root])
+    cited_nodes = [n for n in case.all_nodes_fast(pkg_root)
                    if n.is_citation and n.identifier]
     if not cited_nodes:
         return False
@@ -3798,7 +3759,7 @@ Typical usage (simple):
   # (not citations or Links) that are Claims and have no children:
   unsupported = [
       (node.identifier, node.text)
-      for node in case._all_nodes()
+      for node in case.all_nodes()
       if node.is_definition and node.node_type == 'Claim' and not node.children
   ]
 
@@ -4835,7 +4796,7 @@ def _fixmisplaced_document(path, case, config, doc_format):
         region_map[current_ident] = (region_start, len(lines) - 1)
 
     # Get LTAC order
-    ltac_order = [node.identifier for node in _all_nodes(case.roots)
+    ltac_order = [node.identifier for node in case.all_nodes()
                   if node.is_definition and node.identifier]
     ltac_pos = {ident: i for i, ident in enumerate(ltac_order)}
 
@@ -5065,16 +5026,6 @@ def commit_updates(pairs: List[Tuple[str, str]], ltac_path: str,
             os.replace(tmp, final)
         except OSError as e:
             panic(f"cannot update {final!r}: {e}")
-
-
-def _update_pkg_id_for_subtree(node: Node, old_pkg_id: str, new_pkg_id: str,
-                                id_info: Dict[str, dict]) -> None:
-    """Update decl_pkg_id in id_info for node and all its descendants."""
-    for n in _all_nodes_fast([node]):
-        if n.identifier and n.identifier in id_info:
-            info = id_info[n.identifier]
-            if info.get('decl_pkg_id') == old_pkg_id:
-                info['decl_pkg_id'] = new_pkg_id
 
 
 def _make_temp(path: str, content: str, line_ending: str = '\n') -> Optional[str]:
@@ -5442,7 +5393,7 @@ def main() -> bool:
             if pair:
                 pairs.append(pair)
         # Mark needsSupport on all leaf elements that lack an assertion status.
-        all_ids_ordered = [node.identifier for node in _all_nodes_fast(case.roots)
+        all_ids_ordered = [node.identifier for node in case.all_nodes_fast()
                            if node.is_definition and node.identifier]
         changed = _mark_needs_support(all_ids_ordered, case.registry)
         if changed:

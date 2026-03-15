@@ -359,18 +359,23 @@ verocase checks.
 
 ### --help-config
 
-Prints the full list of configuration keys recognised in the JSON config file,
+Prints the full list of configuration keys recognised in the TOML config file,
 then exits.  Equivalent to reading the [Configuration](#configuration) section
 of this reference.
 
 ### --config FILE
 
-Loads configuration from a JSON file (an object of key/value pairs).
+Loads configuration from a TOML file.
 See [Configuration](#configuration) for the full list of keys.
 Unknown keys produce a warning and are ignored.
 
 `verocase` also auto-discovers a config file if `--config` is not given:
-it checks for `case.config` in the current directory, then `docs/case.config`.
+it checks for `verocase.toml` in the current directory, then `docs/verocase.toml`.
+
+TOML support requires Python 3.11 or later (which includes `tomllib` in the
+standard library), or the third-party `tomli` package (`pip install tomli`)
+for older Python versions.  If neither is available and a config file is
+found, `verocase` reports an error and continues with default settings.
 
 ### --error
 
@@ -469,8 +474,8 @@ Two CLI shortcuts exist for the most commonly used inspection selectors:
 
 ## Configuration
 
-Configuration is supplied in a JSON object, either via `--config FILE` or
-auto-discovered from `case.config` / `docs/case.config`.
+Configuration is supplied in a TOML file, either via `--config FILE` or
+auto-discovered from `verocase.toml` / `docs/verocase.toml`.
 All keys are optional; unrecognized keys produce a warning.
 
 | Key | Default | Description |
@@ -704,7 +709,7 @@ Currently supported keys:
 
 Keys that affect LTAC parsing (such as `warn_dubious_reference`) cannot be
 set per-document because LTAC is parsed before documents are read.
-Set them in the `--config` JSON file instead.
+Set them in the `--config` TOML file instead.
 
 Example: use level-2 headings for packages and level-3 for elements:
 
@@ -932,8 +937,8 @@ Similarly, if no document files are given on the command line and no
 (in order): `case.md`, `case.markdown`, `case.html`,
 `docs/case.md`, `docs/case.markdown`, `docs/case.html`.
 
-Config file auto-discovery: `case.config` in the current directory, then
-`docs/case.config`.
+Config file auto-discovery: `verocase.toml` in the current directory, then
+`docs/verocase.toml`.
 
 ### Safe file updates
 

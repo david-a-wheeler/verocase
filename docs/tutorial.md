@@ -447,27 +447,25 @@ See the [reference manual](reference.md) for details.
 
 ### The config file
 
-`verocase` looks for a JSON config file automatically:
+`verocase` looks for a TOML config file automatically:
 
-1. `case.config` in the current directory
-2. `docs/case.config` in the current directory
+1. `verocase.toml` in the current directory
+2. `docs/verocase.toml` in the current directory
 
 You can also specify one explicitly:
 
 ```sh
-verocase --config path/to/myconfig.json
+verocase --config path/to/myconfig.toml
 ```
 
-The config file is a JSON object of key/value pairs.  All keys are optional.
+The config file is a TOML file of key/value pairs.  All keys are optional.
 Run `verocase --help-config` to print the full list, or see the
 [reference manual](reference.md#configuration).
 
 A minimal config file looks like this:
 
-```json
-{
-  "base_url": "https://github.com/OWNER/REPO/blob/main/docs/case.md"
-}
+```toml
+base_url = "https://github.com/OWNER/REPO/blob/main/docs/case.md"
 ```
 
 ### Making diagram clicks work on GitHub with `base_url`
@@ -494,19 +492,15 @@ branch; that's unfortunate, but at least the result works.
 Set `base_url` in your config file to the full GitHub URL of the document
 that contains the diagrams:
 
-```json
-{
-  "base_url": "https://github.com/OWNER/REPO/blob/BRANCH/PATH/TO/case.md"
-}
+```toml
+base_url = "https://github.com/OWNER/REPO/blob/BRANCH/PATH/TO/case.md"
 ```
 
 For example, if your repository is `https://github.com/example/myproject`
 and your case document is `docs/case.md` on the `main` branch:
 
-```json
-{
-  "base_url": "https://github.com/example/myproject/blob/main/docs/case.md"
-}
+```toml
+base_url = "https://github.com/example/myproject/blob/main/docs/case.md"
 ```
 
 Once set, every diagram node click will take the reader directly to the
@@ -529,7 +523,7 @@ and works as-is.
   an Evidence element) are also resolved against `base_url`, so they will
   link correctly to the file alongside the document on GitHub.
 
-You can set `base_url` either in the JSON config file (to apply to all
+You can set `base_url` either in the TOML config file (to apply to all
 documents at once) or inline in a specific document with `verocase-config`:
 
 ```markdown
@@ -552,7 +546,7 @@ The directive takes effect from that point onward in the file.
 Supported inline keys are `base_url`, `element_level`, `package_level`,
 `max_mermaid_children`, and `narrowed_mermaid_children`.
 Keys that affect LTAC parsing (such as `warn_dubious_reference`) require
-the JSON config file instead.
+the TOML config file instead.
 
 ---
 

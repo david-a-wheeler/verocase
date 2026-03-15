@@ -43,9 +43,6 @@ __all__ = [
     'Case',
     'DEFAULT_CONFIG',
     # Loading, configuration, and serialization
-    'load_case',
-    'load_ltac_file',
-    'parse_ltac_lines',
     'write_ltac',
     # Tree manipulation
     'copy_forest',
@@ -100,7 +97,7 @@ def notify(msg: str) -> None:
 _DEFAULT_ELEMENT_SELECTIONS = 'referenced_by,supported_by,supports,ext_ref'
 _DEFAULT_PACKAGE_SELECTIONS = 'representation,pkg_defines,pkg_citing,pkg_cited'
 
-# Default configuration values.  load_config() merges a JSON file over these.
+# Default configuration values.  Case().load_config() merges a TOML file over these.
 # Pass to functions that accept a config dict when no config file is needed.
 DEFAULT_CONFIG = types.MappingProxyType({
     'base_url': '',
@@ -125,47 +122,6 @@ DEFAULT_CONFIG = types.MappingProxyType({
     'warn_dubious_reference': True,
 })
 
-
-def load_config(config_path: Optional[str]) -> dict:
-    """Load and validate configuration from a TOML file.
-
-    If config_path is None, return a copy of DEFAULT_CONFIG.
-    Unknown keys produce a warning; known keys are merged over the defaults.
-    Requires tomllib (Python 3.11+) or the third-party tomli package; calls
-    error() and returns DEFAULT_CONFIG if neither is available.
-    """
-    if config_path is None:
-        return dict(DEFAULT_CONFIG)
-    if tomllib is None:
-        print(
-            f"verocase: error: cannot load config file {config_path!r}: "
-            "TOML support requires Python 3.11+ (tomllib) or "
-            "'pip install tomli' for older Python versions",
-            file=sys.stderr,
-        )
-        return dict(DEFAULT_CONFIG)
-    try:
-        with open(config_path, 'rb') as f:
-            parsed = tomllib.load(f)
-    except FileNotFoundError:
-        panic(f"config file not found: {config_path!r}")
-    except PermissionError:
-        panic(f"config file not readable: {config_path!r}")
-    except Exception as e:
-        panic(f"invalid TOML in config file {config_path!r}: {e}")
-    if not isinstance(parsed, dict):
-        panic(f"config file must contain a TOML table, not {type(parsed).__name__}")
-    for key in parsed:
-        if key not in DEFAULT_CONFIG:
-            print(f"verocase: warning: unknown config key: {key!r}", file=sys.stderr)
-    config = dict(DEFAULT_CONFIG)
-    config.update({k: v for k, v in parsed.items() if k in DEFAULT_CONFIG})
-    mb = config.get('max_backups')
-    if not isinstance(mb, int) or mb < 0:
-        print(f"verocase: warning: invalid value for max_backups: {mb!r}; "
-              f"using default {DEFAULT_CONFIG['max_backups']}", file=sys.stderr)
-        config['max_backups'] = DEFAULT_CONFIG['max_backups']
-    return config
 
 
 # ---------------------------------------------------------------------------
@@ -620,6 +576,33 @@ class Case:
     # Construction: load from files
     # ------------------------------------------------------------------
 
+    def load_config(self, filename: Optional[str] = None) -> 'Case':
+        """Load configuration from filename, or auto-discover verocase.toml.
+
+        If filename is given, load it (panic if not found). If None, search for
+        verocase.toml / docs/verocase.toml; keep defaults if not found.
+        Sets self.config and self.config_path. Returns self for chaining.
+        """
+        self.config_path = self._find_config(filename)
+        self.config = self._load_config(self.config_path)
+        return self
+
+    def load_ltac_string(self, text: str) -> 'Case':
+        """Parse LTAC from a string, using self.config.
+
+        Does not read any files. Parses text, setting self.roots, self.registry,
+        and self.id_info. Sets self.ltac_path = None (no backing file). Does not
+        run validation; call validate_ltac() separately if needed.
+        Returns self for chaining.
+
+        Call load_config() first if you need non-default configuration::
+
+            case = Case().load_config('myconfig.toml').load_ltac_string(ltac_text)
+        """
+        self.ltac_path = None
+        _LTACParser(self).parse(text.splitlines(keepends=True), config=self.config)
+        return self
+
     def load(self, ltac_file: Optional[str] = None,
              config_file: Optional[str] = None,
              document_files: Optional[List[str]] = None,
@@ -650,8 +633,7 @@ class Case:
             self, allowing fluent use: ``case = Case().load(...)``.
         """
         self.strict = strict
-        self.config_path = self._find_config(config_file)
-        self.config = self._load_config(self.config_path)
+        self.load_config(config_file)
         ltac_path = self._find_ltac_file(ltac_file)
         self.ltac_path = ltac_path
         self._parse_ltac_file(ltac_path)
@@ -772,7 +754,7 @@ class Case:
                 lines = f.readlines()
         except OSError as e:
             self.panic(f"cannot open {path!r}: {e}")
-        LTACParser(self).parse(lines, config=self.config)
+        _LTACParser(self).parse(lines, config=self.config)
 
     def validate_ltac(self) -> bool:
         """Run all LTAC structural validation checks; return True if no errors.
@@ -1709,7 +1691,7 @@ _LTAC_LINE_RE = re.compile(
 )
 
 
-class LTACParser:
+class _LTACParser:
     def __init__(self, case: 'Case') -> None:
         self._case = case
 
@@ -1981,32 +1963,6 @@ class LTACParser:
         self._stack = []
 
 
-def parse_ltac_lines(lines: List[str], config: Optional[dict] = None) -> 'Case':
-    """Parse a list of LTAC text lines and return a Case.
-
-    Lower-level alternative to load_ltac_file() for when the text is already
-    in memory (e.g. from a string, a test fixture, or a network source).
-    Does not raise VerocaseError; I/O is the caller's responsibility.
-
-    Parameters
-    ----------
-    lines : List[str]
-        Raw text lines including newline characters, as returned by
-        file.readlines() or str.splitlines(keepends=True).
-    config : dict, optional
-        Configuration dict (from load_config()).  Uses DEFAULT_CONFIG if None.
-
-    Returns
-    -------
-    Case
-        Bundled (roots, registry, id_info); see Case for field descriptions.
-    """
-    cfg = config if config is not None else dict(DEFAULT_CONFIG)
-    case = Case()
-    case.config = cfg
-    LTACParser(case).parse(lines, config=cfg)
-    return case
-
 
 def all_nodes_fast(roots: List[Node]):
     """Yield every node in the forest faster than all_nodes(), but not in LTAC order.
@@ -2069,27 +2025,6 @@ def _recalc_depths(node: 'Node', new_depth: int) -> None:
     for child in node.children:
         _recalc_depths(child, new_depth + 1)
 
-
-# ---------------------------------------------------------------------------
-# LTAC file loader
-# ---------------------------------------------------------------------------
-
-def load_ltac_file(path: str,
-                   config: Optional[dict] = None) -> 'Case':
-    """Open and parse an LTAC file; return a Case.
-
-    Convenience wrapper around parse_ltac_lines() that handles file I/O.
-    Raises VerocaseError (after printing to stderr) if the file cannot be
-    opened.
-    """
-    try:
-        with open(path) as f:
-            lines = f.readlines()
-    except OSError as e:
-        panic(f"cannot open {path!r}: {e}")
-    case = parse_ltac_lines(lines, config=config)
-    case.ltac_path = path
-    return case
 
 
 # ---------------------------------------------------------------------------
@@ -3838,7 +3773,7 @@ is in place. __all__ declares the intended public surface.
 Typical usage (simple):
   import verocase, sys, io
 
-  case = verocase.load_case()   # auto-discovers config, LTAC, and documents
+  case = verocase.Case().load()   # auto-discovers config, LTAC, and documents
   if case.had_error:
       sys.exit(1)
 
@@ -3861,14 +3796,12 @@ Typical usage (simple):
 Usage for explicit control over loading:
   import verocase, io, sys
 
-  config = verocase.load_config(verocase.find_config())
-  ltac_path = verocase.find_ltac_file(None, config)
-  case = verocase.load_ltac_file(ltac_path, config=config)
-  case.document_files = verocase.find_document_files(config, ltac_path)
+  case = verocase.Case()
+  case.load_config('myconfig.toml')          # or omit to auto-discover
+  case.load_ltac_string(open('my.ltac').read())  # parse from string
+  case.document_files = ['docs/case.md']     # or call case.load() for auto-discovery
 
-  case.check_id_info()
-  case.check_circularities()
-  case.check_reachability()
+  case.validate_ltac()
 
   if case.had_error:
       sys.exit(1)
@@ -3934,16 +3867,13 @@ Data types:
   DEFAULT_CONFIG: dict  default configuration values
 
 Loading and initialization:
-  load_case(ltac=None, config_file=None, documents=None, validate=True) -> Case
-    Recommended entry point.  Auto-discovers config (verocase.toml), LTAC,
-    and documents; (by default) runs all validation.
-    Override any parameter to take explicit control.  Check case.had_error on return.
-  find_config(path=None)       -> Optional[str]  (None if not found; searches verocase.toml)
-  find_ltac_file(ltac_arg, config) -> str        (panics if not found)
-  find_document_files(config=None, ltac_path=None) -> List[str]  ([] if none)
-  load_config(path_or_None)    -> dict  (reads TOML; requires tomllib/tomli)
-  load_ltac_file(path, config=config) -> Case    (document_files=[])
-  parse_ltac_lines(lines, config=config)  -> Case
+  Case().load(ltac_file=None, config_file=None, document_files=None,
+              strict=False, validate=True) -> Case
+    Recommended entry point.  Auto-discovers config, LTAC, and documents.
+  Case().load_config(filename=None) -> Case
+    Load config from filename, or auto-discover; sets self.config.
+  Case().load_ltac_string(text) -> Case
+    Parse LTAC from a string using self.config; sets self.ltac_path = None.
   write_ltac(roots, out)   serialize forest to out; use io.StringIO() for a string
   detect_doc_format(path)  'markdown' or 'html'
 
@@ -4409,156 +4339,6 @@ Run --help-api for the public Python API summary (for library use).
     return args
 
 
-def find_ltac_file(ltac_arg: Optional[str], config: dict) -> str:
-    """Determine the path of the LTAC file to load and return it.
-
-    Search order: ltac_arg (explicit path) → config['ltac_file'] →
-    case.ltac → docs/case.ltac.  Raises VerocaseError if no candidate
-    file is found.
-    """
-    if ltac_arg:
-        return ltac_arg
-    ltac_from_config = config.get('ltac_file', '')
-    if ltac_from_config:
-        return ltac_from_config
-    if os.path.exists('case.ltac'):
-        return 'case.ltac'
-    if os.path.exists('docs/case.ltac'):
-        return 'docs/case.ltac'
-    panic("no LTAC file found; use --ltac, set ltac_file in config, or create case.ltac. See --help")
-
-
-def find_config(path: Optional[str] = None) -> Optional[str]:
-    """Find the configuration file path to use, returning None if not found.
-
-    Search order: explicit path → verocase.toml → docs/verocase.toml → None.
-    Unlike find_ltac_file(), returns None rather than panicking when no file
-    is found; callers can pass the result directly to load_config(), which
-    returns DEFAULT_CONFIG when given None.
-
-    Parameters
-    ----------
-    path : str, optional
-        Explicit config path.  If given and the file exists, returned as-is.
-        If given and the file does not exist, panics (caller explicitly asked
-        for a file that is not there).
-    """
-    if path is not None:
-        if os.path.exists(path):
-            return path
-        panic(f"config file not found: {path!r}")
-    if os.path.exists('verocase.toml'):
-        return 'verocase.toml'
-    if os.path.exists('docs/verocase.toml'):
-        return 'docs/verocase.toml'
-    return None
-
-
-def find_document_files(
-    config: Optional[dict] = None,
-    ltac_path: Optional[str] = None,
-) -> List[str]:
-    """Find the document files associated with this case, returning a list.
-
-    Search order:
-      1. config['document_files'] if non-empty
-      2. case.md / case.markdown / case.html in the same directory as ltac_path
-         (if ltac_path is given), then in the current directory
-      3. docs/case.md / docs/case.markdown / docs/case.html
-
-    Returns an empty list if no documents are found (no panic).
-
-    Parameters
-    ----------
-    config : dict, optional
-        Configuration dict from load_config().  Uses DEFAULT_CONFIG if None.
-    ltac_path : str, optional
-        Path to the loaded LTAC file.  When given, the directory containing
-        it is searched for document files before falling back to cwd/docs/.
-    """
-    cfg = config or DEFAULT_CONFIG
-    from_config = list(cfg.get('document_files', []))
-    if from_config:
-        return from_config
-
-    candidates: List[str] = []
-    if ltac_path:
-        ltac_dir = os.path.dirname(os.path.abspath(ltac_path))
-        cwd = os.path.abspath('.')
-        if ltac_dir != cwd:
-            for ext in ('md', 'markdown', 'html'):
-                candidates.append(os.path.join(ltac_dir, f'case.{ext}'))
-    for name in ('case.md', 'case.markdown', 'case.html',
-                 'docs/case.md', 'docs/case.markdown', 'docs/case.html'):
-        candidates.append(name)
-
-    for candidate in candidates:
-        if os.path.exists(candidate):
-            return [candidate]
-    return []
-
-
-def load_case(
-    ltac: Optional[str] = None,
-    config_file: Optional[str] = None,
-    documents: Optional[List[str]] = None,
-    validate: bool = True,
-) -> 'Case':
-    """Load a full assurance case with automatic discovery of all components.
-
-    This is the recommended entry point for library callers.  All parameters
-    are optional; with no arguments it behaves like the CLI with no flags,
-    auto-discovering config, LTAC, and document files from well-known paths.
-
-    Check case.had_error after calling if you need to detect non-fatal problems
-    found during validation.
-
-    Parameters
-    ----------
-    ltac : str, optional
-        Path to the LTAC file.  If None, auto-discovered via find_ltac_file().
-    config_file : str, optional
-        Path to the TOML config file.  If None, auto-discovered via
-        find_config() (verocase.toml → docs/verocase.toml → defaults).
-    documents : list of str, optional
-        Document file paths.  If None, auto-discovered via
-        find_document_files() (config → adjacent to LTAC → cwd → docs/).
-    validate : bool, default True
-        When True, run check_id_info(), check_circularities(), and
-        check_reachability() before returning.  Errors set had_error but do
-        not raise; check verocase.had_error if needed.  Pass False to skip
-        validation (e.g. to inspect a malformed file).
-
-    Returns
-    -------
-    Case
-        Fully populated Case with document_files set.
-
-    Examples
-    --------
-    Simplest usage — mirrors the CLI with no arguments::
-
-        case = verocase.load_case()
-
-    Explicit LTAC, auto-discover everything else::
-
-        case = verocase.load_case(ltac='my.ltac')
-
-    Full explicit control::
-
-        case = verocase.load_case(
-            ltac='my.ltac',
-            config_file='my.config',
-            documents=['a.md', 'b.md'],
-        )
-
-    Skip validation to inspect an invalid file::
-
-        case = verocase.load_case(validate=False)
-    """
-    return Case().load(ltac_file=ltac, config_file=config_file,
-                       document_files=documents, validate=validate)
-
 
 # SACM spec section 11 defines AssertionStatus as a mutually exclusive
 # enumeration: Asserted (default), NeedsSupport, Assumed, Axiomatic, Defeated,
@@ -4817,7 +4597,7 @@ def write_ltac(roots: List['Node'], out: 'TextIO') -> None:
 
     >>> import io
     >>> case = Case()
-    >>> LTACParser(case).parse(['- Claim C1: The software is safe',
+    >>> _LTACParser(case).parse(['- Claim C1: The software is safe',
     ...                         '  - Evidence E1: Test results (tests.pdf)'])
     >>> buf = io.StringIO()
     >>> write_ltac(case.roots, buf)
@@ -5499,7 +5279,7 @@ def main() -> bool:
     if args.selftest:
         return run_selftests()
 
-    # --start must fire before find_ltac_file() because it creates case.ltac.
+    # --start must fire before _find_ltac_file() because it creates case.ltac.
     # After writing the stubs, execution falls through to the normal LTAC
     # loading below, which will find the newly created case.ltac.
     if args.start:
@@ -5592,7 +5372,7 @@ def main() -> bool:
     # Resolve document files: CLI args > config > auto-discover.
     document_files = (
         list(args.files) if args.files
-        else find_document_files(config, ltac_path)
+        else case._find_document_files(ltac_path)
     )
 
     _NO_FILES_MSG = (

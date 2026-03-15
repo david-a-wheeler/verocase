@@ -930,7 +930,11 @@ class Case:
         return all_nodes(self.roots)
 
     def all_nodes_fast(self):
-        """Yield every node in the forest in fast DFS order (not LTAC order)."""
+        """Yield every node faster than all_nodes(), in arbitrary DFS order.
+
+        See the module-level all_nodes_fast() for full rationale on why this
+        is a separate function rather than a flag on all_nodes().
+        """
         return all_nodes_fast(self.roots)
 
     def collect_bfs(self) -> List['Node']:
@@ -1505,22 +1509,26 @@ class Case:
         _render_single_package(pkg_root, self, self.config, state, out)
         return True
 
-    def process_document(self, f, out, seen_element_ids: set,
+    def process_document(self, f, out,
                          doc_format: str = 'markdown',
                          add_missing: bool = False,
                          strip: bool = False,
-                         existing_ids: Optional[set] = None) -> None:
+                         existing_ids: Optional[set] = None,
+                         seen_ids: Optional[set] = None) -> set:
         """Process a document file line by line, replacing LTAC selector regions.
 
-        Writes all output to `out`. Updates `seen_element_ids` with identifiers
-        of LTAC elements rendered via 'element' selectors. Performs no LTAC parsing.
+        Writes all output to `out`. Performs no LTAC parsing.
+
+        Returns the set of element identifiers rendered via 'element' selectors
+        during this call, seeded from `seen_ids` if provided (useful for
+        accumulating across multiple documents).
 
         When `add_missing` is True, inserts skeleton element regions for every
         declared LTAC element not yet seen via an 'element' selector.
         When `strip` is True, generated content is omitted from all selector
         regions except 'warning', leaving the markers in place with empty bodies.
         """
-        _doc_state = DocState(doc_format=doc_format, seen_element_ids=seen_element_ids)
+        _doc_state = DocState(doc_format=doc_format, seen_element_ids=set(seen_ids) if seen_ids is not None else set())
         filename = getattr(f, 'name', '<stream>')
 
         config = dict(self.config)  # local copy so directives don't affect self.config
@@ -1633,6 +1641,8 @@ class Case:
             _emit_all_remaining()
             if _stubs_added[0]:
                 self.notify(f"Added {_stubs_added[0]} missing element(s) to {filename}")
+
+        return _doc_state.seen_element_ids
 
     def render_ltac_txt(self, node_list, out: 'TextIO', sep: str = '') -> bool:
         """Write node_list as raw LTAC text to out, normalizing indentation to depth 0.
@@ -2001,17 +2011,36 @@ def parse_ltac_lines(lines: List[str], config: Optional[dict] = None) -> 'Case':
 def all_nodes_fast(roots: List[Node]):
     """Yield every node in the forest faster than all_nodes(), but not in LTAC order.
 
-    Traversal is DFS with children pushed in forward order, so they are popped
-    and visited in reverse order (last child first, recursively).  The order is
-    fully deterministic for a given tree; it is simply not the order a reader
-    would expect from the LTAC source file.
+    Traversal is DFS with children pushed in forward order onto a list-stack,
+    so they are popped and visited in reverse order (last child first, recursively).
+    The order is fully deterministic for a given tree; it is simply not the order
+    a reader would expect from the LTAC source file.
 
     Do not write code that depends on this specific order; a future implementation
     may change it.  Use only when order does not matter (e.g. building a lookup
     set, computing aggregate counts) and throughput is a concern.
 
-    Roughly 2-3x faster than all_nodes() because list.extend() can copy a list
-    directly without the per-element overhead of consuming a reversed() iterator.
+    **Why this is a separate function, not a flag on all_nodes():**
+
+    all_nodes() visits children in LTAC written order (first child first) using
+    ``stack.extend(reversed(node.children))``.  The ``reversed()`` call creates a
+    Python-level iterator that extend() must consume element-by-element, incurring
+    per-element interpreter overhead.  all_nodes_fast() instead calls
+    ``stack.extend(node.children)`` — a direct list-to-list bulk copy at the C
+    level — which is roughly 2-3x faster.
+
+    The obvious fixes do not work:
+    - Storing children in reverse order would make all_nodes_fast() correct but
+      break every caller that reads node.children[0] as the first child.
+    - Using a deque with popleft() still requires reversed() for first-child-first
+      order, and deque has worse cache locality than a list for this workload.
+    - An iterator-stack approach (push iter(node.children) rather than the children
+      themselves) eliminates reversed() but replaces it with per-element iter()/
+      next() overhead — a wash at best, and more complex.
+
+    The speed difference is therefore fundamental to storing children in natural
+    order and wanting correct DFS order.  all_nodes_fast() accepts the trade-off:
+    arbitrary (but deterministic) order in exchange for maximum throughput.
     """
     stack = list(roots)
     while stack:
@@ -3897,9 +3926,9 @@ Data types:
                          doc_format='markdown', state=None)  -> bool
     case.render_element(node_id, out, *, state=None, sep='')  -> bool
     case.render_package(pkg_id_or_star, out, *, state=None)   -> bool
-    case.process_document(src, out, seen_element_ids,
-                          doc_format='markdown',
-                          add_missing=False, strip=False)
+    case.process_document(src, out, doc_format='markdown',
+                          add_missing=False, strip=False,
+                          seen_ids=None)        -> set
     case.render_ltac_txt(node_list, out, sep='')               -> bool
   @dataclass DocState   per-document rendering state
   DEFAULT_CONFIG: dict  default configuration values
@@ -3934,8 +3963,8 @@ Rendering (write to caller-supplied out: TextIO; return True if written):
   render_ltac_txt(node_list, config, out, sep='')
   case.render_element(node_id, out, state=state, sep='')
   case.render_package(pkg_id_or_star, out, state=state)
-  case.process_document(src, out, seen_element_ids, doc_format='markdown',
-                        add_missing=False, strip=False)
+  case.process_document(src, out, doc_format='markdown',
+                        add_missing=False, strip=False, seen_ids=None) -> set
 
 main():
   success: bool = main()   # parses sys.argv, runs full CLI pipeline
@@ -4554,20 +4583,21 @@ def _process_files(
     out,
     case: 'Case',
     config: dict,
-    seen_element_ids: set,
     strip: bool = False,
-) -> None:
+    seen_ids: Optional[set] = None,
+) -> set:
     """Open each file and call process_document; fall back to stdin if none given."""
+    seen = seen_ids if seen_ids is not None else set()
     if files:
         for path in files:
             try:
                 with open(path, newline='') as f:
-                    case.process_document(f, out, seen_element_ids,
-                                          detect_doc_format(path), strip=strip)
+                    seen = case.process_document(f, out, detect_doc_format(path), strip=strip, seen_ids=seen)
             except OSError as e:
                 case.error(f"cannot open {path!r}: {e}")
     else:
-        case.process_document(sys.stdin, out, seen_element_ids, 'markdown', strip=strip)
+        seen = case.process_document(sys.stdin, out, 'markdown', strip=strip, seen_ids=seen)
+    return seen
 
 
 
@@ -4973,8 +5003,7 @@ def _is_element_region_terminator(line: str) -> bool:
     return False
 
 
-def _fixmisplaced_document(path, case, config,
-                           seen_element_ids, doc_format):
+def _fixmisplaced_document(path, case, config, doc_format):
     """Move misplaced element regions to their correct LTAC order positions.
 
     Returns a (tmp_path, final_path) pair, or None if no changes or error.
@@ -5381,14 +5410,16 @@ def _inline_rewrite_file(
     path: str,
     case: 'Case',
     config: dict,
-    seen_element_ids: set,
     add_missing: bool = False,
     strip: bool = False,
-) -> Optional[Tuple[str, str]]:
+    seen_ids: Optional[set] = None,
+) -> Tuple[Optional[Tuple[str, str]], set]:
     """Process a single document file, streaming updated content to a temp file.
 
-    Returns a (tmp_path, final_path) pair on success, or None if an error
-    occurred.  Streams directly to a temp file (no whole-document buffer).
+    Returns a ``(pair, seen_ids)`` tuple where pair is ``(tmp_path, final_path)``
+    or None on error, and seen_ids is the set of element identifiers rendered.
+
+    Streams directly to a temp file (no whole-document buffer).
 
     When add_missing is True, uses a single-pass smart-placement algorithm to
     insert new element stubs near their natural LTAC order position.
@@ -5401,7 +5432,7 @@ def _inline_rewrite_file(
             first_chunk = bf.read(4096)
     except OSError as e:
         case.error(f"cannot open {path!r}: {e}")
-        return None
+        return None, seen_ids if seen_ids is not None else set()
     line_ending = '\r\n' if b'\r\n' in first_chunk else '\n'
     doc_format = detect_doc_format(path)
 
@@ -5413,24 +5444,22 @@ def _inline_rewrite_file(
         fd, tmp = tempfile.mkstemp(dir=dir_)
     except OSError as e:
         case.error(f"cannot create temp file for {path!r}: {e}")
-        return None
+        return None, seen_ids if seen_ids is not None else set()
 
     try:
         nl = '\r\n' if line_ending == '\r\n' else ''
         with os.fdopen(fd, 'w', encoding='utf-8', newline=nl, buffering=_DOC_IO_BUFSIZE) as out_f:
             with open(path, encoding='utf-8', newline='', buffering=_DOC_IO_BUFSIZE) as src_f:
-                case.process_document(
-                    src_f, out_f,
-                    seen_element_ids, doc_format,
-                    add_missing=add_missing, strip=strip,
-                    existing_ids=existing_ids)
+                seen = case.process_document(src_f, out_f, doc_format,
+                                             add_missing=add_missing, strip=strip,
+                                             existing_ids=existing_ids, seen_ids=seen_ids)
     except Exception as e:
         try:
             os.unlink(tmp)
         except OSError:
             pass
         case.error(f"error processing {path!r}: {e}")
-        return None
+        return None, seen_ids if seen_ids is not None else set()
     except BaseException:
         try:
             os.unlink(tmp)
@@ -5443,9 +5472,9 @@ def _inline_rewrite_file(
             os.unlink(tmp)
         except OSError:
             pass
-        return None
+        return None, seen_ids if seen_ids is not None else set()
 
-    return (tmp, path)
+    return (tmp, path), seen
 
 
 def run_selftests() -> None:
@@ -5667,8 +5696,7 @@ def main() -> bool:
             commit_updates([ltac_pair], ltac_path, config, config_path)
     elif args.validate:
         if document_files:
-            seen_element_ids: set = set()
-            _process_files(document_files, _NullWriter(), case, config, seen_element_ids, strip=args.strip)
+            seen_element_ids = _process_files(document_files, _NullWriter(), case, config, strip=args.strip)
             # This validation requires that we read all document files
             _check_element_coverage(case.registry, seen_element_ids, case)
         if ltac_pair:
@@ -5676,8 +5704,7 @@ def main() -> bool:
     elif args.stdout:
         if not document_files:
             panic(_NO_FILES_MSG)
-        seen_element_ids: set = set()
-        _process_files(document_files, sys.stdout, case, config, seen_element_ids, strip=args.strip)
+        seen_element_ids = _process_files(document_files, sys.stdout, case, config, strip=args.strip)
         _check_element_coverage(case.registry, seen_element_ids, case)
         if ltac_pair:
             commit_updates([ltac_pair], ltac_path, config, config_path)
@@ -5689,8 +5716,9 @@ def main() -> bool:
         pairs = []
         for i, path in enumerate(document_files):
             is_last = (i == len(document_files) - 1)
-            pair = _inline_rewrite_file(path, case, config,
-                                        seen_element_ids, add_missing=is_last)
+            pair, seen_element_ids = _inline_rewrite_file(path, case, config,
+                                                          add_missing=is_last,
+                                                          seen_ids=seen_element_ids)
             if pair:
                 pairs.append(pair)
         # Mark needsSupport on all leaf elements that lack an assertion status.
@@ -5714,15 +5742,15 @@ def main() -> bool:
         # First pass: re-render existing regions to get current state
         pairs = []
         for path in document_files:
-            pair = _inline_rewrite_file(path, case, config,
-                                        seen_element_ids, add_missing=False)
+            pair, seen_element_ids = _inline_rewrite_file(path, case, config,
+                                                           add_missing=False,
+                                                           seen_ids=seen_element_ids)
             if pair:
                 pairs.append(pair)
         # Second pass: fix misplaced regions
         # Need to work on the current file content (updated or original)
         for path in document_files:
-            pair = _fixmisplaced_document(path, case, config,
-                                          seen_element_ids, detect_doc_format(path))
+            pair = _fixmisplaced_document(path, case, config, detect_doc_format(path))
             if pair:
                 pairs.append(pair)
         if ltac_pair:
@@ -5735,8 +5763,7 @@ def main() -> bool:
         # suppressed (mutations are already blocked above, so ltac_pair is None
         # here; the guard is kept for clarity).
         if document_files:
-            seen_element_ids: set = set()
-            _process_files(document_files, _NullWriter(), case, config, seen_element_ids, strip=args.strip)
+            seen_element_ids = _process_files(document_files, _NullWriter(), case, config, strip=args.strip)
             _check_element_coverage(case.registry, seen_element_ids, case)
     else:
         # Default mode: rewrite document files in place.
@@ -5745,7 +5772,9 @@ def main() -> bool:
         seen_element_ids: set = set()
         pairs = ([ltac_pair] if ltac_pair else [])
         for path in document_files:
-            pair = _inline_rewrite_file(path, case, config, seen_element_ids, strip=args.strip)
+            pair, seen_element_ids = _inline_rewrite_file(path, case, config,
+                                                           strip=args.strip,
+                                                           seen_ids=seen_element_ids)
             if pair is not None:
                 pairs.append(pair)
         if pairs:

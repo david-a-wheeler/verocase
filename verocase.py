@@ -470,6 +470,22 @@ class Node:
             stack.extend(n.children)
         return count
 
+    def write_ltac_subtree(self, out: 'TextIO', first: list,
+                           depth_offset: int = 0) -> None:
+        """Write LTAC lines for this node and all its descendants to out.
+
+        depth_offset is subtracted from each node's depth when formatting;
+        pass node.depth to normalize the subtree to start at column 0.
+        first is a one-element mutable list used to suppress the leading
+        blank line before the very first node.
+        """
+        if not first[0]:
+            out.write('\n')
+        first[0] = False
+        out.write(self.to_ltac_line(depth_offset=depth_offset))
+        for child in self.children:
+            child.write_ltac_subtree(out, first, depth_offset)
+
     def has_claim_descendant(self, registry: Dict[str, 'Node'], seen: set) -> bool:
         """Return True if this node has any Claim descendant, following citations.
 
@@ -1036,7 +1052,7 @@ class Case:
             if i > 0:
                 out.write('\n')
                 first = [True]
-            _write_ltac_node(root, out, first)
+            root.write_ltac_subtree(out, first)
         if self.roots:
             out.write('\n')
 
@@ -5020,16 +5036,6 @@ def print_stats(ltac_stats: dict, doc_stats: Optional[dict],
         print(f"  Elements with no prose:  {doc_stats['empty_elem_regions']}", file=out)
 
 
-def _write_ltac_node(node: 'Node', out: 'TextIO', first: list) -> None:
-    """Write LTAC lines for *node* and all its descendants to *out*."""
-    if not first[0]:
-        out.write('\n')
-    first[0] = False
-    out.write(node.to_ltac_line())
-    for child in node.children:
-        _write_ltac_node(child, out, first)
-
-
 
 # ---------------------------------------------------------------------------
 # Analysis helpers
@@ -5064,17 +5070,8 @@ def _render_ltac_txt(node_list, config, out: TextIO, sep: str = '') -> bool:
     out.write(sep)
     first = [True]
     for root in node_list:
-        _write_ltac_node_normalized(root, out, first, root.depth)
+        root.write_ltac_subtree(out, first, root.depth)
     return True
-
-def _write_ltac_node_normalized(node, out: TextIO, first: list, depth_offset: int) -> None:
-    """Write LTAC lines for node and all its descendants to out, normalizing depth."""
-    if not first[0]:
-        out.write('\n')
-    out.write(node.to_ltac_line(depth_offset=depth_offset))
-    first[0] = False
-    for child in node.children:
-        _write_ltac_node_normalized(child, out, first, depth_offset)
 
 
 # ---------------------------------------------------------------------------

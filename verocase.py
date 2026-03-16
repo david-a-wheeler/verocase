@@ -110,7 +110,6 @@ DEFAULT_CONFIG = types.MappingProxyType({
 })
 
 
-
 # ---------------------------------------------------------------------------
 # Utility functions
 # ---------------------------------------------------------------------------
@@ -2685,15 +2684,11 @@ class _LTACParser:
         self._stack = []
 
 
-
-
-
 def _recalc_depths(node: 'Node', new_depth: int) -> None:
     """Recursively update depth for node and all descendants."""
     node.depth = new_depth
     for child in node.children:
         _recalc_depths(child, new_depth + 1)
-
 
 
 # ---------------------------------------------------------------------------
@@ -4924,15 +4919,6 @@ Run --help-api for the public Python API summary (for library use).
     return args
 
 
-
-
-
-
-
-
-
-
-
 _ASSERTION_STATUSES = frozenset({'needssupport', 'assumed', 'axiomatic', 'defeated', 'ascited'})
 
 
@@ -4966,8 +4952,6 @@ def _mark_needs_support(candidate_ids: List[str],
     if count:
         notify(f"Adding {count} needsSupport marking(s) to leaves in the LTAC file")
     return count
-
-
 
 
 # ---------------------------------------------------------------------------
@@ -5031,7 +5015,6 @@ def print_stats(ltac_stats: dict, doc_stats: Optional[dict],
         print(f"  Elements with no prose:  {doc_stats['empty_elem_regions']}", file=out)
 
 
-
 # ---------------------------------------------------------------------------
 # Analysis helpers
 # ---------------------------------------------------------------------------
@@ -5051,7 +5034,6 @@ def _print_analysis_list(header, items, fmt=str) -> None:
     else:
         for item in items:
             print(fmt(item))
-
 
 
 # ---------------------------------------------------------------------------

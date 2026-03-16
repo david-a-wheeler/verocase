@@ -1610,9 +1610,88 @@ class Case:
                 totals[k] += ds.get(k, 0)
         return totals
 
+    def _scan_document_elements(self):
+        """Scan self.document_files and return element region info.
+
+        Returns a tuple (ordered_ids, id_info) where:
+        - ordered_ids: list of (identifier, filepath, lineno) for element regions,
+          in document order
+        - id_info: dict mapping identifier ->
+          {'has_prose': bool, 'filepath': str, 'lineno': int}
+        """
+        ordered_ids = []
+        id_info = {}
+
+        for path in self.document_files:
+            try:
+                with open(path, encoding='utf-8', errors='replace') as f:
+                    lines = f.readlines()
+            except OSError:
+                continue
+
+            i = 0
+            in_elem_region = False
+            current_ident = None
+            current_lineno = None
+            after_end = False
+            gap_has_content = False
+
+            while i < len(lines):
+                text = lines[i].rstrip('\r\n')
+                # Skip config lines
+                cm = _CASEPROC_CONFIG_RE.match(text)
+                if cm:
+                    i += 1
+                    continue
+                m = _CASEPROC_REGION_RE.match(text)
+                if m:
+                    # If we were tracking prose after an end marker, finalize
+                    if after_end and current_ident is not None:
+                        id_info[current_ident]['has_prose'] = gap_has_content
+                    after_end = False
+                    gap_has_content = False
+                    in_elem_region = False
+                    current_ident = None
+                    current_lineno = None
+
+                    selector = m.group(1)
+                    parts = selector.split(None, 1)
+                    kind = parts[0] if parts else ''
+                    if kind == 'element' and len(parts) == 2:
+                        ident = parts[1].strip()
+                        in_elem_region = True
+                        current_ident = ident
+                        current_lineno = i + 1  # 1-based
+                        ordered_ids.append((ident, path, i + 1))
+                        id_info[ident] = {'has_prose': False, 'filepath': path, 'lineno': i + 1}
+
+                    i += 1
+                    # Consume until end verocase
+                    while i < len(lines):
+                        t = lines[i].rstrip('\r\n')
+                        if t.strip() == '<!-- end verocase -->':
+                            if in_elem_region:
+                                after_end = True
+                            in_elem_region = False
+                            i += 1
+                            break
+                        i += 1
+                    continue
+
+                # Check for prose after end verocase
+                if after_end and text.strip() and not text.strip().startswith('<!--'):
+                    gap_has_content = True
+                i += 1
+
+            # Finalize the last region
+            if after_end and current_ident is not None:
+                id_info[current_ident]['has_prose'] = gap_has_content
+
+        return ordered_ids, id_info
+
     def missing(self) -> List['Node']:
         """Return LTAC elements that have no selector region in the document(s)."""
-        ordered_ids, _ = _scan_document_elements(self.document_files)
+        ordered_ids, _ = self._scan_document_elements()
         seen = {ident for ident, _, _ in ordered_ids}
         all_ids_ordered = [node for node in self.all_nodes()
                            if node.is_definition and node.identifier]
@@ -1620,7 +1699,7 @@ class Case:
 
     def empty(self) -> List[str]:
         """Return identifiers of elements whose selector region contains no prose."""
-        _, elem_info = _scan_document_elements(self.document_files)
+        _, elem_info = self._scan_document_elements()
         return [
             ident for ident, info in elem_info.items()
             if not info['has_prose']
@@ -1629,7 +1708,7 @@ class Case:
 
     def orphans(self) -> List[str]:
         """Return identifiers of document selector regions not present in the LTAC."""
-        _, elem_info = _scan_document_elements(self.document_files)
+        _, elem_info = self._scan_document_elements()
         return [ident for ident in elem_info if ident not in self.registry]
 
     def misplaced(self) -> list:
@@ -1638,7 +1717,7 @@ class Case:
                       if node.is_definition and node.identifier]
         ltac_pos = {ident: i for i, ident in enumerate(ltac_order)}
 
-        ordered_ids, elem_info = _scan_document_elements(self.document_files)
+        ordered_ids, elem_info = self._scan_document_elements()
         doc_entries = [(ident, filepath, lineno) for ident, filepath, lineno in ordered_ids
                        if ident in self.registry]
 
@@ -4959,85 +5038,6 @@ def _write_ltac(roots: List['Node'], out: 'TextIO') -> None:
 # ---------------------------------------------------------------------------
 # Analysis helpers
 # ---------------------------------------------------------------------------
-
-def _scan_document_elements(paths):
-    """Scan document files and return element region info.
-
-    Returns a tuple (ordered_ids, id_info) where:
-    - ordered_ids: list of (identifier, filepath, lineno) for element regions,
-      in document order
-    - id_info: dict mapping identifier ->
-      {'has_prose': bool, 'filepath': str, 'lineno': int}
-    """
-    ordered_ids = []
-    id_info = {}
-
-    for path in paths:
-        try:
-            with open(path, encoding='utf-8', errors='replace') as f:
-                lines = f.readlines()
-        except OSError:
-            continue
-
-        i = 0
-        in_elem_region = False
-        current_ident = None
-        current_lineno = None
-        after_end = False
-        gap_has_content = False
-
-        while i < len(lines):
-            text = lines[i].rstrip('\r\n')
-            # Skip config lines
-            cm = _CASEPROC_CONFIG_RE.match(text)
-            if cm:
-                i += 1
-                continue
-            m = _CASEPROC_REGION_RE.match(text)
-            if m:
-                # If we were tracking prose after an end marker, finalize
-                if after_end and current_ident is not None:
-                    id_info[current_ident]['has_prose'] = gap_has_content
-                after_end = False
-                gap_has_content = False
-                in_elem_region = False
-                current_ident = None
-                current_lineno = None
-
-                selector = m.group(1)
-                parts = selector.split(None, 1)
-                kind = parts[0] if parts else ''
-                if kind == 'element' and len(parts) == 2:
-                    ident = parts[1].strip()
-                    in_elem_region = True
-                    current_ident = ident
-                    current_lineno = i + 1  # 1-based
-                    ordered_ids.append((ident, path, i + 1))
-                    id_info[ident] = {'has_prose': False, 'filepath': path, 'lineno': i + 1}
-
-                i += 1
-                # Consume until end verocase
-                while i < len(lines):
-                    t = lines[i].rstrip('\r\n')
-                    if t.strip() == '<!-- end verocase -->':
-                        if in_elem_region:
-                            after_end = True
-                        in_elem_region = False
-                        i += 1
-                        break
-                    i += 1
-                continue
-
-            # Check for prose after end verocase
-            if after_end and text.strip() and not text.strip().startswith('<!--'):
-                gap_has_content = True
-            i += 1
-
-        # Finalize the last region
-        if after_end and current_ident is not None:
-            id_info[current_ident]['has_prose'] = gap_has_content
-
-    return ordered_ids, id_info
 
 
 def _print_analysis_list(header, items, fmt=str) -> None:

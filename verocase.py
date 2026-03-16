@@ -2106,7 +2106,7 @@ class Case:
             nodes = _resolve_element(element_id, self, current_element)
             if not nodes:
                 return False
-            return _render_ltac_txt(nodes, self.config, out)
+            return self.render_ltac_txt(nodes, out)
         elif display_type == 'info':
             if element_id is None or element_id == '*':
                 self.error("'info' selector requires an explicit element ID")
@@ -2334,9 +2334,14 @@ class Case:
     def render_ltac_txt(self, node_list, out: 'TextIO', sep: str = '') -> bool:
         """Write node_list as raw LTAC text to out, normalizing indentation to depth 0.
 
-        Uses self.config.
+        Returns False if node_list is empty.
         """
-        return _render_ltac_txt(node_list, self.config, out, sep)
+        if not node_list:
+            return False
+        out.write(sep)
+        for root in node_list:
+            root.write_ltac_subtree(out, root.depth)
+        return True
 
     def _check_no_existing_case_files(self) -> None:
         """Panic if any well-known case file already exists."""
@@ -5047,20 +5052,6 @@ def _print_analysis_list(header, items, fmt=str) -> None:
         for item in items:
             print(fmt(item))
 
-
-def _render_ltac_txt(node_list, config, out: TextIO, sep: str = '') -> bool:
-    """Write a list of nodes as raw LTAC text to out, normalizing indentation to depth 0.
-
-    Each node in node_list is treated as a root; its subtree is rendered
-    with the node at depth 0 regardless of its actual tree depth.
-    Returns False if node_list is empty.
-    """
-    if not node_list:
-        return False
-    out.write(sep)
-    for root in node_list:
-        root.write_ltac_subtree(out, root.depth)
-    return True
 
 
 # ---------------------------------------------------------------------------

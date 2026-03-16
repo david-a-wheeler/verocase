@@ -4522,8 +4522,8 @@ class _MutationAction(argparse.Action):
         setattr(namespace, self.dest, mutations)
 
 
-def parse_args() -> argparse.Namespace:
-    """Build the argument parser, define all flags, and parse the command line."""
+def parse_args(args=None) -> argparse.Namespace:
+    """Build the argument parser, define all flags, and parse args (or sys.argv)."""
     parser = argparse.ArgumentParser(
         prog='verocase',
         description='Process assurance case LTAC file and update documentation files (Markdown/HTML)',
@@ -4880,7 +4880,7 @@ Run --help-api for the public Python API summary (for library use).
              '--rename, --restate, --detach, --move).',
     )
 
-    args = parser.parse_args()
+    args = parser.parse_args(args)
 
     # Handle --help / --help-validations / --help-config / --help-api / --help-api-details.
     # All requested sections are printed together so the flags are freely combinable.
@@ -5247,14 +5247,12 @@ def run_selftests() -> None:
     return failures == 0
 
 
-def main() -> bool:
-    """Entry point: parse arguments, load configuration and LTAC data, then dispatch.
+def run(args: argparse.Namespace) -> bool:
+    """Load configuration and LTAC data, then dispatch based on parsed args.
 
     Returns True on clean success, False if any errors were encountered.
     Raises VerocaseError on fatal errors.
     """
-    args = parse_args()
-
     if args.selftest:
         return run_selftests()
 
@@ -5466,6 +5464,11 @@ def main() -> bool:
         print_stats(case.stats(), case.doc_files_stats())
 
     return not case.had_error
+
+
+def main() -> bool:
+    """CLI entry point: parse sys.argv and dispatch via run()."""
+    return run(parse_args())
 
 
 if __name__ == '__main__':

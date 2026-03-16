@@ -5276,6 +5276,7 @@ def main() -> bool:
     case = Case().load(
         ltac_file=args.ltac,
         config_file=args.config,
+        document_files=list(args.files) if args.files else None,
         strict=args.error,
         validate=False,  # validate manually below
     )
@@ -5346,12 +5347,6 @@ def main() -> bool:
         if case.had_error:
             panic("LTAC validation failed after mutations; no files updated")
 
-    # Resolve document files: CLI args > config > auto-discover.
-    document_files = (
-        list(args.files) if args.files
-        else case._find_document_files(ltac_path)
-    )
-
     _NO_FILES_MSG = (
         "no document files found; specify files on the command line, set document_files "
         "in config, or create one of: case.md, case.markdown, case.html, "
@@ -5360,14 +5355,7 @@ def main() -> bool:
 
     if _has_analysis:
         # Analysis-only mode: no document processing, no file modification
-        reports = []
-        if document_files:
-            analysis_doc_files = document_files
-        else:
-            analysis_doc_files = []
-
         first = True
-        case.document_files = analysis_doc_files
         if args.missing:
             if not first:
                 print()
@@ -5449,38 +5437,35 @@ def main() -> bool:
             sys.stdout.write('\n')
         case.save_ltac_if_modified()
     elif args.validate:
-        if document_files:
-            seen_element_ids = case._process_document_files(document_files, _NullWriter(), strip=args.strip)
+        if case.document_files:
+            seen_element_ids = case._process_document_files(case.document_files, _NullWriter(), strip=args.strip)
             # This validation requires that we read all document files
             case.check_element_coverage(seen_element_ids)
         case.save_ltac_if_modified()
     elif args.stdout:
-        if not document_files:
+        if not case.document_files:
             panic(_NO_FILES_MSG)
-        seen_element_ids = case._process_document_files(document_files, sys.stdout, strip=args.strip)
+        seen_element_ids = case._process_document_files(case.document_files, sys.stdout, strip=args.strip)
         case.check_element_coverage(seen_element_ids)
         case.save_ltac_if_modified()
     elif args.fixmissing or args.start:
-        if not document_files:
+        if not case.document_files:
             panic(_NO_FILES_MSG)
-        case.document_files = document_files
         case.fixmissing()
     elif args.fixmisplaced:
-        if not document_files:
+        if not case.document_files:
             panic(_NO_FILES_MSG)
-        case.document_files = document_files
         case.fix_misplaced_documents()
     elif args.read_only:
         # --read-only: load, validate, and optionally report stats; no file writes.
         # Mutations are blocked above, so ltac_modified is always False here.
-        if document_files:
-            seen_element_ids = case._process_document_files(document_files, _NullWriter(), strip=args.strip)
+        if case.document_files:
+            seen_element_ids = case._process_document_files(case.document_files, _NullWriter(), strip=args.strip)
             case.check_element_coverage(seen_element_ids)
     else:
         # Default mode: rewrite document files in place (+ LTAC if modified).
-        if not document_files and not case.ltac_modified:
+        if not case.document_files and not case.ltac_modified:
             panic(_NO_FILES_MSG)
-        case.document_files = document_files
         case.update_files(strip=args.strip)
 
     if args.stats:

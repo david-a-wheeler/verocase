@@ -835,25 +835,25 @@ class Case:
     # ------------------------------------------------------------------
 
     def definition_for(self, ident: str) -> Optional['Node']:
-        """Return the definition Node for ident, or None if absent or duplicated.
+        """Return the definition Node for ident, or None if absent.
 
-        Returns None when there are zero declarations (ident unknown) or more
-        than one declaration (broken LTAC).  Callers that need all declarations
-        including duplicates should access self.all_definitions_for[ident] directly.
+        Returns None only when there are zero declarations (ident unknown).
+        When there are multiple declarations (broken LTAC), returns the first
+        one to simplify managing erroneous cases; the duplicate is already
+        reported as a warning at parse time.  Callers that need all
+        declarations including duplicates should access
+        self.all_definitions_for[ident] directly.
         """
         defs = self.all_definitions_for.get(ident, [])
-        if len(defs) == 1:
-            return defs[0]
-        if len(defs) > 1:
-            self.error(f"{ident!r}: multiple declarations")
-        return None
+        return defs[0] if defs else None
 
     def declaring_package_for(self, ident: str) -> Optional['Node']:
         """Return the package root Node that declares ident, or None.
 
-        Returns None when ident is unknown or has duplicate declarations
-        (definition_for returns None in both cases).  If you have a Node
-        that's the definition already, use node.pkg_root directly instead.
+        Returns None only when ident is unknown.  If there are duplicate
+        declarations, definition_for() returns the first,
+        so this returns *its* package root.  If you have a Node that's the
+        definition already, use node.pkg_root directly instead.
         """
         node = self.definition_for(ident)
         return node.pkg_root if node is not None else None
@@ -901,8 +901,9 @@ class Case:
                   current: Optional['Node'] = None) -> List['Node']:
         """Return the node(s) for element_id, with fallback to current or all roots.
 
-        If element_id is given, look it up via definition_for (error and return []
-        if not found).  If element_id is None, return [current] when current is
+        If element_id is given, look it up via definition_for
+        (error and return [] if not found).
+        If element_id is None, return [current] when current is
         set, else return all roots.  ('*' is handled at dispatch time before
         calling here.)
         """
@@ -1031,8 +1032,9 @@ class Case:
 
         Performs an iterative DFS over the logical dependency graph.  For each
         node, its logical successors are its structural children (non-citation,
-        non-Link), any cited child's defined node (^ID → definition_for(ID)), and
-        any Link child's link_target.  A node encountered while already on the
+        non-Link), any cited child's defined node (^ID → definition_for(ID)),
+        and any Link child's link_target.
+        A node encountered while already on the
         current DFS path (a back-edge) means circular reasoning is possible.
         """
         visiting: Set[int] = set()  # id(node) of nodes on the current DFS path
@@ -4684,7 +4686,7 @@ Data types and examples of their methods/properties:
     case.citations            Dict[str, List[Node]] (ID → all citation Nodes)
     case.links                Dict[str, List[Node]] (ID → all Link Nodes targeting it)
     # Lookups
-    case.definition_for(ident) -> Optional[Node]  (None if 0 or >1 declarations)
+    case.definition_for(ident) -> Optional[Node]  (None if unknown; first if duplicated)
     case.declaring_package_for(ident) -> Optional[Node]
     case.statement_for(ident) -> Optional[str]
     case.citations_and_links(node) -> List[Node]  (citation + Link nodes referencing node)

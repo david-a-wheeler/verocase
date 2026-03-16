@@ -1017,8 +1017,28 @@ class Case:
         return _copy_forest(self.roots)
 
     def write_ltac(self, out: 'TextIO') -> None:
-        """Serialize the full forest to LTAC text, writing to out."""
-        _write_ltac(self.roots, out)
+        """Serialize the full forest to LTAC text, writing to out.
+
+        Packages are separated by blank lines; the result ends with a newline.
+        To collect the result as a string, pass an io.StringIO() instance.
+
+        >>> import io
+        >>> case = Case()
+        >>> _LTACParser(case).parse(['- Claim C1: The software is safe',
+        ...                         '  - Evidence E1: Test results (tests.pdf)'])
+        >>> buf = io.StringIO()
+        >>> case.write_ltac(buf)
+        >>> buf.getvalue()
+        '- Claim C1: The software is safe\\n  - Evidence E1: Test results (tests.pdf)\\n'
+        """
+        first = [True]
+        for i, root in enumerate(self.roots):
+            if i > 0:
+                out.write('\n')
+                first = [True]
+            _write_ltac_node(root, out, first)
+        if self.roots:
+            out.write('\n')
 
     def needs_support(self) -> List['Node']:
         """Return all nodes in the forest that carry the {needssupport} option."""
@@ -5009,30 +5029,6 @@ def _write_ltac_node(node: 'Node', out: 'TextIO', first: list) -> None:
     for child in node.children:
         _write_ltac_node(child, out, first)
 
-
-def _write_ltac(roots: List['Node'], out: 'TextIO') -> None:
-    """Serialize a Node forest to LTAC text, writing to out.
-
-    Packages are separated by blank lines; the result ends with a newline.
-    To collect the result as a string, pass an io.StringIO() instance.
-
-    >>> import io
-    >>> case = Case()
-    >>> _LTACParser(case).parse(['- Claim C1: The software is safe',
-    ...                         '  - Evidence E1: Test results (tests.pdf)'])
-    >>> buf = io.StringIO()
-    >>> case.write_ltac(buf)
-    >>> buf.getvalue()
-    '- Claim C1: The software is safe\\n  - Evidence E1: Test results (tests.pdf)\\n'
-    """
-    first = [True]
-    for i, root in enumerate(roots):
-        if i > 0:
-            out.write('\n')
-            first = [True]
-        _write_ltac_node(root, out, first)
-    if roots:
-        out.write('\n')
 
 
 # ---------------------------------------------------------------------------

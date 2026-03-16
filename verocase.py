@@ -1049,6 +1049,98 @@ class Case:
         """Return all nodes in the forest that carry the {needssupport} option."""
         return [n for n in self.all_nodes_fast() if 'needssupport' in n.options]
 
+    def _make_temp(self, path: str, content: str,
+                   line_ending: str = '\n') -> Optional[str]:
+        """Write content to a temp file in the same directory as path.
+
+        If line_ending is '\\r\\n', converts all '\\n' to '\\r\\n' before writing.
+        Returns the temp file path, or None if writing failed (error already reported).
+        """
+        dir_ = os.path.dirname(os.path.abspath(path))
+        try:
+            fd, tmp = tempfile.mkstemp(dir=dir_)
+            try:
+                encoded = content.replace('\n', line_ending).encode('utf-8')
+                with os.fdopen(fd, 'wb') as f:
+                    f.write(encoded)
+            except Exception:
+                try:
+                    os.unlink(tmp)
+                except OSError:
+                    pass
+                raise
+            return tmp
+        except OSError as e:
+            self.error(f"cannot write temp file for {path!r}: {e}")
+            return None
+
+    def _make_backup(self, pairs: List[Tuple[str, str]]) -> None:
+        """Create a timestamped backup snapshot of files about to be modified.
+
+        Backs up all final_path files from *pairs*, the LTAC file, and the config
+        file (if any) into a single timestamped subdirectory under .backups/ next
+        to the LTAC file.  Directory structure relative to the LTAC directory is
+        preserved.  Files outside the LTAC directory are stored under absolute/.
+
+        Old snapshots are silently rotated when the count exceeds max_backups.
+        Setting max_backups to 0 disables backups entirely.
+        """
+        max_backups = self.config.get('max_backups', DEFAULT_CONFIG['max_backups'])
+        if max_backups <= 0:
+            return
+
+        now = datetime.datetime.now()
+        ts = now.strftime('%Y-%m-%dT%H%M%S') + f'.{now.microsecond // 10000:02d}'
+
+        ltac_dir = os.path.dirname(os.path.abspath(self.ltac_path))
+        backups_dir = os.path.join(ltac_dir, '.backups')
+        snapshot_dir = os.path.join(backups_dir, ts)
+
+        srcs = {os.path.abspath(f) for _, f in pairs} | {os.path.abspath(self.ltac_path)}
+        if self.config_path:
+            srcs.add(os.path.abspath(self.config_path))
+
+        try:
+            os.makedirs(snapshot_dir, exist_ok=True)
+        except OSError:
+            return  # best-effort: skip backup if snapshot dir can't be created
+
+        for src in sorted(srcs):
+            try:
+                rel = os.path.relpath(src, ltac_dir)
+                if rel.startswith('..'):
+                    rel = os.path.join('absolute', src.lstrip(os.sep))
+                dst = os.path.join(snapshot_dir, rel)
+                os.makedirs(os.path.dirname(dst) or '.', exist_ok=True)
+                shutil.copy2(src, dst)
+            except OSError:
+                pass  # best-effort: skip files that can't be read or written
+
+        # Rotate: silently remove oldest snapshots when over the limit.
+        try:
+            snapshots = sorted(e for e in os.listdir(backups_dir)
+                               if os.path.isdir(os.path.join(backups_dir, e)))
+            for old in snapshots[:-max_backups]:
+                shutil.rmtree(os.path.join(backups_dir, old), ignore_errors=True)
+        except OSError:
+            pass
+
+    def commit_updates(self, pairs: List[Tuple[str, str]]) -> None:
+        """Atomically update files by backing up originals and moving in new versions.
+
+        *pairs* is a list of (tmp_path, final_path).  A timestamped backup snapshot
+        is first created under .backups/ next to the LTAC file, then the temp files
+        are moved to their final locations.  This minimises the window when files
+        are absent.
+        """
+        notify("Updating " + " ".join(os.path.basename(fp) for _, fp in pairs))
+        self._make_backup(pairs)
+        for tmp, final in pairs:
+            try:
+                os.replace(tmp, final)
+            except OSError as e:
+                self.panic(f"cannot update {final!r}: {e}")
+
     def _make_ltac_temp(self, path: str,
                         line_ending: str = '\n') -> Optional[str]:
         """Stream the LTAC forest directly to a temp file next to path.
@@ -1087,7 +1179,7 @@ class Case:
         tmp = self._make_ltac_temp(target)
         if tmp is None:
             return  # error already reported
-        commit_updates([(tmp, target)], target, self.config, self.config_path)
+        self.commit_updates([(tmp, target)])
         self.ltac_modified = False
 
     def save_ltac_if_modified(self) -> None:
@@ -1209,7 +1301,7 @@ class Case:
             if tmp is not None:
                 pairs.append((tmp, self.ltac_path))
         if pairs:
-            commit_updates(pairs, self.ltac_path, self.config, self.config_path)
+            self.commit_updates(pairs)
             self.ltac_modified = False
         return not self.had_error
 
@@ -1235,7 +1327,7 @@ class Case:
             if tmp is not None:
                 pairs.append((tmp, self.ltac_path))
         if pairs:
-            commit_updates(pairs, self.ltac_path, self.config, self.config_path)
+            self.commit_updates(pairs)
         return not self.had_error
 
     def _fix_misplaced_document(self, path: str) -> Optional[Tuple[str, str]]:
@@ -1460,7 +1552,7 @@ class Case:
             new_content += '\n'
         if new_content == content:
             return None
-        tmp = _make_temp(path, new_content, line_ending)
+        tmp = self._make_temp(path, new_content, line_ending)
         return (tmp, path) if tmp is not None else None
 
     def update_files(self, add_missing: bool = False,
@@ -1485,7 +1577,7 @@ class Case:
             if tmp is not None:
                 pairs.append((tmp, self.ltac_path))
         if pairs:
-            commit_updates(pairs, self.ltac_path, self.config, self.config_path)
+            self.commit_updates(pairs)
             self.ltac_modified = False
         if self.document_files:
             self.check_element_coverage(seen)
@@ -5075,100 +5167,6 @@ def _is_element_region_terminator(line: str) -> bool:
     return False
 
 
-def make_backup(pairs: List[Tuple[str, str]], ltac_path: str,
-                config: dict, config_path: Optional[str]) -> None:
-    """Create a timestamped backup snapshot of files about to be modified.
-
-    Backs up all final_path files from *pairs*, the LTAC file, and the config
-    file (if any) into a single timestamped subdirectory under .backups/ next
-    to the LTAC file.  Directory structure relative to the LTAC directory is
-    preserved.  Files outside the LTAC directory are stored under absolute/.
-
-    Old snapshots are silently rotated when the count exceeds max_backups.
-    Setting max_backups to 0 disables backups entirely.
-    """
-    max_backups = config.get('max_backups', DEFAULT_CONFIG['max_backups'])
-    if max_backups <= 0:
-        return
-
-    now = datetime.datetime.now()
-    ts = now.strftime('%Y-%m-%dT%H%M%S') + f'.{now.microsecond // 10000:02d}'
-
-    ltac_dir = os.path.dirname(os.path.abspath(ltac_path))
-    backups_dir = os.path.join(ltac_dir, '.backups')
-    snapshot_dir = os.path.join(backups_dir, ts)
-
-    srcs = {os.path.abspath(f) for _, f in pairs} | {os.path.abspath(ltac_path)}
-    if config_path:
-        srcs.add(os.path.abspath(config_path))
-
-    try:
-        os.makedirs(snapshot_dir, exist_ok=True)
-    except OSError:
-        return  # best-effort: skip backup if snapshot dir can't be created
-
-    for src in sorted(srcs):
-        try:
-            rel = os.path.relpath(src, ltac_dir)
-            if rel.startswith('..'):
-                rel = os.path.join('absolute', src.lstrip(os.sep))
-            dst = os.path.join(snapshot_dir, rel)
-            os.makedirs(os.path.dirname(dst) or '.', exist_ok=True)
-            shutil.copy2(src, dst)
-        except OSError:
-            pass  # best-effort: skip files that can't be read or written
-
-    # Rotate: silently remove oldest snapshots when over the limit.
-    try:
-        snapshots = sorted(e for e in os.listdir(backups_dir)
-                           if os.path.isdir(os.path.join(backups_dir, e)))
-        for old in snapshots[:-max_backups]:
-            shutil.rmtree(os.path.join(backups_dir, old), ignore_errors=True)
-    except OSError:
-        pass
-
-
-def commit_updates(pairs: List[Tuple[str, str]], ltac_path: str,
-                   config: dict, config_path: Optional[str]) -> None:
-    """Atomically update files by backing up originals and moving in new versions.
-
-    *pairs* is a list of (tmp_path, final_path).  A timestamped backup snapshot
-    is first created under .backups/ next to the LTAC file, then the temp files
-    are moved to their final locations.  This minimises the window when files
-    are absent.
-    """
-    notify("Updating " + " ".join(os.path.basename(fp) for _, fp in pairs))
-    make_backup(pairs, ltac_path, config, config_path)
-    for tmp, final in pairs:
-        try:
-            os.replace(tmp, final)
-        except OSError as e:
-            panic(f"cannot update {final!r}: {e}")
-
-
-def _make_temp(path: str, content: str, line_ending: str = '\n') -> Optional[str]:
-    """Write content to a temp file in the same directory as path.
-
-    If line_ending is '\\r\\n', converts all '\\n' to '\\r\\n' before writing.
-    Returns the temp file path, or None if writing failed (error already reported).
-    """
-    dir_ = os.path.dirname(os.path.abspath(path))
-    try:
-        fd, tmp = tempfile.mkstemp(dir=dir_)
-        try:
-            encoded = content.replace('\n', line_ending).encode('utf-8')
-            with os.fdopen(fd, 'wb') as f:
-                f.write(encoded)
-        except Exception:
-            try:
-                os.unlink(tmp)
-            except OSError:
-                pass
-            raise
-        return tmp
-    except OSError as e:
-        print(f"verocase: error: cannot write temp file for {path!r}: {e}", file=sys.stderr)
-        return None
 
 
 def _collect_document_element_ids(path: str) -> set:
@@ -5277,7 +5275,7 @@ def run(args: argparse.Namespace) -> bool:
             tmp = case._make_ltac_temp(ltac_path, ltac_line_ending)
             if tmp is None:
                 panic("cannot write updated LTAC file")
-            commit_updates([(tmp, ltac_path)], ltac_path, config, config_path)
+            case.commit_updates([(tmp, ltac_path)])
 
     # Apply ordered mutations (--rename / --restate).
     if args.mutations:

@@ -210,7 +210,6 @@ def make_mermaid_id(identifier: str, counter: list) -> str:
 _HTML_ESCAPE_TABLE = str.maketrans({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'})
 
 
-
 def escape_html(text: str) -> str:
     """Escape text for safe embedding in mermaid HTML labels.
 
@@ -872,7 +871,7 @@ class Case:
         """
         ident = node.identifier
         result = []
-        for n in self.all_nodes_fast():
+        for n in self.all_nodes():
             if (n.is_citation and n.identifier == ident) or \
                (n.node_type == 'Link' and n.link_target is node):
                 result.append(n)
@@ -979,53 +978,149 @@ class Case:
 
     def check_id_info(self) -> None:
         """Validate identifier usage; warn about IDs cited but never declared."""
-        all_ids = set(self.all_definitions_for) | set(self.citations)
+        all_ids = list(dict.fromkeys(list(self.all_definitions_for) + list(self.citations)))
         for ident in all_ids:
             n_decls = len(self.all_definitions_for.get(ident, []))
             n_cites = len(self.citations.get(ident, []))
             if n_cites > 0 and n_decls == 0:
                 self.warn(f"{ident}: cited but never declared")
 
-    def reindex(self) -> None:
-        """Rebuild all_definitions_for, citations, and links from the current node forest.
+    def _check_map(self, attr: str, stored_map: dict, computed_map: dict) -> bool:
+        """Compare two node-list maps and report discrepancies via error().
 
-        Call after directly manipulating node.children or node.parent to bring
-        the index maps back in sync with the tree.
+        Iterates over the union of keys in stored_map and computed_map.  For
+        each key, compares the stored and computed node lists by identity.
+        Reports a mismatch via error() and returns False if any key differs;
+        returns True if all keys match.  attr names the map (used in messages).
         """
-        self.all_definitions_for = {}
-        self.citations = {}
-        self.links = {}
+        ok = True
+        for ident in sorted(set(stored_map) | set(computed_map)):
+            stored   = stored_map.get(ident, [])
+            computed = computed_map.get(ident, [])
+            if [id(n) for n in stored] != [id(n) for n in computed]:
+                self.error(f"cache error: {attr}[{ident!r}]: "
+                           f"stored {len(stored)} node(s), computed {len(computed)}")
+                ok = False
+        return ok
+
+    def recalculate_cache(self) -> dict:
+        """Recompute all cached derived values from the node forest and return them.
+
+        Returns a dict with keys matching the stored attribute names:
+          'all_definitions_for' : Dict[str, List[Node]]
+          'citations'           : Dict[str, List[Node]]
+          'links'               : Dict[str, List[Node]]
+          'link_targets'        : Dict[int, Optional[Node]]  id(link_node) -> target
+
+        Most of its data is intentionally in LTAC order (via all_nodes).
+        In most cases the order doesn't matter, but having a reproducible
+        canonical order improves verifiability.
+        Does not modify any stored state.  Used by doublecheck_cache() and
+        reset_cache().
+        """
+        all_definitions_for: Dict[str, List['Node']] = {}
+        citations: Dict[str, List['Node']] = {}
 
         # Pass 1: collect definitions and citations.
-        for node in self.all_nodes():
+        for node in self.all_nodes(): # all_nodes provides LTAC order
             if not node.identifier:
                 continue
             if node.is_citation:
-                self.citations.setdefault(node.identifier, []).append(node)
+                citations.setdefault(node.identifier, []).append(node)
             elif node.node_type != 'Link':
-                self.all_definitions_for.setdefault(node.identifier, []).append(node)
+                all_definitions_for.setdefault(node.identifier, []).append(node)
 
         # Pass 2: resolve link_target on all Link nodes.
+        links: Dict[str, List['Node']] = {}
+        link_targets: Dict[int, Optional['Node']] = {}
         for node in self.all_nodes():
             if node.node_type != 'Link' or not node.identifier:
                 continue
-            node.link_target = None
             target_id = node.identifier
+            computed_target = None
             if node.is_citation:
                 # Link ^Foo: target is the ^Foo citation in the same package.
                 pkg = node.pkg_root
                 cite_node = next(
-                    (c for c in self.citations.get(target_id, []) if c.pkg_root is pkg),
+                    (c for c in citations.get(target_id, []) if c.pkg_root is pkg),
                     None)
                 if cite_node is not None:
-                    node.link_target = cite_node
-                    self.links.setdefault(target_id, []).append(node)
+                    computed_target = cite_node
+                    links.setdefault(target_id, []).append(node)
             else:
                 # Link Foo: target is the definition.
-                defs = self.all_definitions_for.get(target_id, [])
+                defs = all_definitions_for.get(target_id, [])
                 if defs:
-                    node.link_target = defs[0]
-                    self.links.setdefault(target_id, []).append(node)
+                    computed_target = defs[0]
+                    links.setdefault(target_id, []).append(node)
+            link_targets[id(node)] = computed_target
+
+        return {
+            'all_definitions_for': all_definitions_for,
+            'citations':           citations,
+            'links':               links,
+            'link_targets':        link_targets,
+        }
+
+    def doublecheck_cache(self, cache: Optional[dict] = None) -> bool:
+        """Recompute cached values and report any discrepancies against stored values.
+
+        If cache is provided (a dict previously returned by recalculate_cache()),
+        it is used as the reference for correct values.  Otherwise
+        recalculate_cache() is called first.  Compares each result against the
+        corresponding stored value and reports mismatches via error().
+        Returns True if everything matches, False if any discrepancy is found.
+        Intended for internal testing via --doublecheck; does not modify any
+        stored state.
+        """
+        c = cache if cache is not None else self.recalculate_cache()
+
+        ok  = self._check_map('all_definitions_for', self.all_definitions_for, c['all_definitions_for'])
+        ok &= self._check_map('citations',           self.citations,           c['citations'])
+        ok &= self._check_map('links',               self.links,               c['links'])
+
+        for node in self.all_nodes():
+            if node.node_type != 'Link' or not node.identifier:
+                continue
+            computed_target = c['link_targets'].get(id(node))
+            if node.link_target is not computed_target:
+                self.error(f"cache error: link_target on Link {node.identifier!r} "
+                           f"(line {node.lineno}): "
+                           f"stored {node.link_target!r}, computed {computed_target!r}")
+                ok = False
+
+        return ok
+
+    def reset_cache(self, cache: Optional[dict] = None) -> None:
+        """Replace stored cached values with freshly computed ones.
+        Use this after directly manipulating Case structures like
+        IDs, locations, node.children, node.parent, etc.
+        to bring the cached values back in sync with the tree.
+
+        Key background: for speed, when we load an LTAC file, class Case
+        precalculates and caches several values. E.g., 'all_definitions_for'
+        has a map from an ID to its definitions, so that we
+        never need to hunt for a definition - we just use it.
+        See recalculate_cache() for the list of currently cached values
+        in Case. If you treat the LTAC information as read-only, or only
+        modify it use our modifiers, you don't need to do anything special.
+
+        HOWEVER: if you modify the Case structure *after* loading it, the
+        precalculated cache could be wrong. You can call this
+        method to fix everything.
+
+        If a cache is provided (a dict previously returned by
+        recalculate_cache()), it is applied directly.
+        Otherwise recalculate_cache() is called first.
+        """
+        if cache is None:
+            cache = self.recalculate_cache()
+        self.all_definitions_for = cache['all_definitions_for']
+        self.citations           = cache['citations']
+        self.links               = cache['links']
+        for node in self.all_nodes():
+            if node.node_type == 'Link' and id(node) in cache['link_targets']:
+                node.link_target = cache['link_targets'][id(node)]
 
     def check_circularities(self) -> None:
         """Panic if any circular dependency exists in the LTAC model.
@@ -1152,22 +1247,25 @@ class Case:
             stack.extend(reversed(node.children))
 
     def all_nodes_fast(self, root: Optional['Node'] = None):
-        """Yield every node faster than all_nodes(), in arbitrary DFS order.
+        """Yield every node faster than all_nodes(), in arbitrary order.
 
-        If root is given, traverse only that node's subtree; otherwise
-        traverse the full forest (self.roots).
+        This replies all nodes, as fast as we can, in some arbitrary order.
+        Use when order does not matter (building lookup
+        sets, computing aggregates) and you want to maximize throughput.
 
-        Children are pushed in forward order onto a list-stack and popped in
-        reverse, so the traversal order is not LTAC written order but is
-        fully deterministic.  Use when order does not matter (building lookup
-        sets, computing aggregates) and throughput is a concern.
+        Currently, children are pushed in forward order onto a list-stack
+        and popped in reverse, so the traversal order is not LTAC written
+        order but is fully deterministic.  If root is given, traverse
+        only that node's subtree; otherwise traverse the full forest
+        (self.roots).
 
         **Why faster than all_nodes():** all_nodes() calls
         ``stack.extend(reversed(node.children))``, which creates a Python-level
-        iterator that extend() consumes element-by-element.  This method calls
-        ``stack.extend(node.children)`` — a C-level bulk copy — roughly 2-3x
-        faster.  Storing children in reverse order or using a deque do not help
-        (see git log for the full analysis).
+        iterator that extend() consumes element-by-element.
+        By contrast, this method all_nodes_fast() calls
+        ``stack.extend(node.children)``, a C-level bulk copy which is
+        roughly 2-3x faster. Storing children in reverse order or
+        using a deque do not help (see git log for the full analysis).
         """
         stack = [root] if root is not None else list(self.roots)
         while stack:
@@ -2952,10 +3050,7 @@ class _LTACParser:
             parent_node.children.append(node)
         else:
             if self._current_pkg:
-                self._case.panic(
-                    f"package starting at line {self._pkg_root_lineno} "
-                    f"already has a top-level element; only one allowed"
-                )
+                self._finalize_package()
             if node.node_type not in ('Claim', 'Justification'):
                 self._case.warn(f"line {lineno}: {node.node_type} {node.identifier!r}:"
                                 f" package starts with {node.node_type!r};"
@@ -4627,10 +4722,10 @@ Configuration values that can be changed by verocase-config are:
 """ + ", ".join(sorted(_ALLOWED_CONFIG_VALUES)) + "\n"
 
 _HELP_API = """\
-verocase.py can be imported as a Python module. All top-level code is
-constant/regex definitions; there are no file I/O, network calls, or
-environment reads at import time. The if __name__ == '__main__': guard
-is in place. __all__ declares the intended public surface.
+verocase.py can be imported as a normal Python module. There are no file
+I/O requests, network calls, or environment reads at import time.
+The typical if __name__ == '__main__': guard is in place, and __all__
+eclares the intended public surface.
 
 Typical usage (simple):
   import verocase, sys, io
@@ -4644,9 +4739,9 @@ Typical usage (simple):
   print(buf.getvalue())
 
   # Render to a stream using self.config automatically:
-  import sys
   case.render_selector('element SomeClaim', sys.stdout)
 
+  # case.all_nodes() lets you walk the node tree to examine LTAC nodes.
   # Walk the tree to collect (identifier, statement) tuples for definitions
   # (not citations or Links) that are Claims and have no children:
   unsupported = [
@@ -4655,8 +4750,9 @@ Typical usage (simple):
       if node.is_definition and node.node_type == 'Claim' and not node.children
   ]
 
-Usage for explicit control over loading (ADVANCED):
-  import verocase, io, sys
+The Case load() method has options for controlling what files are used.
+Here's usage for explicit control over loading (ADVANCED):
+  import verocase, sys
 
   case = verocase.Case()
   case.load_config('myconfig.toml') # or omit filename to auto-discover
@@ -4667,6 +4763,16 @@ Usage for explicit control over loading (ADVANCED):
 
   if case.had_error:
       sys.exit(1)
+
+Triggering the full CLI pipeline programmatically:
+  import verocase
+  args = verocase.parse_args(['--update-ltac', '--ltac', 'my.ltac'])
+  success = verocase.run(args) # same logic as CLI; returns True on success
+
+  run() accepts an argparse.Namespace from parse_args() and executes the
+  same dispatch logic as the CLI entry point. This is a good way
+  to drive verocase programmatically when you want the exact CLI behaviour
+  (validation, rendering, file updates) without subprocess overhead.
 
 Exceptions:
   class VerocaseError(Exception)  raised by panic() on fatal errors
@@ -4680,11 +4786,21 @@ Data types and examples of their methods/properties:
     node.subtree_count  total nodes in subtree including self (property)
     node.to_ltac_line(depth_offset=0)  format node as an LTAC source line
   class Case  the full assurance case (LTAC + documents):
-    case.document_files List[str] (set by caller after loading)
-    case.config         dict (config used to load)
+    case.had_error      bool: True if any error or warning-as-error occurred
+    case.roots          List[Node]: package root nodes in LTAC order
+    case.ltac_path      str: path of the loaded LTAC file (or None)
+    case.document_files List[str]: document paths (set by load() or caller)
+    case.config         dict: configuration values in effect
+    case.ltac_modified  bool: set True by any mutation method; checked by
+                        save_ltac_if_modified() and update_files() to decide
+                        whether to rewrite the LTAC file. Set it True manually
+                        if you modify the tree directly (and call reset_cache()).
     case.all_definitions_for  Dict[str, List[Node]] (ID → all defining Nodes)
     case.citations            Dict[str, List[Node]] (ID → all citation Nodes)
     case.links                Dict[str, List[Node]] (ID → all Link Nodes targeting it)
+    # Tree traversal
+    case.all_nodes()         DFS generator, LTAC order
+    case.all_nodes_fast()    DFS generator, deterministic but not LTAC order
     # Lookups
     case.definition_for(ident) -> Optional[Node]  (None if unknown; first if duplicated)
     case.declaring_package_for(ident) -> Optional[Node]
@@ -4692,20 +4808,33 @@ Data types and examples of their methods/properties:
     case.citations_and_links(node) -> List[Node]  (citation + Link nodes referencing node)
     case.parents(nodes) -> List[Node]  (deduplicated parents of given nodes)
     case.needs_support() -> List[Node]  (nodes with {needssupport} option)
-    case.all_nodes()         DFS generator, LTAC order
-    case.all_nodes_fast()    DFS generator, fast order (order unspecified)
+    # Validation
+    case.validate_ltac() -> bool  (circularities, reachability, identifier rules)
+    # Mutations — each sets ltac_modified = True
+    case.rename_id(old, new)
+    case.restate_id(ident, new_text)
+    case.detach_id(ident)
+    case.move_id(moving_id, dest_id)
+    case.sync_citations() -> int  (returns count of citations updated)
+    # Saving mutations
+    case.save_ltac_if_modified()   write LTAC iff ltac_modified is True
+    case.reset_cache()             rebuild derived maps after direct tree edits
     # Document processing
+    case.fixmissing() -> bool
     case.fix_misplaced_documents() -> bool
     case.update_files(add_missing=False, strip=False) -> bool
+                        rewrites document_files and LTAC (if ltac_modified);
+                        works with empty document_files (LTAC-only update)
     case.check_element_coverage(seen_element_ids)  warn about uncovered elements
 
 Standalone helpers:
+  DEFAULT_CONFIG        dict of built-in configuration defaults
   print_stats(ltac_stats, doc_stats, out=sys.stdout)
 
-main():
-  success: bool = main()   # parses sys.argv, runs full CLI pipeline
-  Returns True on clean success, False if errors. Raises VerocaseError
-  on fatal errors.
+CLI entry points:
+  parse_args(args=None) -> argparse.Namespace  (args=None reads sys.argv)
+  run(args) -> bool      full CLI pipeline from a parsed Namespace
+  main() -> bool         parse_args() + run(); the __main__ entry point
 
 Use --help-api-details to display full docstrings for all public names.
 import verocase; help(verocase) will also display those same docstrings.
@@ -4960,6 +5089,12 @@ Run --help-api for the public Python API summary (for library use).
              'combine with --read-only if you *only* want to see stats)',
     )
     parser.add_argument(
+        '--doublecheck', action='store_true', default=False,
+        help='recompute internally cached LTAC values (all_definitions_for, '
+             'citations, links, link_target) and verify they match the stored '
+             'values; intended for internal testing but harmless for any user',
+    )
+    parser.add_argument(
         '--strip', action='store_true', default=False,
         help=(
             'regenerate documents with empty selector regions '
@@ -5109,7 +5244,13 @@ Run --help-api for the public Python API summary (for library use).
              'triggering document rewrites. '
              'Cannot be combined with any file-modifying mode '
              '(--fixmissing, --fixmisplaced, --start, --sync, '
-             '--rename, --restate, --detach, --move).',
+             '--rename, --restate, --detach, --move, --update-ltac).',
+    )
+    parser.add_argument(
+        '--update-ltac', action='store_true', default=False, dest='update_ltac',
+        help='rewrite the LTAC file even without an explicit edit '
+             '(normalises formatting and blank-line separators between packages). '
+             'Cannot be combined with --read-only.',
     )
 
     args = parser.parse_args(args)
@@ -5356,6 +5497,8 @@ def run(args: argparse.Namespace) -> bool:
             panic("--read-only cannot be combined with --sync")
         if getattr(args, 'mutations', []):
             panic("--read-only cannot be combined with --rename/--restate/--detach/--move")
+        if args.update_ltac:
+            panic("--read-only cannot be combined with --update-ltac")
 
     if args.sync:
         changed = case.sync_citations()
@@ -5496,9 +5639,15 @@ def run(args: argparse.Namespace) -> bool:
             case.check_element_coverage(seen_element_ids)
     else:
         # Default mode: rewrite document files in place (+ LTAC if modified).
+        if args.update_ltac:
+            case.ltac_modified = True
         if not case.document_files and not case.ltac_modified:
             panic(_NO_FILES_MSG)
         case.update_files(strip=args.strip)
+
+    if args.doublecheck:
+        if case.doublecheck_cache():
+            print("doublecheck: all cached values verified correct")
 
     if args.stats:
         print_stats(case.stats(), case.doc_files_stats())

@@ -370,11 +370,17 @@ class TestDefaultMode(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("no 'element' selector", result.stderr)
 
-    def test_two_top_level_elements_is_fatal(self):
-        """An LTAC with two root-level elements (different IDs) always exits non-zero."""
+    def test_two_top_level_elements_become_packages(self):
+        """Two depth-0 elements without a blank line become separate packages."""
         result = run('--ltac', fixture('two-roots.ltac'), '--select', 'ltac/markdown')
         self.assertNotEqual(result.returncode, 0)
-        self.assertIn('already has a top-level element', result.stderr)
+        self.assertIn('unreachable', result.stderr)
+
+    def test_no_blank_lines_between_packages_is_accepted(self):
+        """An LTAC file with no blank lines between packages is accepted (exits 0)."""
+        result = run('--ltac', fixture('no-blank-between-pkgs.ltac'), '--select', 'ltac/markdown')
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        self.assertEqual(result.stderr, '')
 
     def test_duplicate_id_warns(self):
         """An LTAC with two declarations of the same ID produces a warning but exits 0."""
@@ -416,14 +422,16 @@ class TestLTACValidation(unittest.TestCase):
         """A Link to a nonexistent element produces a warning but exits 0."""
         r = run('--ltac', fixture('bad-link.ltac'), '--select', 'ltac/markdown')
         self.assertEqual(r.returncode, 0)
-        self.assertIn('Link target', r.stderr)
+        self.assertIn('Link', r.stderr)
+        self.assertIn('definition not found', r.stderr)
         self.assertIn('NoSuchElement', r.stderr)
 
     def test_link_target_not_found_error_flag(self):
         """A Link to a nonexistent element exits non-zero with --error."""
         r = run('--ltac', fixture('bad-link.ltac'), '--select', 'ltac/markdown', '--error')
         self.assertNotEqual(r.returncode, 0)
-        self.assertIn('Link target', r.stderr)
+        self.assertIn('Link', r.stderr)
+        self.assertIn('definition not found', r.stderr)
 
     def test_select_nonexistent_element_is_error(self):
         """--select with an element ID absent from the registry always exits non-zero."""
@@ -615,9 +623,10 @@ class TestStress(unittest.TestCase):
         try:
             result = run('--ltac', fixture('stress-test.ltac'),
                          '--config', fixture('stress-test.toml'),
+                         '--doublecheck',
                          tmp)
             self.assertEqual(result.returncode, 0)
-            self.assertEqual(result.stdout, '')
+            self.assertIn('doublecheck: all cached values verified correct', result.stdout)
             self.assertEqual(check(result.stderr, 'stress-test-stderr.expected.txt'),
                              read_fixture('stress-test-stderr.expected.txt'))
             self.assertEqual(check(read_file(tmp), 'stress-test-output.expected.md'),

@@ -470,21 +470,15 @@ class Node:
             stack.extend(n.children)
         return count
 
-    def write_ltac_subtree(self, out: 'TextIO', first: list,
-                           depth_offset: int = 0) -> None:
+    def write_ltac_subtree(self, out: 'TextIO', depth_offset: int = 0) -> None:
         """Write LTAC lines for this node and all its descendants to out.
 
         depth_offset is subtracted from each node's depth when formatting;
         pass node.depth to normalize the subtree to start at column 0.
-        first is a one-element mutable list used to suppress the leading
-        blank line before the very first node.
         """
-        if not first[0]:
-            out.write('\n')
-        first[0] = False
-        out.write(self.to_ltac_line(depth_offset=depth_offset))
+        out.write(self.to_ltac_line(depth_offset=depth_offset) + '\n')
         for child in self.children:
-            child.write_ltac_subtree(out, first, depth_offset)
+            child.write_ltac_subtree(out, depth_offset)
 
     def has_claim_descendant(self, registry: Dict[str, 'Node'], seen: set) -> bool:
         """Return True if this node has any Claim descendant, following citations.
@@ -1047,14 +1041,10 @@ class Case:
         >>> buf.getvalue()
         '- Claim C1: The software is safe\\n  - Evidence E1: Test results (tests.pdf)\\n'
         """
-        first = [True]
         for i, root in enumerate(self.roots):
             if i > 0:
                 out.write('\n')
-                first = [True]
-            root.write_ltac_subtree(out, first)
-        if self.roots:
-            out.write('\n')
+            root.write_ltac_subtree(out)
 
     def needs_support(self) -> List['Node']:
         """Return all nodes in the forest that carry the {needssupport} option."""
@@ -5068,9 +5058,8 @@ def _render_ltac_txt(node_list, config, out: TextIO, sep: str = '') -> bool:
     if not node_list:
         return False
     out.write(sep)
-    first = [True]
     for root in node_list:
-        root.write_ltac_subtree(out, first, root.depth)
+        root.write_ltac_subtree(out, root.depth)
     return True
 
 

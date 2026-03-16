@@ -500,6 +500,34 @@ class Node:
                 return True
         return False
 
+    def recalc_depths(self, new_depth: int) -> None:
+        """Recursively update depth for this node and all descendants."""
+        self.depth = new_depth
+        for child in self.children:
+            child.recalc_depths(new_depth + 1)
+
+    def render_statement(self) -> str:
+        """Return a markdown 'Statement:' line for the node's text."""
+        return f"Statement: {self.text}"
+
+    @property
+    def leftmost_leaf(self) -> 'Node':
+        """Return the leftmost deepest rendered leaf in the subtree.
+
+        Follows the first non-Link child recursively, so that the result is the
+        node that appears at the bottom-left of the BT diagram.
+        """
+        for child in self.children:
+            if child.node_type != 'Link':
+                return child.leftmost_leaf
+        return self
+
+    @property
+    def is_incontextof(self) -> bool:
+        """True if this node attaches via InContextOf (--o), not SupportedBy (-->)."""
+        return self.node_type in ('Context', 'Assumption', 'Justification') or \
+               (self.node_type == 'Claim' and 'assumed' in self.options)
+
     def to_ltac_line(self, depth_offset: int = 0) -> str:
         """Format this node as an LTAC source line (without trailing newline).
 
@@ -2061,7 +2089,7 @@ class Case:
         parent.children[idx] = cited
 
         node.parent = None
-        _recalc_depths(node, 0)
+        node.recalc_depths(0)
         self.roots.append(node)
 
         new_pkg_id = node.identifier
@@ -2109,7 +2137,7 @@ class Case:
             dest.children.append(node)
 
         node.parent = dest
-        _recalc_depths(node, dest.depth + 1)
+        node.recalc_depths(dest.depth + 1)
 
         new_pkg_id = dest.pkg_root.identifier
         self._update_pkg_id_for_subtree(node, old_pkg_id, new_pkg_id)
@@ -2222,7 +2250,7 @@ class Case:
                 return False
             node = nodes[0]
             if display_type == 'statement':
-                out.write(render_statement(node))
+                out.write(node.render_statement())
                 return True
             return False
 
@@ -2776,12 +2804,6 @@ class _LTACParser:
         self._stack = []
 
 
-def _recalc_depths(node: 'Node', new_depth: int) -> None:
-    """Recursively update depth for node and all descendants."""
-    node.depth = new_depth
-    for child in node.children:
-        _recalc_depths(child, new_depth + 1)
-
 
 # ---------------------------------------------------------------------------
 # id_info accessors (private; use Case.declaring_package_for / Case.statement_for)
@@ -2916,10 +2938,6 @@ def render_markdown(roots: List[Node], config: dict, out: TextIO) -> bool:
         _render_markdown_node(root, 0, base_url, out, pkg_label, first)
     return not first[0]
 
-
-def render_statement(node: Node) -> str:
-    """Return a markdown 'Statement:' line for the node's text."""
-    return f"Statement: {node.text}"
 
 
 def _render_html_node(node: Node, indent: int, base_url: str, out: TextIO,
@@ -3456,17 +3474,6 @@ def _sacm_collect_edges(
                 _edge_line(ctx.diagram_id, s.diagram_id, True, is_counter, is_abstract))
 
 
-def _sacm_leftmost_leaf(node: 'Node') -> 'Node':
-    """Return the leftmost deepest rendered leaf in the subtree.
-
-    Follows the first non-Link child recursively, so that the result is the
-    node that appears at the bottom-left of the BT diagram.
-    """
-    for child in node.children:
-        if child.node_type != 'Link':
-            return _sacm_leftmost_leaf(child)
-    return node
-
 
 def _sacm_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
     """Write the SACM diagram content without opening/closing fence markers."""
@@ -3521,7 +3528,7 @@ def _sacm_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
         out.write(line)
 
     if bottom_padding and roots:
-        bottom_node = _sacm_leftmost_leaf(roots[0])
+        bottom_node = roots[0].leftmost_leaf
         _write_edge(f'    BottomPadding[ ]:::invisible ~~~ {bottom_node.diagram_id}')
 
     for edge_line in edge_lines:
@@ -3554,11 +3561,6 @@ def render_sacm_html(roots: List['Node'], config: dict, out: TextIO,
 # ---------------------------------------------------------------------------
 # GSN/mermaid renderer
 # ---------------------------------------------------------------------------
-
-def _gsn_is_incontextof(node: 'Node') -> bool:
-    """True if node attaches to its parent via InContextOf (--o), not SupportedBy (-->)."""
-    return node.node_type in ('Context', 'Assumption', 'Justification') or \
-           (node.node_type == 'Claim' and 'assumed' in node.options)
 
 
 def _gsn_assertion_suffix(node_type: str, options: List[str]) -> str:
@@ -3681,7 +3683,7 @@ def _gsn_collect_edges(node, write_edge, leaf_nodes):
                 tgt = child.link_target
                 _we(_edge_line(
                     node.diagram_id, tgt.diagram_id,
-                    _gsn_is_incontextof(tgt),
+                    tgt.is_incontextof,
                     'counter' in child.options, False))
         elif child.node_type == 'Connector':
             _we(_edge_line(node.diagram_id, child.diagram_id,
@@ -3696,16 +3698,16 @@ def _gsn_collect_edges(node, write_edge, leaf_nodes):
                         tgt = gc.link_target
                         _we(_edge_line(
                             node.diagram_id, tgt.diagram_id,
-                            _gsn_is_incontextof(tgt), rc, ra))
+                            tgt.is_incontextof, rc, ra))
                 else:
                     _we(_edge_line(
                         node.diagram_id, gc.diagram_id,
-                        _gsn_is_incontextof(gc), rc, ra))
+                        gc.is_incontextof, rc, ra))
                     _gsn_collect_edges(gc, write_edge, leaf_nodes)
         else:
             _we(_edge_line(
                 node.diagram_id, child.diagram_id,
-                _gsn_is_incontextof(child),
+                child.is_incontextof,
                 'counter' in child.options, False))
             _gsn_collect_edges(child, write_edge, leaf_nodes)
     if not _had_edge[0]:

@@ -161,49 +161,6 @@ def to_github_fragment(text: str) -> str:
 # Sources:
 #   https://github.com/mermaid-js/mermaid/blob/develop/packages/mermaid/src/diagrams/flowchart/parser/flow.jison
 #   https://mermaid.js.org/syntax/flowchart.html
-def make_mermaid_id(identifier: str, counter: list) -> str:
-    """Return a valid Mermaid node id for the given LTAC identifier.
-
-    Hyphens and dots are preserved (both are legal in Mermaid node IDs).
-    Spaces are converted to underscores; other characters that are syntactically
-    meaningful in Mermaid (brackets, angle brackets, parentheses, braces) are
-    removed.
-    The reserved word 'end' is suffixed with '_' to avoid a Mermaid parse error.
-    If the result is empty, generates '_auto{N}' using counter[0]++.
-    Prefixes with underscore if the first character is a digit.
-
-    >>> make_mermaid_id("C1", [0])
-    'C1'
-    >>> make_mermaid_id("AR-1.0", [0])
-    'AR-1.0'
-    >>> make_mermaid_id("hello world", [0])
-    'hello_world'
-    >>> make_mermaid_id("1st", [0])
-    '_1st'
-    >>> make_mermaid_id("end", [0])
-    'end_'
-    >>> make_mermaid_id("", [0])
-    '_auto0'
-    >>> make_mermaid_id("", [3])
-    '_auto3'
-    """
-    if not identifier:
-        idx = counter[0]
-        counter[0] += 1
-        return f'_auto{idx}'
-    # Spaces become underscores; other Mermaid-syntax characters are removed.
-    result = re.sub(r'\s', '_', identifier)
-    result = re.sub(r'[()\[\]{}<>]', '', result)
-    if not result:
-        idx = counter[0]
-        counter[0] += 1
-        return f'_auto{idx}'
-    if result[0].isdigit():
-        result = '_' + result
-    if result == 'end':
-        result = 'end_'
-    return result
-
 
 _HTML_ESCAPE_TABLE = str.maketrans({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'})
 
@@ -413,8 +370,12 @@ class Node:
     link_target : Optional[Node]
         For Link nodes: the node this link points to.  None for all other
         node types.
-    diagram_id : str
-        A stable identifier suitable for use in Mermaid diagram node IDs.
+    diagram_id : str (property)
+        A Mermaid-safe node ID derived from ``identifier`` (sanitised) plus
+        ``_L{lineno}`` when a source line is available, guaranteeing
+        uniqueness across the LTAC file.  Connector nodes carry their
+        counter-based identifier (``_Connector_{N:08x}``) and have no
+        ``lineno``, so their ``diagram_id`` equals their ``identifier``.
     id_inferred : bool
         True when ``identifier`` was auto-generated from ``text``
         rather than declared explicitly.  Defaults to False.
@@ -428,14 +389,13 @@ class Node:
     node_type: str
     identifier: str
     text: str
-    ext_ref: str
-    options: List[str]
-    children: List['Node']
     is_citation: bool
     depth: int
     parent: Optional['Node']
-    link_target: Optional['Node']
-    diagram_id: str
+    ext_ref: str = ''
+    options: List[str] = field(default_factory=list)
+    children: List['Node'] = field(default_factory=list)
+    link_target: Optional['Node'] = None
     id_inferred: bool = False
     lineno: Optional[int] = None
 
@@ -451,6 +411,39 @@ class Node:
         ``not is_citation and node_type != 'Link'`` at every call site.
         """
         return not self.is_citation and self.node_type != 'Link'
+
+    @property
+    def diagram_id(self) -> str:
+        """Mermaid-safe node ID derived from identifier and source line.
+
+        For nodes with a non-empty identifier, the identifier is sanitised
+        (spaces→underscores, Mermaid-syntax characters removed, digit-leading
+        names prefixed with '_', 'end' suffixed with '_') and then
+        '_L{lineno}' is appended when lineno is available.  This gives
+        human-readable IDs like 'C1_L42' or 'AR-1.0_L100' that are also
+        guaranteed unique within a file.
+
+        For nodes with no usable identifier, '_L{lineno}' is returned.
+
+        Connector nodes store '_Connector_{N:08x}' in identifier and have no
+        lineno, so their diagram_id equals their identifier directly.
+        """
+        if self.identifier:
+            result = re.sub(r'\s', '_', self.identifier)
+            result = re.sub(r'[()\[\]{}<>]', '', result)
+            if result:
+                if result[0].isdigit():
+                    result = '_' + result
+                if result == 'end':
+                    result = 'end_'
+                if self.lineno is not None:
+                    return f'{result}_L{self.lineno}'
+                return result
+        if self.lineno is not None:
+            return f'_L{self.lineno}'
+        raise ValueError(
+            f"Node has neither a usable identifier nor a lineno: {self!r}"
+        )
 
     @property
     def pkg_root(self) -> 'Node':
@@ -2347,14 +2340,9 @@ class Case:
             node_type=node.node_type,
             identifier=node.identifier,
             text=node.text,
-            ext_ref='',
-            options=[],
-            children=[],
             is_citation=True,
             depth=node.depth,
             parent=parent,
-            link_target=None,
-            diagram_id=None,
         )
         parent.children[idx] = cited
 
@@ -2816,7 +2804,6 @@ class _LTACParser:
         self._stack: List[Tuple[int, Node]] = []
         self._current_pkg: List[Node] = []
         self._pkg_root_lineno: Optional[int] = None
-        self._id_counter: List[int] = [0]
         # For empty-statement check (item 4): track declarations that usually
         # carry a statement (non-Link, non-Relation, non-citation) and whether
         # any such declaration has a non-empty statement.
@@ -2898,20 +2885,15 @@ class _LTACParser:
             identifier = _infer_id(text)
             id_inferred = True
 
-        diagram_id = make_mermaid_id(identifier, self._id_counter)
-
         node = Node(
             node_type=nodetype,
             identifier=identifier,
             text=text,
-            ext_ref=ref,
-            options=options,
-            children=[],
             is_citation=is_citation,
             depth=depth,
             parent=None,
-            link_target=None,
-            diagram_id=diagram_id,
+            ext_ref=ref,
+            options=options,
             id_inferred=id_inferred,
             lineno=lineno,
         )
@@ -3321,25 +3303,20 @@ def _make_syn_connector(children: List['Node'], parent: 'Node',
     """Create a synthetic Connector node that groups *children*.
 
     counter is a one-element list [int] incremented on each call so IDs are
-    unique within a rendering pass (e.g. SynConnect_00000000, _00000001, …).
+    unique within a rendering pass (e.g. _Connector_00000000, _00000001, …).
     The returned node is NOT yet inserted into parent.children; the caller
     is responsible for insertion.  Each child's .parent is updated here.
     """
-    conn_id = f'SynConnect_{counter[0]:08x}'
-    counter[0] += 1
     connector = Node(
         node_type='Connector',
-        identifier='',
+        identifier=f'_Connector_{counter[0]:08x}',
         text='',
-        ext_ref='',
-        options=[],
-        children=list(children),
         is_citation=False,
         depth=parent.depth + 1,
         parent=parent,
-        link_target=None,
-        diagram_id=conn_id,
+        children=list(children),
     )
+    counter[0] += 1
     for child in children:
         child.parent = connector
     return connector

@@ -2725,6 +2725,7 @@ class Case:
 _NON_INFERENTIAL_TYPES = frozenset({'Evidence', 'Context', 'Assumption', 'Justification'})
 # Explicit assertion-status options (all lowercase, matching parse_options output).
 _STATUS_OPTIONS = frozenset({'assumed', 'needssupport', 'axiomatic', 'defeated'})
+_ASSERTION_STATUSES = frozenset({'assumed', 'needssupport', 'axiomatic', 'defeated', 'ascited'})
 
 def _infer_id(text: str) -> str:
     """Derive an LTAC identifier from element text for nodes with no explicit ID.
@@ -5283,9 +5284,6 @@ Run --help-api for the public Python API summary (for library use).
         sys.exit(0)
 
     return args
-
-
-_ASSERTION_STATUSES = frozenset({'needssupport', 'assumed', 'axiomatic', 'defeated', 'ascited'})
 
 
 

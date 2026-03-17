@@ -707,7 +707,7 @@ class Case:
         """
         self.ltac_path = None
         self.ltac_line_ending = detect_line_ending(text)
-        _LTACParser(self).parse(text.splitlines(keepends=True), config=self.config)
+        _LTACParser(self, config=self.config).parse(text.splitlines(keepends=True))
         return self
 
     def load(self, ltac_file: Optional[str] = None,
@@ -852,7 +852,7 @@ class Case:
         except OSError as e:
             self.panic(f"cannot open {path!r}: {e}")
         self.ltac_line_ending = detect_line_ending(lines[0] if lines else '')
-        _LTACParser(self).parse(lines, config=self.config)
+        _LTACParser(self, config=self.config).parse(lines)
 
     def validate_ltac(self) -> bool:
         """Run all LTAC structural validation checks; return True if
@@ -2633,17 +2633,17 @@ class Case:
             m = _CASEPROC_REGION_RE.match(text)
             if m:
                 selector = m.group(1)
-                _sel_parts = selector.split(None, 1)
-                _sel_kind = _sel_parts[0] if _sel_parts else ''
-                if _sel_kind == 'element' and _doc_state.after_epilogue:
+                sel_parts = selector.split(None, 1)
+                sel_kind = sel_parts[0] if sel_parts else ''
+                if sel_kind == 'element' and _doc_state.after_epilogue:
                     self.error(f"'element' selector found after 'epilogue' in {filename}:{lineno}; "
                                "element selectors must not appear after an epilogue marker")
-                if _sel_kind == 'epilogue':
+                if sel_kind == 'epilogue':
                     _doc_state.after_epilogue = True
                 if add_missing:
-                    if _sel_kind == 'element':
+                    if sel_kind == 'element':
                         _emit_stubs_after(_last_placed_id)
-                    elif _sel_kind in ('stop', 'epilogue'):
+                    elif sel_kind in ('stop', 'epilogue'):
                         _emit_all_remaining()
                 found_end = _consume_region(line_iter, filename, lineno, selector, self)
                 if strip and selector.strip() not in ('warning', 'stop', 'epilogue'):
@@ -2663,8 +2663,8 @@ class Case:
                         if wrote:
                             out.write('\n')
                         out.write('<!-- end verocase -->\n')
-                if add_missing and _sel_kind == 'element' and len(_sel_parts) == 2:
-                    _last_placed_id = _sel_parts[1]
+                if add_missing and sel_kind == 'element' and len(sel_parts) == 2:
+                    _last_placed_id = sel_parts[1]
                 continue
 
             if 'verocase' in text and text.lstrip().startswith('<!-- end verocase -->'):
@@ -2766,15 +2766,8 @@ def _is_dubious_reference(ref: str) -> bool:
     return bool(ref) and '.' not in ref and not ref.startswith('#')
 
 class _LTACParser:
-    def __init__(self, case: 'Case') -> None:
+    def __init__(self, case: 'Case', config: Optional[dict] = None) -> None:
         self._case = case
-
-    def parse(self, lines: List[str], config: Optional[dict] = None) -> None:
-        """Parse LTAC lines and populate the Case passed to __init__.
-
-        Populates self._case.roots, self._case.all_definitions_for,
-        self._case.citations, and self._case.links.
-        """
         self._warn_dubious_reference: bool = (config or {}).get('warn_dubious_reference', True)
         self._anchor_seen:    Dict[str, str]       = {}  # anchor id -> first label that claimed it
         self._node_types:     Dict[str, str]       = {}  # ident -> node_type on first use
@@ -2793,6 +2786,12 @@ class _LTACParser:
         self._empty_decl_ids: List[Tuple[str, int]] = []
         self._has_nonempty_decl: bool = False
 
+    def parse(self, lines: List[str]) -> None:
+        """Parse LTAC lines and populate the Case passed to __init__.
+
+        Populates self._case.roots, self._case.all_definitions_for,
+        self._case.citations, and self._case.links.
+        """
         for lineno, line in enumerate(lines, 1):
             self._parse_line(lineno, line)
 

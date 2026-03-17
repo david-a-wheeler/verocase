@@ -947,26 +947,11 @@ class Case:
 
     def nodes_for(self, element_id: Optional[str],
                   current: Optional['Node'] = None) -> List['Node']:
-        """Return the node(s) for element_id, with fallback to
-        current or all roots.
-
-        If element_id is given, look it up via definition_for
-        (error and return [] if not found).
-        If element_id is None, return [current] when current is
-        set, else return all roots.  ('*' is handled at dispatch
-        time before calling here.)
-        """
-        return self._resolve_element(element_id, current)
-
-    def _resolve_element(self,
-                         element_id: Optional[str],
-                         current_element: Optional['Node'],
-                         ) -> List['Node']:
-        """Return the list of nodes to render for the given element_id.
+        """Return the node(s) to render for element_id.
 
         If element_id is given: look up via definition_for(); call error() and
-        return [] if not found.  If element_id is None: use current_element if
-        set, else return case.roots.  ('*' is handled at dispatch time before
+        return [] if not found.  If element_id is None: use current if set,
+        else return all roots.  ('*' is handled at dispatch time before
         calling here.)
         """
         if element_id is not None:
@@ -975,8 +960,8 @@ class Case:
                 self.error(f"element {element_id!r} not found")
                 return []
             return [node]
-        if current_element is not None:
-            return [current_element]
+        if current is not None:
+            return [current]
         return list(self.roots)
 
     def _mark_needs_support(self, candidate_ids: List[str]) -> int:
@@ -2472,7 +2457,7 @@ class Case:
         elif display_type == 'ltac/html':
             return _render_or_all(element_id, self, render_html, current_element, self.config, out)
         elif display_type == 'ltac/txt':
-            nodes = self._resolve_element(element_id, current_element)
+            nodes = self.nodes_for(element_id, current_element)
             if not nodes:
                 return False
             return self.render_ltac_txt(nodes, out)
@@ -2495,7 +2480,7 @@ class Case:
             if element_id == '*':
                 self.error(f"'*' is not valid with the '{display_type}' selector")
                 return False
-            nodes = self._resolve_element(element_id, current_element)
+            nodes = self.nodes_for(element_id, current_element)
             if not nodes:
                 return False
             node = nodes[0]
@@ -4167,7 +4152,7 @@ def _render_or_all(
     """Resolve element_id and render to out, or render all packages if element_id is '*'."""
     if element_id == '*':
         return render_all_packages(case.roots, render_fn, config, out)
-    nodes = case._resolve_element(element_id, current_element)
+    nodes = case.nodes_for(element_id, current_element)
     if not nodes:
         return False
     return render_fn(nodes, config, out)

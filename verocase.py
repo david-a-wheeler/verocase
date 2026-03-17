@@ -17,6 +17,7 @@ import statistics
 import sys
 import tempfile
 import types
+from bisect import bisect_left
 from collections import deque
 from dataclasses import dataclass, field
 from typing import Dict, Iterable, List, Optional, Set, TextIO, Tuple, Union
@@ -569,6 +570,37 @@ class Node:
         return line
 
 
+def _lis_indices(ranks: List[int]) -> set:
+    """Return the set of indices belonging to a longest increasing subsequence.
+
+    Uses the O(n log n) patience-sort algorithm.  Negative ranks are skipped;
+    callers use -1 to mark elements that have no position in the reference
+    ordering and should be treated as unordered rather than misplaced.
+    """
+    tails: List[int] = []
+    tail_idx: List[int] = []
+    predecessor = [-1] * len(ranks)
+    for i, r in enumerate(ranks):
+        if r < 0:
+            continue
+        pos = bisect_left(tails, r)
+        if pos == len(tails):
+            tails.append(r)
+            tail_idx.append(i)
+        else:
+            tails[pos] = r
+            tail_idx[pos] = i
+        if pos > 0:
+            predecessor[i] = tail_idx[pos - 1]
+    result = set()
+    if tail_idx:
+        idx = tail_idx[-1]
+        while idx >= 0:
+            result.add(idx)
+            idx = predecessor[idx]
+    return result
+
+
 class Case:
     """A fully loaded LTAC assurance case: node forest, lookup tables,
     and documents.
@@ -997,7 +1029,7 @@ class Case:
     def check_id_info(self) -> None:
         """Validate identifier usage; warn about IDs cited but never
         declared."""
-        all_ids = list(dict.fromkeys(list(self.all_definitions_for) + list(self.citations)))
+        all_ids = list(dict.fromkeys([*self.all_definitions_for, *self.citations]))
         for ident in all_ids:
             n_decls = len(self.all_definitions_for.get(ident, []))
             n_cites = len(self.citations.get(ident, []))
@@ -1731,30 +1763,7 @@ class Case:
             return None
 
         ranks = [ltac_pos.get(ident, -1) for ident in doc_with_regions]
-        from bisect import bisect_left
-        tails = []
-        tail_idx = []
-        predecessor = [-1] * len(doc_with_regions)
-
-        for i, r in enumerate(ranks):
-            if r < 0:
-                continue
-            pos = bisect_left(tails, r)
-            if pos == len(tails):
-                tails.append(r)
-                tail_idx.append(i)
-            else:
-                tails[pos] = r
-                tail_idx[pos] = i
-            if pos > 0:
-                predecessor[i] = tail_idx[pos - 1]
-
-        lis_indices = set()
-        if tail_idx:
-            idx = tail_idx[-1]
-            while idx >= 0:
-                lis_indices.add(idx)
-                idx = predecessor[idx]
+        lis_indices = _lis_indices(ranks)
 
         misplaced = [doc_with_regions[i] for i in range(len(doc_with_regions))
                      if i not in lis_indices]
@@ -2141,30 +2150,7 @@ class Case:
 
         doc_ids = [ident for ident, _, _ in doc_entries]
         ranks = [ltac_pos.get(ident, -1) for ident in doc_ids]
-        from bisect import bisect_left
-        tails = []
-        tail_idx = []
-        predecessor = [-1] * len(doc_ids)
-
-        for i, r in enumerate(ranks):
-            if r < 0:
-                continue
-            pos = bisect_left(tails, r)
-            if pos == len(tails):
-                tails.append(r)
-                tail_idx.append(i)
-            else:
-                tails[pos] = r
-                tail_idx[pos] = i
-            if pos > 0:
-                predecessor[i] = tail_idx[pos - 1]
-
-        lis_indices = set()
-        if tail_idx:
-            idx = tail_idx[-1]
-            while idx >= 0:
-                lis_indices.add(idx)
-                idx = predecessor[idx]
+        lis_indices = _lis_indices(ranks)
 
         misplaced_entries = []
         for i, (ident, filepath, lineno) in enumerate(doc_entries):
@@ -3781,7 +3767,8 @@ def _sacm_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
     out.write(body_header)
 
     # Node declarations (BFS); write directly.
-    for node in _collect_bfs(roots):
+    all_nodes = _collect_bfs(roots)
+    for node in all_nodes:
         decl = _sacm_node_decl(node)
         if decl:
             out.write('\n')
@@ -3803,7 +3790,7 @@ def _sacm_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
     # Link to the element anchor; never directly to ext_ref.
     # When base_url is empty, fragment-only links (#id) are used so that
     # clicks still work on platforms that resolve them within the same page.
-    for node in _collect_bfs(roots):
+    for node in all_nodes:
         if node.node_type not in ('Relation', 'Link'):
             url = _node_anchor_url(node, base_url, pkg_label)
             if url:
@@ -4020,7 +4007,8 @@ def _gsn_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
     out.write(body_header)
 
     # Node declarations (BFS); write directly.
-    for node in _collect_bfs(roots):
+    all_nodes = _collect_bfs(roots)
+    for node in all_nodes:
         decl = _gsn_node_decl(node)
         if decl:
             out.write('\n')
@@ -4030,7 +4018,7 @@ def _gsn_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
     # Link to the element anchor; never directly to ext_ref.
     # When base_url is empty, fragment-only links (#id) are used so that
     # clicks still work on platforms that resolve them within the same page.
-    for node in _collect_bfs(roots):
+    for node in all_nodes:
         if node.node_type not in ('Relation', 'Link', 'Connector'):
             url = _node_anchor_url(node, base_url, pkg_label)
             if url:

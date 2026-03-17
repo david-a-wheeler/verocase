@@ -2584,15 +2584,14 @@ class Case:
             _last_placed_id: Optional[str] = None
             _stubs_added = [0]
 
-            _stub_case = Case()
-            _stub_case.all_definitions_for = self.all_definitions_for
-            _stub_case.citations = self.citations
-            _stub_case.links = self.links
-            _stub_case.config = config
-
             def _write_stub(ident: str) -> None:
                 out.write('\n<!-- verocase element ' + ident + ' -->\n')
-                _stub_case.render_element(ident, out, state=_inj_state)
+                _saved_config = self.config
+                self.config = config
+                try:
+                    self.render_element(ident, out, state=_inj_state)
+                finally:
+                    self.config = _saved_config
                 out.write('\n<!-- end verocase -->\n')
                 _stubs_added[0] += 1
 

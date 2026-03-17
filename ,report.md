@@ -2,9 +2,6 @@
 
 ## Pre-calculated Constants
 
-**13. Config fallback strings are repeated literals instead of `DEFAULT_CONFIG[key]`**
-E.g., `config.get('pkg_header_prefix', '### ')` — the literal `'### '` must stay in sync with `DEFAULT_CONFIG`. Use `DEFAULT_CONFIG['pkg_header_prefix']` as the fallback instead.
-
 **14. `_ASSERTION_STATUSES` defined at ~5360, used at ~971**
 Move it near `_STATUS_OPTIONS` (~2760) where the related constant lives, and reconcile why `_ASSERTION_STATUSES` includes `'ascited'` but `_STATUS_OPTIONS` does not (see overlapping constants below).
 

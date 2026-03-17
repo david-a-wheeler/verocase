@@ -811,7 +811,7 @@ class Case:
         """
         if ltac_arg:
             return ltac_arg
-        ltac_from_config = self.config.get('ltac_file', '')
+        ltac_from_config = self.config['ltac_file']
         if ltac_from_config:
             return ltac_from_config
         if os.path.exists('case.ltac'):
@@ -826,7 +826,7 @@ class Case:
         Search order: config['document_files'] → adjacent to ltac_path → cwd → docs/.
         Returns [] if none found.
         """
-        from_config = list(self.config.get('document_files', []))
+        from_config = list(self.config['document_files'])
         if from_config:
             return from_config
         candidates: List[str] = []
@@ -1380,7 +1380,7 @@ class Case:
         Old snapshots are silently rotated when the count exceeds max_backups.
         Setting max_backups to 0 disables backups entirely.
         """
-        max_backups = self.config.get('max_backups', DEFAULT_CONFIG['max_backups'])
+        max_backups = self.config['max_backups']
         if max_backups <= 0:
             return
 
@@ -2501,7 +2501,7 @@ class Case:
         state.current_id = node_id
         state.seen_element_ids.add(node_id)
 
-        level = self.config.get('element_level', 3)
+        level = self.config['element_level']
         anchor = _component_anchor_id(node.node_type, node_id)
         stmt = self.statement_for(node_id) or node.text or ''
         heading_text = f'{node.node_type} {node_id}'
@@ -2513,7 +2513,7 @@ class Case:
         out.write(_WARNING_TEXT_SELECTOR)
         out.write('\n\n')
         out.write(_make_heading(anchor, level, heading_text, fmt))
-        _apply_sel(self.config.get('element_selections', _DEFAULT_ELEMENT_SELECTIONS),
+        _apply_sel(self.config['element_selections'],
                    _ELEMENT_RENDER_MAP, node, self, self.config, fmt, out, pending_sep='\n\n')
         return True
 
@@ -3187,8 +3187,8 @@ def render_markdown(roots: List[Node], config: dict, out: TextIO) -> bool:
     present it is shown as an additional parenthetical link.
     Link nodes are skipped.
     """
-    base_url = config.get('markdown_base_url', '')
-    pkg_label = config.get('pkg_label', DEFAULT_CONFIG['pkg_label'])
+    base_url = config['markdown_base_url']
+    pkg_label = config['pkg_label']
     first = [True]
     for root in roots:
         _render_markdown_node(root, 0, base_url, out, pkg_label, first)
@@ -3238,8 +3238,8 @@ def render_html(roots: List[Node], config: dict, out: TextIO) -> bool:
 
     Link nodes are skipped. Identifiers are hyperlinked when a URL is available.
     """
-    base_url = config.get('markdown_base_url', '')
-    pkg_label = config.get('pkg_label', DEFAULT_CONFIG['pkg_label'])
+    base_url = config['markdown_base_url']
+    pkg_label = config['pkg_label']
     out.write('<ul>')
     for root in roots:
         _render_html_node(root, 1, base_url, out, pkg_label)
@@ -3386,8 +3386,8 @@ def _insert_connectors_for_overflow(
 def _get_width_config(config: dict) -> tuple:
     """Return (max_mermaid_children, narrowed_mermaid_children) from config."""
     return (
-        config.get('max_mermaid_children', DEFAULT_CONFIG['max_mermaid_children']),
-        config.get('narrowed_mermaid_children', DEFAULT_CONFIG['narrowed_mermaid_children']),
+        config['max_mermaid_children'],
+        config['narrowed_mermaid_children'],
     )
 
 
@@ -3727,9 +3727,9 @@ def _sacm_collect_edges(
 
 def _sacm_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
     """Write the SACM diagram content without opening/closing fence markers."""
-    base_url = config.get('base_url', '')
-    pkg_label = config.get('pkg_label', DEFAULT_CONFIG['pkg_label'])
-    bottom_padding = config.get('bottom_padding', DEFAULT_CONFIG['bottom_padding'])
+    base_url = config['base_url']
+    pkg_label = config['pkg_label']
+    bottom_padding = config['bottom_padding']
     roots = _copy_forest(roots)
     syn_counter = [0]  # one-element mutable int, incremented per Connector created
     _apply_sacm_width_transform(roots, config, syn_counter)
@@ -3964,9 +3964,9 @@ def _gsn_collect_edges(node, write_edge, leaf_nodes):
 
 def _gsn_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
     """Write the GSN diagram content without opening/closing fence markers."""
-    base_url = config.get('base_url', '')
-    pkg_label = config.get('pkg_label', DEFAULT_CONFIG['pkg_label'])
-    bottom_padding = config.get('bottom_padding', DEFAULT_CONFIG['bottom_padding'])
+    base_url = config['base_url']
+    pkg_label = config['pkg_label']
+    bottom_padding = config['bottom_padding']
     roots = _copy_forest(roots)
     syn_counter = [0]  # one-element mutable int, incremented per Connector created
     _apply_gsn_width_transform(roots, config, syn_counter)
@@ -4050,9 +4050,9 @@ def render_all_packages(all_roots: List[Node], render_fn, config: dict,
     Package blocks are separated by a blank line.
     Header format: {pkg_header_prefix}{pkg_label}{id}{pkg_header_suffix}{content}
     """
-    prefix = config.get('pkg_header_prefix', '### ')
-    suffix = config.get('pkg_header_suffix', '\n')
-    pkg_label = config.get('pkg_label', 'Package ')
+    prefix = config['pkg_header_prefix']
+    suffix = config['pkg_header_suffix']
+    pkg_label = config['pkg_label']
     pending_sep = ''
     for root in all_roots:
         label = f"{pkg_label}{root.identifier}" if root.identifier else pkg_label.rstrip()
@@ -4106,11 +4106,10 @@ def expand_selector(raw: str, doc_format: str, config: dict) -> str:
     >>> expand_selector('statement', 'markdown', {})
     'statement'
     """
-    renderer = config.get('default_renderer', 'mermaid')
     parts = raw.split('/')
     if parts[0] in ('sacm', 'gsn'):
         if len(parts) == 1:
-            return f'{parts[0]}/{renderer}/{doc_format}'
+            return f'{parts[0]}/{config["default_renderer"]}/{doc_format}'
         if len(parts) == 2:
             return f'{parts[0]}/{parts[1]}/{doc_format}'
         return raw  # explicit three-part, pass through
@@ -4146,14 +4145,14 @@ def _render_or_all(
 
 def _pkg_anchor_url(pkg_root_id: str, config: dict) -> str:
     """Return the fragment URL for a package heading."""
-    base_url = config.get('markdown_base_url', '')
+    base_url = config['markdown_base_url']
     anchor = _component_anchor_id('Package', pkg_root_id)
     return base_url + '#' + anchor
 
 
 def _element_anchor_url(node_type: str, ident: str, config: dict) -> str:
     """Return the fragment URL for an element heading."""
-    base_url = config.get('markdown_base_url', '')
+    base_url = config['markdown_base_url']
     anchor = _component_anchor_id(node_type, ident)
     return base_url + '#' + anchor
 
@@ -4244,7 +4243,7 @@ def _render_ext_ref(node: Node, config: dict, fmt: str,
     """
     if not node.ext_ref:
         return False
-    url = _resolve_ext_ref(node.ext_ref, config.get('base_url', ''))
+    url = _resolve_ext_ref(node.ext_ref, config['base_url'])
     out.write(sep)
     out.write('External Reference: ' + hyperlink(node.ext_ref, url, fmt))
     return True
@@ -4325,8 +4324,8 @@ def render_representation(pkg_root: Node, all_roots: List[Node],
                           sep: str = '', state: 'DocState' = None,
                           case: 'Case' = None) -> bool:
     """Write the default diagram representation for a package to out."""
-    notation = config.get('default_representation', 'sacm')
-    renderer = config.get('default_renderer', 'mermaid')
+    notation = config['default_representation']
+    renderer = config['default_renderer']
     selector = f'{notation}/{renderer}/{fmt}'
     if selector in ('sacm/mermaid/markdown', 'sacm/mermaid'):
         out.write(sep)
@@ -4406,7 +4405,7 @@ def _render_single_package(pkg_root: Node, case: 'Case',
                             out: TextIO, sep: str = '') -> bool:
     """Write one package heading + its package_selections to out."""
     fmt = state.doc_format
-    level = config.get('package_level', 3)
+    level = config['package_level']
     anchor = _component_anchor_id('Package', pkg_root.identifier)
     stmt = case.statement_for(pkg_root.identifier) or pkg_root.text or ''
     heading_text = f'Package {pkg_root.identifier}'
@@ -4415,7 +4414,7 @@ def _render_single_package(pkg_root: Node, case: 'Case',
 
     out.write(sep)
     out.write(_make_heading(anchor, level, heading_text, fmt))
-    _apply_sel(config.get('package_selections', _DEFAULT_PACKAGE_SELECTIONS),
+    _apply_sel(config['package_selections'],
                _PACKAGE_RENDER_MAP, pkg_root, case, config, fmt, out, pending_sep='\n\n')
     return True
 
@@ -4482,7 +4481,7 @@ def _maybe_inject_mermaid_js(config: dict, state: 'DocState', out: TextIO) -> No
     """
     if state is None or state.doc_format != 'html' or state.mermaid_injected:
         return
-    url = config.get('mermaid_js_url', DEFAULT_CONFIG['mermaid_js_url'])
+    url = config['mermaid_js_url']
     if not url:
         return
     out.write(
@@ -4521,10 +4520,8 @@ def config_invariant_checker(config: dict,
       narrowed_mermaid_children >= 2           (enough room to place a connector)
       narrowed_mermaid_children < max_mermaid_children  (strictly improves)
     """
-    mx = config.get('max_mermaid_children',
-                    DEFAULT_CONFIG['max_mermaid_children'])
-    nr = config.get('narrowed_mermaid_children',
-                    DEFAULT_CONFIG['narrowed_mermaid_children'])
+    mx = config['max_mermaid_children']
+    nr = config['narrowed_mermaid_children']
     if mx == 0:
         return
     prefix = f'{filename}:{lineno}: ' if filename else ''

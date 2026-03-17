@@ -107,8 +107,8 @@ optional:
 ```
 
 The first form is a placeholder: the identifier is required but the text
-may be left empty and filled in by `--update`.  When text is present it
-must match the declared element's text; `--update` will correct it if not.
+may be left empty and filled in by `--sync`.  When text is present it
+must match the declared element's text; `--sync` will correct it if not.
 
 `^ID` resolves to the declared element with identifier `ID`
 in any loaded package.
@@ -219,11 +219,15 @@ by `Justification`, `Assumption`, or `Strategy`
 ### Synopsis
 
 ```
-verocase [--config FILE] [--error] [--update]
-         [--rename OLD NEW] [--restate LABEL STATEMENT]
+verocase [--config FILE] [--error] [--stats] [--strip]
+         [--sync] [--rename OLD NEW] [--restate LABEL STATEMENT]
+         [--detach ID] [--move ID DESTINATION]
          [--ltac FILENAME]
-         [--validate | --select SELECTOR | --stdout | --selftest | --fixmissing | --fixmisplaced | --start]
+         [--validate | --select SELECTOR | --stdout | --selftest
+          | --fixmissing | --fixmisplaced | --start
+          | --info ID | --descendants ID]
          [--missing] [--empty] [--orphans] [--misplaced] [--leaves] [--packages]
+         [--read-only] [--update-ltac]
          [files ...]
 ```
 
@@ -383,18 +387,41 @@ Treats warnings as errors: any warning causes a non-zero exit code.
 By default only serious errors (such as unclosed marked regions or
 unresolvable LTAC files) cause a non-zero exit.
 
-### --update
+### --stats
+
+Prints statistics about the LTAC structure (element counts by type, package
+sizes, citations) and processed documents (region counts, empty regions).
+May be combined with any mode.  Does not itself modify files; combine with
+`--read-only` if you want statistics without triggering document rewrites.
+
+### --strip
+
+Regenerates document files with all selector regions emptied out (only
+`warning` content is preserved).  Useful for reviewing document structure
+without generated diagrams and boilerplate.  Combine with `--stdout` to write
+the stripped result to stdout without modifying any files.
+
+### --sync
 
 Synchronizes citation statement text with declaration statement text in the
 LTAC file.  If a `^ID: wrong text` citation does not match `ID: correct text`,
-`--update` rewrites the LTAC file so every citation and Link that carries
+`--sync` rewrites the LTAC file so every citation and Link that carries
 text uses the declaration's text instead.
 
-Without `--update`, a mismatch between a citation's text and its
-declaration's text produces a warning suggesting the use of `--update`.
+Without `--sync`, a mismatch between a citation's text and its
+declaration's text produces a warning suggesting the use of `--sync`.
 
-`--update` modifies the LTAC file (subject to the safe backup mechanism
+`--sync` modifies the LTAC file (subject to the safe backup mechanism
 described in [File handling](#file-handling)).
+
+### --read-only
+
+Suppresses the default document-update pass.  Loads and validates the LTAC
+(and any document files given) without rewriting anything.  Useful for
+combining with `--stats` or any analysis option without triggering document
+rewrites.  Cannot be combined with any file-modifying mode (`--fixmissing`,
+`--fixmisplaced`, `--start`, `--sync`, `--rename`, `--restate`, `--detach`,
+`--move`, `--update-ltac`).
 
 ### --rename OLD NEW
 
@@ -486,7 +513,7 @@ All keys are optional; unrecognized keys produce a warning.
 | `default_representation` | `"sacm"` | Diagram notation used by the `package` selector.  Accepts `"sacm"` or `"gsn"`. |
 | `document_files` | `[]` | List of document files to process; equivalent to listing them on the command line.  Command-line files take priority. |
 | `element_level` | `3` | Markdown/HTML heading level (1-6) used by the `element` selector.  Can also be set per-document with `verocase-config`. |
-| `element_selections` | `"referenced_by,supported_by,supports"` | Comma-separated list of sub-sections rendered inside each `element` region.  Valid values: `referenced_by`, `supported_by`, `supports`. |
+| `element_selections` | `"referenced_by,supported_by,supports,ext_ref"` | Comma-separated list of sub-sections rendered inside each `element` region.  Valid values: `referenced_by`, `supported_by`, `supports`, `ext_ref`. |
 | `ltac_file` | `""` | Path to the LTAC file; overridden by `--ltac`. |
 | `markdown_base_url` | `""` | Base URL for hyperlinks in `ltac/markdown` and `ltac/html` output. |
 | `max_backups` | `20` | Number of backup snapshots to keep in `.backups/` next to the LTAC file.  Each time verocase modifies any file it saves a complete snapshot (all modified files, the LTAC, and the config) in a timestamped subdirectory before making changes.  Older snapshots are silently rotated out.  Set to `0` to disable backups entirely.  Cannot be set per-document with `verocase-config`. |
@@ -793,13 +820,20 @@ unreified form is used: a direct arrow from child to parent with no dot.
 
 #### Click links in SACM diagrams
 
-Each identified node gets a `click` line.  The URL is determined as:
+Every identified node gets a `click` line.  The URL is:
 
-1. If `base_url` is set and the node is a **citation** (`^ID`): links to
-   the cited package's section header (`base_url + "#package-ID"`).
-2. If `base_url` is set and the node is **declared**: links to the element's
-   own content heading (`base_url + "#type-id"`).
-3. Otherwise: no `click` line.
+- `base_url + "#" + fragment` when `base_url` is set (full absolute URL,
+  required for GitHub rendering).
+- `"#" + fragment` when `base_url` is empty (fragment-only link; works on
+  platforms that resolve fragments within the same page, such as local HTML
+  preview, GitLab, and Gitea).
+
+The fragment used is:
+
+| Node kind | Fragment |
+|---|---|
+| Citation (`^ID`) | `package-<id>` (the cited element's package heading) |
+| Declaration | `<type>-<id>` (the element's own heading) |
 
 ### GSN/mermaid
 
@@ -865,7 +899,7 @@ Errors cause a non-zero exit; warnings do not (unless `--error` is given).
 - **Inconsistent type**: the same identifier used with different element types.
 
 - **Inconsistent statement**: statement text that differs between the
-  declaration and a citation or Link (use `--update` to fix).
+  declaration and a citation or Link (use `--sync` to fix).
 
 - **Multiple assertion statuses**: more than one of `needsSupport`,
   `assumed`, `axiomatic`, `defeated`, `asCited` on the same element.
@@ -890,7 +924,7 @@ By default, `verocase` treats the LTAC file as read-only.
 Several options cause it to write an updated LTAC file.
 All of them use the same safe backup mechanism (see [File handling](#file-handling)).
 
-### --update
+### --sync
 
 Walks every citation and Link node in the LTAC tree.
 If a node carries statement text that differs from the declaration's text,
@@ -898,7 +932,7 @@ the node's text is replaced with the declaration's text.
 Reports the count of changed nodes and writes the file if any changes were made.
 
 Example: if `- Claim ^C1: Old statement` is found but the declaration is
-`- Claim C1: New statement`, `--update` rewrites the citation to
+`- Claim C1: New statement`, `--sync` rewrites the citation to
 `- Claim ^C1: New statement`.
 
 ### --rename OLD NEW
@@ -917,10 +951,33 @@ are written.
 Changes the statement text of `LABEL` to `STATEMENT` in the LTAC forest and
 rewrites the LTAC file.
 
-`--rename` and `--restate` may be given more than once per invocation;
-mutations are applied in the order specified.
-If `--rename` and `--restate` are both given, the LTAC file is written once
-with all mutations applied.
+### --detach ID
+
+Replaces `ID`'s definition with a citation (`^ID`) at its current location
+and moves its entire subtree to a new top-level package.
+Panics if `ID` is not defined or is already a top-level package root.
+
+Use `--detach` to break a large package into smaller ones.  After detaching,
+the original package retains a `^ID` citation, preserving the argument
+structure, while `ID` becomes the root of its own package.
+
+### --move ID DESTINATION
+
+Moves `ID`'s definition to be a child of `DESTINATION`.  `ID` may be anywhere
+in the tree (top-level or nested).  If `^ID` is already a direct child of
+`DESTINATION` it is replaced by the definition; otherwise the definition is
+appended as the last child.  No citation is left at the original location;
+to leave one behind, run `--detach ID` first, then `--move ID DESTINATION`.
+Panics if `ID` or `DESTINATION` is not defined.
+
+### Mutation ordering
+
+`--rename`, `--restate`, `--detach`, and `--move` all share a single ordered
+mutation queue and may be given more than once per invocation.
+Mutations are applied in the order specified on the command line.  Order
+matters: for example, `--detach C2 --move C2 C1` detaches `C2` first
+(leaving `^C2` in place), then moves `C2` under `C1`.
+The LTAC file is written once with all mutations applied.
 
 ---
 
@@ -944,24 +1001,32 @@ Config file auto-discovery: `verocase.toml` in the current directory, then
 
 All file writes are done atomically to prevent data loss:
 
-1. The updated content is written to a temporary file in the **same
-   directory** as the target file.
-2. The original file is moved to a `.backup/` subdirectory
-   (e.g., `docs/.backup/case.ltac`), overwriting any previous backup for
-   that filename.
-3. The temporary file is moved into place as the final destination.
+1. The updated content for each file is written to a temporary file in the
+   **same directory** as the target.
+2. A complete timestamped snapshot of the current state (all files about to
+   be modified, the LTAC file, and the config file if any) is saved under
+   `.backups/` next to the LTAC file in a subdirectory named by the current
+   time (e.g., `.backups/2026-03-17T142305.07/`).
+3. The temporary files are moved into place as the final destinations.
 
 If the updated content is identical to the original, the file is not
 touched and no backup is created.
 
-If a serious error occurs during processing, the file is left unchanged.
+If a serious error occurs during processing, the files are left unchanged.
 
-### The `.backup/` directory
+### The `.backups/` directory
 
-Each directory that contains files updated by `verocase` gets a `.backup/`
-subdirectory holding the immediately previous version of each updated file.
-Only the most recent backup for each filename is kept.
-Add `.backup/` to `.gitignore` if you do not want these files tracked.
+`verocase` maintains a `.backups/` directory next to the LTAC file.
+Each time any file is modified, a complete snapshot of the pre-change state
+is saved in a new timestamped subdirectory.  Up to `max_backups` snapshots
+are kept (default 20); older ones are automatically deleted.
+
+To recover from an accidental edit inside a marked region, find the most
+recent timestamped subdirectory in `.backups/` and copy the file back.
+
+Set `max_backups = 0` in the config to disable backups entirely.
+
+Add `.backups/` to `.gitignore` if you do not want snapshots tracked by git.
 
 ---
 

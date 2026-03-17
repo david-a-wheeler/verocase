@@ -3930,7 +3930,7 @@ flowchart BT
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -4183,7 +4183,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -4416,7 +4416,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -4649,7 +4649,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -4882,7 +4882,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -5115,7 +5115,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -5348,7 +5348,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -5412,7 +5412,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -5476,7 +5476,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -5540,7 +5540,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -5604,7 +5604,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -5668,7 +5668,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -5732,7 +5732,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -5796,7 +5796,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -5860,7 +5860,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -5924,7 +5924,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -5988,7 +5988,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -6048,7 +6048,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -6108,7 +6108,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -6168,7 +6168,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -6228,7 +6228,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -6288,7 +6288,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -6348,7 +6348,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -6408,7 +6408,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -6468,7 +6468,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -6528,7 +6528,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -6588,7 +6588,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -6648,7 +6648,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -6708,7 +6708,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -6768,7 +6768,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -6828,7 +6828,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -6888,7 +6888,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -6948,7 +6948,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -7008,7 +7008,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -7068,7 +7068,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -7128,7 +7128,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -7188,7 +7188,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -7248,7 +7248,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -7308,7 +7308,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -7368,7 +7368,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -7428,7 +7428,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -7488,7 +7488,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -7548,7 +7548,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -7608,7 +7608,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -7668,7 +7668,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -7728,7 +7728,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -7788,7 +7788,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -7848,7 +7848,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -7908,7 +7908,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -7968,7 +7968,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -8028,7 +8028,7 @@ flowchart TD
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45

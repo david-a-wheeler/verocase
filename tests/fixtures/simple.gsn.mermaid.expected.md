@@ -3,7 +3,7 @@
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45

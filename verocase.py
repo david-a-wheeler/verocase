@@ -3588,8 +3588,7 @@ def _sacm_node_decl(node: 'Node') -> str:
 
 # Standard mermaid YAML frontmatter and opening classDef lines shared by all
 # sacm/mermaid diagrams.  The closing ``` fence is appended by render_sacm().
-_SACM_HEADER = """\
-```mermaid
+_SACM_BODY_HEADER = """\
 ---
 config:
   theme: neutral
@@ -3749,8 +3748,7 @@ def _sacm_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
     syn_counter = [0]  # one-element mutable int, incremented per Connector created
     _apply_sacm_width_transform(roots, config, syn_counter)
 
-    body_header = _SACM_HEADER[len('```mermaid\n'):]
-    out.write(body_header)
+    out.write(_SACM_BODY_HEADER)
 
     # Node declarations (BFS); write directly.
     all_nodes = _collect_bfs(roots)
@@ -3911,13 +3909,12 @@ def _gsn_node_decl(node: 'Node') -> str:
     return f'    {did}{shape}{abstract_cls}'
 
 
-_GSN_HEADER = """\
-```mermaid
+_GSN_BODY_HEADER = """\
 ---
 config:
   theme: neutral
   flowchart:
-    curve: linear
+    curve: basis
     htmlLabels: true
     rankSpacing: 60
     nodeSpacing: 45
@@ -3989,8 +3986,7 @@ def _gsn_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
     syn_counter = [0]  # one-element mutable int, incremented per Connector created
     _apply_gsn_width_transform(roots, config, syn_counter)
 
-    body_header = _GSN_HEADER[len('```mermaid\n'):]
-    out.write(body_header)
+    out.write(_GSN_BODY_HEADER)
 
     # Node declarations (BFS); write directly.
     all_nodes = _collect_bfs(roots)

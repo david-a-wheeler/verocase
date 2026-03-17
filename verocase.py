@@ -3299,7 +3299,7 @@ def _collect_bfs(roots: List['Node']) -> List['Node']:
 
 
 def _make_syn_connector(children: List['Node'], parent: 'Node',
-                        counter: list) -> 'Node':
+                        counter: List[int]) -> 'Node':  # counter: one-element mutable int
     """Create a synthetic Connector node that groups *children*.
 
     counter is a one-element list [int] incremented on each call so IDs are
@@ -3378,7 +3378,7 @@ def _gsn_visual_children(
 
 def _insert_connectors_for_overflow(
     overflow: List[Tuple['Node', 'Node']],
-    counter: list,
+    counter: List[int],  # one-element mutable int
 ) -> None:
     """Group overflow items by tree-parent; create one Connector per group.
 
@@ -3413,7 +3413,7 @@ def _get_width_config(config: dict) -> tuple:
 
 
 def _apply_sacm_width_transform(roots: List['Node'], config: dict,
-                                counter: list) -> None:
+                                counter: List[int]) -> None:  # counter: one-element mutable int
     """Narrow SACM inference groups that exceed max_mermaid_children.
 
     Operates in-place on the deep-copied forest.  Inserts synthetic Connector
@@ -3444,7 +3444,7 @@ def _apply_sacm_width_transform(roots: List['Node'], config: dict,
 
 
 def _apply_gsn_width_transform(roots: List['Node'], config: dict,
-                               counter: list) -> None:
+                               counter: List[int]) -> None:  # counter: one-element mutable int
     """Narrow GSN nodes that have too many visual children.
 
     Operates in-place on the deep-copied forest.
@@ -3753,7 +3753,7 @@ def _sacm_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
     pkg_label = config.get('pkg_label', DEFAULT_CONFIG['pkg_label'])
     bottom_padding = config.get('bottom_padding', DEFAULT_CONFIG['bottom_padding'])
     roots = _copy_forest(roots)
-    syn_counter = [0]
+    syn_counter = [0]  # one-element mutable int, incremented per Connector created
     _apply_sacm_width_transform(roots, config, syn_counter)
 
     body_header = _SACM_HEADER[len('```mermaid\n'):]
@@ -3992,7 +3992,7 @@ def _gsn_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
     pkg_label = config.get('pkg_label', DEFAULT_CONFIG['pkg_label'])
     bottom_padding = config.get('bottom_padding', DEFAULT_CONFIG['bottom_padding'])
     roots = _copy_forest(roots)
-    syn_counter = [0]
+    syn_counter = [0]  # one-element mutable int, incremented per Connector created
     _apply_gsn_width_transform(roots, config, syn_counter)
 
     body_header = _GSN_HEADER[len('```mermaid\n'):]

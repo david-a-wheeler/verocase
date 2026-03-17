@@ -706,6 +706,7 @@ class Case:
                       ).load_ltac_string(ltac_text)
         """
         self.ltac_path = None
+        self.ltac_line_ending = detect_line_ending(text)
         _LTACParser(self).parse(text.splitlines(keepends=True), config=self.config)
         return self
 
@@ -856,10 +857,11 @@ class Case:
     def _parse_ltac_file(self, path: str) -> None:
         """Open path and parse its LTAC content into this Case."""
         try:
-            with open(path) as f:
+            with open(path, newline='') as f:
                 lines = f.readlines()
         except OSError as e:
             self.panic(f"cannot open {path!r}: {e}")
+        self.ltac_line_ending = detect_line_ending(lines[0] if lines else '')
         _LTACParser(self).parse(lines, config=self.config)
 
     def validate_ltac(self) -> bool:
@@ -1443,12 +1445,11 @@ class Case:
             except OSError as e:
                 self.panic(f"cannot update {final!r}: {e}")
 
-    def _make_ltac_temp(self, path: str,
-                        line_ending: str = '\n') -> Optional[str]:
+    def _make_ltac_temp(self, path: str) -> Optional[str]:
         """Stream the LTAC forest directly to a temp file next to path.
 
         Returns the temp file path, or None if an error occurred (already
-        reported via self.error).  line_ending controls CRLF conversion.
+        reported via self.error).  Uses self.ltac_line_ending for CRLF.
         """
         dir_ = os.path.dirname(os.path.abspath(path))
         try:
@@ -1457,7 +1458,7 @@ class Case:
             self.error(f"cannot create temp file for {path!r}: {e}")
             return None
         try:
-            nl = '\r\n' if line_ending == '\r\n' else ''
+            nl = '\r\n' if self.ltac_line_ending == '\r\n' else ''
             with os.fdopen(fd, 'w', encoding='utf-8', newline=nl) as f:
                 self.write_ltac(f)
         except Exception as e:
@@ -1631,7 +1632,7 @@ class Case:
                            if node.is_definition and node.identifier]
         changed = self._mark_needs_support(all_ids_ordered)
         if changed or self.ltac_modified:
-            tmp = self._make_ltac_temp(self.ltac_path, self.ltac_line_ending)
+            tmp = self._make_ltac_temp(self.ltac_path)
             if tmp is not None:
                 pairs.append((tmp, self.ltac_path))
         if pairs:
@@ -5483,13 +5484,6 @@ def run(args: argparse.Namespace) -> bool:
     ltac_path = case.ltac_path
     config_invariant_checker(config)
 
-    try:
-        with open(ltac_path, newline='') as _f:
-            ltac_line_ending = detect_line_ending(_f.read())
-    except OSError:
-        ltac_line_ending = '\n'
-    case.ltac_line_ending = ltac_line_ending
-
     # LTAC parse complete. Perform validations needing all LTAC data
     case.validate_ltac()
 
@@ -5523,7 +5517,7 @@ def run(args: argparse.Namespace) -> bool:
     if args.sync:
         changed = case.sync_citations()
         if changed:
-            tmp = case._make_ltac_temp(ltac_path, ltac_line_ending)
+            tmp = case._make_ltac_temp(ltac_path)
             if tmp is None:
                 _panic("cannot write updated LTAC file")
             case.commit_updates([(tmp, ltac_path)])

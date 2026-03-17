@@ -173,6 +173,67 @@ def to_github_fragment(text: str) -> str:
 _MERMAID_ID_SPACES_RE  = re.compile(r'\s')
 _MERMAID_ID_SYNTAX_RE  = re.compile(r'[()\[\]{}<>]')
 
+
+def _sanitize_mermaid_id(identifier: str) -> str:
+    """Return a Mermaid-safe base ID for *identifier*, with no uniqueness suffix.
+
+    Spaces become underscores; Mermaid syntax characters are deleted; a
+    digit-leading result is prefixed with '_'; the reserved word 'end' gains a
+    trailing '_'.  Returns an empty string when nothing survives sanitisation.
+    """
+    result = _MERMAID_ID_SPACES_RE.sub('_', identifier)
+    result = _MERMAID_ID_SYNTAX_RE.sub('', result)
+    if not result:
+        return ''
+    if result[0].isdigit():
+        result = '_' + result
+    if result == 'end':
+        result = 'end_'
+    return result
+
+
+def _assign_diagram_ids(nodes: List['Node']) -> None:
+    """Assign diagram_id to every node in *nodes* (a copied forest, BFS order).
+
+    Rules:
+    - Definitions get their sanitized base ID.  If that base is already taken
+      (two identifiers that sanitize identically), '_L{lineno}' is appended
+      repeatedly until the result is unique.
+    - Citations and Links on their first occurrence for a given base
+      intentionally receive the *same* ID as their target definition, so
+      Mermaid routes edges correctly.  Subsequent occurrences of the same base
+      get '_L{lineno}' appended (looping if still taken).
+    - Nodes with no usable identifier fall back to '_L{lineno}'.
+    - The loop ensures that even adversarial IDs like '_L123' never cause
+      silent collisions; users never need to think about Mermaid IDs.
+    """
+    assigned: set = set()          # every diagram_id handed out to a real node
+    non_def_seen: dict = {}        # base → count of non-definition uses
+
+    def _unique(candidate: str, suffix: str) -> str:
+        while candidate in assigned:
+            candidate += suffix
+        assigned.add(candidate)
+        return candidate
+
+    for node in nodes:
+        base = _sanitize_mermaid_id(node.identifier) if node.identifier else ''
+        suffix = f'_L{node.lineno}' if node.lineno is not None else '_X'
+
+        if not base:
+            node.diagram_id = _unique(suffix, suffix)
+
+        elif node.is_definition:
+            node.diagram_id = _unique(base, suffix)
+
+        else:  # citation or link
+            count = non_def_seen.get(base, 0)
+            non_def_seen[base] = count + 1
+            if count == 0:
+                node.diagram_id = base   # intentionally share definition's ID
+            else:
+                node.diagram_id = _unique(base + suffix, suffix)
+
 _HTML_ESCAPE_TABLE = str.maketrans({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'})
 
 
@@ -381,12 +442,13 @@ class Node:
     link_target : Optional[Node]
         For Link nodes: the node this link points to.  None for all other
         node types.
-    diagram_id : str (property)
-        A Mermaid-safe node ID derived from ``identifier`` (sanitised) plus
-        ``_L{lineno}`` when a source line is available, guaranteeing
-        uniqueness across the LTAC file.  Connector nodes carry their
-        counter-based identifier (``_Connector_{N:08x}``) and have no
-        ``lineno``, so their ``diagram_id`` equals their ``identifier``.
+    diagram_id : str
+        Mermaid-safe node ID assigned by ``_assign_diagram_ids`` during
+        diagram rendering (on copied nodes only; empty on originals).
+        Definitions get their sanitized identifier; citations and links
+        share the definition's ID on first occurrence so Mermaid routes
+        edges correctly; duplicates and collisions are resolved by
+        appending ``_L{lineno}`` as many times as needed.
     id_inferred : bool
         True when ``identifier`` was auto-generated from ``text``
         rather than declared explicitly.  Defaults to False.
@@ -409,6 +471,7 @@ class Node:
     link_target: Optional['Node'] = None
     id_inferred: bool = False
     lineno: Optional[int] = None
+    diagram_id: str = ''
 
     @property
     def is_definition(self) -> bool:
@@ -422,39 +485,6 @@ class Node:
         ``not is_citation and node_type != 'Link'`` at every call site.
         """
         return not self.is_citation and self.node_type != 'Link'
-
-    @property
-    def diagram_id(self) -> str:
-        """Mermaid-safe node ID derived from identifier and source line.
-
-        For nodes with a non-empty identifier, the identifier is sanitised
-        (spaces→underscores, Mermaid-syntax characters removed, digit-leading
-        names prefixed with '_', 'end' suffixed with '_') and then
-        '_L{lineno}' is appended when lineno is available.  This gives
-        human-readable IDs like 'C1_L42' or 'AR-1.0_L100' that are also
-        guaranteed unique within a file.
-
-        For nodes with no usable identifier, '_L{lineno}' is returned.
-
-        Connector nodes store '_Connector_{N:08x}' in identifier and have no
-        lineno, so their diagram_id equals their identifier directly.
-        """
-        if self.identifier:
-            result = _MERMAID_ID_SPACES_RE.sub('_', self.identifier)
-            result = _MERMAID_ID_SYNTAX_RE.sub('', result)
-            if result:
-                if result[0].isdigit():
-                    result = '_' + result
-                if result == 'end':
-                    result = 'end_'
-                if self.lineno is not None:
-                    return f'{result}_L{self.lineno}'
-                return result
-        if self.lineno is not None:
-            return f'_L{self.lineno}'
-        raise ValueError(
-            f"Node has neither a usable identifier nor a lineno: {self!r}"
-        )
 
     @property
     def pkg_root(self) -> 'Node':
@@ -3749,6 +3779,7 @@ def _sacm_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
 
     # Node declarations (BFS); write directly.
     all_nodes = _collect_bfs(roots)
+    _assign_diagram_ids(all_nodes)
     for node in all_nodes:
         decl = _sacm_node_decl(node)
         if decl:
@@ -3986,6 +4017,7 @@ def _gsn_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
 
     # Node declarations (BFS); write directly.
     all_nodes = _collect_bfs(roots)
+    _assign_diagram_ids(all_nodes)
     for node in all_nodes:
         decl = _gsn_node_decl(node)
         if decl:

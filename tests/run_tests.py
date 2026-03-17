@@ -1914,9 +1914,9 @@ class TestGsnConnectorVisible(unittest.TestCase):
         self.assertEqual(r.returncode, 0, r.stderr)
         self.assertIn(':::connector', r.stdout)
         self.assertIn('Grp', r.stdout)
-        self.assertIn('Root_L1 --> Grp_L2', r.stdout)
-        self.assertIn('Grp_L2 --> C1_L3', r.stdout)
-        self.assertIn('Grp_L2 --> C2_L4', r.stdout)
+        self.assertIn('Root --> Grp', r.stdout)
+        self.assertIn('Grp --> C1', r.stdout)
+        self.assertIn('Grp --> C2', r.stdout)
 
     def test_gsn_connector_not_transparent(self):
         """Connector children are NOT connected directly to the grandparent (old transparent behaviour)."""

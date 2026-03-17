@@ -27,7 +27,7 @@ to modify. AI systems *really* like recursively indented information
 like LTAC (Python, YAML, and many other formats already do this) and
 they know how to handle Markdown (they've been trained on vast amounts of it).
 
-Processing is lightening-fast, too. In one real-world assurance case
+Processing is lightning-fast, too. In one real-world assurance case
 with over 200 elements and 370Kib of documentation, processing
 takes less than 0.2 seconds.
 
@@ -61,8 +61,8 @@ we'll explain how verocase is different.
 
 ### Traditional document
 
-One approach is for maintaining an assurance case
-is to maintain one entirely as a traditional document.
+One approach for maintaining an assurance case
+is to maintain it entirely as a traditional document.
 That's possible, and traditional document editing tools make it easy to
 edit documents.
 I've done this for over a decade on one project using LibreOffice.
@@ -186,7 +186,7 @@ However, a few options will *update* the LTAC file:
 * `--rename OLD NEW` let you rename IDs in the LTAC and document files.
 * `--restate LABEL STATEMENT` lets you change the statement of a given label
   in the LTAC and document files.
-* `--detail ID` detaches ID from its current package, and makes it the
+* `--detach ID` detaches ID from its current package, and makes it the
   head of its own package.
 
 These options give us many of the advantages of database-based approaches

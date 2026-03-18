@@ -1455,13 +1455,13 @@ class TestComments(unittest.TestCase):
         self.assertEqual(req_cite.pre_comments,
                          ['# Comment about Requirements at depth 1.'])
 
-        # Depth-1 comment group with bare '#' visual separator before ^Design citation.
+        # Depth-1 comment group with absorbed blank line before ^Design citation.
         design_cite = next(n for n in case.all_nodes()
                            if n.identifier == 'Design' and n.is_citation)
         self.assertEqual(design_cite.pre_comments, [
             '# Comment about Design at depth 1.',
-            '#',
-            '# Blank comment above is a visual separator within the group.',
+            '',
+            '# Blank line above is absorbed into the group.',
         ])
 
         # Inter-package comment becomes pre_comments on the Requirements root.

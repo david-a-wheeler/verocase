@@ -6,8 +6,8 @@
   # Comment about Requirements at depth 1.
   - Claim ^Requirements
   # Comment about Design at depth 1.
-  #
-  # Blank comment above is a visual separator within the group.
+
+  # Blank line above is absorbed into the group.
   - Claim ^Design
 
 # Requirements: what the system must achieve.

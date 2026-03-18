@@ -516,6 +516,8 @@ class Node:
         """
         indent = '  ' * (self.depth - depth_offset)
         for c in self.pre_comments:
+            # Write out blank lines *within* the comment as blank lines
+            # *without* indentation, regardless of our indentation level.
             out.write((indent + c + '\n') if c else '\n')
         out.write(self.to_ltac_line(depth_offset=depth_offset) + '\n')
         for child in self.children:

@@ -472,6 +472,7 @@ class Node:
     id_inferred: bool = False
     lineno: Optional[int] = None
     diagram_id: str = ''
+    pre_comments: List[str] = field(default_factory=list)
 
     @property
     def is_definition(self) -> bool:
@@ -513,6 +514,9 @@ class Node:
         depth_offset is subtracted from each node's depth when formatting;
         pass node.depth to normalize the subtree to start at column 0.
         """
+        indent = '  ' * (self.depth - depth_offset)
+        for c in self.pre_comments:
+            out.write((indent + c + '\n') if c else '\n')
         out.write(self.to_ltac_line(depth_offset=depth_offset) + '\n')
         for child in self.children:
             child.write_ltac_subtree(out, depth_offset)
@@ -680,6 +684,7 @@ class Case:
         self.ltac_path:      Optional[str]      = None
         self.config_path:    Optional[str]      = None
         self.stderr:         'TextIO'           = stderr or sys.stderr
+        self.trailing_comments: List[str]       = []
 
     # ------------------------------------------------------------------
     # Error reporting: We do our own, to set self.had_error
@@ -1370,6 +1375,8 @@ class Case:
             if i > 0:
                 out.write('\n')
             root.write_ltac_subtree(out)
+        for c in self.trailing_comments:
+            out.write((c + '\n') if c else '\n')
 
     def needs_support(self) -> List['Node']:
         """Return all nodes in the forest that carry the
@@ -2820,6 +2827,7 @@ class _LTACParser:
         self.citations:       Dict[str, List[Node]] = {}
         self.links:           Dict[str, List[Node]] = {}
         self._pending_links:  Dict[str, List[Node]] = {}
+        self._pending_comments: List[str] = []
         self.results: List[Node] = []
         self.node_count: int = 0
         self._stack: List[Tuple[int, Node]] = []
@@ -2842,6 +2850,7 @@ class _LTACParser:
         # Finalize last open package
         if self._stack or self._current_pkg:
             self._finalize_package()
+        self._case.trailing_comments = self._pending_comments
 
         # Warn about any Link nodes whose targets were never found.
         for target_id, pending in self._pending_links.items():
@@ -2869,8 +2878,14 @@ class _LTACParser:
         """Process a single LTAC source line, updating parser state."""
         stripped = line.strip()
         if not stripped:
-            if self._stack or self._current_pkg:
+            if self._pending_comments:
+                self._pending_comments.append('')
+            elif self._stack or self._current_pkg:
                 self._finalize_package()
+            return
+
+        if stripped.startswith('#'):
+            self._pending_comments.append(stripped)
             return
 
         leading = len(line) - len(line.lstrip(' '))
@@ -2924,6 +2939,8 @@ class _LTACParser:
             lineno=lineno,
         )
         self.node_count += 1
+        node.pre_comments = self._pending_comments
+        self._pending_comments = []
 
         # Assertion status: SACM spec section 11 requires mutual exclusivity.
         active = _STATUS_OPTIONS.intersection(options)

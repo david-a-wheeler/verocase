@@ -1,0 +1,21 @@
+# File header: demonstrates comment support in the LTAC format.
+# Second line of the file header.
+
+# The Security package is the top-level entry point.
+- Claim Security: The system is acceptably secure
+  # Comment about Requirements at depth 1.
+  - Claim ^Requirements
+  # Comment about Design at depth 1.
+  #
+  # Blank comment above is a visual separator within the group.
+  - Claim ^Design
+
+# Requirements: what the system must achieve.
+- Claim Requirements: Security requirements are identified and met
+  - Claim Confidentiality: Confidentiality is maintained
+    # Evidence for confidentiality is at depth 2.
+    - Evidence ConfEvidence: TLS configuration reviewed (tls.pdf)
+  - Claim Integrity: Integrity is maintained
+
+- Claim Design: Security is implemented in the design
+# Trailing comment after the last package.

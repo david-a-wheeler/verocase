@@ -1384,6 +1384,104 @@ class TestWriteLTAC(unittest.TestCase):
             os.unlink(tmp_ltac)
 
 
+class TestComments(unittest.TestCase):
+    """Comments in LTAC: parsing, round-trip, and correct node attachment.
+
+    The fixture comments.ltac exercises every interesting position:
+      - file-level header block (multi-line, with an absorbed blank line)
+      - inter-package comment (depth 0 between packages)
+      - depth-1 comment within a package
+      - depth-1 comment group containing a bare '#' visual separator
+      - depth-2 comment within a package
+      - trailing comment after the last package
+    """
+
+    def _case(self):
+        """Return (case, verocase_module) parsed from the fixture."""
+        sys.path.insert(0, os.path.join(_HERE, '..'))
+        import verocase
+        with open(fixture('comments.ltac'), encoding='utf-8') as f:
+            src = f.read()
+        case = verocase.Case()
+        verocase._LTACParser(case).parse(src.splitlines(keepends=True))
+        return case, verocase
+
+    def test_roundtrip(self):
+        """write_ltac reproduces the fixture file byte-for-byte."""
+        import io
+        case, _ = self._case()
+        self.assertFalse(case.had_error)
+        buf = io.StringIO()
+        case.write_ltac(buf)
+        self.assertEqual(buf.getvalue(), read_fixture('comments.ltac'))
+
+    def test_validate_passes(self):
+        """--validate reports no errors or warnings on a commented LTAC file."""
+        r = run('--ltac', fixture('comments.ltac'), '--validate')
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertEqual(r.stderr, '')
+
+    def test_all_nodes_skips_comments(self):
+        """all_nodes() and all_nodes_fast() yield only argument nodes, not comments."""
+        case, _ = self._case()
+        types = {n.node_type for n in case.all_nodes()}
+        self.assertNotIn('Comment', types)
+        self.assertIn('Claim', types)
+        self.assertIn('Evidence', types)
+        self.assertNotIn('Comment', {n.node_type for n in case.all_nodes_fast()})
+
+    def test_roots_are_package_roots_only(self):
+        """Case.roots contains exactly the three package roots, in order."""
+        case, _ = self._case()
+        self.assertEqual([r.identifier for r in case.roots],
+                         ['Security', 'Requirements', 'Design'])
+
+    def test_pre_comments_on_correct_nodes(self):
+        """Each comment block is attached as pre_comments on the node that follows it."""
+        case, _ = self._case()
+        by_id = {n.identifier: n for n in case.all_nodes()}
+
+        # File header block: two lines + absorbed blank line + package-level comment.
+        self.assertEqual(by_id['Security'].pre_comments, [
+            '# File header: demonstrates comment support in the LTAC format.',
+            '# Second line of the file header.',
+            '',
+            '# The Security package is the top-level entry point.',
+        ])
+
+        # Depth-1 single-line comment before ^Requirements citation.
+        req_cite = next(n for n in case.all_nodes()
+                        if n.identifier == 'Requirements' and n.is_citation)
+        self.assertEqual(req_cite.pre_comments,
+                         ['# Comment about Requirements at depth 1.'])
+
+        # Depth-1 comment group with bare '#' visual separator before ^Design citation.
+        design_cite = next(n for n in case.all_nodes()
+                           if n.identifier == 'Design' and n.is_citation)
+        self.assertEqual(design_cite.pre_comments, [
+            '# Comment about Design at depth 1.',
+            '#',
+            '# Blank comment above is a visual separator within the group.',
+        ])
+
+        # Inter-package comment becomes pre_comments on the Requirements root.
+        self.assertEqual(by_id['Requirements'].pre_comments,
+                         ['# Requirements: what the system must achieve.'])
+
+        # Depth-2 comment before ConfEvidence.
+        self.assertEqual(by_id['ConfEvidence'].pre_comments,
+                         ['# Evidence for confidentiality is at depth 2.'])
+
+        # Design has no preceding comment (blank line only).
+        self.assertEqual(by_id['Design'].pre_comments, [])
+
+    def test_trailing_comments(self):
+        """Comments after the last package are stored in case.trailing_comments."""
+        case, _ = self._case()
+        self.assertEqual(case.trailing_comments,
+                         ['# Trailing comment after the last package.'])
+
+
 class TestCommitUpdates(unittest.TestCase):
     def test_backup_created(self):
         """commit_updates creates a timestamped snapshot in .backups/ next to the LTAC."""

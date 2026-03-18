@@ -50,8 +50,8 @@ NOTE: This "Extended LTAC" is based on LTAC v1.1.2, 26.02.2026 from Argevide but
   a) A comment is a line whose first non-space character is '#'. The comment text runs from the '#' to the end of the line.
   b) A comment is associated with the next non-comment line in the file, wherever that line appears. Intervening blank lines do not change this association.
   c) A comment's indentation must equal the indentation of the line it is associated with. Consequently, comments before a package root must be at indentation level 0, comments within a package must match the depth of the element they precede, and trailing comments at the end of the file must be at indentation level 0.
-  d) Consecutive comment lines form a comment group; blank lines within an open group are absorbed into it (not treated as package separators) and may serve as visual separators. All comment lines in a group must share the same indentation level.
-  e) A blank line before a comment group begins is not absorbed; it acts as a normal package separator.
+  d) Blank lines are part of the comment block at their position in the file, whether they appear before, within, or after comment lines, and whether or not any comment lines are present. This applies at any depth, including between sibling elements within a package. Blank lines within a comment block may serve as visual separators. All comment lines in a group must share the same indentation level.
+  e) Tools may normalize blank lines around package boundaries when rewriting them. Specifically they may remove a leading blank line from the comment block that precedes a package root (or the trailing comment block at end of file), add a blank line after some or all packages, and/or remove blank lines at the very beginning or end of the file.
 
 11. Options and references
   a) After the element text you may add an optional curly-brace-enclosed comma-separated list of options that mark the element
@@ -133,16 +133,20 @@ This specification extends LTAC as follows:
 
 # EBNF grammar for LTAC:
 
-LTACfile        = { BlankLine | Package } ;
+LTACfile        = { Package } CommentBlock ;
 
-Package         = Element { Element } ;
+Package         = CommentBlock Element ElementList ;
+
+ElementList     = { CommentBlock Element ElementList } ;
+
+CommentBlock    = { CommentLine | BlankLine } ;
+
+CommentLine     = Indent "#" { Character - Newline } Newline ;
 
 BlankLine       = Newline ;
 
 Element         = Indent "-" WS NodeType [WS Identifier] ":" WS Text [WS Options] [WS Reference] Newline
-                  [ ElementList ]
                 | Indent "-" WS NodeType WS "^" Identifier [":" WS Text [WS Options] [WS Reference]] Newline
-                  [ ElementList ]
                 | Indent "-" WS "Link" WS Identifier [WS Options] Newline ;
 
 NodeType        = "Claim" | "Strategy" | "Evidence" | "Justification" | "Context" | "Assumption" | "Relation" ;
@@ -159,7 +163,7 @@ Option          = { Character - "," - "}" } ;
 
 Indent          = { "  " } ;   (* each indentation level = 2 spaces *)
 
-Newline         = "\n" ;
+Newline         = ["\r"] "\n" ;
 
 WS              = " " | "\t" ;
 Character       = ? any printable character ? ;

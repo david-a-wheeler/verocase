@@ -244,21 +244,33 @@ def _assign_diagram_ids(nodes: List['Node']) -> None:
             else:
                 node.diagram_id = _unique(base + suffix, suffix)
 
-_HTML_ESCAPE_TABLE = str.maketrans({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'})
+_HTML_ESCAPE_TABLE = str.maketrans({'<': '&lt;', '>': '&gt;', '"': '&quot;'})
+# Match '&' only when followed by '#' or an alphanumeric character — i.e. the
+# start of a potential HTML entity (&alpha;, &#123;).  A bare '&' not followed
+# by those characters (e.g. "Smith & Jones") is left alone.
+_AMP_ENTITY_RE = re.compile(r'&(?=[#a-zA-Z0-9])')
 
 
 def escape_html(text: str) -> str:
-    """Escape text for safe embedding in mermaid HTML labels.
+    """Escape text for safe embedding in HTML attribute values and labels.
 
-    Replaces & -> &amp;  < -> &lt;  > -> &gt;  " -> &quot;
+    Escapes < -> &lt;  > -> &gt;  " -> &quot; unconditionally.
+    Escapes & -> &amp; only when followed by '#' or an alphanumeric character
+    (i.e. when it could start an HTML entity).  A bare '&' not followed by
+    those characters (e.g. "Smith & Jones") is left unescaped.
 
     >>> escape_html("safe text")
     'safe text'
     >>> escape_html('<b>Hello & "World"</b>')
-    '&lt;b&gt;Hello &amp; &quot;World&quot;&lt;/b&gt;'
+    '&lt;b&gt;Hello & &quot;World&quot;&lt;/b&gt;'
     >>> escape_html("a & b & c")
-    'a &amp; b &amp; c'
+    'a & b & c'
+    >>> escape_html("x &lt; y and a &amp; b")
+    'x &amp;lt; y and a &amp;amp; b'
+    >>> escape_html('"quoted" & done')
+    '&quot;quoted&quot; & done'
     """
+    text = _AMP_ENTITY_RE.sub('&amp;', text)
     return text.translate(_HTML_ESCAPE_TABLE)
 
 
@@ -381,7 +393,7 @@ def hyperlink(content: str, url: str, fmt: str) -> str:
     >>> hyperlink("A & B", "#x", "markdown")
     '[A & B](#x)'
     >>> hyperlink("A & B", "#x", "html")
-    '<a href="#x">A &amp; B</a>'
+    '<a href="#x">A & B</a>'
     """
     if fmt == 'html':
         return f'<a href="{escape_html(url)}">{escape_html(content)}</a>'
@@ -4835,9 +4847,13 @@ This tool passes non-generated material through; what's there is there.
 
 Here are different cases:
 
-- HTML attribute values (e.g. href=)
-  - Escaped with escape_html(): & < > " are all replaced by HTML entities.
-  - This prevents quote-breaking and tag injection in attributes.
+- HTML attribute values (e.g. href=) and mermaid label text
+  - Escaped with escape_html(): < > " are always replaced by HTML entities.
+  - & is replaced by &amp; only when followed by '#' or an alphanumeric
+    character (the start of a potential HTML entity such as &lt; or &#160;).
+    A bare & not followed by those characters (e.g. "Smith & Jones") is left
+    alone, since it cannot start an entity and browsers handle it gracefully.
+  - This prevents quote-breaking and tag injection.
 - HTML element content (<li>, <h1>, ...)
   - Escaped with escape_html_content(): only < and > are replaced.
   - Ampersands (&) are left alone so that HTML entities in LTAC source
@@ -4845,9 +4861,6 @@ Here are different cases:
     because HTML entities in element content can represent arbitrary
     characters but cannot inject structural HTML (tags, attributes, or
     event handlers).
-- Mermaid diagram label text
-  - Escaped with escape_html(): Mermaid renders labels inside the
-    HTML DOM, so the same full escaping as attribute values is applied.
 - URL allowlist
   - URLs from LTAC (ext_ref and similar) are validated by is_safe_url()
     before being placed in href= attributes.  Accepted prefixes:

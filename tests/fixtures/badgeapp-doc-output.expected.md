@@ -27,11 +27,11 @@ flowchart BT
     Processes[/"<b>Processes</b><br>Security is argued by examining lifecycle processes"/]
     Technical["<b>Technical</b><br>Technical lifecycle processes implement security"]
     NonTechnical[["<b>NonTechnical</b><br>Non-technical lifecycle processes implement security"]]
-    Controls[["<b>Controls</b><br>Certifications &amp; controls provide confidence in operating results"]]
+    Controls[["<b>Controls</b><br>Certifications & controls provide confidence in operating results"]]
     Requirements[["<b>Requirements</b>"]]
     Design[["<b>Design</b><br>The security design is documented and reviewed"]]
     Implementation[["<b>Implementation</b><br>The implementation process maintains security"]]
-    Verification[["<b>Verification</b><br>Integration &amp; verification confirm security"]]
+    Verification[["<b>Verification</b><br>Integration & verification confirm security"]]
     Deployment[["<b>Deployment</b><br>Deployment maintains security"]]
     Maintenance[["<b>Maintenance</b><br>The maintenance process maintains security"]]
     Dot1((" ")):::sacmDot

@@ -303,6 +303,54 @@ def escape_markdown(text: str) -> str:
     return text
 
 
+_SAFE_URL_PREFIXES = ('https://', 'http://', 'file://', '/', './', '../', '#')
+
+
+def is_safe_url(url: str) -> bool:
+    """Return True if url is safe to place in an HTML href= or Markdown link.
+
+    Accepts the explicitly allowed scheme/path prefixes and any URL that
+    contains no colon (i.e. a bare relative path such as 'hara.pdf').
+    Rejects javascript:, data:, vbscript:, blob:, and any other scheme
+    not on the allowlist.
+
+    >>> is_safe_url('https://example.com/foo')
+    True
+    >>> is_safe_url('http://example.com/foo')
+    True
+    >>> is_safe_url('file:///home/user/doc.pdf')
+    True
+    >>> is_safe_url('file://host/share/doc.pdf')
+    True
+    >>> is_safe_url('/absolute/path')
+    True
+    >>> is_safe_url('./relative/path')
+    True
+    >>> is_safe_url('../parent/path')
+    True
+    >>> is_safe_url('#section')
+    True
+    >>> is_safe_url('hara.pdf')
+    True
+    >>> is_safe_url('docs/report.pdf')
+    True
+    >>> is_safe_url('javascript:alert(1)')
+    False
+    >>> is_safe_url('data:text/html,<h1>hi</h1>')
+    False
+    >>> is_safe_url('vbscript:msgbox(1)')
+    False
+    >>> is_safe_url('JAVASCRIPT:alert(1)')
+    False
+    """
+    s = url.strip().lower()
+    if s.startswith(_SAFE_URL_PREFIXES):
+        return True
+    # A URL with no colon is a bare relative path (e.g. 'hara.pdf', 'docs/foo')
+    # which the browser resolves relative to the current page — safe.
+    return ':' not in s
+
+
 def detect_line_ending(text: str) -> str:
     """Return '\\r\\n' if the first newline in text is CRLF, else '\\n'.
 
@@ -342,6 +390,11 @@ def hyperlink(content: str, url: str, fmt: str) -> str:
 
 def bold(text: str, fmt: str) -> str:
     """Wrap text in bold markup for the given format.
+
+    The caller is responsible for escaping text before passing it here.
+    For HTML, text must already be HTML-escaped (e.g. via escape_html() or
+    escape_html_content()), or be a fully-formed HTML fragment such as the
+    output of hyperlink().  bold() does not escape its input.
 
     >>> bold("Package Foo", "markdown")
     '**Package Foo**'
@@ -3186,16 +3239,18 @@ def _node_anchor_url(node: Node, base_url: str, pkg_label: str) -> str:
 def _resolve_ext_ref(ext_ref: str, base_url: str) -> str:
     """Resolve an ext_ref to its click-target URL.
 
-    Absolute references (http://, https://, file:///, or a leading /) are
-    returned unchanged.  A relative reference is resolved against the
-    directory portion of base_url when base_url is non-empty, so that
-    'hara.pdf' becomes the full URL to that file alongside the document.
+    Absolute references (http://, https://, file://, or a leading /) and
+    fragment-only references (#...) are returned unchanged.  A relative
+    reference (including ./ and ../ forms) is resolved against the directory
+    portion of base_url when base_url is non-empty, so that 'hara.pdf'
+    becomes the full URL to that file alongside the document.
     When base_url is empty the relative reference is returned unchanged.
     """
     if (ext_ref.startswith('http://')
             or ext_ref.startswith('https://')
-            or ext_ref.startswith('file:///')
-            or ext_ref.startswith('/')):
+            or ext_ref.startswith('file://')
+            or ext_ref.startswith('/')
+            or ext_ref.startswith('#')):
         return ext_ref
     if base_url:
         base_dir = base_url.rsplit('/', 1)[0]
@@ -3245,7 +3300,12 @@ def _render_markdown_node(node: Node, indent: int, base_url: str,
     display = escape_markdown(label)
     main = f'[{display}]({anchor})' if anchor else display
     ref_ext = node.ext_ref or ''
-    ref_part = f' ([{escape_markdown(ref_ext)}]({ref_ext}))' if ref_ext else ''
+    if ref_ext:
+        ref_part = (f' ([{escape_markdown(ref_ext)}]({ref_ext}))'
+                    if is_safe_url(ref_ext)
+                    else f' ({escape_markdown(ref_ext)})')
+    else:
+        ref_part = ''
     if not first[0]:
         out.write('\n')
     out.write('  ' * indent + f'- {main}{ref_part}')
@@ -3292,8 +3352,11 @@ def _render_html_node(node: Node, indent: int, base_url: str, out: TextIO,
     else:
         main = escape_html_content(label)
     if node.ext_ref:
-        main += (f' (<a href="{escape_html(node.ext_ref)}">'
-                 f'{escape_html_content(node.ext_ref)}</a>)')
+        if is_safe_url(node.ext_ref):
+            main += (f' (<a href="{escape_html(node.ext_ref)}">'
+                     f'{escape_html_content(node.ext_ref)}</a>)')
+        else:
+            main += f' ({escape_html_content(node.ext_ref)})'
     prefix = '  ' * indent
     visible_children = [c for c in node.children if c.node_type != 'Link']
     if visible_children:
@@ -3622,7 +3685,7 @@ def _sacm_node_decl(node: 'Node') -> str:
 
     did = node.diagram_id
     eid = escape_html(node.identifier) if node.identifier else ''
-    etxt = escape_html(node.text) if node.text else ''
+    etxt = escape_html_content(node.text) if node.text else ''
     opts = node.options
 
     suffix = _sacm_assertion_suffix(node.node_type, opts)
@@ -3947,7 +4010,7 @@ def _gsn_node_decl(node: 'Node') -> str:
 
     did = node.diagram_id
     eid = escape_html(node.identifier) if node.identifier else ''
-    etxt = escape_html(node.text) if node.text else ''
+    etxt = escape_html_content(node.text) if node.text else ''
     opts = node.options
 
     # Assumed Claim is rendered as an Assumption shape.
@@ -4330,9 +4393,19 @@ def _render_ext_ref(node: Node, config: dict, fmt: str,
     """
     if not node.ext_ref:
         return False
-    url = _resolve_ext_ref(node.ext_ref, config['base_url'])
     out.write(sep)
-    out.write('External Reference: ' + hyperlink(node.ext_ref, url, fmt))
+    url = _resolve_ext_ref(node.ext_ref, config['base_url'])
+    # Validate both the raw ext_ref and the resolved URL.  The raw check blocks
+    # a malicious ext_ref value; the resolved check blocks a malicious base_url
+    # that could smuggle an unsafe scheme in via relative-path resolution.
+    if is_safe_url(node.ext_ref) and is_safe_url(url):
+        out.write('External Reference: ' + hyperlink(node.ext_ref, url, fmt))
+    else:
+        # Disallowed scheme: show as plain text so the value is visible but not clickable.
+        if fmt == 'html':
+            out.write('External Reference: ' + escape_html_content(node.ext_ref))
+        else:
+            out.write('External Reference: ' + escape_markdown(node.ext_ref))
     return True
 
 
@@ -4739,6 +4812,67 @@ _START_CANDIDATES = (
 )
 
 
+_HELP_SECURITY = """\
+Security model and assumptions for verocase
+
+verocase reads configuration and LTAC files written by you
+(or your team) and updates some Markdown/HTML files (as identified
+y the configuration file or the command line). Some options also
+update the LTAC file.
+
+It does NOT connect to a network and it does NOT execute content from
+files. It doesn't have elevated privileges. The security model assumes
+LTAC and config files are TRUSTED inputs written by people who already
+have access to the generated output files.
+
+Given that assumption, the main concern is HTML injection in the
+*generated* output files, which may be unintentionally included in the
+inputs and then served to readers. The Markdown and HTML files may already
+have malicious URLs, CSS, or JavaScript in the non-generated regions.
+You could argue that this is over-protective, since we assume inputs
+are trusted, but we felt extra protection was a good idea.
+This tool passes non-generated material through; what's there is there.
+
+Here are different cases:
+
+- HTML attribute values (e.g. href=)
+  - Escaped with escape_html(): & < > " are all replaced by HTML entities.
+  - This prevents quote-breaking and tag injection in attributes.
+- HTML element content (<li>, <h1>, ...)
+  - Escaped with escape_html_content(): only < and > are replaced.
+  - Ampersands (&) are left alone so that HTML entities in LTAC source
+    (e.g. &alpha;, &le;) render correctly in the output.  This is safe
+    because HTML entities in element content can represent arbitrary
+    characters but cannot inject structural HTML (tags, attributes, or
+    event handlers).
+- Mermaid diagram label text
+  - Escaped with escape_html(): Mermaid renders labels inside the
+    HTML DOM, so the same full escaping as attribute values is applied.
+- URL allowlist
+  - URLs from LTAC (ext_ref and similar) are validated by is_safe_url()
+    before being placed in href= attributes.  Accepted prefixes:
+    `https://` `http://` `file://` `/` `./` `../` `#`
+  - Also accepted: any URL containing no colon, which is a bare relative
+    path (e.g. 'hara.pdf', 'docs/report.pdf') that the browser resolves
+    relative to the current page.
+  - Any URL that does not match is rendered as plain escaped text (no <a>
+    tag).  This blocks javascript:, data:, vbscript:, blob:, and other
+    executable schemes.
+- Markdown output
+  - Escaped with escape_markdown(): \\, [, ], and < are backslash-escaped.
+    Ampersands pass through because Markdown renderers treat & as literal
+    text in most contexts.
+
+What this does NOT protect against:
+
+- Malicious configuration file. In particular, if the config file lists
+  document files to process, it will try to process those
+- A malicious LTAC file. verocase assumes LTAC authors are trusted
+- Content you write in document files outside verocase-managed regions
+- Downstream vulnerabilities in the Mermaid JS library, the Markdown
+  renderer, or web browser you use to view the output
+"""
+
 _HELP_VALIDATIONS = """\
 Validations on the LTAC file (always):
   - There must be no circularities (this prevents circular reasoning)
@@ -5011,7 +5145,7 @@ Types:
   Strategy     argument pattern; explains *how* its sub-elements support
                the parent claim (e.g. "argued by examining X and Y").
                Not necessary if it's obvious how a claim is justified
-               by its children.
+               by its children
   Evidence     supporting artifact (leaf only; no children allowed)
   Justification  rationale for a design decision or argument choice
   Context      background information (scope, environment, definitions)
@@ -5022,14 +5156,13 @@ Types:
 
 A node that is neither a citation (^) nor a Link is called a 'definition'.
 Every node is exactly one of: citation, Link, or definition.
-Each ID must have exactly one definition; duplicates and omissions are errors.
 
 Packages organize top-level claims so you can focus on one part at a time.
 
 IDs are optional but strongly recommended. A bare ID (no `^` prefix) declares
 the element; use the prefix `^` to cite (cross-reference) an element declared
 elsewhere. If the ID is omitted, the text is the ID (after
-stripping ^{}()\\n\\r).
+stripping ^{}()\\n\\r). Every definition must have a unique ID.
 
 Key options in the LTAC file (these are comma-separated inside {}):
   needssupport  leaf element needs supporting evidence (--missing adds these)
@@ -5068,12 +5201,13 @@ them. A typical document uses these selectors:
   <!-- verocase package MyPkg -->    diagram + index for package MyPkg
   <!-- verocase element MyElem -->   heading + cross-refs for element MyElem
 
-Use --fixmissing to scaffold element regions for elements not yet in the document.
+Use --fixmissing to scaffold element regions for elements
+not yet in the document.
 
-Read-only options (marked [READ-ONLY] in --help; never modify any stored file):
+Read-only options (marked [READ-ONLY] in --help; never modifies files):
   --validate, --select, --info, --descendants, --stdout
   --missing, --empty, --orphans, --misplaced, --leaves, --packages
-  --read-only (suppresses the default document-update pass; use with --stats
+  --read-only (suppresses default document-update pass; use with --stats
     or any read-only option to avoid triggering document rewrites)
   (--stats does not itself modify files but combines with any mode)
 
@@ -5100,29 +5234,31 @@ All file updates are done carefully. The updated files are generated
 first as temporary files, then a timestamped backup snapshot is created
 under .backups/ next to the LTAC file, and only then are the generated
 files moved to their final destinations. Old snapshots are automatically
-rotated (max_backups in config, default 20). Use --stdout to prevent
-in-place updates.
+rotated (max_backups in config, default 20). Use --stdout or --read-only
+to prevent in-place updates.
 
 Selectors are of format `KIND [ID | *]`, where KIND is:
   element        ID    heading + cross-references for one element
   package        ID|*  heading + diagram + index for one or all packages
-  sacm           ID|*  SACM mermaid diagram (auto-detects markdown/HTML output)
+  sacm           ID|*  SACM mermaid diagram (auto-detects markdown/HTML)
   sacm/mermaid/markdown  ID|*  explicit markdown fenced block
   sacm/mermaid/html      ID|*  explicit <pre class="mermaid"> block
   gsn            ID|*  GSN mermaid diagram (auto-detects format)
   ltac           ID|*  LTAC argument list (auto-detects format)
   ltac/markdown  ID|*  LTAC as Markdown bullet list
   ltac/html      ID|*  LTAC as HTML <ul> list
-  ltac/txt       ID|*  LTAC as raw text (no Markdown/HTML; shows IDs, options, refs)
-  info           ID    full context: ancestors, children, citation parents, counts
+  ltac/txt       ID|*  LTAC as raw text (no Markdown/HTML)
+  info           ID    ancestors, children, citation parents, counts
   statement      ID    one-line statement for an element
-  warning              fixed "do not edit" warning comment (no ID)
-  stop                 sentinel: ends the preceding element's full content; prose
-                       after this marker is not part of any element and will not
-                       be repositioned by --fixmisplaced (no ID)
-  epilogue             like stop, but also directs --fixmissing to insert new
-                       element stubs before this point rather than at end of
-                       file; element selectors must not appear after epilogue (no ID)
+  warning              a fixed "do not edit" warning comment (no ID)
+  stop                 sentinel: ends preceding element's full content;
+                       prose after this marker is not part of any element
+                       and won't be repositioned by --fixmisplaced (no ID)
+  epilogue             like stop, but also directs --fixmissing to insert
+                       new element stubs before this point rather than at
+                       end of file; element selectors must not appear
+                       after epilogue (no ID)
+
 Use * to render all packages (package/ltac/sacm/gsn selectors).
 
 Shortcuts for common selectors:
@@ -5135,9 +5271,13 @@ first node of the first package, that a package must start with
 Claim or Justification, and that each identifier must be declared
 (no ^ prefix) exactly once.
 
-Run --help-validations for the full list of LTAC and document validations.
-Run --help-config for the full list of configuration keys.
-Run --help-api for the public Python API summary (for library use).
+More help is available:
+
+- --help-validations - full list of LTAC and document validations
+- --help-config - full list of configuration keys
+- --help-api - summary of public Python library API
+- --help-api-details - details on public Python library API
+- --help-security - security assumptions and HTML-escaping rules
 """,
     )
     parser.add_argument(
@@ -5163,6 +5303,10 @@ Run --help-api for the public Python API summary (for library use).
     parser.add_argument(
         '--help-api-details', action=_HelpTopicAction, default=False, dest='help_api_details',
         help='print full Python help() output for all public names, then exit',
+    )
+    parser.add_argument(
+        '--help-security', action=_HelpTopicAction, default=False, dest='help_security',
+        help='print security assumptions and HTML-escaping rules, then exit',
     )
     parser.add_argument(
         '--config', type=str, metavar='FILE',
@@ -5345,9 +5489,11 @@ Run --help-api for the public Python API summary (for library use).
 
     args = parser.parse_args(args)
 
-    # Handle --help / --help-validations / --help-config / --help-api / --help-api-details.
+    # Handle --help / --help-validations / --help-config / --help-api /
+    # --help-api-details / --help-security.
     # All requested sections are printed together so the flags are freely combinable.
-    if args.help_main or args.help_validations or args.help_config or args.help_api or args.help_api_details:
+    if (args.help_main or args.help_validations or args.help_config
+            or args.help_api or args.help_api_details or args.help_security):
         sep = False
         if args.help_main:
             parser.print_help()
@@ -5371,6 +5517,11 @@ Run --help-api for the public Python API summary (for library use).
             if sep:
                 print()
             help(sys.modules[__name__])
+            sep = True
+        if args.help_security:
+            if sep:
+                print()
+            print(_HELP_SECURITY, end='')
         sys.exit(0)
 
     return args

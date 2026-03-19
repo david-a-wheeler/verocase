@@ -88,6 +88,13 @@ _DEFAULT_PACKAGE_SELECTIONS = 'representation,pkg_defines,pkg_citing,pkg_cited'
 # Config files searched in order when no explicit --config is given.
 _CONFIG_SEARCH_PATHS = ('verocase.toml', 'docs/verocase.toml', 'case.toml', 'docs/case.toml')
 
+# CLI analysis-only flags (incompatible with file-modifying modes).
+ANALYSIS_FLAGS = frozenset({'missing', 'empty', 'orphans',
+                            'misplaced', 'leaves', 'packages'})
+
+# CLI flags whose actions modify document or LTAC files.
+FILE_MODIFYING_FLAGS = frozenset({'fixmissing', 'fixmisplaced', 'start'})
+
 # Pass to functions that accept a config dict when no config file is needed.
 DEFAULT_CONFIG = types.MappingProxyType({
     'base_url': '',
@@ -774,8 +781,8 @@ class Case:
         strict : bool, default False
             When True, warnings are treated as errors.
         validate : bool, default True
-            When True, run structural validation after loading.
-
+            When True, run structural validation of LTAC after loading.
+o
         Returns
         -------
         Case
@@ -783,6 +790,7 @@ class Case:
         """
         self.strict = strict
         self.load_config(config_file)
+        config_invariant_checker(self.config)
         ltac_path = self._find_ltac_file(ltac_file)
         self.ltac_path = ltac_path
         self._parse_ltac_file(ltac_path)
@@ -5506,45 +5514,38 @@ def run(args: argparse.Namespace) -> bool:
         _tmp_case._check_no_existing_case_files()
         _tmp_case._write_start_stubs()
 
-    # Load config, discover LTAC, parse LTAC — all via Case().load().
+    # Load config, discover LTAC, parse LTAC, and validate:
     case = Case().load(
         ltac_file=args.ltac,
         config_file=args.config,
         document_files=list(args.files) if args.files else None,
         strict=args.error,
-        validate=False,  # validate manually below
     )
     config = case.config
     config_path = case.config_path
     ltac_path = case.ltac_path
-    config_invariant_checker(config)
-
-    # LTAC parse complete. Perform validations needing all LTAC data
-    case.validate_ltac()
 
     # Detect analysis options early, before any file-modifying operations,
     # so we can reject illegal combinations before any writes happen.
-    _analysis_flags = ('missing', 'empty', 'orphans', 'misplaced', 'leaves', 'packages')
-    _has_analysis = any(getattr(args, f, False) for f in _analysis_flags)
+    _has_analysis = any(getattr(args, f, False) for f in ANALYSIS_FLAGS)
+    _analysis_str = ', '.join(f'--{f}' for f in sorted(ANALYSIS_FLAGS))
+    _modifying_str = ', '.join(f'--{f}' for f in sorted(FILE_MODIFYING_FLAGS))
     if _has_analysis:
-        _file_modifying_modes = ('fixmissing', 'fixmisplaced', 'start')
-        if any(getattr(args, f, False) for f in _file_modifying_modes):
-            _panic("analysis options (--missing, --empty, --orphans, --misplaced, --leaves, --packages) "
-                   "cannot be combined with file-modifying modes (--fixmissing, --fixmisplaced, --start)")
+        if any(getattr(args, f, False) for f in FILE_MODIFYING_FLAGS):
+            _panic(f"analysis options ({_analysis_str}) "
+                   f"cannot be combined with file-modifying modes ({_modifying_str})")
         if args.sync:
             _panic("analysis options cannot be combined with --sync (which modifies the LTAC file)")
-        if getattr(args, 'mutations', []):
+        if args.mutations:
             _panic("analysis options cannot be combined with --rename/--restate/--detach/--move "
                    "(which modify the LTAC file)")
 
     if args.read_only:
-        _file_modifying_modes = ('fixmissing', 'fixmisplaced', 'start')
-        if any(getattr(args, f, False) for f in _file_modifying_modes):
-            _panic("--read-only cannot be combined with file-modifying modes "
-                   "(--fixmissing, --fixmisplaced, --start)")
+        if any(getattr(args, f, False) for f in FILE_MODIFYING_FLAGS):
+            _panic(f"--read-only cannot be combined with file-modifying modes ({_modifying_str})")
         if args.sync:
             _panic("--read-only cannot be combined with --sync")
-        if getattr(args, 'mutations', []):
+        if args.mutations:
             _panic("--read-only cannot be combined with --rename/--restate/--detach/--move")
         if args.update_ltac:
             _panic("--read-only cannot be combined with --update-ltac")
@@ -5557,7 +5558,7 @@ def run(args: argparse.Namespace) -> bool:
                 _panic("cannot write updated LTAC file")
             case.commit_updates([(tmp, ltac_path)])
 
-    # Apply ordered mutations (--rename / --restate).
+    # Apply ordered mutations (--rename / --restate / --detach / --move).
     if args.mutations:
         for op, a, b in args.mutations:
             if op == 'rename':
@@ -5578,35 +5579,29 @@ def run(args: argparse.Namespace) -> bool:
     )
 
     if _has_analysis:
-        # Analysis-only mode: no document processing, no file modification
-        first = True
+        # Analysis-only mode: no document processing, no file modification.
+        # sep is printed before each section after the first.
+        sep = ''
         if args.missing:
-            if not first:
-                print()
+            print(sep, end=''); sep = '\n'
             _print_analysis_list(
                 "Elements missing a selector region in the document(s):",
                 case.missing(),
                 lambda n: f"{n.node_type} {n.identifier}")
-            first = False
         if args.empty:
-            if not first:
-                print()
+            print(sep, end=''); sep = '\n'
             _print_analysis_list(
                 "Elements with no prose in the document(s):",
                 case.empty(),
                 lambda i: f"{n.node_type if (n := case.definition_for(i)) else '?'} {i}")
-            first = False
         if args.orphans:
-            if not first:
-                print()
+            print(sep, end=''); sep = '\n'
             _print_analysis_list(
                 "Orphaned selector regions in the document(s) (not in LTAC):",
                 case.orphans(),
                 lambda i: f"element {i}")
-            first = False
         if args.misplaced:
-            if not first:
-                print()
+            print(sep, end=''); sep = '\n'
             misplaced = case.misplaced()
             def _fmt_misplaced(t):
                 ntype = n.node_type if (n := case.definition_for(t[0])) else '?'
@@ -5618,10 +5613,8 @@ def run(args: argparse.Namespace) -> bool:
             _print_analysis_list(
                 "Misplaced elements (document order differs from LTAC order):",
                 misplaced, _fmt_misplaced)
-            first = False
         if args.leaves:
-            if not first:
-                print()
+            print(sep, end=''); sep = '\n'
             leaves = case.leaves()
             ns_leaves = [n for n in leaves if 'needssupport' in n.options]
             print("Leaf elements:")
@@ -5633,44 +5626,36 @@ def run(args: argparse.Namespace) -> bool:
             _print_analysis_list(
                 "All leaves:", leaves,
                 lambda n: n.to_ltac_line(depth_offset=n.depth))
-            first = False
         if args.packages:
-            if not first:
-                print()
+            print(sep, end=''); sep = '\n'
             case.render_packages()
-            first = False
 
         return not case.had_error
 
+    def _render_stdout(selector):
+        if case.render_selector(selector, sys.stdout, doc_format='markdown'):
+            sys.stdout.write('\n')
+        case.save_ltac_if_modified()
+
+    def _scan_docs():
+        seen = case._process_document_files(case.document_files, _NullWriter(), strip=args.strip)
+        case.check_element_coverage(seen)
+
     if args.info:
-        wrote = case.render_selector(f'info {args.info}', sys.stdout,
-                                     doc_format='markdown')
-        if wrote:
-            sys.stdout.write('\n')
-        case.save_ltac_if_modified()
+        _render_stdout(f'info {args.info}')
     elif args.descendants:
-        wrote = case.render_selector(f'ltac/txt {args.descendants}', sys.stdout,
-                                     doc_format='markdown')
-        if wrote:
-            sys.stdout.write('\n')
-        case.save_ltac_if_modified()
+        _render_stdout(f'ltac/txt {args.descendants}')
     elif args.select:
-        wrote = case.render_selector(args.select, sys.stdout,
-                                     doc_format='markdown')
-        if wrote:
-            sys.stdout.write('\n')
-        case.save_ltac_if_modified()
+        _render_stdout(args.select)
     elif args.validate:
         if case.document_files:
-            seen_element_ids = case._process_document_files(case.document_files, _NullWriter(), strip=args.strip)
-            # This validation requires that we read all document files
-            case.check_element_coverage(seen_element_ids)
+            _scan_docs()
         case.save_ltac_if_modified()
     elif args.stdout:
         if not case.document_files:
             _panic(_NO_FILES_MSG)
-        seen_element_ids = case._process_document_files(case.document_files, sys.stdout, strip=args.strip)
-        case.check_element_coverage(seen_element_ids)
+        seen = case._process_document_files(case.document_files, sys.stdout, strip=args.strip)
+        case.check_element_coverage(seen)
         case.save_ltac_if_modified()
     elif args.fixmissing or args.start:
         if not case.document_files:
@@ -5684,8 +5669,7 @@ def run(args: argparse.Namespace) -> bool:
         # --read-only: load, validate, and optionally report stats; no file writes.
         # Mutations are blocked above, so ltac_modified is always False here.
         if case.document_files:
-            seen_element_ids = case._process_document_files(case.document_files, _NullWriter(), strip=args.strip)
-            case.check_element_coverage(seen_element_ids)
+            _scan_docs()
     else:
         # Default mode: rewrite document files in place (+ LTAC if modified).
         if args.update_ltac:

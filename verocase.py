@@ -4589,6 +4589,7 @@ _CASEPROC_CONFIG_RE = re.compile(r'^<!--\s*verocase-config\s+(\S+)\s*=\s*(.*?)\s
 # Allowed dynamically-settable config keys and their validation patterns.
 _ALLOWED_CONFIG_VALUES = {
     'base_url': re.compile(r'.*'),
+    'bottom_padding': re.compile(r'^(true|false)\Z'),
     'element_level': re.compile(r'^[1-6]$'),
     'package_level': re.compile(r'^[1-6]$'),
     'max_mermaid_children':    re.compile(r'^(0|[1-9][0-9]*)\Z'),
@@ -4637,6 +4638,8 @@ def apply_config_directive(key: str, value: str, config: dict,
     if key in ('element_level', 'package_level',
                'max_mermaid_children', 'narrowed_mermaid_children'):
         config[key] = int(value)
+    elif key in ('bottom_padding',):
+        config[key] = (value == 'true')
     else:
         config[key] = value
     if key in ('max_mermaid_children', 'narrowed_mermaid_children'):
@@ -4777,6 +4780,7 @@ Configuration keys (--config FILE, TOML file; auto-discovered as verocase.toml o
   ltac_file          LTAC file path (alternative to --ltac; default: auto-discover)
   max_backups        number of timestamped backup snapshots to keep (default: 20)
   base_url           base URL for hyperlinks in sacm/gsn mermaid output (default: "")
+  bottom_padding     add invisible BottomPadding node in mermaid diagrams (default: true)
   markdown_base_url  base URL for hyperlinks in ltac/markdown and ltac/html output (default: "")
   default_renderer   renderer for 'sacm'/'gsn' shorthands: "mermaid" (default)
   default_representation  content for 'package' selector: "sacm" (default)

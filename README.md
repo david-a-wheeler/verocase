@@ -147,11 +147,10 @@ As noted above, this tool `verocase` takes a completely different approach:
 In short: just run `verocase` and the document files will be updated
 based on the input LTAC file.
 
-Currently the tool can generate both SACM and GSN notation in mermaid format.
+The tool can generate SACM, GSN, and CAE notation in mermaid format.
 It can also generate a markdown indented bullet list that looks like LTAC
 format but adds hyperlinks, making it easy to go from a high-level
 summary to specific details and back.
-It might someday support CAE notation as well.
 The tool can also insert various cross-references and update heading names
 as appropriate.
 

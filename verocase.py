@@ -645,10 +645,13 @@ class Node:
 
     @property
     def is_incontextof(self) -> bool:
-        """True if this node attaches via InContextOf (--o),
-        not SupportedBy (-->)."""
-        return self.node_type in ('Context', 'Assumption', 'Justification') or \
-               (self.node_type == 'Claim' and 'assumed' in self.options)
+        """True if this node attaches via InContextOf (--o), not SupportedBy (-->).
+
+        Determined solely by node type (Context, Assumption, Justification);
+        assertion-status options like 'assumed' or 'axiomatic' are orthogonal
+        to edge type and must not influence this property.
+        """
+        return self.node_type in ('Context', 'Assumption', 'Justification')
 
     def to_ltac_line(self, depth_offset: int = 0) -> str:
         """Format this node as an LTAC source line (without trailing
@@ -2550,6 +2553,8 @@ o
             return _render_or_all(element_id, self, render_sacm, current_element, self.config, out)
         elif display_type in ('gsn/mermaid', 'gsn/mermaid/markdown'):
             return _render_or_all(element_id, self, render_gsn, current_element, self.config, out)
+        elif display_type in ('cae/mermaid', 'cae/mermaid/markdown'):
+            return _render_or_all(element_id, self, render_cae, current_element, self.config, out)
         elif display_type == 'sacm/mermaid/html':
             if state is not None:
                 _maybe_inject_mermaid_js(self.config, state, out)
@@ -2558,6 +2563,10 @@ o
             if state is not None:
                 _maybe_inject_mermaid_js(self.config, state, out)
             return _render_or_all(element_id, self, render_gsn_html, current_element, self.config, out)
+        elif display_type == 'cae/mermaid/html':
+            if state is not None:
+                _maybe_inject_mermaid_js(self.config, state, out)
+            return _render_or_all(element_id, self, render_cae_html, current_element, self.config, out)
         elif display_type == 'ltac/markdown':
             return _render_or_all(element_id, self, render_markdown, current_element, self.config, out)
         elif display_type == 'ltac/html':
@@ -3601,12 +3610,14 @@ def _apply_gsn_width_transform(roots: List['Node'], config: dict,
 
 
 def _edge_line(src_id: str, tgt_id: str, is_context: bool,
-               counter: bool = False, abstract: bool = False) -> str:
+               counter: bool = False, abstract: bool = False,
+               defeater: bool = False) -> str:
     """Return a directed edge line (with arrowhead) from src to tgt.
 
     is_context → circle head (--o); otherwise arrow head (-->).
     counter    → adds |⊖| label on the edge.
     abstract   → uses dashed line style (-.- prefix).
+    defeater   → X head (--x); takes priority over all other flags.
 
     >>> _edge_line("A", "B", False)
     '    A --> B'
@@ -3618,7 +3629,11 @@ def _edge_line(src_id: str, tgt_id: str, is_context: bool,
     '    A -.-o B'
     >>> _edge_line("A", "B", False, counter=True, abstract=True)
     '    A -.->|⊖| B'
+    >>> _edge_line("A", "B", False, defeater=True)
+    '    A --x B'
     """
+    if defeater:
+        return f'    {src_id} --x {tgt_id}'
     base = ('-.-o' if abstract else '--o') if is_context else ('-.->' if abstract else '-->')
     arrow = f'{base}|⊖|' if counter else base
     return f'    {src_id} {arrow} {tgt_id}'
@@ -3821,7 +3836,8 @@ def _sacm_collect_edges(
                         elif ggc.node_type not in ('Relation', 'Link'):
                             inference_sources.append((ggc, rc, ra))
                 elif gc.node_type not in ('Relation', 'Link'):
-                    inference_sources.append((gc, 'counter' in gc.options, False))
+                    is_counter = 'counter' in gc.options or 'defeater' in gc.options
+                    inference_sources.append((gc, is_counter, False))
             inference_sources.append((child, 'counter' in child.options, False))
             strategy_ctx[child.diagram_id] = ctx_of_s
 
@@ -3834,7 +3850,8 @@ def _sacm_collect_edges(
                     inference_sources.append((gc, rc, ra))
 
         elif child.node_type != 'Link':
-            inference_sources.append((child, 'counter' in child.options, False))
+            is_counter = 'counter' in child.options or 'defeater' in child.options
+            inference_sources.append((child, is_counter, False))
 
     # Recurse into all non-Link children first (post-order: deepest edges first).
     for child in node.children:
@@ -4117,10 +4134,11 @@ def _gsn_collect_edges(node, write_edge, leaf_nodes):
                         gc.is_incontextof, rc, ra))
                     _gsn_collect_edges(gc, write_edge, leaf_nodes)
         else:
+            is_counter = 'counter' in child.options or 'defeater' in child.options
             _we(_edge_line(
                 node.diagram_id, child.diagram_id,
                 child.is_incontextof,
-                'counter' in child.options, False))
+                is_counter, False))
             _gsn_collect_edges(child, write_edge, leaf_nodes)
     if not _had_edge[0]:
         leaf_nodes.append(node)
@@ -4207,6 +4225,263 @@ def render_gsn_html(roots: List['Node'], config: dict, out: TextIO,
     return True
 
 
+# ---------------------------------------------------------------------------
+# CAE/mermaid renderer
+# ---------------------------------------------------------------------------
+
+_CAE_BODY_HEADER = """\
+---
+config:
+  theme: neutral
+  flowchart:
+    curve: linear
+    htmlLabels: true
+    rankSpacing: 60
+    nodeSpacing: 45
+    padding: 15
+---
+flowchart BT
+    classDef invisible        opacity:0
+    classDef connector        fill:none,stroke:#cccccc,stroke-width:1px
+    classDef caeClaimClass    fill:#dce8f8,stroke:#2874a6,stroke-width:2px,color:#000
+    classDef caeArgClass      fill:#fdebd0,stroke:#d35400,stroke-width:3px,color:#000
+    classDef caeEvidClass     fill:#d5f5e3,stroke:#1e8449,stroke-width:2px,color:#000
+    classDef caeInfoClass     fill:#f0f0f0,stroke:#999999,stroke-width:1px,stroke-dasharray:4 3,color:#000
+    classDef caeAssumedClass  fill:#e8daef,stroke:#76448a,stroke-width:2px,stroke-dasharray:4 3,color:#000
+    classDef caeSideClass     fill:#d6eaf8,stroke:#1a5276,stroke-width:2px,color:#000
+    classDef caeDefeaterClass fill:#fadbd8,stroke:#c0392b,stroke-width:4px,color:#000
+    classDef abstractClaim    stroke-width:2px,stroke-dasharray:5 5"""
+
+
+def _cae_assertion_suffix(node_type: str, options) -> str:
+    """Return the CAE mermaid assertion-state suffix for the given node type and options.
+
+    >>> _cae_assertion_suffix('Claim', {'defeated'})
+    '<br>DEFEATED'
+    >>> _cae_assertion_suffix('Claim', {'defeater', 'defeated'})
+    '<br>DEFEATED'
+    >>> _cae_assertion_suffix('Claim', {'needssupport'})
+    '<br>...'
+    >>> _cae_assertion_suffix('Claim', set())
+    ''
+    """
+    if 'defeated' in options:
+        return '<br>DEFEATED'
+    elif 'needssupport' in options:
+        return '<br>...'
+    else:
+        return ''
+
+
+def _cae_node_decl(node: 'Node') -> str:
+    """Return the mermaid node-declaration line for a single LTAC node (CAE style).
+
+    Returns '' for Relation and Link nodes.
+    diagram_id must already be set on the node.
+
+    >>> class _N:
+    ...     diagram_id = 'C1'; identifier = 'C1'; text = 'The system is safe'
+    ...     options = set(); is_citation = False; node_type = 'Claim'
+    ...     is_incontextof = False
+    >>> _cae_node_decl(_N())
+    '    C1(("<b>C1</b><br>The system is safe")):::caeClaimClass'
+    """
+    if node.node_type in ('Relation', 'Link'):
+        return ''
+    if node.node_type == 'Connector':
+        return f'    {node.diagram_id}(("{_HAIR_SPACE}")):::connector'
+
+    did = node.diagram_id
+    eid = escape_html(node.identifier) if node.identifier else ''
+    etxt = escape_html_content(node.text) if node.text else ''
+    opts = node.options
+    is_defeater = 'defeater' in opts
+
+    suffix = _cae_assertion_suffix(node.node_type, opts)
+
+    # Decorator badge
+    if is_defeater:
+        decorator = '&nbsp;⊗'
+    elif node.node_type == 'Assumption' or ('assumed' in opts and node.node_type == 'Claim'):
+        decorator = '&nbsp;Ⓐ'
+    elif node.node_type == 'Justification':
+        decorator = '&nbsp;Ⓢ'
+    else:
+        decorator = ''
+
+    inner = _build_inner_label(eid, etxt, suffix, decorator)
+
+    # Class selection
+    if is_defeater:
+        cls = 'caeDefeaterClass'
+    elif node.node_type == 'Assumption' or (node.node_type == 'Claim' and 'assumed' in opts):
+        cls = 'caeAssumedClass'
+    elif node.node_type == 'Strategy':
+        cls = 'caeArgClass'
+    elif node.node_type == 'Evidence':
+        cls = 'caeEvidClass'
+    elif node.node_type == 'Context':
+        cls = 'caeInfoClass'
+    elif node.node_type == 'Justification':
+        cls = 'caeSideClass'
+    else:
+        cls = 'caeClaimClass'
+
+    # Shape: citations always use double-rectangle; otherwise by type
+    if node.is_citation:
+        shape = f'[["{inner}"]]'
+    elif node.node_type in ('Strategy', 'Justification'):
+        shape = f'(["{inner}"])'
+    elif node.node_type == 'Evidence':
+        shape = f'["{inner}"]'
+    else:  # Claim, Assumption, Context, Defeater — all ellipses
+        shape = f'(("{inner}"))'
+
+    abstract_cls = ':::abstractClaim' if 'abstract' in opts else ''
+    return f'    {did}{shape}:::{cls}{abstract_cls}'
+
+
+def _cae_collect_edges(node: 'Node', write_edge) -> None:
+    """Write CAE edges for *node* and its subtree (DFS pre-order) via write_edge.
+
+    CAE has no dot/connector nodes — all edges are direct.
+    Context children use dashed arrows (abstract=True).
+    Defeater children use X-head edges (defeater=True).
+    """
+    if node.node_type == 'Connector':
+        for child in node.children:
+            if child.node_type != 'Link':
+                write_edge(f'    {child.diagram_id} --- {node.diagram_id}')
+                _cae_collect_edges(child, write_edge)
+        return
+
+    if node.node_type in ('Link', 'Relation'):
+        return
+
+    for child in node.children:
+        if child.node_type == 'Link':
+            if child.link_target is not None:
+                tgt = child.link_target
+                is_ctx = tgt.node_type == 'Context'
+                write_edge(_edge_line(node.diagram_id, tgt.diagram_id,
+                                      False, 'counter' in child.options,
+                                      abstract=is_ctx))
+        elif child.node_type == 'Connector':
+            write_edge(_edge_line(node.diagram_id, child.diagram_id, False))
+            _cae_collect_edges(child, write_edge)
+        elif child.node_type == 'Relation':
+            rc = 'counter' in child.options
+            ra = 'abstract' in child.options
+            for gc in child.children:
+                if gc.node_type == 'Link':
+                    if gc.link_target is not None:
+                        tgt = gc.link_target
+                        is_ctx = tgt.node_type == 'Context'
+                        write_edge(_edge_line(node.diagram_id, tgt.diagram_id,
+                                             False, rc, abstract=is_ctx or ra))
+                else:
+                    is_ctx = gc.node_type == 'Context'
+                    write_edge(_edge_line(node.diagram_id, gc.diagram_id,
+                                         False, rc, abstract=is_ctx or ra))
+                    _cae_collect_edges(gc, write_edge)
+        else:
+            is_ctx = child.node_type == 'Context'
+            is_def = 'defeater' in child.options
+            is_counter = 'counter' in child.options and not is_def
+            write_edge(_edge_line(node.diagram_id, child.diagram_id,
+                                  False, is_counter,
+                                  abstract=is_ctx,
+                                  defeater=is_def))
+            _cae_collect_edges(child, write_edge)
+
+
+def _cae_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
+    """Write the CAE diagram content without opening/closing fence markers."""
+    base_url = config['base_url']
+    pkg_label = config['pkg_label']
+    bottom_padding = config['bottom_padding']
+    roots = _copy_forest(roots)
+    syn_counter = [0]
+    _apply_sacm_width_transform(roots, config, syn_counter)
+
+    out.write(_CAE_BODY_HEADER)
+
+    all_nodes = _collect_bfs(roots)
+    _assign_diagram_ids(all_nodes)
+
+    # Node declarations (BFS)
+    for node in all_nodes:
+        decl = _cae_node_decl(node)
+        if decl:
+            out.write('\n')
+            out.write(decl)
+
+    # Click lines (BFS)
+    for node in all_nodes:
+        if node.node_type not in ('Relation', 'Link', 'Connector'):
+            url = _node_anchor_url(node, base_url, pkg_label)
+            if url:
+                out.write('\n')
+                out.write(f'    click {node.diagram_id} "{url}"')
+
+    # Collect edges; leaves derived from edge targets below.
+    edge_lines: list = []
+    for root in roots:
+        _cae_collect_edges(root, edge_lines.append)
+
+    # Display leaves: nodes that never appear as an edge target
+    edge_targets = {line.split()[-1] for line in edge_lines}
+    display_leaves = [n for n in all_nodes
+                      if n.node_type not in ('Relation', 'Link')
+                      and n.diagram_id not in edge_targets]
+
+    _first_edge = [True]
+
+    def _write_edge(line: str) -> None:
+        if _first_edge[0]:
+            out.write('\n')  # blank line between declarations and edges
+            _first_edge[0] = False
+        out.write('\n')
+        out.write(line)
+
+    # BottomPadding first (BT diagram: invisible node below each leaf)
+    if bottom_padding:
+        first_bp = True
+        seen: set = set()
+        for leaf in display_leaves:
+            if leaf.diagram_id not in seen:
+                seen.add(leaf.diagram_id)
+                bp = 'BottomPadding[ ]:::invisible' if first_bp else 'BottomPadding'
+                _write_edge(f'    {bp} ~~~ {leaf.diagram_id}')
+                first_bp = False
+
+    for edge_line in edge_lines:
+        _write_edge(edge_line)
+
+
+def render_cae(roots: List['Node'], config: dict, out: TextIO) -> bool:
+    """Write package roots as a complete CAE/mermaid code block to out.
+
+    Output structure: header → node declarations (BFS) → click lines
+    → blank line → BottomPadding + edges (DFS pre-order).
+    The original nodes are not modified; a deep copy is used internally.
+    """
+    out.write('```mermaid\n')
+    _cae_diagram_body(roots, config, out)
+    out.write('\n```')
+    return True
+
+
+def render_cae_html(roots: List['Node'], config: dict, out: TextIO,
+                    state: 'DocState' = None) -> bool:
+    """Write CAE diagram as a <pre class="mermaid"> block to out."""
+    _maybe_inject_mermaid_js(config, state, out)
+    out.write('<pre class="mermaid">\n')
+    _cae_diagram_body(roots, config, out)
+    out.write('\n</pre>')
+    return True
+
+
 def render_all_packages(all_roots: List[Node], render_fn, config: dict,
                         out: TextIO) -> bool:
     """Write every package preceded by a configurable header to out.
@@ -4231,6 +4506,7 @@ _VALID_DISPLAY_TYPES = {
     'ltac/markdown', 'ltac/html', 'ltac/txt',
     'sacm/mermaid', 'sacm/mermaid/markdown', 'sacm/mermaid/html',
     'gsn/mermaid',  'gsn/mermaid/markdown',  'gsn/mermaid/html',
+    'cae/mermaid',  'cae/mermaid/markdown',  'cae/mermaid/html',
     'statement',
     'element', 'package',
     'info',
@@ -4254,6 +4530,8 @@ def expand_selector(raw: str, doc_format: str, config: dict) -> str:
       sacm/mermaid/html     -> explicit
       gsn             -> gsn/{renderer}/{doc_format}
       gsn/mermaid     -> gsn/mermaid/{doc_format}
+      cae             -> cae/{renderer}/{doc_format}
+      cae/mermaid     -> cae/mermaid/{doc_format}
       ltac            -> ltac/{doc_format}
       ltac/markdown   -> ltac/markdown  (explicit, no third part)
       ltac/html       -> ltac/html
@@ -4271,7 +4549,7 @@ def expand_selector(raw: str, doc_format: str, config: dict) -> str:
     'statement'
     """
     parts = raw.split('/')
-    if parts[0] in ('sacm', 'gsn'):
+    if parts[0] in ('sacm', 'gsn', 'cae'):
         if len(parts) == 1:
             return f'{parts[0]}/{config["default_renderer"]}/{doc_format}'
         if len(parts) == 2:
@@ -4511,6 +4789,12 @@ def render_representation(pkg_root: Node, all_roots: List[Node],
     elif selector == 'gsn/mermaid/html':
         out.write(sep)
         return render_gsn_html([pkg_root], config, out, state)
+    elif selector in ('cae/mermaid/markdown', 'cae/mermaid'):
+        out.write(sep)
+        return render_cae([pkg_root], config, out)
+    elif selector == 'cae/mermaid/html':
+        out.write(sep)
+        return render_cae_html([pkg_root], config, out, state)
     elif selector == 'ltac/markdown':
         out.write(sep)
         return render_markdown([pkg_root], config, out)
@@ -4930,7 +5214,7 @@ Configuration keys (--config FILE, TOML file; auto-discovered as verocase.toml o
   bottom_padding     add invisible BottomPadding node in mermaid diagrams (default: true)
   markdown_base_url  base URL for hyperlinks in ltac/markdown and ltac/html output (default: "")
   default_renderer   renderer for 'sacm'/'gsn' shorthands: "mermaid" (default)
-  default_representation  content for 'package' selector: "sacm" (default)
+  default_representation  content for 'package' selector: "sacm" (default), "gsn", "cae", or "ltac"
   element_level      heading level (1-6) for 'element' selector (default: 3)
   element_selections comma-separated list for element sub-sections (default: referenced_by,supported_by,supports,ext_ref)
   max_mermaid_children      max visual children before width narrowing (default: 8; 0 disables)
@@ -5182,6 +5466,8 @@ Key options in the LTAC file (these are comma-separated inside {}):
   axiomatic     accepted as foundational; needs no supporting evidence
   defeated      argument is disproved or no longer valid
   assumed       claim is treated as an assumption (no support required)
+  defeater      node actively defeats/refutes its parent (CAE: red ellipse +
+                X-head edge; SACM/GSN: ⊖ counter edge)
   metaclaim     claim is about the argument structure itself, not the system
 
 Reference is a file path, URL, or anchor (e.g. (report.pdf)). If you want
@@ -5257,6 +5543,7 @@ Selectors are of format `KIND [ID | *]`, where KIND is:
   sacm/mermaid/markdown  ID|*  explicit markdown fenced block
   sacm/mermaid/html      ID|*  explicit <pre class="mermaid"> block
   gsn            ID|*  GSN mermaid diagram (auto-detects format)
+  cae            ID|*  CAE mermaid diagram (auto-detects format)
   ltac           ID|*  LTAC argument list (auto-detects format)
   ltac/markdown  ID|*  LTAC as Markdown bullet list
   ltac/html      ID|*  LTAC as HTML <ul> list

@@ -31,12 +31,14 @@ or maintain if you just maintain a document.
 `verocase` reads the LTAC file and regenerates the structured portions
 of the document automatically (diagrams, headings, cross-reference links).
 You write the key information; `verocase` takes care of the boilerplate.
+Verocase also supports an optional configuration file.
 
 ---
 
 ## Quick start
 
-Here's a quick start. Create an empty directory and run `--start`:
+Here's a quick start, presuming you've installed verocase.
+Create an empty directory and run `--start`:
 
 ```sh
 mkdir demo && cd demo
@@ -453,6 +455,57 @@ key, or set it to `0` to disable backups entirely.
 See the [reference manual](reference.md) for details.
 
 ---
+
+## Creating an assurance case
+
+The basic idea of an assurance case is simple enough.
+It's simply a way to organize and keep track of a multi-layer
+logical argument.
+An assurance case focused on safety is often called a "safety case".
+An assurance case focused on security is often called a "trust case".
+
+There are several modern assurance case notations, and the different
+ones have slightly different terminology and conventions.
+However, they all build on the same foundations from Stephen
+Toulmin in the 1950s, so they have *many* similarities.
+You should *eventually* pick a specific notation and
+convention.
+
+Don't worry, `verocase` is designed to support many of them.
+Most of the input to `verocase` is the same regardless of
+which notation and conventions you use.
+You can even switch later.
+Their differences are less important than the fundamentals
+of the system claims that you're trying to make.
+As a result, it's much more important to focus on your *problem*.
+
+A useful overall guide to assurance cases, that
+also discusses some differences in
+the various terminology and conventions, is
+["Assurance Case Guide Part 1. Argument Structure" by Argevide](https://www.argevide.com/documents/assurance-case-guide-part-1-argument-structure.pdf).
+
+Here are some of the more common modern notations
+for assurance cases and useful materials about them:
+
+* Goal Structuring Notation (GSN). Probably the most popular; it's also a little more complicated. It can be confusing at first, because it uses unusual words for straightforward concepts, but you can get used to it. [GSN in a nutshell](https://scsc.uk/in-a-nutshell) gives a quick introduction. The [Goal Structuring Notation (GSN) Standard](https://scsc.uk/gsn-standard) is a canonical information source.
+* Claims, Argument, and Evidence (CAE). An approach focused on simplicity. The [Declare guidance](https://claimsargumentsevidence.org/resources/the-declare-guidance/) is a great place to start, especially its one-page summary. The entire [CLaims Arguments Evidence website](https://claimsargumentsevidence.org/) is a key resource.
+* TRUST-IT. See ["Argument Strategies and Patterns of the Trust-IT Framework" by Janusz Górski et al](https://www.researchgate.net/publication/229034967_Argument_Strategies_and_Patterns_of_the_Trust-IT_Framework).
+* Structured Assurance Case Metamodel (SACM) - [OMG SACM site](https://www.omg.org/spec/SACM/). Here we focus on SACM version 2.3.
+
+Here are key LTAC terms, and what they basically map to in various notations:
+
+| LTAC | GSN | CAE | TRUST-IT | SACM |
+| Claim | Goal | Claim | Claim ("Fact" if base claim) | Claim |
+| Strategy | Strategy | Argument | Argumentation Strategy | ArgumentReasoning |
+| Justification | Justification | Side claim | Rationale | Claim |
+| Evidence | Solution | Evidence | Reference | ArtifactReference |
+| Assumption | Assumption | Assumed claim | Assumption | Claim + assumed |
+| Context | Context | Information | Information | ArtifactReference + AssertedContext |
+| Assurance case | Argument | Case | Trust case | Assurance case |
+
+Note that the word "argument" can be confusing. GSN uses the term "argument" for an (assurance) case. Many others use some version of the word "argument" for what GSN calls a "strategy".
+
+The point of an assurance case is to enable everyone to assess it, question it, and work to make it stronger. For pointers, see ["Developing Compelling Safety Cases" by Richard Hawkins](https://arxiv.org/abs/2502.00911v1).
 
 ## Configuration
 

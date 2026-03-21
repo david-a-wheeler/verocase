@@ -443,14 +443,18 @@ flowchart BT
     click EvHarden "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/demo-output.expected.md#evidence-evharden"
     click XProd "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/demo-output.expected.md#context-xprod"
 
-    BottomPadding[ ]:::invisible ~~~ Security
-    Security -.-> XScope
-    Security --> SArg
-    SArg --> Access
-    SArg --> Data
-    SArg --> Deployment
-    Deployment --> EvHarden
-    Deployment -.-> XProd
+    BottomPadding[ ]:::invisible ~~~ XScope
+    BottomPadding ~~~ Access
+    BottomPadding ~~~ Data
+    BottomPadding ~~~ EvHarden
+    BottomPadding ~~~ XProd
+    XScope -.-> Security
+    Access --> SArg
+    Data --> SArg
+    EvHarden --> Deployment
+    XProd -.-> Deployment
+    Deployment --> SArg
+    SArg --> Security
 ```
 
 ### Package Access
@@ -507,22 +511,30 @@ flowchart BT
     click EvPenTest "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/demo-output.expected.md#evidence-evpentest"
     click DBVuln "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/demo-output.expected.md#claim-dbvuln"
 
-    BottomPadding[ ]:::invisible ~~~ Access
-    Access --> AAdmin
-    Access --> SAccess
-    SAccess --> AuthN
-    AuthN --> EvLogin
-    AuthN --> JMechanism
-    AuthN -.-> XLogPolicy
-    SAccess --> AuthZ
-    AuthZ --> EvRBAC
-    AuthZ --> AuthZAdmin
-    SAccess --> XSSFree
-    XSSFree --> EvCSP
-    XSSFree -->|⊖| EvPenTest
-    SAccess --> SqlFree
-    SqlFree --> EvPenTest
-    SqlFree --x DBVuln
+    BottomPadding[ ]:::invisible ~~~ AAdmin
+    BottomPadding ~~~ EvLogin
+    BottomPadding ~~~ JMechanism
+    BottomPadding ~~~ XLogPolicy
+    BottomPadding ~~~ EvRBAC
+    BottomPadding ~~~ AuthZAdmin
+    BottomPadding ~~~ EvCSP
+    BottomPadding ~~~ EvPenTest
+    BottomPadding ~~~ DBVuln
+    AAdmin --> Access
+    EvLogin --> AuthN
+    JMechanism --> AuthN
+    XLogPolicy -.-> AuthN
+    AuthN --> SAccess
+    EvRBAC --> AuthZ
+    AuthZAdmin --> AuthZ
+    AuthZ --> SAccess
+    EvCSP --> XSSFree
+    EvPenTest -->|⊖| XSSFree
+    XSSFree --> SAccess
+    EvPenTest --> SqlFree
+    DBVuln --x SqlFree
+    SqlFree --> SAccess
+    SAccess --> Access
 ```
 
 ### Package Data
@@ -573,18 +585,25 @@ flowchart BT
     click DataMap "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/demo-output.expected.md#claim-datamap"
     click JRetention "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/demo-output.expected.md#justification-jretention"
 
-    BottomPadding[ ]:::invisible ~~~ Data
-    Data -.-> XRegulation
-    Data --> AEncrypt
-    Data --> SData
-    SData --> Encrypt
-    Encrypt --> EvTLS
-    Encrypt --> EvDB
-    SData --> Minimise
-    Minimise --> DataMap
-    Minimise --> JRetention
-    SData --> AuditAccess
-    Data --> MetaClaim
+    BottomPadding[ ]:::invisible ~~~ XRegulation
+    BottomPadding ~~~ AEncrypt
+    BottomPadding ~~~ MetaClaim
+    BottomPadding ~~~ AuditAccess
+    BottomPadding ~~~ EvTLS
+    BottomPadding ~~~ EvDB
+    BottomPadding ~~~ DataMap
+    BottomPadding ~~~ JRetention
+    XRegulation -.-> Data
+    AEncrypt --> Data
+    EvTLS --> Encrypt
+    EvDB --> Encrypt
+    Encrypt --> SData
+    DataMap --> Minimise
+    JRetention --> Minimise
+    Minimise --> SData
+    AuditAccess --> SData
+    SData --> Data
+    MetaClaim --> Data
 ```
 <!-- end verocase -->
 

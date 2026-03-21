@@ -3890,6 +3890,28 @@ def _sacm_collect_edges(
                 _edge_line(ctx.diagram_id, s.diagram_id, True, is_counter, is_abstract))
 
 
+def _write_bottom_padding(leaves, write_edge, bt_direction: bool) -> None:
+    """Emit one invisible BottomPaddingN node per leaf for vertical clearance.
+
+    Uses a long invisible edge (~~~~, rank-diff 2) so GitHub's zoom/pan
+    controls don't overlap diagram content at the bottom.
+    bt_direction=True  → BT diagrams (SACM, CAE): BottomPaddingN ~~~~ leaf
+    bt_direction=False → TD diagrams (GSN):        leaf ~~~~ BottomPaddingN
+    """
+    bp_idx = 0
+    seen: set = set()
+    for leaf in leaves:
+        did = leaf.diagram_id
+        if did not in seen:
+            seen.add(did)
+            bp_idx += 1
+            bp = f'BottomPadding{bp_idx}["<br/><br/><br/>"]:::invisible'
+            if bt_direction:
+                write_edge(f'    {bp} ~~~~ {did}')
+            else:
+                write_edge(f'    {did} ~~~~ {bp}')
+
+
 def _sacm_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
     """Write the SACM diagram content without opening/closing fence markers."""
     base_url = config['base_url']
@@ -3950,16 +3972,9 @@ def _sacm_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
         out.write('\n')
         out.write(line)
 
-    # BottomPadding: one invisible node per leaf, below every display leaf, so
-    # that GitHub's diagram controls never obscure content at the bottom.
+    # BottomPadding: one invisible node per leaf for vertical clearance.
     if bottom_padding:
-        bp_idx = 0
-        seen: set = set()
-        for leaf in leaf_nodes:
-            if leaf.diagram_id not in seen:
-                seen.add(leaf.diagram_id)
-                bp_idx += 1
-                _write_edge(f'    BottomPadding{bp_idx}["<br/><br/><br/>"]:::invisible ~~~ {leaf.diagram_id}')
+        _write_bottom_padding(leaf_nodes, _write_edge, bt_direction=True)
 
     for edge_line in edge_lines:
         _write_edge(edge_line)
@@ -4188,16 +4203,9 @@ def _gsn_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
     for root in roots:
         _gsn_collect_edges(root, _write_edge, leaf_nodes)
 
-    # BottomPadding (after edges): one invisible node per leaf, below every
-    # leaf, so GitHub's diagram controls don't obscure the bottom of the diagram.
+    # BottomPadding: one invisible node per leaf for vertical clearance.
     if bottom_padding:
-        bp_idx = 0
-        seen: set = set()
-        for leaf in leaf_nodes:
-            if leaf.diagram_id not in seen:
-                seen.add(leaf.diagram_id)
-                bp_idx += 1
-                _write_edge(f'    {leaf.diagram_id} ~~~ BottomPadding{bp_idx}["<br/><br/><br/>"]:::invisible')
+        _write_bottom_padding(leaf_nodes, _write_edge, bt_direction=False)
 
 
 def render_gsn(roots: List['Node'], config: dict, out: TextIO) -> bool:
@@ -4453,16 +4461,9 @@ def _cae_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
         out.write('\n')
         out.write(line)
 
-    # BottomPadding first (BT diagram): one invisible node per leaf, below every
-    # display leaf, so GitHub's diagram controls don't obscure the bottom.
+    # BottomPadding first (BT diagram): one invisible node per leaf for clearance.
     if bottom_padding:
-        bp_idx = 0
-        seen: set = set()
-        for leaf in display_leaves:
-            if leaf.diagram_id not in seen:
-                seen.add(leaf.diagram_id)
-                bp_idx += 1
-                _write_edge(f'    BottomPadding{bp_idx}["<br/><br/><br/>"]:::invisible ~~~ {leaf.diagram_id}')
+        _write_bottom_padding(display_leaves, _write_edge, bt_direction=True)
 
     for edge_line in edge_lines:
         _write_edge(edge_line)

@@ -3959,7 +3959,7 @@ def _sacm_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
             if leaf.diagram_id not in seen:
                 seen.add(leaf.diagram_id)
                 bp_idx += 1
-                _write_edge(f'    BottomPadding{bp_idx}[ ]:::invisible ~~~ {leaf.diagram_id}')
+                _write_edge(f'    BottomPadding{bp_idx}["<br/><br/><br/>"]:::invisible ~~~ {leaf.diagram_id}')
 
     for edge_line in edge_lines:
         _write_edge(edge_line)
@@ -4197,7 +4197,7 @@ def _gsn_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
             if leaf.diagram_id not in seen:
                 seen.add(leaf.diagram_id)
                 bp_idx += 1
-                _write_edge(f'    {leaf.diagram_id} ~~~ BottomPadding{bp_idx}[ ]:::invisible')
+                _write_edge(f'    {leaf.diagram_id} ~~~ BottomPadding{bp_idx}["<br/><br/><br/>"]:::invisible')
 
 
 def render_gsn(roots: List['Node'], config: dict, out: TextIO) -> bool:
@@ -4462,7 +4462,7 @@ def _cae_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
             if leaf.diagram_id not in seen:
                 seen.add(leaf.diagram_id)
                 bp_idx += 1
-                _write_edge(f'    BottomPadding{bp_idx}[ ]:::invisible ~~~ {leaf.diagram_id}')
+                _write_edge(f'    BottomPadding{bp_idx}["<br/><br/><br/>"]:::invisible ~~~ {leaf.diagram_id}')
 
     for edge_line in edge_lines:
         _write_edge(edge_line)

@@ -35,7 +35,7 @@ flowchart TD
     C3 --> E1
     C1 --o A1
     C1 --o X1
-    E1 ~~~ BottomPadding1[ ]:::invisible
-    A1 ~~~ BottomPadding2[ ]:::invisible
-    X1 ~~~ BottomPadding3[ ]:::invisible
+    E1 ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    A1 ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    X1 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
 ```

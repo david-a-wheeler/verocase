@@ -154,61 +154,61 @@ flowchart BT
     click C24top "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#package-c24top"
     click C25top "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#package-c25top"
 
-    BottomPadding1[ ]:::invisible ~~~ Xscope
-    BottomPadding2[ ]:::invisible ~~~ Asys
-    BottomPadding3[ ]:::invisible ~~~ Esys1
-    BottomPadding4[ ]:::invisible ~~~ Scomps
-    BottomPadding5[ ]:::invisible ~~~ Sdecomp
-    BottomPadding6[ ]:::invisible ~~~ C44top
-    BottomPadding7[ ]:::invisible ~~~ C45top
-    BottomPadding8[ ]:::invisible ~~~ L1top
-    BottomPadding9[ ]:::invisible ~~~ C01top
-    BottomPadding10[ ]:::invisible ~~~ C02top
-    BottomPadding11[ ]:::invisible ~~~ C03top
-    BottomPadding12[ ]:::invisible ~~~ C41top
-    BottomPadding13[ ]:::invisible ~~~ C42top
-    BottomPadding14[ ]:::invisible ~~~ C43top
-    BottomPadding15[ ]:::invisible ~~~ L2top
-    BottomPadding16[ ]:::invisible ~~~ L3top
-    BottomPadding17[ ]:::invisible ~~~ L4top
-    BottomPadding18[ ]:::invisible ~~~ L5top
-    BottomPadding19[ ]:::invisible ~~~ C04top
-    BottomPadding20[ ]:::invisible ~~~ C05top
-    BottomPadding21[ ]:::invisible ~~~ C06top
-    BottomPadding22[ ]:::invisible ~~~ C38top
-    BottomPadding23[ ]:::invisible ~~~ C39top
-    BottomPadding24[ ]:::invisible ~~~ C40top
-    BottomPadding25[ ]:::invisible ~~~ C07top
-    BottomPadding26[ ]:::invisible ~~~ C08top
-    BottomPadding27[ ]:::invisible ~~~ C09top
-    BottomPadding28[ ]:::invisible ~~~ C35top
-    BottomPadding29[ ]:::invisible ~~~ C36top
-    BottomPadding30[ ]:::invisible ~~~ C37top
-    BottomPadding31[ ]:::invisible ~~~ C10top
-    BottomPadding32[ ]:::invisible ~~~ C11top
-    BottomPadding33[ ]:::invisible ~~~ C12top
-    BottomPadding34[ ]:::invisible ~~~ C32top
-    BottomPadding35[ ]:::invisible ~~~ C33top
-    BottomPadding36[ ]:::invisible ~~~ C34top
-    BottomPadding37[ ]:::invisible ~~~ C13top
-    BottomPadding38[ ]:::invisible ~~~ C14top
-    BottomPadding39[ ]:::invisible ~~~ C15top
-    BottomPadding40[ ]:::invisible ~~~ C29top
-    BottomPadding41[ ]:::invisible ~~~ C30top
-    BottomPadding42[ ]:::invisible ~~~ C31top
-    BottomPadding43[ ]:::invisible ~~~ C16top
-    BottomPadding44[ ]:::invisible ~~~ C17top
-    BottomPadding45[ ]:::invisible ~~~ C18top
-    BottomPadding46[ ]:::invisible ~~~ C26top
-    BottomPadding47[ ]:::invisible ~~~ C27top
-    BottomPadding48[ ]:::invisible ~~~ C28top
-    BottomPadding49[ ]:::invisible ~~~ C19top
-    BottomPadding50[ ]:::invisible ~~~ C20top
-    BottomPadding51[ ]:::invisible ~~~ C21top
-    BottomPadding52[ ]:::invisible ~~~ C22top
-    BottomPadding53[ ]:::invisible ~~~ C23top
-    BottomPadding54[ ]:::invisible ~~~ C24top
-    BottomPadding55[ ]:::invisible ~~~ C25top
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ Xscope
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ Asys
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ Esys1
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ Scomps
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ Sdecomp
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C44top
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C45top
+    BottomPadding8["<br/><br/><br/>"]:::invisible ~~~ L1top
+    BottomPadding9["<br/><br/><br/>"]:::invisible ~~~ C01top
+    BottomPadding10["<br/><br/><br/>"]:::invisible ~~~ C02top
+    BottomPadding11["<br/><br/><br/>"]:::invisible ~~~ C03top
+    BottomPadding12["<br/><br/><br/>"]:::invisible ~~~ C41top
+    BottomPadding13["<br/><br/><br/>"]:::invisible ~~~ C42top
+    BottomPadding14["<br/><br/><br/>"]:::invisible ~~~ C43top
+    BottomPadding15["<br/><br/><br/>"]:::invisible ~~~ L2top
+    BottomPadding16["<br/><br/><br/>"]:::invisible ~~~ L3top
+    BottomPadding17["<br/><br/><br/>"]:::invisible ~~~ L4top
+    BottomPadding18["<br/><br/><br/>"]:::invisible ~~~ L5top
+    BottomPadding19["<br/><br/><br/>"]:::invisible ~~~ C04top
+    BottomPadding20["<br/><br/><br/>"]:::invisible ~~~ C05top
+    BottomPadding21["<br/><br/><br/>"]:::invisible ~~~ C06top
+    BottomPadding22["<br/><br/><br/>"]:::invisible ~~~ C38top
+    BottomPadding23["<br/><br/><br/>"]:::invisible ~~~ C39top
+    BottomPadding24["<br/><br/><br/>"]:::invisible ~~~ C40top
+    BottomPadding25["<br/><br/><br/>"]:::invisible ~~~ C07top
+    BottomPadding26["<br/><br/><br/>"]:::invisible ~~~ C08top
+    BottomPadding27["<br/><br/><br/>"]:::invisible ~~~ C09top
+    BottomPadding28["<br/><br/><br/>"]:::invisible ~~~ C35top
+    BottomPadding29["<br/><br/><br/>"]:::invisible ~~~ C36top
+    BottomPadding30["<br/><br/><br/>"]:::invisible ~~~ C37top
+    BottomPadding31["<br/><br/><br/>"]:::invisible ~~~ C10top
+    BottomPadding32["<br/><br/><br/>"]:::invisible ~~~ C11top
+    BottomPadding33["<br/><br/><br/>"]:::invisible ~~~ C12top
+    BottomPadding34["<br/><br/><br/>"]:::invisible ~~~ C32top
+    BottomPadding35["<br/><br/><br/>"]:::invisible ~~~ C33top
+    BottomPadding36["<br/><br/><br/>"]:::invisible ~~~ C34top
+    BottomPadding37["<br/><br/><br/>"]:::invisible ~~~ C13top
+    BottomPadding38["<br/><br/><br/>"]:::invisible ~~~ C14top
+    BottomPadding39["<br/><br/><br/>"]:::invisible ~~~ C15top
+    BottomPadding40["<br/><br/><br/>"]:::invisible ~~~ C29top
+    BottomPadding41["<br/><br/><br/>"]:::invisible ~~~ C30top
+    BottomPadding42["<br/><br/><br/>"]:::invisible ~~~ C31top
+    BottomPadding43["<br/><br/><br/>"]:::invisible ~~~ C16top
+    BottomPadding44["<br/><br/><br/>"]:::invisible ~~~ C17top
+    BottomPadding45["<br/><br/><br/>"]:::invisible ~~~ C18top
+    BottomPadding46["<br/><br/><br/>"]:::invisible ~~~ C26top
+    BottomPadding47["<br/><br/><br/>"]:::invisible ~~~ C27top
+    BottomPadding48["<br/><br/><br/>"]:::invisible ~~~ C28top
+    BottomPadding49["<br/><br/><br/>"]:::invisible ~~~ C19top
+    BottomPadding50["<br/><br/><br/>"]:::invisible ~~~ C20top
+    BottomPadding51["<br/><br/><br/>"]:::invisible ~~~ C21top
+    BottomPadding52["<br/><br/><br/>"]:::invisible ~~~ C22top
+    BottomPadding53["<br/><br/><br/>"]:::invisible ~~~ C23top
+    BottomPadding54["<br/><br/><br/>"]:::invisible ~~~ C24top
+    BottomPadding55["<br/><br/><br/>"]:::invisible ~~~ C25top
     L2top --- _Connector_00000000
     L3top --- _Connector_00000000
     L4top --- _Connector_00000000
@@ -422,40 +422,40 @@ flowchart BT
     click L1Ebr3 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l1ebr3"
     click L1Edeep "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l1edeep"
 
-    BottomPadding1[ ]:::invisible ~~~ L1Xctx
-    BottomPadding2[ ]:::invisible ~~~ L1Esh1
-    BottomPadding3[ ]:::invisible ~~~ L1Esh2
-    BottomPadding4[ ]:::invisible ~~~ L1Smain
-    BottomPadding5[ ]:::invisible ~~~ L1S2
-    BottomPadding6[ ]:::invisible ~~~ C08top
-    BottomPadding7[ ]:::invisible ~~~ C09top
-    BottomPadding8[ ]:::invisible ~~~ C10top
-    BottomPadding9[ ]:::invisible ~~~ L1Gbr7b
-    BottomPadding10[ ]:::invisible ~~~ L1Gbr8b
-    BottomPadding11[ ]:::invisible ~~~ L1S2b
-    BottomPadding12[ ]:::invisible ~~~ C11top
-    BottomPadding13[ ]:::invisible ~~~ C12top
-    BottomPadding14[ ]:::invisible ~~~ L1Gbr4b
-    BottomPadding15[ ]:::invisible ~~~ L1Gbr5b
-    BottomPadding16[ ]:::invisible ~~~ L1Gbr6b
-    BottomPadding17[ ]:::invisible ~~~ L1Ebr7
-    BottomPadding18[ ]:::invisible ~~~ L1Ebr8
-    BottomPadding19[ ]:::invisible ~~~ L1S3
-    BottomPadding20[ ]:::invisible ~~~ L1G3b
-    BottomPadding21[ ]:::invisible ~~~ L1J1
-    BottomPadding22[ ]:::invisible ~~~ L1G3d
-    BottomPadding23[ ]:::invisible ~~~ L1Gbr1b
-    BottomPadding24[ ]:::invisible ~~~ L1Gbr2b
-    BottomPadding25[ ]:::invisible ~~~ L1Gbr3b
-    BottomPadding26[ ]:::invisible ~~~ L1Ebr4
-    BottomPadding27[ ]:::invisible ~~~ L1Ebr5
-    BottomPadding28[ ]:::invisible ~~~ L1Ebr6
-    BottomPadding29[ ]:::invisible ~~~ L1G4b
-    BottomPadding30[ ]:::invisible ~~~ L1E2
-    BottomPadding31[ ]:::invisible ~~~ L1Ebr1
-    BottomPadding32[ ]:::invisible ~~~ L1Ebr2
-    BottomPadding33[ ]:::invisible ~~~ L1Ebr3
-    BottomPadding34[ ]:::invisible ~~~ L1Edeep
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ L1Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ L1Esh1
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ L1Esh2
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ L1Smain
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ L1S2
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C08top
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C09top
+    BottomPadding8["<br/><br/><br/>"]:::invisible ~~~ C10top
+    BottomPadding9["<br/><br/><br/>"]:::invisible ~~~ L1Gbr7b
+    BottomPadding10["<br/><br/><br/>"]:::invisible ~~~ L1Gbr8b
+    BottomPadding11["<br/><br/><br/>"]:::invisible ~~~ L1S2b
+    BottomPadding12["<br/><br/><br/>"]:::invisible ~~~ C11top
+    BottomPadding13["<br/><br/><br/>"]:::invisible ~~~ C12top
+    BottomPadding14["<br/><br/><br/>"]:::invisible ~~~ L1Gbr4b
+    BottomPadding15["<br/><br/><br/>"]:::invisible ~~~ L1Gbr5b
+    BottomPadding16["<br/><br/><br/>"]:::invisible ~~~ L1Gbr6b
+    BottomPadding17["<br/><br/><br/>"]:::invisible ~~~ L1Ebr7
+    BottomPadding18["<br/><br/><br/>"]:::invisible ~~~ L1Ebr8
+    BottomPadding19["<br/><br/><br/>"]:::invisible ~~~ L1S3
+    BottomPadding20["<br/><br/><br/>"]:::invisible ~~~ L1G3b
+    BottomPadding21["<br/><br/><br/>"]:::invisible ~~~ L1J1
+    BottomPadding22["<br/><br/><br/>"]:::invisible ~~~ L1G3d
+    BottomPadding23["<br/><br/><br/>"]:::invisible ~~~ L1Gbr1b
+    BottomPadding24["<br/><br/><br/>"]:::invisible ~~~ L1Gbr2b
+    BottomPadding25["<br/><br/><br/>"]:::invisible ~~~ L1Gbr3b
+    BottomPadding26["<br/><br/><br/>"]:::invisible ~~~ L1Ebr4
+    BottomPadding27["<br/><br/><br/>"]:::invisible ~~~ L1Ebr5
+    BottomPadding28["<br/><br/><br/>"]:::invisible ~~~ L1Ebr6
+    BottomPadding29["<br/><br/><br/>"]:::invisible ~~~ L1G4b
+    BottomPadding30["<br/><br/><br/>"]:::invisible ~~~ L1E2
+    BottomPadding31["<br/><br/><br/>"]:::invisible ~~~ L1Ebr1
+    BottomPadding32["<br/><br/><br/>"]:::invisible ~~~ L1Ebr2
+    BottomPadding33["<br/><br/><br/>"]:::invisible ~~~ L1Ebr3
+    BottomPadding34["<br/><br/><br/>"]:::invisible ~~~ L1Edeep
     L1Edeep --> L1G4
     L1G4 --- Dot1
     L1G4b --- Dot1
@@ -676,40 +676,40 @@ flowchart BT
     click L2Ebr3 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l2ebr3"
     click L2Edeep "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l2edeep"
 
-    BottomPadding1[ ]:::invisible ~~~ L2Xctx
-    BottomPadding2[ ]:::invisible ~~~ L2Esh1
-    BottomPadding3[ ]:::invisible ~~~ L2Esh2
-    BottomPadding4[ ]:::invisible ~~~ L2Smain
-    BottomPadding5[ ]:::invisible ~~~ L2S2
-    BottomPadding6[ ]:::invisible ~~~ C15top
-    BottomPadding7[ ]:::invisible ~~~ C16top
-    BottomPadding8[ ]:::invisible ~~~ C17top
-    BottomPadding9[ ]:::invisible ~~~ L2Gbr7b
-    BottomPadding10[ ]:::invisible ~~~ L2Gbr8b
-    BottomPadding11[ ]:::invisible ~~~ L2S2b
-    BottomPadding12[ ]:::invisible ~~~ C18top
-    BottomPadding13[ ]:::invisible ~~~ C19top
-    BottomPadding14[ ]:::invisible ~~~ L2Gbr4b
-    BottomPadding15[ ]:::invisible ~~~ L2Gbr5b
-    BottomPadding16[ ]:::invisible ~~~ L2Gbr6b
-    BottomPadding17[ ]:::invisible ~~~ L2Ebr7
-    BottomPadding18[ ]:::invisible ~~~ L2Ebr8
-    BottomPadding19[ ]:::invisible ~~~ L2S3
-    BottomPadding20[ ]:::invisible ~~~ L2G3b
-    BottomPadding21[ ]:::invisible ~~~ L2J1
-    BottomPadding22[ ]:::invisible ~~~ L2G3d
-    BottomPadding23[ ]:::invisible ~~~ L2Gbr1b
-    BottomPadding24[ ]:::invisible ~~~ L2Gbr2b
-    BottomPadding25[ ]:::invisible ~~~ L2Gbr3b
-    BottomPadding26[ ]:::invisible ~~~ L2Ebr4
-    BottomPadding27[ ]:::invisible ~~~ L2Ebr5
-    BottomPadding28[ ]:::invisible ~~~ L2Ebr6
-    BottomPadding29[ ]:::invisible ~~~ L2G4b
-    BottomPadding30[ ]:::invisible ~~~ L2E2
-    BottomPadding31[ ]:::invisible ~~~ L2Ebr1
-    BottomPadding32[ ]:::invisible ~~~ L2Ebr2
-    BottomPadding33[ ]:::invisible ~~~ L2Ebr3
-    BottomPadding34[ ]:::invisible ~~~ L2Edeep
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ L2Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ L2Esh1
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ L2Esh2
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ L2Smain
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ L2S2
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C15top
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C16top
+    BottomPadding8["<br/><br/><br/>"]:::invisible ~~~ C17top
+    BottomPadding9["<br/><br/><br/>"]:::invisible ~~~ L2Gbr7b
+    BottomPadding10["<br/><br/><br/>"]:::invisible ~~~ L2Gbr8b
+    BottomPadding11["<br/><br/><br/>"]:::invisible ~~~ L2S2b
+    BottomPadding12["<br/><br/><br/>"]:::invisible ~~~ C18top
+    BottomPadding13["<br/><br/><br/>"]:::invisible ~~~ C19top
+    BottomPadding14["<br/><br/><br/>"]:::invisible ~~~ L2Gbr4b
+    BottomPadding15["<br/><br/><br/>"]:::invisible ~~~ L2Gbr5b
+    BottomPadding16["<br/><br/><br/>"]:::invisible ~~~ L2Gbr6b
+    BottomPadding17["<br/><br/><br/>"]:::invisible ~~~ L2Ebr7
+    BottomPadding18["<br/><br/><br/>"]:::invisible ~~~ L2Ebr8
+    BottomPadding19["<br/><br/><br/>"]:::invisible ~~~ L2S3
+    BottomPadding20["<br/><br/><br/>"]:::invisible ~~~ L2G3b
+    BottomPadding21["<br/><br/><br/>"]:::invisible ~~~ L2J1
+    BottomPadding22["<br/><br/><br/>"]:::invisible ~~~ L2G3d
+    BottomPadding23["<br/><br/><br/>"]:::invisible ~~~ L2Gbr1b
+    BottomPadding24["<br/><br/><br/>"]:::invisible ~~~ L2Gbr2b
+    BottomPadding25["<br/><br/><br/>"]:::invisible ~~~ L2Gbr3b
+    BottomPadding26["<br/><br/><br/>"]:::invisible ~~~ L2Ebr4
+    BottomPadding27["<br/><br/><br/>"]:::invisible ~~~ L2Ebr5
+    BottomPadding28["<br/><br/><br/>"]:::invisible ~~~ L2Ebr6
+    BottomPadding29["<br/><br/><br/>"]:::invisible ~~~ L2G4b
+    BottomPadding30["<br/><br/><br/>"]:::invisible ~~~ L2E2
+    BottomPadding31["<br/><br/><br/>"]:::invisible ~~~ L2Ebr1
+    BottomPadding32["<br/><br/><br/>"]:::invisible ~~~ L2Ebr2
+    BottomPadding33["<br/><br/><br/>"]:::invisible ~~~ L2Ebr3
+    BottomPadding34["<br/><br/><br/>"]:::invisible ~~~ L2Edeep
     L2Edeep --> L2G4
     L2G4 --- Dot1
     L2G4b --- Dot1
@@ -930,40 +930,40 @@ flowchart BT
     click L3Ebr3 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l3ebr3"
     click L3Edeep "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l3edeep"
 
-    BottomPadding1[ ]:::invisible ~~~ L3Xctx
-    BottomPadding2[ ]:::invisible ~~~ L3Esh1
-    BottomPadding3[ ]:::invisible ~~~ L3Esh2
-    BottomPadding4[ ]:::invisible ~~~ L3Smain
-    BottomPadding5[ ]:::invisible ~~~ L3S2
-    BottomPadding6[ ]:::invisible ~~~ C22top
-    BottomPadding7[ ]:::invisible ~~~ C23top
-    BottomPadding8[ ]:::invisible ~~~ C24top
-    BottomPadding9[ ]:::invisible ~~~ L3Gbr7b
-    BottomPadding10[ ]:::invisible ~~~ L3Gbr8b
-    BottomPadding11[ ]:::invisible ~~~ L3S2b
-    BottomPadding12[ ]:::invisible ~~~ C25top
-    BottomPadding13[ ]:::invisible ~~~ C26top
-    BottomPadding14[ ]:::invisible ~~~ L3Gbr4b
-    BottomPadding15[ ]:::invisible ~~~ L3Gbr5b
-    BottomPadding16[ ]:::invisible ~~~ L3Gbr6b
-    BottomPadding17[ ]:::invisible ~~~ L3Ebr7
-    BottomPadding18[ ]:::invisible ~~~ L3Ebr8
-    BottomPadding19[ ]:::invisible ~~~ L3S3
-    BottomPadding20[ ]:::invisible ~~~ L3G3b
-    BottomPadding21[ ]:::invisible ~~~ L3J1
-    BottomPadding22[ ]:::invisible ~~~ L3G3d
-    BottomPadding23[ ]:::invisible ~~~ L3Gbr1b
-    BottomPadding24[ ]:::invisible ~~~ L3Gbr2b
-    BottomPadding25[ ]:::invisible ~~~ L3Gbr3b
-    BottomPadding26[ ]:::invisible ~~~ L3Ebr4
-    BottomPadding27[ ]:::invisible ~~~ L3Ebr5
-    BottomPadding28[ ]:::invisible ~~~ L3Ebr6
-    BottomPadding29[ ]:::invisible ~~~ L3G4b
-    BottomPadding30[ ]:::invisible ~~~ L3E2
-    BottomPadding31[ ]:::invisible ~~~ L3Ebr1
-    BottomPadding32[ ]:::invisible ~~~ L3Ebr2
-    BottomPadding33[ ]:::invisible ~~~ L3Ebr3
-    BottomPadding34[ ]:::invisible ~~~ L3Edeep
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ L3Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ L3Esh1
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ L3Esh2
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ L3Smain
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ L3S2
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C22top
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C23top
+    BottomPadding8["<br/><br/><br/>"]:::invisible ~~~ C24top
+    BottomPadding9["<br/><br/><br/>"]:::invisible ~~~ L3Gbr7b
+    BottomPadding10["<br/><br/><br/>"]:::invisible ~~~ L3Gbr8b
+    BottomPadding11["<br/><br/><br/>"]:::invisible ~~~ L3S2b
+    BottomPadding12["<br/><br/><br/>"]:::invisible ~~~ C25top
+    BottomPadding13["<br/><br/><br/>"]:::invisible ~~~ C26top
+    BottomPadding14["<br/><br/><br/>"]:::invisible ~~~ L3Gbr4b
+    BottomPadding15["<br/><br/><br/>"]:::invisible ~~~ L3Gbr5b
+    BottomPadding16["<br/><br/><br/>"]:::invisible ~~~ L3Gbr6b
+    BottomPadding17["<br/><br/><br/>"]:::invisible ~~~ L3Ebr7
+    BottomPadding18["<br/><br/><br/>"]:::invisible ~~~ L3Ebr8
+    BottomPadding19["<br/><br/><br/>"]:::invisible ~~~ L3S3
+    BottomPadding20["<br/><br/><br/>"]:::invisible ~~~ L3G3b
+    BottomPadding21["<br/><br/><br/>"]:::invisible ~~~ L3J1
+    BottomPadding22["<br/><br/><br/>"]:::invisible ~~~ L3G3d
+    BottomPadding23["<br/><br/><br/>"]:::invisible ~~~ L3Gbr1b
+    BottomPadding24["<br/><br/><br/>"]:::invisible ~~~ L3Gbr2b
+    BottomPadding25["<br/><br/><br/>"]:::invisible ~~~ L3Gbr3b
+    BottomPadding26["<br/><br/><br/>"]:::invisible ~~~ L3Ebr4
+    BottomPadding27["<br/><br/><br/>"]:::invisible ~~~ L3Ebr5
+    BottomPadding28["<br/><br/><br/>"]:::invisible ~~~ L3Ebr6
+    BottomPadding29["<br/><br/><br/>"]:::invisible ~~~ L3G4b
+    BottomPadding30["<br/><br/><br/>"]:::invisible ~~~ L3E2
+    BottomPadding31["<br/><br/><br/>"]:::invisible ~~~ L3Ebr1
+    BottomPadding32["<br/><br/><br/>"]:::invisible ~~~ L3Ebr2
+    BottomPadding33["<br/><br/><br/>"]:::invisible ~~~ L3Ebr3
+    BottomPadding34["<br/><br/><br/>"]:::invisible ~~~ L3Edeep
     L3Edeep --> L3G4
     L3G4 --- Dot1
     L3G4b --- Dot1
@@ -1184,40 +1184,40 @@ flowchart BT
     click L4Ebr3 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l4ebr3"
     click L4Edeep "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l4edeep"
 
-    BottomPadding1[ ]:::invisible ~~~ L4Xctx
-    BottomPadding2[ ]:::invisible ~~~ L4Esh1
-    BottomPadding3[ ]:::invisible ~~~ L4Esh2
-    BottomPadding4[ ]:::invisible ~~~ L4Smain
-    BottomPadding5[ ]:::invisible ~~~ L4S2
-    BottomPadding6[ ]:::invisible ~~~ C29top
-    BottomPadding7[ ]:::invisible ~~~ C30top
-    BottomPadding8[ ]:::invisible ~~~ C31top
-    BottomPadding9[ ]:::invisible ~~~ L4Gbr7b
-    BottomPadding10[ ]:::invisible ~~~ L4Gbr8b
-    BottomPadding11[ ]:::invisible ~~~ L4S2b
-    BottomPadding12[ ]:::invisible ~~~ C32top
-    BottomPadding13[ ]:::invisible ~~~ C33top
-    BottomPadding14[ ]:::invisible ~~~ L4Gbr4b
-    BottomPadding15[ ]:::invisible ~~~ L4Gbr5b
-    BottomPadding16[ ]:::invisible ~~~ L4Gbr6b
-    BottomPadding17[ ]:::invisible ~~~ L4Ebr7
-    BottomPadding18[ ]:::invisible ~~~ L4Ebr8
-    BottomPadding19[ ]:::invisible ~~~ L4S3
-    BottomPadding20[ ]:::invisible ~~~ L4G3b
-    BottomPadding21[ ]:::invisible ~~~ L4J1
-    BottomPadding22[ ]:::invisible ~~~ L4G3d
-    BottomPadding23[ ]:::invisible ~~~ L4Gbr1b
-    BottomPadding24[ ]:::invisible ~~~ L4Gbr2b
-    BottomPadding25[ ]:::invisible ~~~ L4Gbr3b
-    BottomPadding26[ ]:::invisible ~~~ L4Ebr4
-    BottomPadding27[ ]:::invisible ~~~ L4Ebr5
-    BottomPadding28[ ]:::invisible ~~~ L4Ebr6
-    BottomPadding29[ ]:::invisible ~~~ L4G4b
-    BottomPadding30[ ]:::invisible ~~~ L4E2
-    BottomPadding31[ ]:::invisible ~~~ L4Ebr1
-    BottomPadding32[ ]:::invisible ~~~ L4Ebr2
-    BottomPadding33[ ]:::invisible ~~~ L4Ebr3
-    BottomPadding34[ ]:::invisible ~~~ L4Edeep
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ L4Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ L4Esh1
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ L4Esh2
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ L4Smain
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ L4S2
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C29top
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C30top
+    BottomPadding8["<br/><br/><br/>"]:::invisible ~~~ C31top
+    BottomPadding9["<br/><br/><br/>"]:::invisible ~~~ L4Gbr7b
+    BottomPadding10["<br/><br/><br/>"]:::invisible ~~~ L4Gbr8b
+    BottomPadding11["<br/><br/><br/>"]:::invisible ~~~ L4S2b
+    BottomPadding12["<br/><br/><br/>"]:::invisible ~~~ C32top
+    BottomPadding13["<br/><br/><br/>"]:::invisible ~~~ C33top
+    BottomPadding14["<br/><br/><br/>"]:::invisible ~~~ L4Gbr4b
+    BottomPadding15["<br/><br/><br/>"]:::invisible ~~~ L4Gbr5b
+    BottomPadding16["<br/><br/><br/>"]:::invisible ~~~ L4Gbr6b
+    BottomPadding17["<br/><br/><br/>"]:::invisible ~~~ L4Ebr7
+    BottomPadding18["<br/><br/><br/>"]:::invisible ~~~ L4Ebr8
+    BottomPadding19["<br/><br/><br/>"]:::invisible ~~~ L4S3
+    BottomPadding20["<br/><br/><br/>"]:::invisible ~~~ L4G3b
+    BottomPadding21["<br/><br/><br/>"]:::invisible ~~~ L4J1
+    BottomPadding22["<br/><br/><br/>"]:::invisible ~~~ L4G3d
+    BottomPadding23["<br/><br/><br/>"]:::invisible ~~~ L4Gbr1b
+    BottomPadding24["<br/><br/><br/>"]:::invisible ~~~ L4Gbr2b
+    BottomPadding25["<br/><br/><br/>"]:::invisible ~~~ L4Gbr3b
+    BottomPadding26["<br/><br/><br/>"]:::invisible ~~~ L4Ebr4
+    BottomPadding27["<br/><br/><br/>"]:::invisible ~~~ L4Ebr5
+    BottomPadding28["<br/><br/><br/>"]:::invisible ~~~ L4Ebr6
+    BottomPadding29["<br/><br/><br/>"]:::invisible ~~~ L4G4b
+    BottomPadding30["<br/><br/><br/>"]:::invisible ~~~ L4E2
+    BottomPadding31["<br/><br/><br/>"]:::invisible ~~~ L4Ebr1
+    BottomPadding32["<br/><br/><br/>"]:::invisible ~~~ L4Ebr2
+    BottomPadding33["<br/><br/><br/>"]:::invisible ~~~ L4Ebr3
+    BottomPadding34["<br/><br/><br/>"]:::invisible ~~~ L4Edeep
     L4Edeep --> L4G4
     L4G4 --- Dot1
     L4G4b --- Dot1
@@ -1438,40 +1438,40 @@ flowchart BT
     click L5Ebr3 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l5ebr3"
     click L5Edeep "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-l5edeep"
 
-    BottomPadding1[ ]:::invisible ~~~ L5Xctx
-    BottomPadding2[ ]:::invisible ~~~ L5Esh1
-    BottomPadding3[ ]:::invisible ~~~ L5Esh2
-    BottomPadding4[ ]:::invisible ~~~ L5Smain
-    BottomPadding5[ ]:::invisible ~~~ L5S2
-    BottomPadding6[ ]:::invisible ~~~ C36top
-    BottomPadding7[ ]:::invisible ~~~ C37top
-    BottomPadding8[ ]:::invisible ~~~ C38top
-    BottomPadding9[ ]:::invisible ~~~ L5Gbr7b
-    BottomPadding10[ ]:::invisible ~~~ L5Gbr8b
-    BottomPadding11[ ]:::invisible ~~~ L5S2b
-    BottomPadding12[ ]:::invisible ~~~ C39top
-    BottomPadding13[ ]:::invisible ~~~ C40top
-    BottomPadding14[ ]:::invisible ~~~ L5Gbr4b
-    BottomPadding15[ ]:::invisible ~~~ L5Gbr5b
-    BottomPadding16[ ]:::invisible ~~~ L5Gbr6b
-    BottomPadding17[ ]:::invisible ~~~ L5Ebr7
-    BottomPadding18[ ]:::invisible ~~~ L5Ebr8
-    BottomPadding19[ ]:::invisible ~~~ L5S3
-    BottomPadding20[ ]:::invisible ~~~ L5G3b
-    BottomPadding21[ ]:::invisible ~~~ L5J1
-    BottomPadding22[ ]:::invisible ~~~ L5G3d
-    BottomPadding23[ ]:::invisible ~~~ L5Gbr1b
-    BottomPadding24[ ]:::invisible ~~~ L5Gbr2b
-    BottomPadding25[ ]:::invisible ~~~ L5Gbr3b
-    BottomPadding26[ ]:::invisible ~~~ L5Ebr4
-    BottomPadding27[ ]:::invisible ~~~ L5Ebr5
-    BottomPadding28[ ]:::invisible ~~~ L5Ebr6
-    BottomPadding29[ ]:::invisible ~~~ L5G4b
-    BottomPadding30[ ]:::invisible ~~~ L5E2
-    BottomPadding31[ ]:::invisible ~~~ L5Ebr1
-    BottomPadding32[ ]:::invisible ~~~ L5Ebr2
-    BottomPadding33[ ]:::invisible ~~~ L5Ebr3
-    BottomPadding34[ ]:::invisible ~~~ L5Edeep
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ L5Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ L5Esh1
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ L5Esh2
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ L5Smain
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ L5S2
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C36top
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C37top
+    BottomPadding8["<br/><br/><br/>"]:::invisible ~~~ C38top
+    BottomPadding9["<br/><br/><br/>"]:::invisible ~~~ L5Gbr7b
+    BottomPadding10["<br/><br/><br/>"]:::invisible ~~~ L5Gbr8b
+    BottomPadding11["<br/><br/><br/>"]:::invisible ~~~ L5S2b
+    BottomPadding12["<br/><br/><br/>"]:::invisible ~~~ C39top
+    BottomPadding13["<br/><br/><br/>"]:::invisible ~~~ C40top
+    BottomPadding14["<br/><br/><br/>"]:::invisible ~~~ L5Gbr4b
+    BottomPadding15["<br/><br/><br/>"]:::invisible ~~~ L5Gbr5b
+    BottomPadding16["<br/><br/><br/>"]:::invisible ~~~ L5Gbr6b
+    BottomPadding17["<br/><br/><br/>"]:::invisible ~~~ L5Ebr7
+    BottomPadding18["<br/><br/><br/>"]:::invisible ~~~ L5Ebr8
+    BottomPadding19["<br/><br/><br/>"]:::invisible ~~~ L5S3
+    BottomPadding20["<br/><br/><br/>"]:::invisible ~~~ L5G3b
+    BottomPadding21["<br/><br/><br/>"]:::invisible ~~~ L5J1
+    BottomPadding22["<br/><br/><br/>"]:::invisible ~~~ L5G3d
+    BottomPadding23["<br/><br/><br/>"]:::invisible ~~~ L5Gbr1b
+    BottomPadding24["<br/><br/><br/>"]:::invisible ~~~ L5Gbr2b
+    BottomPadding25["<br/><br/><br/>"]:::invisible ~~~ L5Gbr3b
+    BottomPadding26["<br/><br/><br/>"]:::invisible ~~~ L5Ebr4
+    BottomPadding27["<br/><br/><br/>"]:::invisible ~~~ L5Ebr5
+    BottomPadding28["<br/><br/><br/>"]:::invisible ~~~ L5Ebr6
+    BottomPadding29["<br/><br/><br/>"]:::invisible ~~~ L5G4b
+    BottomPadding30["<br/><br/><br/>"]:::invisible ~~~ L5E2
+    BottomPadding31["<br/><br/><br/>"]:::invisible ~~~ L5Ebr1
+    BottomPadding32["<br/><br/><br/>"]:::invisible ~~~ L5Ebr2
+    BottomPadding33["<br/><br/><br/>"]:::invisible ~~~ L5Ebr3
+    BottomPadding34["<br/><br/><br/>"]:::invisible ~~~ L5Edeep
     L5Edeep --> L5G4
     L5G4 --- Dot1
     L5G4b --- Dot1
@@ -1588,14 +1588,14 @@ flowchart BT
     click C01A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c01a1"
     click C01E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c01e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C02top
-    BottomPadding2[ ]:::invisible ~~~ C01Xctx
-    BottomPadding3[ ]:::invisible ~~~ C01Esh
-    BottomPadding4[ ]:::invisible ~~~ C01Sass
-    BottomPadding5[ ]:::invisible ~~~ C01E1
-    BottomPadding6[ ]:::invisible ~~~ C01J1
-    BottomPadding7[ ]:::invisible ~~~ C01A1
-    BottomPadding8[ ]:::invisible ~~~ C01E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C02top
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C01Xctx
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C01Esh
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C01Sass
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C01E1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C01J1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C01A1
+    BottomPadding8["<br/><br/><br/>"]:::invisible ~~~ C01E2
     C01E1 --> C01G1
     C01J1 --> C01G2
     C01A1 --- Dot1
@@ -1655,14 +1655,14 @@ flowchart BT
     click C02A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c02a1"
     click C02E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c02e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C03top
-    BottomPadding2[ ]:::invisible ~~~ C02Xctx
-    BottomPadding3[ ]:::invisible ~~~ C02Esh
-    BottomPadding4[ ]:::invisible ~~~ C02Sass
-    BottomPadding5[ ]:::invisible ~~~ C02E1
-    BottomPadding6[ ]:::invisible ~~~ C02J1
-    BottomPadding7[ ]:::invisible ~~~ C02A1
-    BottomPadding8[ ]:::invisible ~~~ C02E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C03top
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C02Xctx
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C02Esh
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C02Sass
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C02E1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C02J1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C02A1
+    BottomPadding8["<br/><br/><br/>"]:::invisible ~~~ C02E2
     C02E1 --> C02G1
     C02J1 --> C02G2
     C02A1 --- Dot1
@@ -1722,14 +1722,14 @@ flowchart BT
     click C03A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c03a1"
     click C03E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c03e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C04top
-    BottomPadding2[ ]:::invisible ~~~ C03Xctx
-    BottomPadding3[ ]:::invisible ~~~ C03Esh
-    BottomPadding4[ ]:::invisible ~~~ C03Sass
-    BottomPadding5[ ]:::invisible ~~~ C03E1
-    BottomPadding6[ ]:::invisible ~~~ C03J1
-    BottomPadding7[ ]:::invisible ~~~ C03A1
-    BottomPadding8[ ]:::invisible ~~~ C03E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C04top
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C03Xctx
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C03Esh
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C03Sass
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C03E1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C03J1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C03A1
+    BottomPadding8["<br/><br/><br/>"]:::invisible ~~~ C03E2
     C03E1 --> C03G1
     C03J1 --> C03G2
     C03A1 --- Dot1
@@ -1789,14 +1789,14 @@ flowchart BT
     click C04A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c04a1"
     click C04E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c04e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C05top
-    BottomPadding2[ ]:::invisible ~~~ C04Xctx
-    BottomPadding3[ ]:::invisible ~~~ C04Esh
-    BottomPadding4[ ]:::invisible ~~~ C04Sass
-    BottomPadding5[ ]:::invisible ~~~ C04E1
-    BottomPadding6[ ]:::invisible ~~~ C04J1
-    BottomPadding7[ ]:::invisible ~~~ C04A1
-    BottomPadding8[ ]:::invisible ~~~ C04E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C05top
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C04Xctx
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C04Esh
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C04Sass
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C04E1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C04J1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C04A1
+    BottomPadding8["<br/><br/><br/>"]:::invisible ~~~ C04E2
     C04E1 --> C04G1
     C04J1 --> C04G2
     C04A1 --- Dot1
@@ -1856,14 +1856,14 @@ flowchart BT
     click C05A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c05a1"
     click C05E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c05e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C06top
-    BottomPadding2[ ]:::invisible ~~~ C05Xctx
-    BottomPadding3[ ]:::invisible ~~~ C05Esh
-    BottomPadding4[ ]:::invisible ~~~ C05Sass
-    BottomPadding5[ ]:::invisible ~~~ C05E1
-    BottomPadding6[ ]:::invisible ~~~ C05J1
-    BottomPadding7[ ]:::invisible ~~~ C05A1
-    BottomPadding8[ ]:::invisible ~~~ C05E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C06top
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C05Xctx
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C05Esh
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C05Sass
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C05E1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C05J1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C05A1
+    BottomPadding8["<br/><br/><br/>"]:::invisible ~~~ C05E2
     C05E1 --> C05G1
     C05J1 --> C05G2
     C05A1 --- Dot1
@@ -1923,14 +1923,14 @@ flowchart BT
     click C06A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c06a1"
     click C06E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c06e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C07top
-    BottomPadding2[ ]:::invisible ~~~ C06Xctx
-    BottomPadding3[ ]:::invisible ~~~ C06Esh
-    BottomPadding4[ ]:::invisible ~~~ C06Sass
-    BottomPadding5[ ]:::invisible ~~~ C06E1
-    BottomPadding6[ ]:::invisible ~~~ C06J1
-    BottomPadding7[ ]:::invisible ~~~ C06A1
-    BottomPadding8[ ]:::invisible ~~~ C06E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C07top
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C06Xctx
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C06Esh
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C06Sass
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C06E1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C06J1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C06A1
+    BottomPadding8["<br/><br/><br/>"]:::invisible ~~~ C06E2
     C06E1 --> C06G1
     C06J1 --> C06G2
     C06A1 --- Dot1
@@ -1990,14 +1990,14 @@ flowchart BT
     click C07A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c07a1"
     click C07E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c07e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C08top
-    BottomPadding2[ ]:::invisible ~~~ C07Xctx
-    BottomPadding3[ ]:::invisible ~~~ C07Esh
-    BottomPadding4[ ]:::invisible ~~~ C07Sass
-    BottomPadding5[ ]:::invisible ~~~ C07E1
-    BottomPadding6[ ]:::invisible ~~~ C07J1
-    BottomPadding7[ ]:::invisible ~~~ C07A1
-    BottomPadding8[ ]:::invisible ~~~ C07E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C08top
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C07Xctx
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C07Esh
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C07Sass
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C07E1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C07J1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C07A1
+    BottomPadding8["<br/><br/><br/>"]:::invisible ~~~ C07E2
     C07E1 --> C07G1
     C07J1 --> C07G2
     C07A1 --- Dot1
@@ -2057,14 +2057,14 @@ flowchart BT
     click C08A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c08a1"
     click C08E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c08e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C09top
-    BottomPadding2[ ]:::invisible ~~~ C08Xctx
-    BottomPadding3[ ]:::invisible ~~~ C08Esh
-    BottomPadding4[ ]:::invisible ~~~ C08Sass
-    BottomPadding5[ ]:::invisible ~~~ C08E1
-    BottomPadding6[ ]:::invisible ~~~ C08J1
-    BottomPadding7[ ]:::invisible ~~~ C08A1
-    BottomPadding8[ ]:::invisible ~~~ C08E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C09top
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C08Xctx
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C08Esh
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C08Sass
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C08E1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C08J1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C08A1
+    BottomPadding8["<br/><br/><br/>"]:::invisible ~~~ C08E2
     C08E1 --> C08G1
     C08J1 --> C08G2
     C08A1 --- Dot1
@@ -2124,14 +2124,14 @@ flowchart BT
     click C09A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c09a1"
     click C09E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c09e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C10top
-    BottomPadding2[ ]:::invisible ~~~ C09Xctx
-    BottomPadding3[ ]:::invisible ~~~ C09Esh
-    BottomPadding4[ ]:::invisible ~~~ C09Sass
-    BottomPadding5[ ]:::invisible ~~~ C09E1
-    BottomPadding6[ ]:::invisible ~~~ C09J1
-    BottomPadding7[ ]:::invisible ~~~ C09A1
-    BottomPadding8[ ]:::invisible ~~~ C09E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C10top
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C09Xctx
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C09Esh
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C09Sass
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C09E1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C09J1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C09A1
+    BottomPadding8["<br/><br/><br/>"]:::invisible ~~~ C09E2
     C09E1 --> C09G1
     C09J1 --> C09G2
     C09A1 --- Dot1
@@ -2191,14 +2191,14 @@ flowchart BT
     click C10A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c10a1"
     click C10E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c10e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C11top
-    BottomPadding2[ ]:::invisible ~~~ C10Xctx
-    BottomPadding3[ ]:::invisible ~~~ C10Esh
-    BottomPadding4[ ]:::invisible ~~~ C10Sass
-    BottomPadding5[ ]:::invisible ~~~ C10E1
-    BottomPadding6[ ]:::invisible ~~~ C10J1
-    BottomPadding7[ ]:::invisible ~~~ C10A1
-    BottomPadding8[ ]:::invisible ~~~ C10E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C11top
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C10Xctx
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C10Esh
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C10Sass
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C10E1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C10J1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C10A1
+    BottomPadding8["<br/><br/><br/>"]:::invisible ~~~ C10E2
     C10E1 --> C10G1
     C10J1 --> C10G2
     C10A1 --- Dot1
@@ -2256,13 +2256,13 @@ flowchart BT
     click C11A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c11a1"
     click C11E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c11e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C11Xctx
-    BottomPadding2[ ]:::invisible ~~~ C11Esh
-    BottomPadding3[ ]:::invisible ~~~ C11Sass
-    BottomPadding4[ ]:::invisible ~~~ C11E1
-    BottomPadding5[ ]:::invisible ~~~ C11J1
-    BottomPadding6[ ]:::invisible ~~~ C11A1
-    BottomPadding7[ ]:::invisible ~~~ C11E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C11Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C11Esh
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C11Sass
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C11E1
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C11J1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C11A1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C11E2
     C11E1 --> C11G1
     C11J1 --> C11G2
     C11A1 --- Dot1
@@ -2319,13 +2319,13 @@ flowchart BT
     click C12A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c12a1"
     click C12E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c12e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C12Xctx
-    BottomPadding2[ ]:::invisible ~~~ C12Esh
-    BottomPadding3[ ]:::invisible ~~~ C12Sass
-    BottomPadding4[ ]:::invisible ~~~ C12E1
-    BottomPadding5[ ]:::invisible ~~~ C12J1
-    BottomPadding6[ ]:::invisible ~~~ C12A1
-    BottomPadding7[ ]:::invisible ~~~ C12E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C12Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C12Esh
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C12Sass
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C12E1
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C12J1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C12A1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C12E2
     C12E1 --> C12G1
     C12J1 --> C12G2
     C12A1 --- Dot1
@@ -2382,13 +2382,13 @@ flowchart BT
     click C13A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c13a1"
     click C13E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c13e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C13Xctx
-    BottomPadding2[ ]:::invisible ~~~ C13Esh
-    BottomPadding3[ ]:::invisible ~~~ C13Sass
-    BottomPadding4[ ]:::invisible ~~~ C13E1
-    BottomPadding5[ ]:::invisible ~~~ C13J1
-    BottomPadding6[ ]:::invisible ~~~ C13A1
-    BottomPadding7[ ]:::invisible ~~~ C13E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C13Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C13Esh
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C13Sass
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C13E1
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C13J1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C13A1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C13E2
     C13E1 --> C13G1
     C13J1 --> C13G2
     C13A1 --- Dot1
@@ -2445,13 +2445,13 @@ flowchart BT
     click C14A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c14a1"
     click C14E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c14e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C14Xctx
-    BottomPadding2[ ]:::invisible ~~~ C14Esh
-    BottomPadding3[ ]:::invisible ~~~ C14Sass
-    BottomPadding4[ ]:::invisible ~~~ C14E1
-    BottomPadding5[ ]:::invisible ~~~ C14J1
-    BottomPadding6[ ]:::invisible ~~~ C14A1
-    BottomPadding7[ ]:::invisible ~~~ C14E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C14Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C14Esh
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C14Sass
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C14E1
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C14J1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C14A1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C14E2
     C14E1 --> C14G1
     C14J1 --> C14G2
     C14A1 --- Dot1
@@ -2508,13 +2508,13 @@ flowchart BT
     click C15A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c15a1"
     click C15E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c15e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C15Xctx
-    BottomPadding2[ ]:::invisible ~~~ C15Esh
-    BottomPadding3[ ]:::invisible ~~~ C15Sass
-    BottomPadding4[ ]:::invisible ~~~ C15E1
-    BottomPadding5[ ]:::invisible ~~~ C15J1
-    BottomPadding6[ ]:::invisible ~~~ C15A1
-    BottomPadding7[ ]:::invisible ~~~ C15E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C15Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C15Esh
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C15Sass
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C15E1
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C15J1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C15A1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C15E2
     C15E1 --> C15G1
     C15J1 --> C15G2
     C15A1 --- Dot1
@@ -2571,13 +2571,13 @@ flowchart BT
     click C16A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c16a1"
     click C16E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c16e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C16Xctx
-    BottomPadding2[ ]:::invisible ~~~ C16Esh
-    BottomPadding3[ ]:::invisible ~~~ C16Sass
-    BottomPadding4[ ]:::invisible ~~~ C16E1
-    BottomPadding5[ ]:::invisible ~~~ C16J1
-    BottomPadding6[ ]:::invisible ~~~ C16A1
-    BottomPadding7[ ]:::invisible ~~~ C16E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C16Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C16Esh
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C16Sass
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C16E1
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C16J1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C16A1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C16E2
     C16E1 --> C16G1
     C16J1 --> C16G2
     C16A1 --- Dot1
@@ -2634,13 +2634,13 @@ flowchart BT
     click C17A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c17a1"
     click C17E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c17e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C17Xctx
-    BottomPadding2[ ]:::invisible ~~~ C17Esh
-    BottomPadding3[ ]:::invisible ~~~ C17Sass
-    BottomPadding4[ ]:::invisible ~~~ C17E1
-    BottomPadding5[ ]:::invisible ~~~ C17J1
-    BottomPadding6[ ]:::invisible ~~~ C17A1
-    BottomPadding7[ ]:::invisible ~~~ C17E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C17Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C17Esh
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C17Sass
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C17E1
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C17J1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C17A1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C17E2
     C17E1 --> C17G1
     C17J1 --> C17G2
     C17A1 --- Dot1
@@ -2697,13 +2697,13 @@ flowchart BT
     click C18A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c18a1"
     click C18E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c18e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C18Xctx
-    BottomPadding2[ ]:::invisible ~~~ C18Esh
-    BottomPadding3[ ]:::invisible ~~~ C18Sass
-    BottomPadding4[ ]:::invisible ~~~ C18E1
-    BottomPadding5[ ]:::invisible ~~~ C18J1
-    BottomPadding6[ ]:::invisible ~~~ C18A1
-    BottomPadding7[ ]:::invisible ~~~ C18E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C18Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C18Esh
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C18Sass
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C18E1
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C18J1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C18A1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C18E2
     C18E1 --> C18G1
     C18J1 --> C18G2
     C18A1 --- Dot1
@@ -2760,13 +2760,13 @@ flowchart BT
     click C19A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c19a1"
     click C19E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c19e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C19Xctx
-    BottomPadding2[ ]:::invisible ~~~ C19Esh
-    BottomPadding3[ ]:::invisible ~~~ C19Sass
-    BottomPadding4[ ]:::invisible ~~~ C19E1
-    BottomPadding5[ ]:::invisible ~~~ C19J1
-    BottomPadding6[ ]:::invisible ~~~ C19A1
-    BottomPadding7[ ]:::invisible ~~~ C19E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C19Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C19Esh
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C19Sass
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C19E1
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C19J1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C19A1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C19E2
     C19E1 --> C19G1
     C19J1 --> C19G2
     C19A1 --- Dot1
@@ -2823,13 +2823,13 @@ flowchart BT
     click C20A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c20a1"
     click C20E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c20e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C20Xctx
-    BottomPadding2[ ]:::invisible ~~~ C20Esh
-    BottomPadding3[ ]:::invisible ~~~ C20Sass
-    BottomPadding4[ ]:::invisible ~~~ C20E1
-    BottomPadding5[ ]:::invisible ~~~ C20J1
-    BottomPadding6[ ]:::invisible ~~~ C20A1
-    BottomPadding7[ ]:::invisible ~~~ C20E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C20Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C20Esh
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C20Sass
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C20E1
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C20J1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C20A1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C20E2
     C20E1 --> C20G1
     C20J1 --> C20G2
     C20A1 --- Dot1
@@ -2886,13 +2886,13 @@ flowchart BT
     click C21A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c21a1"
     click C21E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c21e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C21Xctx
-    BottomPadding2[ ]:::invisible ~~~ C21Esh
-    BottomPadding3[ ]:::invisible ~~~ C21Sass
-    BottomPadding4[ ]:::invisible ~~~ C21E1
-    BottomPadding5[ ]:::invisible ~~~ C21J1
-    BottomPadding6[ ]:::invisible ~~~ C21A1
-    BottomPadding7[ ]:::invisible ~~~ C21E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C21Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C21Esh
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C21Sass
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C21E1
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C21J1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C21A1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C21E2
     C21E1 --> C21G1
     C21J1 --> C21G2
     C21A1 --- Dot1
@@ -2949,13 +2949,13 @@ flowchart BT
     click C22A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c22a1"
     click C22E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c22e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C22Xctx
-    BottomPadding2[ ]:::invisible ~~~ C22Esh
-    BottomPadding3[ ]:::invisible ~~~ C22Sass
-    BottomPadding4[ ]:::invisible ~~~ C22E1
-    BottomPadding5[ ]:::invisible ~~~ C22J1
-    BottomPadding6[ ]:::invisible ~~~ C22A1
-    BottomPadding7[ ]:::invisible ~~~ C22E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C22Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C22Esh
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C22Sass
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C22E1
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C22J1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C22A1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C22E2
     C22E1 --> C22G1
     C22J1 --> C22G2
     C22A1 --- Dot1
@@ -3012,13 +3012,13 @@ flowchart BT
     click C23A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c23a1"
     click C23E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c23e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C23Xctx
-    BottomPadding2[ ]:::invisible ~~~ C23Esh
-    BottomPadding3[ ]:::invisible ~~~ C23Sass
-    BottomPadding4[ ]:::invisible ~~~ C23E1
-    BottomPadding5[ ]:::invisible ~~~ C23J1
-    BottomPadding6[ ]:::invisible ~~~ C23A1
-    BottomPadding7[ ]:::invisible ~~~ C23E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C23Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C23Esh
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C23Sass
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C23E1
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C23J1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C23A1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C23E2
     C23E1 --> C23G1
     C23J1 --> C23G2
     C23A1 --- Dot1
@@ -3075,13 +3075,13 @@ flowchart BT
     click C24A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c24a1"
     click C24E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c24e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C24Xctx
-    BottomPadding2[ ]:::invisible ~~~ C24Esh
-    BottomPadding3[ ]:::invisible ~~~ C24Sass
-    BottomPadding4[ ]:::invisible ~~~ C24E1
-    BottomPadding5[ ]:::invisible ~~~ C24J1
-    BottomPadding6[ ]:::invisible ~~~ C24A1
-    BottomPadding7[ ]:::invisible ~~~ C24E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C24Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C24Esh
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C24Sass
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C24E1
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C24J1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C24A1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C24E2
     C24E1 --> C24G1
     C24J1 --> C24G2
     C24A1 --- Dot1
@@ -3138,13 +3138,13 @@ flowchart BT
     click C25A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c25a1"
     click C25E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c25e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C25Xctx
-    BottomPadding2[ ]:::invisible ~~~ C25Esh
-    BottomPadding3[ ]:::invisible ~~~ C25Sass
-    BottomPadding4[ ]:::invisible ~~~ C25E1
-    BottomPadding5[ ]:::invisible ~~~ C25J1
-    BottomPadding6[ ]:::invisible ~~~ C25A1
-    BottomPadding7[ ]:::invisible ~~~ C25E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C25Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C25Esh
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C25Sass
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C25E1
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C25J1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C25A1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C25E2
     C25E1 --> C25G1
     C25J1 --> C25G2
     C25A1 --- Dot1
@@ -3201,13 +3201,13 @@ flowchart BT
     click C26A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c26a1"
     click C26E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c26e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C26Xctx
-    BottomPadding2[ ]:::invisible ~~~ C26Esh
-    BottomPadding3[ ]:::invisible ~~~ C26Sass
-    BottomPadding4[ ]:::invisible ~~~ C26E1
-    BottomPadding5[ ]:::invisible ~~~ C26J1
-    BottomPadding6[ ]:::invisible ~~~ C26A1
-    BottomPadding7[ ]:::invisible ~~~ C26E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C26Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C26Esh
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C26Sass
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C26E1
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C26J1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C26A1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C26E2
     C26E1 --> C26G1
     C26J1 --> C26G2
     C26A1 --- Dot1
@@ -3264,13 +3264,13 @@ flowchart BT
     click C27A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c27a1"
     click C27E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c27e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C27Xctx
-    BottomPadding2[ ]:::invisible ~~~ C27Esh
-    BottomPadding3[ ]:::invisible ~~~ C27Sass
-    BottomPadding4[ ]:::invisible ~~~ C27E1
-    BottomPadding5[ ]:::invisible ~~~ C27J1
-    BottomPadding6[ ]:::invisible ~~~ C27A1
-    BottomPadding7[ ]:::invisible ~~~ C27E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C27Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C27Esh
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C27Sass
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C27E1
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C27J1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C27A1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C27E2
     C27E1 --> C27G1
     C27J1 --> C27G2
     C27A1 --- Dot1
@@ -3327,13 +3327,13 @@ flowchart BT
     click C28A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c28a1"
     click C28E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c28e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C28Xctx
-    BottomPadding2[ ]:::invisible ~~~ C28Esh
-    BottomPadding3[ ]:::invisible ~~~ C28Sass
-    BottomPadding4[ ]:::invisible ~~~ C28E1
-    BottomPadding5[ ]:::invisible ~~~ C28J1
-    BottomPadding6[ ]:::invisible ~~~ C28A1
-    BottomPadding7[ ]:::invisible ~~~ C28E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C28Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C28Esh
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C28Sass
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C28E1
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C28J1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C28A1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C28E2
     C28E1 --> C28G1
     C28J1 --> C28G2
     C28A1 --- Dot1
@@ -3390,13 +3390,13 @@ flowchart BT
     click C29A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c29a1"
     click C29E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c29e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C29Xctx
-    BottomPadding2[ ]:::invisible ~~~ C29Esh
-    BottomPadding3[ ]:::invisible ~~~ C29Sass
-    BottomPadding4[ ]:::invisible ~~~ C29E1
-    BottomPadding5[ ]:::invisible ~~~ C29J1
-    BottomPadding6[ ]:::invisible ~~~ C29A1
-    BottomPadding7[ ]:::invisible ~~~ C29E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C29Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C29Esh
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C29Sass
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C29E1
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C29J1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C29A1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C29E2
     C29E1 --> C29G1
     C29J1 --> C29G2
     C29A1 --- Dot1
@@ -3453,13 +3453,13 @@ flowchart BT
     click C30A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c30a1"
     click C30E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c30e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C30Xctx
-    BottomPadding2[ ]:::invisible ~~~ C30Esh
-    BottomPadding3[ ]:::invisible ~~~ C30Sass
-    BottomPadding4[ ]:::invisible ~~~ C30E1
-    BottomPadding5[ ]:::invisible ~~~ C30J1
-    BottomPadding6[ ]:::invisible ~~~ C30A1
-    BottomPadding7[ ]:::invisible ~~~ C30E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C30Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C30Esh
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C30Sass
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C30E1
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C30J1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C30A1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C30E2
     C30E1 --> C30G1
     C30J1 --> C30G2
     C30A1 --- Dot1
@@ -3516,13 +3516,13 @@ flowchart BT
     click C31A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c31a1"
     click C31E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c31e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C31Xctx
-    BottomPadding2[ ]:::invisible ~~~ C31Esh
-    BottomPadding3[ ]:::invisible ~~~ C31Sass
-    BottomPadding4[ ]:::invisible ~~~ C31E1
-    BottomPadding5[ ]:::invisible ~~~ C31J1
-    BottomPadding6[ ]:::invisible ~~~ C31A1
-    BottomPadding7[ ]:::invisible ~~~ C31E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C31Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C31Esh
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C31Sass
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C31E1
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C31J1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C31A1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C31E2
     C31E1 --> C31G1
     C31J1 --> C31G2
     C31A1 --- Dot1
@@ -3579,13 +3579,13 @@ flowchart BT
     click C32A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c32a1"
     click C32E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c32e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C32Xctx
-    BottomPadding2[ ]:::invisible ~~~ C32Esh
-    BottomPadding3[ ]:::invisible ~~~ C32Sass
-    BottomPadding4[ ]:::invisible ~~~ C32E1
-    BottomPadding5[ ]:::invisible ~~~ C32J1
-    BottomPadding6[ ]:::invisible ~~~ C32A1
-    BottomPadding7[ ]:::invisible ~~~ C32E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C32Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C32Esh
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C32Sass
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C32E1
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C32J1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C32A1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C32E2
     C32E1 --> C32G1
     C32J1 --> C32G2
     C32A1 --- Dot1
@@ -3642,13 +3642,13 @@ flowchart BT
     click C33A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c33a1"
     click C33E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c33e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C33Xctx
-    BottomPadding2[ ]:::invisible ~~~ C33Esh
-    BottomPadding3[ ]:::invisible ~~~ C33Sass
-    BottomPadding4[ ]:::invisible ~~~ C33E1
-    BottomPadding5[ ]:::invisible ~~~ C33J1
-    BottomPadding6[ ]:::invisible ~~~ C33A1
-    BottomPadding7[ ]:::invisible ~~~ C33E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C33Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C33Esh
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C33Sass
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C33E1
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C33J1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C33A1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C33E2
     C33E1 --> C33G1
     C33J1 --> C33G2
     C33A1 --- Dot1
@@ -3705,13 +3705,13 @@ flowchart BT
     click C34A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c34a1"
     click C34E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c34e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C34Xctx
-    BottomPadding2[ ]:::invisible ~~~ C34Esh
-    BottomPadding3[ ]:::invisible ~~~ C34Sass
-    BottomPadding4[ ]:::invisible ~~~ C34E1
-    BottomPadding5[ ]:::invisible ~~~ C34J1
-    BottomPadding6[ ]:::invisible ~~~ C34A1
-    BottomPadding7[ ]:::invisible ~~~ C34E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C34Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C34Esh
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C34Sass
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C34E1
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C34J1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C34A1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C34E2
     C34E1 --> C34G1
     C34J1 --> C34G2
     C34A1 --- Dot1
@@ -3768,13 +3768,13 @@ flowchart BT
     click C35A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c35a1"
     click C35E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c35e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C35Xctx
-    BottomPadding2[ ]:::invisible ~~~ C35Esh
-    BottomPadding3[ ]:::invisible ~~~ C35Sass
-    BottomPadding4[ ]:::invisible ~~~ C35E1
-    BottomPadding5[ ]:::invisible ~~~ C35J1
-    BottomPadding6[ ]:::invisible ~~~ C35A1
-    BottomPadding7[ ]:::invisible ~~~ C35E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C35Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C35Esh
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C35Sass
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C35E1
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C35J1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C35A1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C35E2
     C35E1 --> C35G1
     C35J1 --> C35G2
     C35A1 --- Dot1
@@ -3831,13 +3831,13 @@ flowchart BT
     click C36A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c36a1"
     click C36E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c36e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C36Xctx
-    BottomPadding2[ ]:::invisible ~~~ C36Esh
-    BottomPadding3[ ]:::invisible ~~~ C36Sass
-    BottomPadding4[ ]:::invisible ~~~ C36E1
-    BottomPadding5[ ]:::invisible ~~~ C36J1
-    BottomPadding6[ ]:::invisible ~~~ C36A1
-    BottomPadding7[ ]:::invisible ~~~ C36E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C36Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C36Esh
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C36Sass
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C36E1
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C36J1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C36A1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C36E2
     C36E1 --> C36G1
     C36J1 --> C36G2
     C36A1 --- Dot1
@@ -3894,13 +3894,13 @@ flowchart BT
     click C37A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c37a1"
     click C37E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c37e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C37Xctx
-    BottomPadding2[ ]:::invisible ~~~ C37Esh
-    BottomPadding3[ ]:::invisible ~~~ C37Sass
-    BottomPadding4[ ]:::invisible ~~~ C37E1
-    BottomPadding5[ ]:::invisible ~~~ C37J1
-    BottomPadding6[ ]:::invisible ~~~ C37A1
-    BottomPadding7[ ]:::invisible ~~~ C37E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C37Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C37Esh
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C37Sass
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C37E1
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C37J1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C37A1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C37E2
     C37E1 --> C37G1
     C37J1 --> C37G2
     C37A1 --- Dot1
@@ -3957,13 +3957,13 @@ flowchart BT
     click C38A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c38a1"
     click C38E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c38e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C38Xctx
-    BottomPadding2[ ]:::invisible ~~~ C38Esh
-    BottomPadding3[ ]:::invisible ~~~ C38Sass
-    BottomPadding4[ ]:::invisible ~~~ C38E1
-    BottomPadding5[ ]:::invisible ~~~ C38J1
-    BottomPadding6[ ]:::invisible ~~~ C38A1
-    BottomPadding7[ ]:::invisible ~~~ C38E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C38Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C38Esh
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C38Sass
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C38E1
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C38J1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C38A1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C38E2
     C38E1 --> C38G1
     C38J1 --> C38G2
     C38A1 --- Dot1
@@ -4020,13 +4020,13 @@ flowchart BT
     click C39A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c39a1"
     click C39E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c39e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C39Xctx
-    BottomPadding2[ ]:::invisible ~~~ C39Esh
-    BottomPadding3[ ]:::invisible ~~~ C39Sass
-    BottomPadding4[ ]:::invisible ~~~ C39E1
-    BottomPadding5[ ]:::invisible ~~~ C39J1
-    BottomPadding6[ ]:::invisible ~~~ C39A1
-    BottomPadding7[ ]:::invisible ~~~ C39E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C39Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C39Esh
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C39Sass
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C39E1
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C39J1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C39A1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C39E2
     C39E1 --> C39G1
     C39J1 --> C39G2
     C39A1 --- Dot1
@@ -4083,13 +4083,13 @@ flowchart BT
     click C40A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c40a1"
     click C40E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c40e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C40Xctx
-    BottomPadding2[ ]:::invisible ~~~ C40Esh
-    BottomPadding3[ ]:::invisible ~~~ C40Sass
-    BottomPadding4[ ]:::invisible ~~~ C40E1
-    BottomPadding5[ ]:::invisible ~~~ C40J1
-    BottomPadding6[ ]:::invisible ~~~ C40A1
-    BottomPadding7[ ]:::invisible ~~~ C40E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C40Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C40Esh
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C40Sass
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C40E1
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C40J1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C40A1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C40E2
     C40E1 --> C40G1
     C40J1 --> C40G2
     C40A1 --- Dot1
@@ -4146,13 +4146,13 @@ flowchart BT
     click C41A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c41a1"
     click C41E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c41e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C41Xctx
-    BottomPadding2[ ]:::invisible ~~~ C41Esh
-    BottomPadding3[ ]:::invisible ~~~ C41Sass
-    BottomPadding4[ ]:::invisible ~~~ C41E1
-    BottomPadding5[ ]:::invisible ~~~ C41J1
-    BottomPadding6[ ]:::invisible ~~~ C41A1
-    BottomPadding7[ ]:::invisible ~~~ C41E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C41Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C41Esh
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C41Sass
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C41E1
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C41J1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C41A1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C41E2
     C41E1 --> C41G1
     C41J1 --> C41G2
     C41A1 --- Dot1
@@ -4209,13 +4209,13 @@ flowchart BT
     click C42A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c42a1"
     click C42E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c42e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C42Xctx
-    BottomPadding2[ ]:::invisible ~~~ C42Esh
-    BottomPadding3[ ]:::invisible ~~~ C42Sass
-    BottomPadding4[ ]:::invisible ~~~ C42E1
-    BottomPadding5[ ]:::invisible ~~~ C42J1
-    BottomPadding6[ ]:::invisible ~~~ C42A1
-    BottomPadding7[ ]:::invisible ~~~ C42E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C42Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C42Esh
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C42Sass
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C42E1
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C42J1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C42A1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C42E2
     C42E1 --> C42G1
     C42J1 --> C42G2
     C42A1 --- Dot1
@@ -4272,13 +4272,13 @@ flowchart BT
     click C43A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c43a1"
     click C43E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c43e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C43Xctx
-    BottomPadding2[ ]:::invisible ~~~ C43Esh
-    BottomPadding3[ ]:::invisible ~~~ C43Sass
-    BottomPadding4[ ]:::invisible ~~~ C43E1
-    BottomPadding5[ ]:::invisible ~~~ C43J1
-    BottomPadding6[ ]:::invisible ~~~ C43A1
-    BottomPadding7[ ]:::invisible ~~~ C43E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C43Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C43Esh
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C43Sass
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C43E1
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C43J1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C43A1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C43E2
     C43E1 --> C43G1
     C43J1 --> C43G2
     C43A1 --- Dot1
@@ -4335,13 +4335,13 @@ flowchart BT
     click C44A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c44a1"
     click C44E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c44e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C44Xctx
-    BottomPadding2[ ]:::invisible ~~~ C44Esh
-    BottomPadding3[ ]:::invisible ~~~ C44Sass
-    BottomPadding4[ ]:::invisible ~~~ C44E1
-    BottomPadding5[ ]:::invisible ~~~ C44J1
-    BottomPadding6[ ]:::invisible ~~~ C44A1
-    BottomPadding7[ ]:::invisible ~~~ C44E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C44Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C44Esh
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C44Sass
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C44E1
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C44J1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C44A1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C44E2
     C44E1 --> C44G1
     C44J1 --> C44G2
     C44A1 --- Dot1
@@ -4398,13 +4398,13 @@ flowchart BT
     click C45A1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#assumption-c45a1"
     click C45E2 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/stress-test-output.expected.md#evidence-c45e2"
 
-    BottomPadding1[ ]:::invisible ~~~ C45Xctx
-    BottomPadding2[ ]:::invisible ~~~ C45Esh
-    BottomPadding3[ ]:::invisible ~~~ C45Sass
-    BottomPadding4[ ]:::invisible ~~~ C45E1
-    BottomPadding5[ ]:::invisible ~~~ C45J1
-    BottomPadding6[ ]:::invisible ~~~ C45A1
-    BottomPadding7[ ]:::invisible ~~~ C45E2
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ C45Xctx
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ C45Esh
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ C45Sass
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ C45E1
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ C45J1
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ C45A1
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ C45E2
     C45E1 --> C45G1
     C45J1 --> C45G2
     C45A1 --- Dot1
@@ -4621,59 +4621,59 @@ flowchart TD
     Scomps --> C43top
     Scomps --> C44top
     Scomps --> C45top
-    Xscope ~~~ BottomPadding1[ ]:::invisible
-    Asys ~~~ BottomPadding2[ ]:::invisible
-    Esys1 ~~~ BottomPadding3[ ]:::invisible
-    L1top ~~~ BottomPadding4[ ]:::invisible
-    L2top ~~~ BottomPadding5[ ]:::invisible
-    L3top ~~~ BottomPadding6[ ]:::invisible
-    L4top ~~~ BottomPadding7[ ]:::invisible
-    L5top ~~~ BottomPadding8[ ]:::invisible
-    C01top ~~~ BottomPadding9[ ]:::invisible
-    C02top ~~~ BottomPadding10[ ]:::invisible
-    C03top ~~~ BottomPadding11[ ]:::invisible
-    C04top ~~~ BottomPadding12[ ]:::invisible
-    C05top ~~~ BottomPadding13[ ]:::invisible
-    C06top ~~~ BottomPadding14[ ]:::invisible
-    C07top ~~~ BottomPadding15[ ]:::invisible
-    C08top ~~~ BottomPadding16[ ]:::invisible
-    C09top ~~~ BottomPadding17[ ]:::invisible
-    C10top ~~~ BottomPadding18[ ]:::invisible
-    C11top ~~~ BottomPadding19[ ]:::invisible
-    C12top ~~~ BottomPadding20[ ]:::invisible
-    C13top ~~~ BottomPadding21[ ]:::invisible
-    C14top ~~~ BottomPadding22[ ]:::invisible
-    C15top ~~~ BottomPadding23[ ]:::invisible
-    C16top ~~~ BottomPadding24[ ]:::invisible
-    C17top ~~~ BottomPadding25[ ]:::invisible
-    C18top ~~~ BottomPadding26[ ]:::invisible
-    C19top ~~~ BottomPadding27[ ]:::invisible
-    C20top ~~~ BottomPadding28[ ]:::invisible
-    C21top ~~~ BottomPadding29[ ]:::invisible
-    C22top ~~~ BottomPadding30[ ]:::invisible
-    C23top ~~~ BottomPadding31[ ]:::invisible
-    C24top ~~~ BottomPadding32[ ]:::invisible
-    C25top ~~~ BottomPadding33[ ]:::invisible
-    C26top ~~~ BottomPadding34[ ]:::invisible
-    C27top ~~~ BottomPadding35[ ]:::invisible
-    C28top ~~~ BottomPadding36[ ]:::invisible
-    C29top ~~~ BottomPadding37[ ]:::invisible
-    C30top ~~~ BottomPadding38[ ]:::invisible
-    C31top ~~~ BottomPadding39[ ]:::invisible
-    C32top ~~~ BottomPadding40[ ]:::invisible
-    C33top ~~~ BottomPadding41[ ]:::invisible
-    C34top ~~~ BottomPadding42[ ]:::invisible
-    C35top ~~~ BottomPadding43[ ]:::invisible
-    C36top ~~~ BottomPadding44[ ]:::invisible
-    C37top ~~~ BottomPadding45[ ]:::invisible
-    C38top ~~~ BottomPadding46[ ]:::invisible
-    C39top ~~~ BottomPadding47[ ]:::invisible
-    C40top ~~~ BottomPadding48[ ]:::invisible
-    C41top ~~~ BottomPadding49[ ]:::invisible
-    C42top ~~~ BottomPadding50[ ]:::invisible
-    C43top ~~~ BottomPadding51[ ]:::invisible
-    C44top ~~~ BottomPadding52[ ]:::invisible
-    C45top ~~~ BottomPadding53[ ]:::invisible
+    Xscope ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    Asys ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    Esys1 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    L1top ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    L2top ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    L3top ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
+    L4top ~~~ BottomPadding7["<br/><br/><br/>"]:::invisible
+    L5top ~~~ BottomPadding8["<br/><br/><br/>"]:::invisible
+    C01top ~~~ BottomPadding9["<br/><br/><br/>"]:::invisible
+    C02top ~~~ BottomPadding10["<br/><br/><br/>"]:::invisible
+    C03top ~~~ BottomPadding11["<br/><br/><br/>"]:::invisible
+    C04top ~~~ BottomPadding12["<br/><br/><br/>"]:::invisible
+    C05top ~~~ BottomPadding13["<br/><br/><br/>"]:::invisible
+    C06top ~~~ BottomPadding14["<br/><br/><br/>"]:::invisible
+    C07top ~~~ BottomPadding15["<br/><br/><br/>"]:::invisible
+    C08top ~~~ BottomPadding16["<br/><br/><br/>"]:::invisible
+    C09top ~~~ BottomPadding17["<br/><br/><br/>"]:::invisible
+    C10top ~~~ BottomPadding18["<br/><br/><br/>"]:::invisible
+    C11top ~~~ BottomPadding19["<br/><br/><br/>"]:::invisible
+    C12top ~~~ BottomPadding20["<br/><br/><br/>"]:::invisible
+    C13top ~~~ BottomPadding21["<br/><br/><br/>"]:::invisible
+    C14top ~~~ BottomPadding22["<br/><br/><br/>"]:::invisible
+    C15top ~~~ BottomPadding23["<br/><br/><br/>"]:::invisible
+    C16top ~~~ BottomPadding24["<br/><br/><br/>"]:::invisible
+    C17top ~~~ BottomPadding25["<br/><br/><br/>"]:::invisible
+    C18top ~~~ BottomPadding26["<br/><br/><br/>"]:::invisible
+    C19top ~~~ BottomPadding27["<br/><br/><br/>"]:::invisible
+    C20top ~~~ BottomPadding28["<br/><br/><br/>"]:::invisible
+    C21top ~~~ BottomPadding29["<br/><br/><br/>"]:::invisible
+    C22top ~~~ BottomPadding30["<br/><br/><br/>"]:::invisible
+    C23top ~~~ BottomPadding31["<br/><br/><br/>"]:::invisible
+    C24top ~~~ BottomPadding32["<br/><br/><br/>"]:::invisible
+    C25top ~~~ BottomPadding33["<br/><br/><br/>"]:::invisible
+    C26top ~~~ BottomPadding34["<br/><br/><br/>"]:::invisible
+    C27top ~~~ BottomPadding35["<br/><br/><br/>"]:::invisible
+    C28top ~~~ BottomPadding36["<br/><br/><br/>"]:::invisible
+    C29top ~~~ BottomPadding37["<br/><br/><br/>"]:::invisible
+    C30top ~~~ BottomPadding38["<br/><br/><br/>"]:::invisible
+    C31top ~~~ BottomPadding39["<br/><br/><br/>"]:::invisible
+    C32top ~~~ BottomPadding40["<br/><br/><br/>"]:::invisible
+    C33top ~~~ BottomPadding41["<br/><br/><br/>"]:::invisible
+    C34top ~~~ BottomPadding42["<br/><br/><br/>"]:::invisible
+    C35top ~~~ BottomPadding43["<br/><br/><br/>"]:::invisible
+    C36top ~~~ BottomPadding44["<br/><br/><br/>"]:::invisible
+    C37top ~~~ BottomPadding45["<br/><br/><br/>"]:::invisible
+    C38top ~~~ BottomPadding46["<br/><br/><br/>"]:::invisible
+    C39top ~~~ BottomPadding47["<br/><br/><br/>"]:::invisible
+    C40top ~~~ BottomPadding48["<br/><br/><br/>"]:::invisible
+    C41top ~~~ BottomPadding49["<br/><br/><br/>"]:::invisible
+    C42top ~~~ BottomPadding50["<br/><br/><br/>"]:::invisible
+    C43top ~~~ BottomPadding51["<br/><br/><br/>"]:::invisible
+    C44top ~~~ BottomPadding52["<br/><br/><br/>"]:::invisible
+    C45top ~~~ BottomPadding53["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package L1top
@@ -4888,25 +4888,25 @@ flowchart TD
     L1Gbr8a --> L1Esh1
     L1Gbr8 --> L1Gbr8b
     L1Gbr8b --> L1Esh2
-    L1Xctx ~~~ BottomPadding1[ ]:::invisible
-    L1Esh1 ~~~ BottomPadding2[ ]:::invisible
-    L1Esh2 ~~~ BottomPadding3[ ]:::invisible
-    L1Edeep ~~~ BottomPadding4[ ]:::invisible
-    L1J1 ~~~ BottomPadding5[ ]:::invisible
-    L1E2 ~~~ BottomPadding6[ ]:::invisible
-    C08top ~~~ BottomPadding7[ ]:::invisible
-    C09top ~~~ BottomPadding8[ ]:::invisible
-    C10top ~~~ BottomPadding9[ ]:::invisible
-    C11top ~~~ BottomPadding10[ ]:::invisible
-    C12top ~~~ BottomPadding11[ ]:::invisible
-    L1Ebr1 ~~~ BottomPadding12[ ]:::invisible
-    L1Ebr2 ~~~ BottomPadding13[ ]:::invisible
-    L1Ebr3 ~~~ BottomPadding14[ ]:::invisible
-    L1Ebr4 ~~~ BottomPadding15[ ]:::invisible
-    L1Ebr5 ~~~ BottomPadding16[ ]:::invisible
-    L1Ebr6 ~~~ BottomPadding17[ ]:::invisible
-    L1Ebr7 ~~~ BottomPadding18[ ]:::invisible
-    L1Ebr8 ~~~ BottomPadding19[ ]:::invisible
+    L1Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    L1Esh1 ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    L1Esh2 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    L1Edeep ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    L1J1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    L1E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
+    C08top ~~~ BottomPadding7["<br/><br/><br/>"]:::invisible
+    C09top ~~~ BottomPadding8["<br/><br/><br/>"]:::invisible
+    C10top ~~~ BottomPadding9["<br/><br/><br/>"]:::invisible
+    C11top ~~~ BottomPadding10["<br/><br/><br/>"]:::invisible
+    C12top ~~~ BottomPadding11["<br/><br/><br/>"]:::invisible
+    L1Ebr1 ~~~ BottomPadding12["<br/><br/><br/>"]:::invisible
+    L1Ebr2 ~~~ BottomPadding13["<br/><br/><br/>"]:::invisible
+    L1Ebr3 ~~~ BottomPadding14["<br/><br/><br/>"]:::invisible
+    L1Ebr4 ~~~ BottomPadding15["<br/><br/><br/>"]:::invisible
+    L1Ebr5 ~~~ BottomPadding16["<br/><br/><br/>"]:::invisible
+    L1Ebr6 ~~~ BottomPadding17["<br/><br/><br/>"]:::invisible
+    L1Ebr7 ~~~ BottomPadding18["<br/><br/><br/>"]:::invisible
+    L1Ebr8 ~~~ BottomPadding19["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package L2top
@@ -5121,25 +5121,25 @@ flowchart TD
     L2Gbr8a --> L2Esh1
     L2Gbr8 --> L2Gbr8b
     L2Gbr8b --> L2Esh2
-    L2Xctx ~~~ BottomPadding1[ ]:::invisible
-    L2Esh1 ~~~ BottomPadding2[ ]:::invisible
-    L2Esh2 ~~~ BottomPadding3[ ]:::invisible
-    L2Edeep ~~~ BottomPadding4[ ]:::invisible
-    L2J1 ~~~ BottomPadding5[ ]:::invisible
-    L2E2 ~~~ BottomPadding6[ ]:::invisible
-    C15top ~~~ BottomPadding7[ ]:::invisible
-    C16top ~~~ BottomPadding8[ ]:::invisible
-    C17top ~~~ BottomPadding9[ ]:::invisible
-    C18top ~~~ BottomPadding10[ ]:::invisible
-    C19top ~~~ BottomPadding11[ ]:::invisible
-    L2Ebr1 ~~~ BottomPadding12[ ]:::invisible
-    L2Ebr2 ~~~ BottomPadding13[ ]:::invisible
-    L2Ebr3 ~~~ BottomPadding14[ ]:::invisible
-    L2Ebr4 ~~~ BottomPadding15[ ]:::invisible
-    L2Ebr5 ~~~ BottomPadding16[ ]:::invisible
-    L2Ebr6 ~~~ BottomPadding17[ ]:::invisible
-    L2Ebr7 ~~~ BottomPadding18[ ]:::invisible
-    L2Ebr8 ~~~ BottomPadding19[ ]:::invisible
+    L2Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    L2Esh1 ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    L2Esh2 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    L2Edeep ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    L2J1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    L2E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
+    C15top ~~~ BottomPadding7["<br/><br/><br/>"]:::invisible
+    C16top ~~~ BottomPadding8["<br/><br/><br/>"]:::invisible
+    C17top ~~~ BottomPadding9["<br/><br/><br/>"]:::invisible
+    C18top ~~~ BottomPadding10["<br/><br/><br/>"]:::invisible
+    C19top ~~~ BottomPadding11["<br/><br/><br/>"]:::invisible
+    L2Ebr1 ~~~ BottomPadding12["<br/><br/><br/>"]:::invisible
+    L2Ebr2 ~~~ BottomPadding13["<br/><br/><br/>"]:::invisible
+    L2Ebr3 ~~~ BottomPadding14["<br/><br/><br/>"]:::invisible
+    L2Ebr4 ~~~ BottomPadding15["<br/><br/><br/>"]:::invisible
+    L2Ebr5 ~~~ BottomPadding16["<br/><br/><br/>"]:::invisible
+    L2Ebr6 ~~~ BottomPadding17["<br/><br/><br/>"]:::invisible
+    L2Ebr7 ~~~ BottomPadding18["<br/><br/><br/>"]:::invisible
+    L2Ebr8 ~~~ BottomPadding19["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package L3top
@@ -5354,25 +5354,25 @@ flowchart TD
     L3Gbr8a --> L3Esh1
     L3Gbr8 --> L3Gbr8b
     L3Gbr8b --> L3Esh2
-    L3Xctx ~~~ BottomPadding1[ ]:::invisible
-    L3Esh1 ~~~ BottomPadding2[ ]:::invisible
-    L3Esh2 ~~~ BottomPadding3[ ]:::invisible
-    L3Edeep ~~~ BottomPadding4[ ]:::invisible
-    L3J1 ~~~ BottomPadding5[ ]:::invisible
-    L3E2 ~~~ BottomPadding6[ ]:::invisible
-    C22top ~~~ BottomPadding7[ ]:::invisible
-    C23top ~~~ BottomPadding8[ ]:::invisible
-    C24top ~~~ BottomPadding9[ ]:::invisible
-    C25top ~~~ BottomPadding10[ ]:::invisible
-    C26top ~~~ BottomPadding11[ ]:::invisible
-    L3Ebr1 ~~~ BottomPadding12[ ]:::invisible
-    L3Ebr2 ~~~ BottomPadding13[ ]:::invisible
-    L3Ebr3 ~~~ BottomPadding14[ ]:::invisible
-    L3Ebr4 ~~~ BottomPadding15[ ]:::invisible
-    L3Ebr5 ~~~ BottomPadding16[ ]:::invisible
-    L3Ebr6 ~~~ BottomPadding17[ ]:::invisible
-    L3Ebr7 ~~~ BottomPadding18[ ]:::invisible
-    L3Ebr8 ~~~ BottomPadding19[ ]:::invisible
+    L3Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    L3Esh1 ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    L3Esh2 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    L3Edeep ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    L3J1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    L3E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
+    C22top ~~~ BottomPadding7["<br/><br/><br/>"]:::invisible
+    C23top ~~~ BottomPadding8["<br/><br/><br/>"]:::invisible
+    C24top ~~~ BottomPadding9["<br/><br/><br/>"]:::invisible
+    C25top ~~~ BottomPadding10["<br/><br/><br/>"]:::invisible
+    C26top ~~~ BottomPadding11["<br/><br/><br/>"]:::invisible
+    L3Ebr1 ~~~ BottomPadding12["<br/><br/><br/>"]:::invisible
+    L3Ebr2 ~~~ BottomPadding13["<br/><br/><br/>"]:::invisible
+    L3Ebr3 ~~~ BottomPadding14["<br/><br/><br/>"]:::invisible
+    L3Ebr4 ~~~ BottomPadding15["<br/><br/><br/>"]:::invisible
+    L3Ebr5 ~~~ BottomPadding16["<br/><br/><br/>"]:::invisible
+    L3Ebr6 ~~~ BottomPadding17["<br/><br/><br/>"]:::invisible
+    L3Ebr7 ~~~ BottomPadding18["<br/><br/><br/>"]:::invisible
+    L3Ebr8 ~~~ BottomPadding19["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package L4top
@@ -5587,25 +5587,25 @@ flowchart TD
     L4Gbr8a --> L4Esh1
     L4Gbr8 --> L4Gbr8b
     L4Gbr8b --> L4Esh2
-    L4Xctx ~~~ BottomPadding1[ ]:::invisible
-    L4Esh1 ~~~ BottomPadding2[ ]:::invisible
-    L4Esh2 ~~~ BottomPadding3[ ]:::invisible
-    L4Edeep ~~~ BottomPadding4[ ]:::invisible
-    L4J1 ~~~ BottomPadding5[ ]:::invisible
-    L4E2 ~~~ BottomPadding6[ ]:::invisible
-    C29top ~~~ BottomPadding7[ ]:::invisible
-    C30top ~~~ BottomPadding8[ ]:::invisible
-    C31top ~~~ BottomPadding9[ ]:::invisible
-    C32top ~~~ BottomPadding10[ ]:::invisible
-    C33top ~~~ BottomPadding11[ ]:::invisible
-    L4Ebr1 ~~~ BottomPadding12[ ]:::invisible
-    L4Ebr2 ~~~ BottomPadding13[ ]:::invisible
-    L4Ebr3 ~~~ BottomPadding14[ ]:::invisible
-    L4Ebr4 ~~~ BottomPadding15[ ]:::invisible
-    L4Ebr5 ~~~ BottomPadding16[ ]:::invisible
-    L4Ebr6 ~~~ BottomPadding17[ ]:::invisible
-    L4Ebr7 ~~~ BottomPadding18[ ]:::invisible
-    L4Ebr8 ~~~ BottomPadding19[ ]:::invisible
+    L4Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    L4Esh1 ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    L4Esh2 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    L4Edeep ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    L4J1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    L4E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
+    C29top ~~~ BottomPadding7["<br/><br/><br/>"]:::invisible
+    C30top ~~~ BottomPadding8["<br/><br/><br/>"]:::invisible
+    C31top ~~~ BottomPadding9["<br/><br/><br/>"]:::invisible
+    C32top ~~~ BottomPadding10["<br/><br/><br/>"]:::invisible
+    C33top ~~~ BottomPadding11["<br/><br/><br/>"]:::invisible
+    L4Ebr1 ~~~ BottomPadding12["<br/><br/><br/>"]:::invisible
+    L4Ebr2 ~~~ BottomPadding13["<br/><br/><br/>"]:::invisible
+    L4Ebr3 ~~~ BottomPadding14["<br/><br/><br/>"]:::invisible
+    L4Ebr4 ~~~ BottomPadding15["<br/><br/><br/>"]:::invisible
+    L4Ebr5 ~~~ BottomPadding16["<br/><br/><br/>"]:::invisible
+    L4Ebr6 ~~~ BottomPadding17["<br/><br/><br/>"]:::invisible
+    L4Ebr7 ~~~ BottomPadding18["<br/><br/><br/>"]:::invisible
+    L4Ebr8 ~~~ BottomPadding19["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package L5top
@@ -5820,25 +5820,25 @@ flowchart TD
     L5Gbr8a --> L5Esh1
     L5Gbr8 --> L5Gbr8b
     L5Gbr8b --> L5Esh2
-    L5Xctx ~~~ BottomPadding1[ ]:::invisible
-    L5Esh1 ~~~ BottomPadding2[ ]:::invisible
-    L5Esh2 ~~~ BottomPadding3[ ]:::invisible
-    L5Edeep ~~~ BottomPadding4[ ]:::invisible
-    L5J1 ~~~ BottomPadding5[ ]:::invisible
-    L5E2 ~~~ BottomPadding6[ ]:::invisible
-    C36top ~~~ BottomPadding7[ ]:::invisible
-    C37top ~~~ BottomPadding8[ ]:::invisible
-    C38top ~~~ BottomPadding9[ ]:::invisible
-    C39top ~~~ BottomPadding10[ ]:::invisible
-    C40top ~~~ BottomPadding11[ ]:::invisible
-    L5Ebr1 ~~~ BottomPadding12[ ]:::invisible
-    L5Ebr2 ~~~ BottomPadding13[ ]:::invisible
-    L5Ebr3 ~~~ BottomPadding14[ ]:::invisible
-    L5Ebr4 ~~~ BottomPadding15[ ]:::invisible
-    L5Ebr5 ~~~ BottomPadding16[ ]:::invisible
-    L5Ebr6 ~~~ BottomPadding17[ ]:::invisible
-    L5Ebr7 ~~~ BottomPadding18[ ]:::invisible
-    L5Ebr8 ~~~ BottomPadding19[ ]:::invisible
+    L5Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    L5Esh1 ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    L5Esh2 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    L5Edeep ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    L5J1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    L5E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
+    C36top ~~~ BottomPadding7["<br/><br/><br/>"]:::invisible
+    C37top ~~~ BottomPadding8["<br/><br/><br/>"]:::invisible
+    C38top ~~~ BottomPadding9["<br/><br/><br/>"]:::invisible
+    C39top ~~~ BottomPadding10["<br/><br/><br/>"]:::invisible
+    C40top ~~~ BottomPadding11["<br/><br/><br/>"]:::invisible
+    L5Ebr1 ~~~ BottomPadding12["<br/><br/><br/>"]:::invisible
+    L5Ebr2 ~~~ BottomPadding13["<br/><br/><br/>"]:::invisible
+    L5Ebr3 ~~~ BottomPadding14["<br/><br/><br/>"]:::invisible
+    L5Ebr4 ~~~ BottomPadding15["<br/><br/><br/>"]:::invisible
+    L5Ebr5 ~~~ BottomPadding16["<br/><br/><br/>"]:::invisible
+    L5Ebr6 ~~~ BottomPadding17["<br/><br/><br/>"]:::invisible
+    L5Ebr7 ~~~ BottomPadding18["<br/><br/><br/>"]:::invisible
+    L5Ebr8 ~~~ BottomPadding19["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C01top
@@ -5896,13 +5896,13 @@ flowchart TD
     C01G3 --o C01A1
     C01G3 --> C01E2
     C01G3 --> C01E1
-    C02top ~~~ BottomPadding1[ ]:::invisible
-    C01Xctx ~~~ BottomPadding2[ ]:::invisible
-    C01Esh ~~~ BottomPadding3[ ]:::invisible
-    C01E1 ~~~ BottomPadding4[ ]:::invisible
-    C01J1 ~~~ BottomPadding5[ ]:::invisible
-    C01A1 ~~~ BottomPadding6[ ]:::invisible
-    C01E2 ~~~ BottomPadding7[ ]:::invisible
+    C02top ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C01Xctx ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C01Esh ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C01E1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C01J1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C01A1 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
+    C01E2 ~~~ BottomPadding7["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C02top
@@ -5960,13 +5960,13 @@ flowchart TD
     C02G3 --o C02A1
     C02G3 --> C02E2
     C02G3 --> C02E1
-    C03top ~~~ BottomPadding1[ ]:::invisible
-    C02Xctx ~~~ BottomPadding2[ ]:::invisible
-    C02Esh ~~~ BottomPadding3[ ]:::invisible
-    C02E1 ~~~ BottomPadding4[ ]:::invisible
-    C02J1 ~~~ BottomPadding5[ ]:::invisible
-    C02A1 ~~~ BottomPadding6[ ]:::invisible
-    C02E2 ~~~ BottomPadding7[ ]:::invisible
+    C03top ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C02Xctx ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C02Esh ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C02E1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C02J1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C02A1 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
+    C02E2 ~~~ BottomPadding7["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C03top
@@ -6024,13 +6024,13 @@ flowchart TD
     C03G3 --o C03A1
     C03G3 --> C03E2
     C03G3 --> C03E1
-    C04top ~~~ BottomPadding1[ ]:::invisible
-    C03Xctx ~~~ BottomPadding2[ ]:::invisible
-    C03Esh ~~~ BottomPadding3[ ]:::invisible
-    C03E1 ~~~ BottomPadding4[ ]:::invisible
-    C03J1 ~~~ BottomPadding5[ ]:::invisible
-    C03A1 ~~~ BottomPadding6[ ]:::invisible
-    C03E2 ~~~ BottomPadding7[ ]:::invisible
+    C04top ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C03Xctx ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C03Esh ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C03E1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C03J1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C03A1 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
+    C03E2 ~~~ BottomPadding7["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C04top
@@ -6088,13 +6088,13 @@ flowchart TD
     C04G3 --o C04A1
     C04G3 --> C04E2
     C04G3 --> C04E1
-    C05top ~~~ BottomPadding1[ ]:::invisible
-    C04Xctx ~~~ BottomPadding2[ ]:::invisible
-    C04Esh ~~~ BottomPadding3[ ]:::invisible
-    C04E1 ~~~ BottomPadding4[ ]:::invisible
-    C04J1 ~~~ BottomPadding5[ ]:::invisible
-    C04A1 ~~~ BottomPadding6[ ]:::invisible
-    C04E2 ~~~ BottomPadding7[ ]:::invisible
+    C05top ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C04Xctx ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C04Esh ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C04E1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C04J1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C04A1 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
+    C04E2 ~~~ BottomPadding7["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C05top
@@ -6152,13 +6152,13 @@ flowchart TD
     C05G3 --o C05A1
     C05G3 --> C05E2
     C05G3 --> C05E1
-    C06top ~~~ BottomPadding1[ ]:::invisible
-    C05Xctx ~~~ BottomPadding2[ ]:::invisible
-    C05Esh ~~~ BottomPadding3[ ]:::invisible
-    C05E1 ~~~ BottomPadding4[ ]:::invisible
-    C05J1 ~~~ BottomPadding5[ ]:::invisible
-    C05A1 ~~~ BottomPadding6[ ]:::invisible
-    C05E2 ~~~ BottomPadding7[ ]:::invisible
+    C06top ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C05Xctx ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C05Esh ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C05E1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C05J1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C05A1 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
+    C05E2 ~~~ BottomPadding7["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C06top
@@ -6216,13 +6216,13 @@ flowchart TD
     C06G3 --o C06A1
     C06G3 --> C06E2
     C06G3 --> C06E1
-    C07top ~~~ BottomPadding1[ ]:::invisible
-    C06Xctx ~~~ BottomPadding2[ ]:::invisible
-    C06Esh ~~~ BottomPadding3[ ]:::invisible
-    C06E1 ~~~ BottomPadding4[ ]:::invisible
-    C06J1 ~~~ BottomPadding5[ ]:::invisible
-    C06A1 ~~~ BottomPadding6[ ]:::invisible
-    C06E2 ~~~ BottomPadding7[ ]:::invisible
+    C07top ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C06Xctx ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C06Esh ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C06E1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C06J1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C06A1 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
+    C06E2 ~~~ BottomPadding7["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C07top
@@ -6280,13 +6280,13 @@ flowchart TD
     C07G3 --o C07A1
     C07G3 --> C07E2
     C07G3 --> C07E1
-    C08top ~~~ BottomPadding1[ ]:::invisible
-    C07Xctx ~~~ BottomPadding2[ ]:::invisible
-    C07Esh ~~~ BottomPadding3[ ]:::invisible
-    C07E1 ~~~ BottomPadding4[ ]:::invisible
-    C07J1 ~~~ BottomPadding5[ ]:::invisible
-    C07A1 ~~~ BottomPadding6[ ]:::invisible
-    C07E2 ~~~ BottomPadding7[ ]:::invisible
+    C08top ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C07Xctx ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C07Esh ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C07E1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C07J1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C07A1 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
+    C07E2 ~~~ BottomPadding7["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C08top
@@ -6344,13 +6344,13 @@ flowchart TD
     C08G3 --o C08A1
     C08G3 --> C08E2
     C08G3 --> C08E1
-    C09top ~~~ BottomPadding1[ ]:::invisible
-    C08Xctx ~~~ BottomPadding2[ ]:::invisible
-    C08Esh ~~~ BottomPadding3[ ]:::invisible
-    C08E1 ~~~ BottomPadding4[ ]:::invisible
-    C08J1 ~~~ BottomPadding5[ ]:::invisible
-    C08A1 ~~~ BottomPadding6[ ]:::invisible
-    C08E2 ~~~ BottomPadding7[ ]:::invisible
+    C09top ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C08Xctx ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C08Esh ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C08E1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C08J1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C08A1 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
+    C08E2 ~~~ BottomPadding7["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C09top
@@ -6408,13 +6408,13 @@ flowchart TD
     C09G3 --o C09A1
     C09G3 --> C09E2
     C09G3 --> C09E1
-    C10top ~~~ BottomPadding1[ ]:::invisible
-    C09Xctx ~~~ BottomPadding2[ ]:::invisible
-    C09Esh ~~~ BottomPadding3[ ]:::invisible
-    C09E1 ~~~ BottomPadding4[ ]:::invisible
-    C09J1 ~~~ BottomPadding5[ ]:::invisible
-    C09A1 ~~~ BottomPadding6[ ]:::invisible
-    C09E2 ~~~ BottomPadding7[ ]:::invisible
+    C10top ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C09Xctx ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C09Esh ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C09E1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C09J1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C09A1 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
+    C09E2 ~~~ BottomPadding7["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C10top
@@ -6472,13 +6472,13 @@ flowchart TD
     C10G3 --o C10A1
     C10G3 --> C10E2
     C10G3 --> C10E1
-    C11top ~~~ BottomPadding1[ ]:::invisible
-    C10Xctx ~~~ BottomPadding2[ ]:::invisible
-    C10Esh ~~~ BottomPadding3[ ]:::invisible
-    C10E1 ~~~ BottomPadding4[ ]:::invisible
-    C10J1 ~~~ BottomPadding5[ ]:::invisible
-    C10A1 ~~~ BottomPadding6[ ]:::invisible
-    C10E2 ~~~ BottomPadding7[ ]:::invisible
+    C11top ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C10Xctx ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C10Esh ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C10E1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C10J1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C10A1 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
+    C10E2 ~~~ BottomPadding7["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C11top
@@ -6533,12 +6533,12 @@ flowchart TD
     C11G3 --o C11A1
     C11G3 --> C11E2
     C11G3 --> C11E1
-    C11Xctx ~~~ BottomPadding1[ ]:::invisible
-    C11Esh ~~~ BottomPadding2[ ]:::invisible
-    C11E1 ~~~ BottomPadding3[ ]:::invisible
-    C11J1 ~~~ BottomPadding4[ ]:::invisible
-    C11A1 ~~~ BottomPadding5[ ]:::invisible
-    C11E2 ~~~ BottomPadding6[ ]:::invisible
+    C11Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C11Esh ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C11E1 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C11J1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C11A1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C11E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C12top
@@ -6593,12 +6593,12 @@ flowchart TD
     C12G3 --o C12A1
     C12G3 --> C12E2
     C12G3 --> C12E1
-    C12Xctx ~~~ BottomPadding1[ ]:::invisible
-    C12Esh ~~~ BottomPadding2[ ]:::invisible
-    C12E1 ~~~ BottomPadding3[ ]:::invisible
-    C12J1 ~~~ BottomPadding4[ ]:::invisible
-    C12A1 ~~~ BottomPadding5[ ]:::invisible
-    C12E2 ~~~ BottomPadding6[ ]:::invisible
+    C12Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C12Esh ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C12E1 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C12J1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C12A1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C12E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C13top
@@ -6653,12 +6653,12 @@ flowchart TD
     C13G3 --o C13A1
     C13G3 --> C13E2
     C13G3 --> C13E1
-    C13Xctx ~~~ BottomPadding1[ ]:::invisible
-    C13Esh ~~~ BottomPadding2[ ]:::invisible
-    C13E1 ~~~ BottomPadding3[ ]:::invisible
-    C13J1 ~~~ BottomPadding4[ ]:::invisible
-    C13A1 ~~~ BottomPadding5[ ]:::invisible
-    C13E2 ~~~ BottomPadding6[ ]:::invisible
+    C13Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C13Esh ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C13E1 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C13J1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C13A1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C13E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C14top
@@ -6713,12 +6713,12 @@ flowchart TD
     C14G3 --o C14A1
     C14G3 --> C14E2
     C14G3 --> C14E1
-    C14Xctx ~~~ BottomPadding1[ ]:::invisible
-    C14Esh ~~~ BottomPadding2[ ]:::invisible
-    C14E1 ~~~ BottomPadding3[ ]:::invisible
-    C14J1 ~~~ BottomPadding4[ ]:::invisible
-    C14A1 ~~~ BottomPadding5[ ]:::invisible
-    C14E2 ~~~ BottomPadding6[ ]:::invisible
+    C14Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C14Esh ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C14E1 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C14J1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C14A1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C14E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C15top
@@ -6773,12 +6773,12 @@ flowchart TD
     C15G3 --o C15A1
     C15G3 --> C15E2
     C15G3 --> C15E1
-    C15Xctx ~~~ BottomPadding1[ ]:::invisible
-    C15Esh ~~~ BottomPadding2[ ]:::invisible
-    C15E1 ~~~ BottomPadding3[ ]:::invisible
-    C15J1 ~~~ BottomPadding4[ ]:::invisible
-    C15A1 ~~~ BottomPadding5[ ]:::invisible
-    C15E2 ~~~ BottomPadding6[ ]:::invisible
+    C15Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C15Esh ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C15E1 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C15J1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C15A1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C15E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C16top
@@ -6833,12 +6833,12 @@ flowchart TD
     C16G3 --o C16A1
     C16G3 --> C16E2
     C16G3 --> C16E1
-    C16Xctx ~~~ BottomPadding1[ ]:::invisible
-    C16Esh ~~~ BottomPadding2[ ]:::invisible
-    C16E1 ~~~ BottomPadding3[ ]:::invisible
-    C16J1 ~~~ BottomPadding4[ ]:::invisible
-    C16A1 ~~~ BottomPadding5[ ]:::invisible
-    C16E2 ~~~ BottomPadding6[ ]:::invisible
+    C16Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C16Esh ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C16E1 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C16J1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C16A1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C16E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C17top
@@ -6893,12 +6893,12 @@ flowchart TD
     C17G3 --o C17A1
     C17G3 --> C17E2
     C17G3 --> C17E1
-    C17Xctx ~~~ BottomPadding1[ ]:::invisible
-    C17Esh ~~~ BottomPadding2[ ]:::invisible
-    C17E1 ~~~ BottomPadding3[ ]:::invisible
-    C17J1 ~~~ BottomPadding4[ ]:::invisible
-    C17A1 ~~~ BottomPadding5[ ]:::invisible
-    C17E2 ~~~ BottomPadding6[ ]:::invisible
+    C17Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C17Esh ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C17E1 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C17J1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C17A1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C17E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C18top
@@ -6953,12 +6953,12 @@ flowchart TD
     C18G3 --o C18A1
     C18G3 --> C18E2
     C18G3 --> C18E1
-    C18Xctx ~~~ BottomPadding1[ ]:::invisible
-    C18Esh ~~~ BottomPadding2[ ]:::invisible
-    C18E1 ~~~ BottomPadding3[ ]:::invisible
-    C18J1 ~~~ BottomPadding4[ ]:::invisible
-    C18A1 ~~~ BottomPadding5[ ]:::invisible
-    C18E2 ~~~ BottomPadding6[ ]:::invisible
+    C18Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C18Esh ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C18E1 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C18J1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C18A1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C18E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C19top
@@ -7013,12 +7013,12 @@ flowchart TD
     C19G3 --o C19A1
     C19G3 --> C19E2
     C19G3 --> C19E1
-    C19Xctx ~~~ BottomPadding1[ ]:::invisible
-    C19Esh ~~~ BottomPadding2[ ]:::invisible
-    C19E1 ~~~ BottomPadding3[ ]:::invisible
-    C19J1 ~~~ BottomPadding4[ ]:::invisible
-    C19A1 ~~~ BottomPadding5[ ]:::invisible
-    C19E2 ~~~ BottomPadding6[ ]:::invisible
+    C19Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C19Esh ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C19E1 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C19J1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C19A1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C19E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C20top
@@ -7073,12 +7073,12 @@ flowchart TD
     C20G3 --o C20A1
     C20G3 --> C20E2
     C20G3 --> C20E1
-    C20Xctx ~~~ BottomPadding1[ ]:::invisible
-    C20Esh ~~~ BottomPadding2[ ]:::invisible
-    C20E1 ~~~ BottomPadding3[ ]:::invisible
-    C20J1 ~~~ BottomPadding4[ ]:::invisible
-    C20A1 ~~~ BottomPadding5[ ]:::invisible
-    C20E2 ~~~ BottomPadding6[ ]:::invisible
+    C20Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C20Esh ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C20E1 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C20J1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C20A1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C20E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C21top
@@ -7133,12 +7133,12 @@ flowchart TD
     C21G3 --o C21A1
     C21G3 --> C21E2
     C21G3 --> C21E1
-    C21Xctx ~~~ BottomPadding1[ ]:::invisible
-    C21Esh ~~~ BottomPadding2[ ]:::invisible
-    C21E1 ~~~ BottomPadding3[ ]:::invisible
-    C21J1 ~~~ BottomPadding4[ ]:::invisible
-    C21A1 ~~~ BottomPadding5[ ]:::invisible
-    C21E2 ~~~ BottomPadding6[ ]:::invisible
+    C21Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C21Esh ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C21E1 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C21J1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C21A1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C21E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C22top
@@ -7193,12 +7193,12 @@ flowchart TD
     C22G3 --o C22A1
     C22G3 --> C22E2
     C22G3 --> C22E1
-    C22Xctx ~~~ BottomPadding1[ ]:::invisible
-    C22Esh ~~~ BottomPadding2[ ]:::invisible
-    C22E1 ~~~ BottomPadding3[ ]:::invisible
-    C22J1 ~~~ BottomPadding4[ ]:::invisible
-    C22A1 ~~~ BottomPadding5[ ]:::invisible
-    C22E2 ~~~ BottomPadding6[ ]:::invisible
+    C22Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C22Esh ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C22E1 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C22J1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C22A1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C22E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C23top
@@ -7253,12 +7253,12 @@ flowchart TD
     C23G3 --o C23A1
     C23G3 --> C23E2
     C23G3 --> C23E1
-    C23Xctx ~~~ BottomPadding1[ ]:::invisible
-    C23Esh ~~~ BottomPadding2[ ]:::invisible
-    C23E1 ~~~ BottomPadding3[ ]:::invisible
-    C23J1 ~~~ BottomPadding4[ ]:::invisible
-    C23A1 ~~~ BottomPadding5[ ]:::invisible
-    C23E2 ~~~ BottomPadding6[ ]:::invisible
+    C23Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C23Esh ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C23E1 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C23J1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C23A1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C23E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C24top
@@ -7313,12 +7313,12 @@ flowchart TD
     C24G3 --o C24A1
     C24G3 --> C24E2
     C24G3 --> C24E1
-    C24Xctx ~~~ BottomPadding1[ ]:::invisible
-    C24Esh ~~~ BottomPadding2[ ]:::invisible
-    C24E1 ~~~ BottomPadding3[ ]:::invisible
-    C24J1 ~~~ BottomPadding4[ ]:::invisible
-    C24A1 ~~~ BottomPadding5[ ]:::invisible
-    C24E2 ~~~ BottomPadding6[ ]:::invisible
+    C24Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C24Esh ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C24E1 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C24J1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C24A1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C24E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C25top
@@ -7373,12 +7373,12 @@ flowchart TD
     C25G3 --o C25A1
     C25G3 --> C25E2
     C25G3 --> C25E1
-    C25Xctx ~~~ BottomPadding1[ ]:::invisible
-    C25Esh ~~~ BottomPadding2[ ]:::invisible
-    C25E1 ~~~ BottomPadding3[ ]:::invisible
-    C25J1 ~~~ BottomPadding4[ ]:::invisible
-    C25A1 ~~~ BottomPadding5[ ]:::invisible
-    C25E2 ~~~ BottomPadding6[ ]:::invisible
+    C25Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C25Esh ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C25E1 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C25J1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C25A1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C25E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C26top
@@ -7433,12 +7433,12 @@ flowchart TD
     C26G3 --o C26A1
     C26G3 --> C26E2
     C26G3 --> C26E1
-    C26Xctx ~~~ BottomPadding1[ ]:::invisible
-    C26Esh ~~~ BottomPadding2[ ]:::invisible
-    C26E1 ~~~ BottomPadding3[ ]:::invisible
-    C26J1 ~~~ BottomPadding4[ ]:::invisible
-    C26A1 ~~~ BottomPadding5[ ]:::invisible
-    C26E2 ~~~ BottomPadding6[ ]:::invisible
+    C26Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C26Esh ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C26E1 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C26J1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C26A1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C26E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C27top
@@ -7493,12 +7493,12 @@ flowchart TD
     C27G3 --o C27A1
     C27G3 --> C27E2
     C27G3 --> C27E1
-    C27Xctx ~~~ BottomPadding1[ ]:::invisible
-    C27Esh ~~~ BottomPadding2[ ]:::invisible
-    C27E1 ~~~ BottomPadding3[ ]:::invisible
-    C27J1 ~~~ BottomPadding4[ ]:::invisible
-    C27A1 ~~~ BottomPadding5[ ]:::invisible
-    C27E2 ~~~ BottomPadding6[ ]:::invisible
+    C27Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C27Esh ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C27E1 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C27J1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C27A1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C27E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C28top
@@ -7553,12 +7553,12 @@ flowchart TD
     C28G3 --o C28A1
     C28G3 --> C28E2
     C28G3 --> C28E1
-    C28Xctx ~~~ BottomPadding1[ ]:::invisible
-    C28Esh ~~~ BottomPadding2[ ]:::invisible
-    C28E1 ~~~ BottomPadding3[ ]:::invisible
-    C28J1 ~~~ BottomPadding4[ ]:::invisible
-    C28A1 ~~~ BottomPadding5[ ]:::invisible
-    C28E2 ~~~ BottomPadding6[ ]:::invisible
+    C28Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C28Esh ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C28E1 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C28J1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C28A1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C28E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C29top
@@ -7613,12 +7613,12 @@ flowchart TD
     C29G3 --o C29A1
     C29G3 --> C29E2
     C29G3 --> C29E1
-    C29Xctx ~~~ BottomPadding1[ ]:::invisible
-    C29Esh ~~~ BottomPadding2[ ]:::invisible
-    C29E1 ~~~ BottomPadding3[ ]:::invisible
-    C29J1 ~~~ BottomPadding4[ ]:::invisible
-    C29A1 ~~~ BottomPadding5[ ]:::invisible
-    C29E2 ~~~ BottomPadding6[ ]:::invisible
+    C29Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C29Esh ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C29E1 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C29J1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C29A1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C29E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C30top
@@ -7673,12 +7673,12 @@ flowchart TD
     C30G3 --o C30A1
     C30G3 --> C30E2
     C30G3 --> C30E1
-    C30Xctx ~~~ BottomPadding1[ ]:::invisible
-    C30Esh ~~~ BottomPadding2[ ]:::invisible
-    C30E1 ~~~ BottomPadding3[ ]:::invisible
-    C30J1 ~~~ BottomPadding4[ ]:::invisible
-    C30A1 ~~~ BottomPadding5[ ]:::invisible
-    C30E2 ~~~ BottomPadding6[ ]:::invisible
+    C30Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C30Esh ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C30E1 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C30J1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C30A1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C30E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C31top
@@ -7733,12 +7733,12 @@ flowchart TD
     C31G3 --o C31A1
     C31G3 --> C31E2
     C31G3 --> C31E1
-    C31Xctx ~~~ BottomPadding1[ ]:::invisible
-    C31Esh ~~~ BottomPadding2[ ]:::invisible
-    C31E1 ~~~ BottomPadding3[ ]:::invisible
-    C31J1 ~~~ BottomPadding4[ ]:::invisible
-    C31A1 ~~~ BottomPadding5[ ]:::invisible
-    C31E2 ~~~ BottomPadding6[ ]:::invisible
+    C31Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C31Esh ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C31E1 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C31J1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C31A1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C31E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C32top
@@ -7793,12 +7793,12 @@ flowchart TD
     C32G3 --o C32A1
     C32G3 --> C32E2
     C32G3 --> C32E1
-    C32Xctx ~~~ BottomPadding1[ ]:::invisible
-    C32Esh ~~~ BottomPadding2[ ]:::invisible
-    C32E1 ~~~ BottomPadding3[ ]:::invisible
-    C32J1 ~~~ BottomPadding4[ ]:::invisible
-    C32A1 ~~~ BottomPadding5[ ]:::invisible
-    C32E2 ~~~ BottomPadding6[ ]:::invisible
+    C32Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C32Esh ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C32E1 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C32J1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C32A1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C32E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C33top
@@ -7853,12 +7853,12 @@ flowchart TD
     C33G3 --o C33A1
     C33G3 --> C33E2
     C33G3 --> C33E1
-    C33Xctx ~~~ BottomPadding1[ ]:::invisible
-    C33Esh ~~~ BottomPadding2[ ]:::invisible
-    C33E1 ~~~ BottomPadding3[ ]:::invisible
-    C33J1 ~~~ BottomPadding4[ ]:::invisible
-    C33A1 ~~~ BottomPadding5[ ]:::invisible
-    C33E2 ~~~ BottomPadding6[ ]:::invisible
+    C33Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C33Esh ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C33E1 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C33J1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C33A1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C33E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C34top
@@ -7913,12 +7913,12 @@ flowchart TD
     C34G3 --o C34A1
     C34G3 --> C34E2
     C34G3 --> C34E1
-    C34Xctx ~~~ BottomPadding1[ ]:::invisible
-    C34Esh ~~~ BottomPadding2[ ]:::invisible
-    C34E1 ~~~ BottomPadding3[ ]:::invisible
-    C34J1 ~~~ BottomPadding4[ ]:::invisible
-    C34A1 ~~~ BottomPadding5[ ]:::invisible
-    C34E2 ~~~ BottomPadding6[ ]:::invisible
+    C34Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C34Esh ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C34E1 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C34J1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C34A1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C34E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C35top
@@ -7973,12 +7973,12 @@ flowchart TD
     C35G3 --o C35A1
     C35G3 --> C35E2
     C35G3 --> C35E1
-    C35Xctx ~~~ BottomPadding1[ ]:::invisible
-    C35Esh ~~~ BottomPadding2[ ]:::invisible
-    C35E1 ~~~ BottomPadding3[ ]:::invisible
-    C35J1 ~~~ BottomPadding4[ ]:::invisible
-    C35A1 ~~~ BottomPadding5[ ]:::invisible
-    C35E2 ~~~ BottomPadding6[ ]:::invisible
+    C35Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C35Esh ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C35E1 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C35J1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C35A1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C35E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C36top
@@ -8033,12 +8033,12 @@ flowchart TD
     C36G3 --o C36A1
     C36G3 --> C36E2
     C36G3 --> C36E1
-    C36Xctx ~~~ BottomPadding1[ ]:::invisible
-    C36Esh ~~~ BottomPadding2[ ]:::invisible
-    C36E1 ~~~ BottomPadding3[ ]:::invisible
-    C36J1 ~~~ BottomPadding4[ ]:::invisible
-    C36A1 ~~~ BottomPadding5[ ]:::invisible
-    C36E2 ~~~ BottomPadding6[ ]:::invisible
+    C36Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C36Esh ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C36E1 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C36J1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C36A1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C36E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C37top
@@ -8093,12 +8093,12 @@ flowchart TD
     C37G3 --o C37A1
     C37G3 --> C37E2
     C37G3 --> C37E1
-    C37Xctx ~~~ BottomPadding1[ ]:::invisible
-    C37Esh ~~~ BottomPadding2[ ]:::invisible
-    C37E1 ~~~ BottomPadding3[ ]:::invisible
-    C37J1 ~~~ BottomPadding4[ ]:::invisible
-    C37A1 ~~~ BottomPadding5[ ]:::invisible
-    C37E2 ~~~ BottomPadding6[ ]:::invisible
+    C37Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C37Esh ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C37E1 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C37J1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C37A1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C37E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C38top
@@ -8153,12 +8153,12 @@ flowchart TD
     C38G3 --o C38A1
     C38G3 --> C38E2
     C38G3 --> C38E1
-    C38Xctx ~~~ BottomPadding1[ ]:::invisible
-    C38Esh ~~~ BottomPadding2[ ]:::invisible
-    C38E1 ~~~ BottomPadding3[ ]:::invisible
-    C38J1 ~~~ BottomPadding4[ ]:::invisible
-    C38A1 ~~~ BottomPadding5[ ]:::invisible
-    C38E2 ~~~ BottomPadding6[ ]:::invisible
+    C38Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C38Esh ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C38E1 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C38J1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C38A1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C38E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C39top
@@ -8213,12 +8213,12 @@ flowchart TD
     C39G3 --o C39A1
     C39G3 --> C39E2
     C39G3 --> C39E1
-    C39Xctx ~~~ BottomPadding1[ ]:::invisible
-    C39Esh ~~~ BottomPadding2[ ]:::invisible
-    C39E1 ~~~ BottomPadding3[ ]:::invisible
-    C39J1 ~~~ BottomPadding4[ ]:::invisible
-    C39A1 ~~~ BottomPadding5[ ]:::invisible
-    C39E2 ~~~ BottomPadding6[ ]:::invisible
+    C39Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C39Esh ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C39E1 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C39J1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C39A1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C39E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C40top
@@ -8273,12 +8273,12 @@ flowchart TD
     C40G3 --o C40A1
     C40G3 --> C40E2
     C40G3 --> C40E1
-    C40Xctx ~~~ BottomPadding1[ ]:::invisible
-    C40Esh ~~~ BottomPadding2[ ]:::invisible
-    C40E1 ~~~ BottomPadding3[ ]:::invisible
-    C40J1 ~~~ BottomPadding4[ ]:::invisible
-    C40A1 ~~~ BottomPadding5[ ]:::invisible
-    C40E2 ~~~ BottomPadding6[ ]:::invisible
+    C40Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C40Esh ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C40E1 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C40J1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C40A1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C40E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C41top
@@ -8333,12 +8333,12 @@ flowchart TD
     C41G3 --o C41A1
     C41G3 --> C41E2
     C41G3 --> C41E1
-    C41Xctx ~~~ BottomPadding1[ ]:::invisible
-    C41Esh ~~~ BottomPadding2[ ]:::invisible
-    C41E1 ~~~ BottomPadding3[ ]:::invisible
-    C41J1 ~~~ BottomPadding4[ ]:::invisible
-    C41A1 ~~~ BottomPadding5[ ]:::invisible
-    C41E2 ~~~ BottomPadding6[ ]:::invisible
+    C41Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C41Esh ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C41E1 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C41J1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C41A1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C41E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C42top
@@ -8393,12 +8393,12 @@ flowchart TD
     C42G3 --o C42A1
     C42G3 --> C42E2
     C42G3 --> C42E1
-    C42Xctx ~~~ BottomPadding1[ ]:::invisible
-    C42Esh ~~~ BottomPadding2[ ]:::invisible
-    C42E1 ~~~ BottomPadding3[ ]:::invisible
-    C42J1 ~~~ BottomPadding4[ ]:::invisible
-    C42A1 ~~~ BottomPadding5[ ]:::invisible
-    C42E2 ~~~ BottomPadding6[ ]:::invisible
+    C42Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C42Esh ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C42E1 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C42J1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C42A1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C42E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C43top
@@ -8453,12 +8453,12 @@ flowchart TD
     C43G3 --o C43A1
     C43G3 --> C43E2
     C43G3 --> C43E1
-    C43Xctx ~~~ BottomPadding1[ ]:::invisible
-    C43Esh ~~~ BottomPadding2[ ]:::invisible
-    C43E1 ~~~ BottomPadding3[ ]:::invisible
-    C43J1 ~~~ BottomPadding4[ ]:::invisible
-    C43A1 ~~~ BottomPadding5[ ]:::invisible
-    C43E2 ~~~ BottomPadding6[ ]:::invisible
+    C43Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C43Esh ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C43E1 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C43J1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C43A1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C43E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C44top
@@ -8513,12 +8513,12 @@ flowchart TD
     C44G3 --o C44A1
     C44G3 --> C44E2
     C44G3 --> C44E1
-    C44Xctx ~~~ BottomPadding1[ ]:::invisible
-    C44Esh ~~~ BottomPadding2[ ]:::invisible
-    C44E1 ~~~ BottomPadding3[ ]:::invisible
-    C44J1 ~~~ BottomPadding4[ ]:::invisible
-    C44A1 ~~~ BottomPadding5[ ]:::invisible
-    C44E2 ~~~ BottomPadding6[ ]:::invisible
+    C44Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C44Esh ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C44E1 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C44J1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C44A1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C44E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
 ```
 
 ### Package C45top
@@ -8573,12 +8573,12 @@ flowchart TD
     C45G3 --o C45A1
     C45G3 --> C45E2
     C45G3 --> C45E1
-    C45Xctx ~~~ BottomPadding1[ ]:::invisible
-    C45Esh ~~~ BottomPadding2[ ]:::invisible
-    C45E1 ~~~ BottomPadding3[ ]:::invisible
-    C45J1 ~~~ BottomPadding4[ ]:::invisible
-    C45A1 ~~~ BottomPadding5[ ]:::invisible
-    C45E2 ~~~ BottomPadding6[ ]:::invisible
+    C45Xctx ~~~ BottomPadding1["<br/><br/><br/>"]:::invisible
+    C45Esh ~~~ BottomPadding2["<br/><br/><br/>"]:::invisible
+    C45E1 ~~~ BottomPadding3["<br/><br/><br/>"]:::invisible
+    C45J1 ~~~ BottomPadding4["<br/><br/><br/>"]:::invisible
+    C45A1 ~~~ BottomPadding5["<br/><br/><br/>"]:::invisible
+    C45E2 ~~~ BottomPadding6["<br/><br/><br/>"]:::invisible
 ```
 <!-- end verocase -->
 

@@ -48,15 +48,15 @@ flowchart BT
     click Deployment "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#package-deployment"
     click Maintenance "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#package-maintenance"
 
-    BottomPadding1[ ]:::invisible ~~~ Processes
-    BottomPadding2[ ]:::invisible ~~~ NonTechnical
-    BottomPadding3[ ]:::invisible ~~~ Controls
-    BottomPadding4[ ]:::invisible ~~~ Requirements
-    BottomPadding5[ ]:::invisible ~~~ Design
-    BottomPadding6[ ]:::invisible ~~~ Implementation
-    BottomPadding7[ ]:::invisible ~~~ Verification
-    BottomPadding8[ ]:::invisible ~~~ Deployment
-    BottomPadding9[ ]:::invisible ~~~ Maintenance
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ Processes
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ NonTechnical
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ Controls
+    BottomPadding4["<br/><br/><br/>"]:::invisible ~~~ Requirements
+    BottomPadding5["<br/><br/><br/>"]:::invisible ~~~ Design
+    BottomPadding6["<br/><br/><br/>"]:::invisible ~~~ Implementation
+    BottomPadding7["<br/><br/><br/>"]:::invisible ~~~ Verification
+    BottomPadding8["<br/><br/><br/>"]:::invisible ~~~ Deployment
+    BottomPadding9["<br/><br/><br/>"]:::invisible ~~~ Maintenance
     Requirements --- Dot1
     Design --- Dot1
     Implementation --- Dot1
@@ -98,9 +98,9 @@ flowchart BT
     click TestCoverage "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#evidence-testcoverage"
     click ReqScope "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#context-reqscope"
 
-    BottomPadding1[ ]:::invisible ~~~ ReqSpec
-    BottomPadding2[ ]:::invisible ~~~ TestCoverage
-    BottomPadding3[ ]:::invisible ~~~ ReqScope
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ ReqSpec
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ TestCoverage
+    BottomPadding3["<br/><br/><br/>"]:::invisible ~~~ ReqScope
     ReqSpec --- Dot1
     TestCoverage --- Dot1
     Dot1 --> Requirements
@@ -132,8 +132,8 @@ flowchart BT
     click DesignDoc "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#evidence-designdoc"
     click ThreatModel "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/badgeapp-doc-output.expected.md#evidence-threatmodel"
 
-    BottomPadding1[ ]:::invisible ~~~ DesignDoc
-    BottomPadding2[ ]:::invisible ~~~ ThreatModel
+    BottomPadding1["<br/><br/><br/>"]:::invisible ~~~ DesignDoc
+    BottomPadding2["<br/><br/><br/>"]:::invisible ~~~ ThreatModel
     DesignDoc --- Dot1
     ThreatModel --- Dot1
     Dot1 --> Design

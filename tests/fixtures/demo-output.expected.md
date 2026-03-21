@@ -52,13 +52,13 @@ flowchart BT
     click EvHarden "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/demo-output.expected.md#evidence-evharden"
     click XProd "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/demo-output.expected.md#context-xprod"
 
-    BottomPadding[ ]:::invisible ~~~ XScope
-    BottomPadding ~~~ SArg
-    BottomPadding ~~~ Access
-    BottomPadding ~~~ Data
-    BottomPadding ~~~ Monitoring
-    BottomPadding ~~~ EvHarden
-    BottomPadding ~~~ XProd
+    BottomPadding1[ ]:::invisible ~~~ XScope
+    BottomPadding2[ ]:::invisible ~~~ SArg
+    BottomPadding3[ ]:::invisible ~~~ Access
+    BottomPadding4[ ]:::invisible ~~~ Data
+    BottomPadding5[ ]:::invisible ~~~ Monitoring
+    BottomPadding6[ ]:::invisible ~~~ EvHarden
+    BottomPadding7[ ]:::invisible ~~~ XProd
     EvHarden --> Deployment
     XProd --o Deployment
     Access --- Dot1
@@ -124,16 +124,16 @@ flowchart BT
     click EvPenTest "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/demo-output.expected.md#evidence-evpentest"
     click DBVuln "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/demo-output.expected.md#claim-dbvuln"
 
-    BottomPadding[ ]:::invisible ~~~ AAdmin
-    BottomPadding ~~~ XAuthStd
-    BottomPadding ~~~ EvLogin
-    BottomPadding ~~~ JMechanism
-    BottomPadding ~~~ XLogPolicy
-    BottomPadding ~~~ EvRBAC
-    BottomPadding ~~~ AuthZAdmin
-    BottomPadding ~~~ EvCSP
-    BottomPadding ~~~ EvPenTest
-    BottomPadding ~~~ DBVuln
+    BottomPadding1[ ]:::invisible ~~~ AAdmin
+    BottomPadding2[ ]:::invisible ~~~ XAuthStd
+    BottomPadding3[ ]:::invisible ~~~ EvLogin
+    BottomPadding4[ ]:::invisible ~~~ JMechanism
+    BottomPadding5[ ]:::invisible ~~~ XLogPolicy
+    BottomPadding6[ ]:::invisible ~~~ EvRBAC
+    BottomPadding7[ ]:::invisible ~~~ AuthZAdmin
+    BottomPadding8[ ]:::invisible ~~~ EvCSP
+    BottomPadding9[ ]:::invisible ~~~ EvPenTest
+    BottomPadding10[ ]:::invisible ~~~ DBVuln
     EvLogin --- Dot1
     JMechanism --- Dot1
     Dot1 --> AuthN
@@ -204,16 +204,16 @@ flowchart BT
     click DataMap "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/demo-output.expected.md#claim-datamap"
     click JRetention "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/demo-output.expected.md#justification-jretention"
 
-    BottomPadding[ ]:::invisible ~~~ XRegulation
-    BottomPadding ~~~ AEncrypt
-    BottomPadding ~~~ MetaClaim
-    BottomPadding ~~~ XDataScope
-    BottomPadding ~~~ JDataArch
-    BottomPadding ~~~ AuditAccess
-    BottomPadding ~~~ EvTLS
-    BottomPadding ~~~ EvDB
-    BottomPadding ~~~ DataMap
-    BottomPadding ~~~ JRetention
+    BottomPadding1[ ]:::invisible ~~~ XRegulation
+    BottomPadding2[ ]:::invisible ~~~ AEncrypt
+    BottomPadding3[ ]:::invisible ~~~ MetaClaim
+    BottomPadding4[ ]:::invisible ~~~ XDataScope
+    BottomPadding5[ ]:::invisible ~~~ JDataArch
+    BottomPadding6[ ]:::invisible ~~~ AuditAccess
+    BottomPadding7[ ]:::invisible ~~~ EvTLS
+    BottomPadding8[ ]:::invisible ~~~ EvDB
+    BottomPadding9[ ]:::invisible ~~~ DataMap
+    BottomPadding10[ ]:::invisible ~~~ JRetention
     EvTLS --- Dot1
     EvDB --- Dot1
     Dot1 --> Encrypt
@@ -269,11 +269,11 @@ flowchart BT
     click EvAlertCoverage "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/demo-output.expected.md#evidence-evalertcoverage"
     click EvResponseTime "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/demo-output.expected.md#evidence-evresponsetime"
 
-    BottomPadding[ ]:::invisible ~~~ XSIEMScope
-    BottomPadding ~~~ JSOCModel
-    BottomPadding ~~~ XSLA
-    BottomPadding ~~~ EvAlertCoverage
-    BottomPadding ~~~ EvResponseTime
+    BottomPadding1[ ]:::invisible ~~~ XSIEMScope
+    BottomPadding2[ ]:::invisible ~~~ JSOCModel
+    BottomPadding3[ ]:::invisible ~~~ XSLA
+    BottomPadding4[ ]:::invisible ~~~ EvAlertCoverage
+    BottomPadding5[ ]:::invisible ~~~ EvResponseTime
     EvAlertCoverage --> AlertCoverage
     EvResponseTime --> ResponseTime
     JSOCModel --- Dot1
@@ -332,12 +332,12 @@ flowchart TD
     Deployment --> EvHarden
     Deployment --o XProd
     SArg --> Monitoring
-    XScope ~~~ BottomPadding[ ]:::invisible
-    Access ~~~ BottomPadding
-    Data ~~~ BottomPadding
-    EvHarden ~~~ BottomPadding
-    XProd ~~~ BottomPadding
-    Monitoring ~~~ BottomPadding
+    XScope ~~~ BottomPadding1[ ]:::invisible
+    Access ~~~ BottomPadding2[ ]:::invisible
+    Data ~~~ BottomPadding3[ ]:::invisible
+    EvHarden ~~~ BottomPadding4[ ]:::invisible
+    XProd ~~~ BottomPadding5[ ]:::invisible
+    Monitoring ~~~ BottomPadding6[ ]:::invisible
 ```
 
 ### Package Access
@@ -392,12 +392,11 @@ flowchart TD
     subgraph SgCJ1 [ ]
         direction LR
         XAuthStd ~~~ SAccess
+        SAccess --o XAuthStd
     end
     style SgCJ1 fill:none,stroke:none
-    Access ~~~ XAuthStd
     Access --o AAdmin
     Access --> SAccess
-    SAccess --o XAuthStd
     SAccess --> AuthN
     AuthN --> EvLogin
     AuthN --o JMechanism
@@ -411,16 +410,15 @@ flowchart TD
     SAccess --> SqlFree
     SqlFree --> EvPenTest
     SqlFree -->|⊖| DBVuln
-    AAdmin ~~~ BottomPadding[ ]:::invisible
-    XAuthStd ~~~ BottomPadding
-    EvLogin ~~~ BottomPadding
-    JMechanism ~~~ BottomPadding
-    XLogPolicy ~~~ BottomPadding
-    EvRBAC ~~~ BottomPadding
-    AuthZAdmin ~~~ BottomPadding
-    EvCSP ~~~ BottomPadding
-    EvPenTest ~~~ BottomPadding
-    DBVuln ~~~ BottomPadding
+    AAdmin ~~~ BottomPadding1[ ]:::invisible
+    EvLogin ~~~ BottomPadding2[ ]:::invisible
+    JMechanism ~~~ BottomPadding3[ ]:::invisible
+    XLogPolicy ~~~ BottomPadding4[ ]:::invisible
+    EvRBAC ~~~ BottomPadding5[ ]:::invisible
+    AuthZAdmin ~~~ BottomPadding6[ ]:::invisible
+    EvCSP ~~~ BottomPadding7[ ]:::invisible
+    EvPenTest ~~~ BottomPadding8[ ]:::invisible
+    DBVuln ~~~ BottomPadding9[ ]:::invisible
 ```
 
 ### Package Data
@@ -471,15 +469,13 @@ flowchart TD
     subgraph SgCJ1 [ ]
         direction LR
         XDataScope ~~~ SData ~~~ JDataArch
+        SData --o XDataScope
+        SData --o JDataArch
     end
     style SgCJ1 fill:none,stroke:none
-    Data ~~~ XDataScope
-    Data ~~~ JDataArch
     Data --o XRegulation
     Data --> AEncrypt
     Data --> SData
-    SData --o XDataScope
-    SData --o JDataArch
     SData --> Encrypt
     Encrypt --> EvTLS
     Encrypt --> EvDB
@@ -488,16 +484,14 @@ flowchart TD
     Minimise --o JRetention
     SData --> AuditAccess
     Data --> MetaClaim
-    XRegulation ~~~ BottomPadding[ ]:::invisible
-    AEncrypt ~~~ BottomPadding
-    XDataScope ~~~ BottomPadding
-    JDataArch ~~~ BottomPadding
-    EvTLS ~~~ BottomPadding
-    EvDB ~~~ BottomPadding
-    DataMap ~~~ BottomPadding
-    JRetention ~~~ BottomPadding
-    AuditAccess ~~~ BottomPadding
-    MetaClaim ~~~ BottomPadding
+    XRegulation ~~~ BottomPadding1[ ]:::invisible
+    AEncrypt ~~~ BottomPadding2[ ]:::invisible
+    EvTLS ~~~ BottomPadding3[ ]:::invisible
+    EvDB ~~~ BottomPadding4[ ]:::invisible
+    DataMap ~~~ BottomPadding5[ ]:::invisible
+    JRetention ~~~ BottomPadding6[ ]:::invisible
+    AuditAccess ~~~ BottomPadding7[ ]:::invisible
+    MetaClaim ~~~ BottomPadding8[ ]:::invisible
 ```
 
 ### Package Monitoring
@@ -538,23 +532,19 @@ flowchart TD
     subgraph SgCJ1 [ ]
         direction LR
         XSIEMScope ~~~ SMonitor ~~~ JSOCModel
+        SMonitor --o XSIEMScope
+        SMonitor --o JSOCModel
     end
     style SgCJ1 fill:none,stroke:none
-    Monitoring ~~~ XSIEMScope
-    Monitoring ~~~ JSOCModel
     Monitoring --> SMonitor
-    SMonitor --o XSIEMScope
-    SMonitor --o JSOCModel
     SMonitor --o XSLA
     SMonitor --> AlertCoverage
     AlertCoverage --> EvAlertCoverage
     SMonitor --> ResponseTime
     ResponseTime --> EvResponseTime
-    XSIEMScope ~~~ BottomPadding[ ]:::invisible
-    JSOCModel ~~~ BottomPadding
-    XSLA ~~~ BottomPadding
-    EvAlertCoverage ~~~ BottomPadding
-    EvResponseTime ~~~ BottomPadding
+    XSLA ~~~ BottomPadding1[ ]:::invisible
+    EvAlertCoverage ~~~ BottomPadding2[ ]:::invisible
+    EvResponseTime ~~~ BottomPadding3[ ]:::invisible
 ```
 <!-- end verocase -->
 
@@ -603,12 +593,12 @@ flowchart BT
     click EvHarden "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/demo-output.expected.md#evidence-evharden"
     click XProd "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/demo-output.expected.md#context-xprod"
 
-    BottomPadding[ ]:::invisible ~~~ XScope
-    BottomPadding ~~~ Access
-    BottomPadding ~~~ Data
-    BottomPadding ~~~ Monitoring
-    BottomPadding ~~~ EvHarden
-    BottomPadding ~~~ XProd
+    BottomPadding1[ ]:::invisible ~~~ XScope
+    BottomPadding2[ ]:::invisible ~~~ Access
+    BottomPadding3[ ]:::invisible ~~~ Data
+    BottomPadding4[ ]:::invisible ~~~ Monitoring
+    BottomPadding5[ ]:::invisible ~~~ EvHarden
+    BottomPadding6[ ]:::invisible ~~~ XProd
     XScope -.-> Security
     Access --> SArg
     Data --> SArg
@@ -675,16 +665,16 @@ flowchart BT
     click EvPenTest "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/demo-output.expected.md#evidence-evpentest"
     click DBVuln "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/demo-output.expected.md#claim-dbvuln"
 
-    BottomPadding[ ]:::invisible ~~~ AAdmin
-    BottomPadding ~~~ XAuthStd
-    BottomPadding ~~~ EvLogin
-    BottomPadding ~~~ JMechanism
-    BottomPadding ~~~ XLogPolicy
-    BottomPadding ~~~ EvRBAC
-    BottomPadding ~~~ AuthZAdmin
-    BottomPadding ~~~ EvCSP
-    BottomPadding ~~~ EvPenTest
-    BottomPadding ~~~ DBVuln
+    BottomPadding1[ ]:::invisible ~~~ AAdmin
+    BottomPadding2[ ]:::invisible ~~~ XAuthStd
+    BottomPadding3[ ]:::invisible ~~~ EvLogin
+    BottomPadding4[ ]:::invisible ~~~ JMechanism
+    BottomPadding5[ ]:::invisible ~~~ XLogPolicy
+    BottomPadding6[ ]:::invisible ~~~ EvRBAC
+    BottomPadding7[ ]:::invisible ~~~ AuthZAdmin
+    BottomPadding8[ ]:::invisible ~~~ EvCSP
+    BottomPadding9[ ]:::invisible ~~~ EvPenTest
+    BottomPadding10[ ]:::invisible ~~~ DBVuln
     AAdmin --> Access
     XAuthStd -.-> SAccess
     EvLogin --> AuthN
@@ -756,16 +746,16 @@ flowchart BT
     click DataMap "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/demo-output.expected.md#claim-datamap"
     click JRetention "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/demo-output.expected.md#justification-jretention"
 
-    BottomPadding[ ]:::invisible ~~~ XRegulation
-    BottomPadding ~~~ AEncrypt
-    BottomPadding ~~~ MetaClaim
-    BottomPadding ~~~ XDataScope
-    BottomPadding ~~~ JDataArch
-    BottomPadding ~~~ AuditAccess
-    BottomPadding ~~~ EvTLS
-    BottomPadding ~~~ EvDB
-    BottomPadding ~~~ DataMap
-    BottomPadding ~~~ JRetention
+    BottomPadding1[ ]:::invisible ~~~ XRegulation
+    BottomPadding2[ ]:::invisible ~~~ AEncrypt
+    BottomPadding3[ ]:::invisible ~~~ MetaClaim
+    BottomPadding4[ ]:::invisible ~~~ XDataScope
+    BottomPadding5[ ]:::invisible ~~~ JDataArch
+    BottomPadding6[ ]:::invisible ~~~ AuditAccess
+    BottomPadding7[ ]:::invisible ~~~ EvTLS
+    BottomPadding8[ ]:::invisible ~~~ EvDB
+    BottomPadding9[ ]:::invisible ~~~ DataMap
+    BottomPadding10[ ]:::invisible ~~~ JRetention
     XRegulation -.-> Data
     AEncrypt --> Data
     XDataScope -.-> SData
@@ -823,11 +813,11 @@ flowchart BT
     click EvAlertCoverage "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/demo-output.expected.md#evidence-evalertcoverage"
     click EvResponseTime "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/demo-output.expected.md#evidence-evresponsetime"
 
-    BottomPadding[ ]:::invisible ~~~ XSIEMScope
-    BottomPadding ~~~ JSOCModel
-    BottomPadding ~~~ XSLA
-    BottomPadding ~~~ EvAlertCoverage
-    BottomPadding ~~~ EvResponseTime
+    BottomPadding1[ ]:::invisible ~~~ XSIEMScope
+    BottomPadding2[ ]:::invisible ~~~ JSOCModel
+    BottomPadding3[ ]:::invisible ~~~ XSLA
+    BottomPadding4[ ]:::invisible ~~~ EvAlertCoverage
+    BottomPadding5[ ]:::invisible ~~~ EvResponseTime
     XSIEMScope -.-> SMonitor
     JSOCModel --> SMonitor
     XSLA -.-> SMonitor

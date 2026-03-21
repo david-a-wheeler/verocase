@@ -3950,17 +3950,16 @@ def _sacm_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
         out.write('\n')
         out.write(line)
 
-    # BottomPadding: connect an invisible node below every display leaf so that
-    # GitHub's diagram controls never obscure content at the bottom.
+    # BottomPadding: one invisible node per leaf, below every display leaf, so
+    # that GitHub's diagram controls never obscure content at the bottom.
     if bottom_padding:
-        first_bp = True
+        bp_idx = 0
         seen: set = set()
         for leaf in leaf_nodes:
             if leaf.diagram_id not in seen:
                 seen.add(leaf.diagram_id)
-                bp = 'BottomPadding[ ]:::invisible' if first_bp else 'BottomPadding'
-                _write_edge(f'    {bp} ~~~ {leaf.diagram_id}')
-                first_bp = False
+                bp_idx += 1
+                _write_edge(f'    BottomPadding{bp_idx}[ ]:::invisible ~~~ {leaf.diagram_id}')
 
     for edge_line in edge_lines:
         _write_edge(edge_line)
@@ -4111,10 +4110,12 @@ def _gsn_strategy_context_just(node) -> list:
     return result
 
 
-def _gsn_collect_edges(node, write_edge, leaf_nodes):
+def _gsn_collect_edges(node, write_edge, leaf_nodes, skip_targets=None):
     """Write GSN edges for *node* and its subtree (DFS pre-order) via write_edge.
 
     Nodes with no outgoing edges are appended to leaf_nodes.
+    skip_targets: optional set of diagram_ids whose incoming edges should be
+    suppressed (used for Context/Justification nodes moved into LR subgraphs).
     """
     if node.node_type in ('Link', 'Relation'):
         return
@@ -4124,10 +4125,15 @@ def _gsn_collect_edges(node, write_edge, leaf_nodes):
         _had_edge[0] = True
         write_edge(line)
 
+    def _skipped(did: str) -> bool:
+        return skip_targets is not None and did in skip_targets
+
     for child in node.children:
         if child.node_type == 'Link':
             if child.link_target is not None:
                 tgt = child.link_target
+                if _skipped(tgt.diagram_id):
+                    continue
                 _we(_edge_line(
                     node.diagram_id, tgt.diagram_id,
                     tgt.is_incontextof,
@@ -4135,7 +4141,7 @@ def _gsn_collect_edges(node, write_edge, leaf_nodes):
         elif child.node_type == 'Connector':
             _we(_edge_line(node.diagram_id, child.diagram_id,
                            False, False, False))
-            _gsn_collect_edges(child, write_edge, leaf_nodes)
+            _gsn_collect_edges(child, write_edge, leaf_nodes, skip_targets)
         elif child.node_type == 'Relation':
             rc = 'counter' in child.options
             ra = 'abstract' in child.options
@@ -4143,21 +4149,27 @@ def _gsn_collect_edges(node, write_edge, leaf_nodes):
                 if gc.node_type == 'Link':
                     if gc.link_target is not None:
                         tgt = gc.link_target
+                        if _skipped(tgt.diagram_id):
+                            continue
                         _we(_edge_line(
                             node.diagram_id, tgt.diagram_id,
                             tgt.is_incontextof, rc, ra))
                 else:
+                    if _skipped(gc.diagram_id):
+                        continue
                     _we(_edge_line(
                         node.diagram_id, gc.diagram_id,
                         gc.is_incontextof, rc, ra))
-                    _gsn_collect_edges(gc, write_edge, leaf_nodes)
+                    _gsn_collect_edges(gc, write_edge, leaf_nodes, skip_targets)
         else:
+            if _skipped(child.diagram_id):
+                continue
             is_counter = 'counter' in child.options or 'defeater' in child.options
             _we(_edge_line(
                 node.diagram_id, child.diagram_id,
                 child.is_incontextof,
                 is_counter, False))
-            _gsn_collect_edges(child, write_edge, leaf_nodes)
+            _gsn_collect_edges(child, write_edge, leaf_nodes, skip_targets)
     if not _had_edge[0]:
         leaf_nodes.append(node)
 
@@ -4204,34 +4216,15 @@ def _gsn_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
         out.write('\n')
         out.write(line)
 
-    # Build parent diagram_id map so we can emit invisible rank-equalising edges.
-    # key = id(child_node), value = parent's diagram_id
-    _parent_did: Dict[int, str] = {}
-    for _n in all_nodes:
-        if not _n.diagram_id:
-            continue
-        for _c in _n.children:
-            if _c.node_type == 'Link':
-                if _c.link_target is not None and _c.link_target.diagram_id:
-                    _parent_did.setdefault(id(_c.link_target), _n.diagram_id)
-            elif _c.node_type == 'Relation':
-                for _gc in _c.children:
-                    if _gc.node_type == 'Link':
-                        if _gc.link_target is not None and _gc.link_target.diagram_id:
-                            _parent_did.setdefault(id(_gc.link_target), _n.diagram_id)
-                    elif _gc.diagram_id:
-                        _parent_did.setdefault(id(_gc), _n.diagram_id)
-            elif _c.diagram_id:
-                _parent_did.setdefault(id(_c), _n.diagram_id)
-
     # Invisible LR subgraphs: keep Context/Justification beside their Strategy.
-    # For each Strategy with 1-2 such children:
-    #   • emit a direction LR subgraph so Dagre arranges nodes horizontally;
-    #   • emit parent ~~~ item invisible edges so each moved item is assigned
-    #     the same TD rank as the Strategy (without this, the directed --o edge
-    #     from Strategy to item pulls the item one rank lower, placing it below).
+    # For each Strategy with 1-2 such children, emit a direction LR subgraph.
+    # The visible --o edges are placed INSIDE the subgraph body so that Dagre
+    # treats them as LR edges (not TD), keeping the items at the same rank as
+    # the Strategy.  They are added to _moved_ids so that _gsn_collect_edges
+    # skips them (preventing duplicate edges and BottomPadding connections).
     # Items are listed leftmost-first: item ~~~ Strategy (1 item) or
     # item1 ~~~ Strategy ~~~ item2 (2 items).
+    _moved_ids: set = set()
     _sg_idx = [0]
     for node in all_nodes:
         if node.node_type != 'Strategy':
@@ -4247,28 +4240,25 @@ def _gsn_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
             _write_edge(f'        {items[0].diagram_id} ~~~ {node.diagram_id}')
         else:
             _write_edge(f'        {items[0].diagram_id} ~~~ {node.diagram_id} ~~~ {items[1].diagram_id}')
+        for item in items:
+            _write_edge(f'        {node.diagram_id} --o {item.diagram_id}')
+            _moved_ids.add(item.diagram_id)
         _write_edge('    end')
         _write_edge(f'    style {sg_id} fill:none,stroke:none')
-        # Rank-equalising invisible edges: parent ~~~ moved_item
-        parent_did = _parent_did.get(id(node))
-        if parent_did:
-            for item in items:
-                _write_edge(f'    {parent_did} ~~~ {item.diagram_id}')
 
     for root in roots:
-        _gsn_collect_edges(root, _write_edge, leaf_nodes)
+        _gsn_collect_edges(root, _write_edge, leaf_nodes, _moved_ids)
 
-    # BottomPadding (after edges): all leaves link to an invisible padding node
-    # that prevents GitHub's diagram controls from obscuring the bottom.
+    # BottomPadding (after edges): one invisible node per leaf, below every
+    # leaf, so GitHub's diagram controls don't obscure the bottom of the diagram.
     if bottom_padding:
-        first_bp = True
+        bp_idx = 0
         seen: set = set()
         for leaf in leaf_nodes:
             if leaf.diagram_id not in seen:
                 seen.add(leaf.diagram_id)
-                bp = 'BottomPadding[ ]:::invisible' if first_bp else 'BottomPadding'
-                _write_edge(f'    {leaf.diagram_id} ~~~ {bp}')
-                first_bp = False
+                bp_idx += 1
+                _write_edge(f'    {leaf.diagram_id} ~~~ BottomPadding{bp_idx}[ ]:::invisible')
 
 
 def render_gsn(roots: List['Node'], config: dict, out: TextIO) -> bool:
@@ -4524,16 +4514,16 @@ def _cae_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
         out.write('\n')
         out.write(line)
 
-    # BottomPadding first (BT diagram: invisible node below every display leaf)
+    # BottomPadding first (BT diagram): one invisible node per leaf, below every
+    # display leaf, so GitHub's diagram controls don't obscure the bottom.
     if bottom_padding:
-        first_bp = True
+        bp_idx = 0
         seen: set = set()
         for leaf in display_leaves:
             if leaf.diagram_id not in seen:
                 seen.add(leaf.diagram_id)
-                bp = 'BottomPadding[ ]:::invisible' if first_bp else 'BottomPadding'
-                _write_edge(f'    {bp} ~~~ {leaf.diagram_id}')
-                first_bp = False
+                bp_idx += 1
+                _write_edge(f'    BottomPadding{bp_idx}[ ]:::invisible ~~~ {leaf.diagram_id}')
 
     for edge_line in edge_lines:
         _write_edge(edge_line)

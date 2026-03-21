@@ -30,11 +30,11 @@ flowchart BT
     click C3 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/simple.sacm.mermaid.expected.md#claim-c3"
     click E1 "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/simple.sacm.mermaid.expected.md#evidence-e1"
 
-    BottomPadding[ ]:::invisible ~~~ AR1
-    BottomPadding ~~~ A1
-    BottomPadding ~~~ X1
-    BottomPadding ~~~ C3
-    BottomPadding ~~~ E1
+    BottomPadding1[ ]:::invisible ~~~ AR1
+    BottomPadding2[ ]:::invisible ~~~ A1
+    BottomPadding3[ ]:::invisible ~~~ X1
+    BottomPadding4[ ]:::invisible ~~~ C3
+    BottomPadding5[ ]:::invisible ~~~ E1
     E1 --> C2
     C2 --- Dot1
     C3 --- Dot1

@@ -4337,8 +4337,7 @@ def _cae_node_decl(node: 'Node') -> str:
     else:  # Claim, Assumption, Context, Defeater — all ellipses
         shape = f'(("{inner}"))'
 
-    abstract_suffix = ' abstractClaim' if 'abstract' in opts else ''
-    return f'    {did}{shape}:::{cls}{abstract_suffix}'
+    return f'    {did}{shape}:::{cls}'
 
 
 def _cae_collect_edges(node: 'Node', write_edge) -> None:
@@ -4419,6 +4418,14 @@ def _cae_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
         if decl:
             out.write('\n')
             out.write(decl)
+
+    # Abstract nodes need a separate 'class' statement because Mermaid does
+    # not support inline multi-class syntax (:::classA classB is invalid).
+    for node in all_nodes:
+        if node.node_type not in ('Relation', 'Link', 'Connector') \
+                and 'abstract' in node.options:
+            out.write('\n')
+            out.write(f'    class {node.diagram_id} abstractClaim')
 
     # Click lines (BFS)
     for node in all_nodes:

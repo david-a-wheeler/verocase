@@ -443,10 +443,7 @@ flowchart BT
     click EvHarden "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/demo-output.expected.md#evidence-evharden"
     click XProd "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/demo-output.expected.md#context-xprod"
 
-    BottomPadding[ ]:::invisible ~~~ XScope
-    BottomPadding ~~~ Access
-    BottomPadding ~~~ Data
-    BottomPadding ~~~ EvHarden
+    BottomPadding[ ]:::invisible ~~~ EvHarden
     BottomPadding ~~~ XProd
     XScope -.-> Security
     Access --> SArg
@@ -511,8 +508,7 @@ flowchart BT
     click EvPenTest "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/demo-output.expected.md#evidence-evpentest"
     click DBVuln "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/demo-output.expected.md#claim-dbvuln"
 
-    BottomPadding[ ]:::invisible ~~~ AAdmin
-    BottomPadding ~~~ EvLogin
+    BottomPadding[ ]:::invisible ~~~ EvLogin
     BottomPadding ~~~ JMechanism
     BottomPadding ~~~ XLogPolicy
     BottomPadding ~~~ EvRBAC
@@ -567,7 +563,7 @@ flowchart BT
     MetaClaim(("<b>MetaClaim</b><br>This assurance case addresses all applicable data protection requirements")):::caeClaimClass
     Encrypt(("<b>Encrypt</b><br>All sensitive data is encrypted in transit and at rest")):::caeClaimClass
     Minimise(("<b>Minimise</b><br>Only necessary data is collected and retained per the privacy policy")):::caeClaimClass
-    AuditAccess(("<b>AuditAccess</b><br>All sensitive data access events are logged and periodically reviewed")):::caeClaimClass:::abstractClaim
+    AuditAccess(("<b>AuditAccess</b><br>All sensitive data access events are logged and periodically reviewed")):::caeClaimClass abstractClaim
     EvTLS["<b>EvTLS</b><br>TLS configuration scan achieves A+ rating"]:::caeEvidClass
     EvDB["<b>EvDB</b><br>Database-level encryption enabled and key management audited"]:::caeEvidClass
     DataMap(("<b>DataMap</b><br>The data flow diagram covers all personal data stores and flows<br>...")):::caeClaimClass
@@ -585,11 +581,7 @@ flowchart BT
     click DataMap "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/demo-output.expected.md#claim-datamap"
     click JRetention "https://github.com/david-a-wheeler/verocase/blob/main/tests/fixtures/demo-output.expected.md#justification-jretention"
 
-    BottomPadding[ ]:::invisible ~~~ XRegulation
-    BottomPadding ~~~ AEncrypt
-    BottomPadding ~~~ MetaClaim
-    BottomPadding ~~~ AuditAccess
-    BottomPadding ~~~ EvTLS
+    BottomPadding[ ]:::invisible ~~~ EvTLS
     BottomPadding ~~~ EvDB
     BottomPadding ~~~ DataMap
     BottomPadding ~~~ JRetention

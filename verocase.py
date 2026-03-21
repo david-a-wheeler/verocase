@@ -4204,9 +4204,34 @@ def _gsn_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
         out.write('\n')
         out.write(line)
 
+    # Build parent diagram_id map so we can emit invisible rank-equalising edges.
+    # key = id(child_node), value = parent's diagram_id
+    _parent_did: Dict[int, str] = {}
+    for _n in all_nodes:
+        if not _n.diagram_id:
+            continue
+        for _c in _n.children:
+            if _c.node_type == 'Link':
+                if _c.link_target is not None and _c.link_target.diagram_id:
+                    _parent_did.setdefault(id(_c.link_target), _n.diagram_id)
+            elif _c.node_type == 'Relation':
+                for _gc in _c.children:
+                    if _gc.node_type == 'Link':
+                        if _gc.link_target is not None and _gc.link_target.diagram_id:
+                            _parent_did.setdefault(id(_gc.link_target), _n.diagram_id)
+                    elif _gc.diagram_id:
+                        _parent_did.setdefault(id(_gc), _n.diagram_id)
+            elif _c.diagram_id:
+                _parent_did.setdefault(id(_c), _n.diagram_id)
+
     # Invisible LR subgraphs: keep Context/Justification beside their Strategy.
-    # For each Strategy with 1-2 such children, emit a direction LR subgraph
-    # with invisible (~~~) edges so Dagre places them at the same visual rank.
+    # For each Strategy with 1-2 such children:
+    #   • emit a direction LR subgraph so Dagre arranges nodes horizontally;
+    #   • emit parent ~~~ item invisible edges so each moved item is assigned
+    #     the same TD rank as the Strategy (without this, the directed --o edge
+    #     from Strategy to item pulls the item one rank lower, placing it below).
+    # Items are listed leftmost-first: item ~~~ Strategy (1 item) or
+    # item1 ~~~ Strategy ~~~ item2 (2 items).
     _sg_idx = [0]
     for node in all_nodes:
         if node.node_type != 'Strategy':
@@ -4219,11 +4244,16 @@ def _gsn_diagram_body(roots: List['Node'], config: dict, out: TextIO) -> None:
         _write_edge(f'    subgraph {sg_id} [ ]')
         _write_edge('        direction LR')
         if len(items) == 1:
-            _write_edge(f'        {node.diagram_id} ~~~ {items[0].diagram_id}')
+            _write_edge(f'        {items[0].diagram_id} ~~~ {node.diagram_id}')
         else:
             _write_edge(f'        {items[0].diagram_id} ~~~ {node.diagram_id} ~~~ {items[1].diagram_id}')
         _write_edge('    end')
         _write_edge(f'    style {sg_id} fill:none,stroke:none')
+        # Rank-equalising invisible edges: parent ~~~ moved_item
+        parent_did = _parent_did.get(id(node))
+        if parent_did:
+            for item in items:
+                _write_edge(f'    {parent_did} ~~~ {item.diagram_id}')
 
     for root in roots:
         _gsn_collect_edges(root, _write_edge, leaf_nodes)

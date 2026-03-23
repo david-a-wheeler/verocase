@@ -5881,20 +5881,16 @@ More help is available:
     ltac_render = parser.add_mutually_exclusive_group()
     ltac_render.add_argument(
         '--select', '-s', type=str, metavar='SELECTOR',
-        help='render SELECTOR to stdout using LTAC/config only; '
-             'see selector table below. May combine with any mode.',
+        help='render SELECTOR to stdout (LTAC/config only; see selector table below)',
     )
     ltac_render.add_argument(
         '--info', type=str, metavar='ID',
-        help='print full context for element ID: package, ancestors, children, '
-             'descendant count, and citation parents. '
-             'Shorthand for --select "info ID". May combine with any mode.',
+        help='print context for ID: package, ancestors, children, '
+             'descendant count, and citation parents',
     )
     ltac_render.add_argument(
         '--descendants', type=str, metavar='ID',
-        help='print the LTAC definition of element ID and all its descendants '
-             'in LTAC source form. Shorthand for --select "ltac/txt ID". '
-             'May combine with any mode.',
+        help='print LTAC source for ID and all its descendants',
     )
 
     # Reporting options: print extra information; may combine with any mode.
@@ -6224,16 +6220,10 @@ def run(args: argparse.Namespace) -> bool:
 
     # Reporting options: print after the main operation.
     _sep = ''
-    if args.select:
-        if case.render_selector(args.select, sys.stdout, doc_format='markdown'):
-            sys.stdout.write('\n')
-        _sep = '\n'
-    elif args.info:
-        if case.render_selector(f'info {args.info}', sys.stdout, doc_format='markdown'):
-            sys.stdout.write('\n')
-        _sep = '\n'
-    elif args.descendants:
-        if case.render_selector(f'ltac/txt {args.descendants}', sys.stdout, doc_format='markdown'):
+    if args.select or args.info or args.descendants:
+        _sel = (args.select or (f'info {args.info}' if args.info
+                                else f'ltac/txt {args.descendants}'))
+        if case.render_selector(_sel, sys.stdout, doc_format='markdown'):
             sys.stdout.write('\n')
         _sep = '\n'
     if args.leaves:

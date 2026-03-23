@@ -19,6 +19,7 @@ import tempfile
 import types
 from bisect import bisect_left
 from collections import deque
+from contextlib import contextmanager
 from dataclasses import dataclass, field
 from typing import Dict, Iterable, List, Optional, Set, TextIO, Tuple, Union
 
@@ -87,10 +88,6 @@ _DEFAULT_PACKAGE_SELECTIONS = 'representation,pkg_defines,pkg_citing,pkg_cited'
 # Default configuration values.  Case().load_config() merges a TOML file over these.
 # Config files searched in order when no explicit --config is given.
 _CONFIG_SEARCH_PATHS = ('verocase.toml', 'docs/verocase.toml', 'case.toml', 'docs/case.toml')
-
-# CLI analysis-only flags (incompatible with file-modifying modes).
-ANALYSIS_FLAGS = frozenset({'missing', 'empty', 'orphans',
-                            'misplaced', 'leaves', 'packages'})
 
 # CLI flags whose actions modify document or LTAC files.
 FILE_MODIFYING_FLAGS = frozenset({'fixmissing', 'fixmisplaced', 'start'})
@@ -750,6 +747,10 @@ class Case:
     (node.children, node.parent) may leave these maps stale.
     """
 
+    # Cache fields that cannot be computed incrementally by the parser
+    # (leaf status is only knowable once the full tree is built).
+    _NON_INCREMENTAL_CACHE_FIELDS = frozenset({'important_leaves'})
+
     def __init__(self, stderr=None):
         self.roots:               List['Node']            = []
         self.all_definitions_for: Dict[str, List['Node']] = {}
@@ -766,19 +767,40 @@ class Case:
         self.stderr:         'TextIO'           = stderr or sys.stderr
         self.trailing_comments: List[str]       = []
 
+        # Document pass results — None means "no pass has run yet" (distinct
+        # from {} / [] which means "pass ran and found nothing").
+        self.element_doc_info: Optional[Dict[str, 'ElementDocInfo']] = None
+        self.element_doc_order: Optional[List[Tuple[str, str, int]]] = None
+        self.doc_pass_stats: Optional['DocPassStats'] = None
+
+        # LTAC-derived leaf set — managed by reset_cache(), not _reset_doc_processing().
+        self.important_leaves: Set[str] = set()
+
+        # Error suppression: had_error is always set, output can be silenced.
+        self._suppress_reporting: bool = False
+        self._suppressed_messages: List[Tuple[str, str]] = []
+
     # ------------------------------------------------------------------
     # Error reporting: We do our own, to set self.had_error
     # ------------------------------------------------------------------
 
     def error(self, msg: str) -> None:
-        """Print an error to stderr and set the error flag."""
-        print(f"verocase: error: {msg}", file=self.stderr)
+        """Print an error to stderr and set the error flag.
+        If reporting is suppressed, the message is collected instead of printed,
+        but had_error is still set."""
         self.had_error = True
+        if self._suppress_reporting:
+            self._suppressed_messages.append(('error', msg))
+        else:
+            print(f"verocase: error: {msg}", file=self.stderr)
 
     def warn(self, msg: str) -> None:
-        """Print a warning; if strict mode is on, escalate to error()."""
+        """Print a warning; if strict mode is on, escalate to error().
+        If reporting is suppressed, the message is collected instead of printed."""
         if self.strict:
             self.error(msg)
+        elif self._suppress_reporting:
+            self._suppressed_messages.append(('warn', msg))
         else:
             print(f"verocase: warning: {msg}", file=self.stderr)
 
@@ -791,6 +813,39 @@ class Case:
     def notify(self, msg: str) -> None:
         """Print an informational notification to stderr."""
         print(f"verocase: {msg}", file=self.stderr)
+
+    def clear_errors(self) -> None:
+        """Reset had_error to False and clear any suppressed messages.
+        Call this at the start of a fresh operation to ensure a clean slate."""
+        self.had_error = False
+        self._suppressed_messages = []
+
+    @contextmanager
+    def suppressed_reporting(self):
+        """Context manager: suppress stderr output from error()/warn().
+
+        had_error is still set when errors occur. Suppressed messages are
+        collected in self._suppressed_messages (cleared at entry, readable
+        after exit). Nested calls wipe messages from the outer context —
+        avoid nesting in practice."""
+        prev = self._suppress_reporting
+        self._suppress_reporting = True
+        self._suppressed_messages = []
+        try:
+            yield
+        finally:
+            self._suppress_reporting = prev
+
+    def _reset_doc_processing(self) -> None:
+        """Reset all document-pass results to None.
+
+        None is the deliberate sentinel meaning 'no pass has run'; an empty
+        dict/list would be ambiguous (pass ran, found nothing). Called by
+        every orchestrator at the start of each pass.
+        Does NOT touch important_leaves (LTAC-derived) or had_error."""
+        self.element_doc_info = None
+        self.element_doc_order = None
+        self.doc_pass_stats = None
 
     # ------------------------------------------------------------------
     # Construction: load from files
@@ -825,6 +880,7 @@ class Case:
         self.ltac_path = None
         self.ltac_line_ending = detect_line_ending(text)
         _LTACParser(self, config=self.config).parse(text.splitlines(keepends=True))
+        self.reset_cache()
         return self
 
     def load(self, ltac_file: Optional[str] = None,
@@ -967,6 +1023,7 @@ o
             self.panic(f"cannot open {path!r}: {e}")
         self.ltac_line_ending = detect_line_ending(lines[0] if lines else '')
         _LTACParser(self, config=self.config).parse(lines)
+        self.reset_cache()
 
     def validate_ltac(self) -> bool:
         """Run all LTAC structural validation checks; return True if
@@ -1100,21 +1157,6 @@ o
             self.notify(f"Adding {count} needsSupport marking(s) to leaves in the LTAC file")
         return count
 
-    def _collect_document_element_ids(self, path: str) -> set:
-        """Fast pre-scan: return the set of element IDs in path's element selector markers."""
-        ids = set()
-        try:
-            with open(path, encoding='utf-8', errors='replace') as f:
-                for line in f:
-                    m = _CASEPROC_REGION_RE.match(line.rstrip('\r\n'))
-                    if m:
-                        parts = m.group(1).split(None, 1)
-                        if len(parts) == 2 and parts[0] == 'element':
-                            ids.add(parts[1])
-        except OSError:
-            pass
-        return ids
-
     # ------------------------------------------------------------------
     # Validation
     # ------------------------------------------------------------------
@@ -1166,8 +1208,11 @@ o
         """
         all_definitions_for: Dict[str, List['Node']] = {}
         citations: Dict[str, List['Node']] = {}
+        important_leaves: Set[str] = set()
 
-        # Pass 1: collect definitions and citations.
+        # Pass 1: collect definitions, citations, and important leaves.
+        # An important leaf is a definition node (non-Link, non-Citation)
+        # with no children and no ext_ref.
         for node in self.all_nodes(): # all_nodes provides LTAC order
             if not node.identifier:
                 continue
@@ -1175,6 +1220,8 @@ o
                 citations.setdefault(node.identifier, []).append(node)
             elif node.node_type != 'Link':
                 all_definitions_for.setdefault(node.identifier, []).append(node)
+                if not node.children and not node.ext_ref:
+                    important_leaves.add(node.identifier)
 
         # Pass 2: resolve link_target on all Link nodes.
         links: Dict[str, List['Node']] = {}
@@ -1206,9 +1253,11 @@ o
             'citations':           citations,
             'links':               links,
             'link_targets':        link_targets,
+            'important_leaves':    important_leaves,
         }
 
-    def doublecheck_cache(self, cache: Optional[dict] = None) -> bool:
+    def doublecheck_cache(self, cache: Optional[dict] = None,
+                          skip_non_incremental: bool = False) -> bool:
         """Recompute cached values and report any discrepancies against
         stored values.
 
@@ -1221,6 +1270,10 @@ o
         is found.
         Intended for internal testing via --doublecheck; does not modify any
         stored state.
+
+        When skip_non_incremental is True, fields in _NON_INCREMENTAL_CACHE_FIELDS
+        are excluded from comparison (used at load time when the parser hasn't
+        computed those fields incrementally).
         """
         c = cache if cache is not None else self.recalculate_cache()
 
@@ -1236,6 +1289,14 @@ o
                 self.error(f"cache error: link_target on Link {node.identifier!r} "
                            f"(line {node.lineno}): "
                            f"stored {node.link_target!r}, computed {computed_target!r}")
+                ok = False
+
+        if not skip_non_incremental:
+            computed_leaves = c.get('important_leaves', set())
+            if self.important_leaves != computed_leaves:
+                self.error(f"cache error: important_leaves mismatch: "
+                           f"stored {sorted(self.important_leaves)!r}, "
+                           f"computed {sorted(computed_leaves)!r}")
                 ok = False
 
         return ok
@@ -1267,6 +1328,7 @@ o
         self.all_definitions_for = cache['all_definitions_for']
         self.citations           = cache['citations']
         self.links               = cache['links']
+        self.important_leaves    = cache['important_leaves']
         for node in self.all_nodes():
             if node.node_type == 'Link' and id(node) in cache['link_targets']:
                 node.link_target = cache['link_targets'][id(node)]
@@ -1605,120 +1667,232 @@ o
     # Document processing
     # ------------------------------------------------------------------
 
-    def check_element_coverage(self, seen_element_ids: set) -> None:
-        """Warn about every defined element with no corresponding
-        element selector."""
-        for ident in self.all_definitions_for:
-            if ident not in seen_element_ids:
-                self.warn(f"element {ident!r} has no 'element' selector in any processed file")
+    # ------------------------------------------------------------------
+    # Document processing orchestrators
+    # ------------------------------------------------------------------
 
-    def _process_document_files(self, files: List[str], out,
-                                 strip: bool = False,
-                                 seen_ids: Optional[set] = None) -> set:
-        """Open each file and call process_document, accumulating seen element IDs."""
-        seen = seen_ids if seen_ids is not None else set()
-        for path in files:
-            try:
-                with open(path, newline='') as f:
-                    seen = self.process_document(f, out, detect_doc_format(path),
-                                                 strip=strip, seen_ids=seen)
-            except OSError as e:
-                self.error(f"cannot open {path!r}: {e}")
-        return seen
+    def _process_document_file(self, input_path: str, out,
+                                add_missing: bool = False,
+                                strip: bool = False,
+                                renames: Optional[Dict[str, str]] = None,
+                                existing_ids: Optional[set] = None,
+                                scan_only: bool = False) -> None:
+        """Process a single document file, writing output to `out`.
 
-    def _rewrite_document_file(
-        self,
-        path: str,
-        add_missing: bool = False,
-        strip: bool = False,
-        seen_ids: Optional[set] = None,
-    ) -> Tuple[Optional[Tuple[str, str]], set]:
-        """Process a single document file, streaming updated content to a temp file.
-
-        Returns a ``(pair, seen)`` tuple where pair is ``(tmp_path, final_path)``
-        or None on error, and seen is the set of element identifiers rendered.
-
-        Streams directly to a temp file (no whole-document buffer).  When
-        add_missing is True, uses a single-pass smart-placement algorithm to
-        insert new element stubs near their natural LTAC order position.
+        Populates self.element_doc_info, self.element_doc_order, and
+        self.doc_pass_stats as side-effects (via process_document).
+        Does NOT call _reset_doc_processing() — that is the caller's job.
+        On OSError, calls self.error() and returns without raising.
+        When scan_only is True, selector regions are not rendered (element
+        tracking and orphan detection still run normally).
         """
-        seen = seen_ids if seen_ids is not None else set()
-        error_before = self.had_error
-
-        # Detect line endings by scanning only the first chunk.
+        doc_format = detect_doc_format(input_path)
         try:
-            with open(path, 'rb') as bf:
-                first_chunk = bf.read(4096)
+            with open(input_path, encoding='utf-8', newline='',
+                      buffering=_DOC_IO_BUFSIZE) as src_f:
+                self.process_document(src_f, out, doc_format,
+                                      add_missing=add_missing, strip=strip,
+                                      existing_ids=existing_ids, renames=renames,
+                                      scan_only=scan_only)
         except OSError as e:
-            self.error(f"cannot open {path!r}: {e}")
-            return None, seen
-        line_ending = '\r\n' if b'\r\n' in first_chunk else '\n'
-        doc_format = detect_doc_format(path)
+            self.error(f"error processing {input_path!r}: {e}")
 
-        # Pre-scan for existing element IDs used by single-pass smart placement.
-        existing_ids = self._collect_document_element_ids(path) if add_missing else None
+    def _post_pass_checks(self, check_misplaced: bool = False,
+                          check_missing: bool = True) -> None:
+        """Run checks that require the full document picture.
 
-        dir_ = os.path.dirname(os.path.abspath(path))
-        try:
-            fd, tmp = tempfile.mkstemp(dir=dir_)
-        except OSError as e:
-            self.error(f"cannot create temp file for {path!r}: {e}")
-            return None, seen
+        Called by every orchestrator after all files have been processed.
+        Reports:
+        - Missing elements: LTAC definitions absent from element_doc_info
+          (as warnings; use --error / strict mode to make them fatal).
+        - Important leaves with no prose.
+        - Misplaced elements (if check_misplaced or config ltac_order is set).
+        Orphan elements are reported immediately in process_document() when
+        first encountered, since the full LTAC is already loaded at that point.
+        """
+        if self.element_doc_info is None:
+            return
 
-        try:
-            nl = '\r\n' if line_ending == '\r\n' else ''
-            with os.fdopen(fd, 'w', encoding='utf-8', newline=nl,
-                           buffering=_DOC_IO_BUFSIZE) as out_f:
-                with open(path, encoding='utf-8', newline='',
-                          buffering=_DOC_IO_BUFSIZE) as src_f:
-                    seen = self.process_document(src_f, out_f, doc_format,
-                                                 add_missing=add_missing, strip=strip,
-                                                 existing_ids=existing_ids,
-                                                 seen_ids=seen_ids)
-        except Exception as e:
+        if check_missing:
+            # Missing elements: defined in LTAC but not covered by an element marker.
+            for ident in self.all_definitions_for:
+                if ident not in self.element_doc_info:
+                    self.warn(f"element {ident!r} has no 'element' selector in any processed file")
+
+        # Important leaves with no prose.
+        for ident in self.important_leaves:
+            info = self.element_doc_info.get(ident)
+            if info is not None and not info.has_prose:
+                node = self.definition_for(ident)
+                if node and not node.ext_ref:
+                    self.warn(f"element {ident!r} ({node.node_type}) has no prose in its document region")
+
+        # Misplaced elements.
+        if check_misplaced and self.element_doc_order:
+            ltac_order = [node.identifier for node in self.all_nodes()
+                          if node.is_definition and node.identifier]
+            ltac_pos = {ident: i for i, ident in enumerate(ltac_order)}
+            doc_entries = [(ident, fp, sl) for ident, fp, sl in self.element_doc_order
+                           if ident in self.all_definitions_for]
+            if doc_entries:
+                ranks = [ltac_pos.get(ident, -1) for ident, _, _ in doc_entries]
+                lis_idx = _lis_indices(ranks)
+                for i, (ident, filepath, lineno) in enumerate(doc_entries):
+                    if i not in lis_idx:
+                        self.warn(f"{filepath}:{lineno}: element {ident!r} is out of LTAC order")
+
+    def scan_documents(self) -> bool:
+        """Scan all document_files without modifying them.
+
+        Populates element_doc_info, element_doc_order, doc_pass_stats.
+        Orphan elements (selector regions not declared in the LTAC) are
+        reported as errors immediately when encountered.  Missing-element
+        warnings are reported after all files are processed.
+        Returns not self.had_error.
+        """
+        self._reset_doc_processing()
+        for path in self.document_files:
+            self._process_document_file(path, _NullWriter(), scan_only=True)
+        self._post_pass_checks(check_misplaced=self.config.get('ltac_order', False))
+        return not self.had_error
+
+    def stdout_documents(self, strip: bool = False) -> bool:
+        """Write all document_files rendered to stdout, without modifying files.
+
+        Populates element_doc_info, element_doc_order, doc_pass_stats.
+        Returns not self.had_error.
+        """
+        self._reset_doc_processing()
+        for path in self.document_files:
+            self._process_document_file(path, sys.stdout, strip=strip)
+        self._post_pass_checks(check_misplaced=self.config.get('ltac_order', False))
+        return not self.had_error
+
+    def update_documents(self, add_missing: bool = False,
+                         strip: bool = False,
+                         renames: Optional[Dict[str, str]] = None) -> bool:
+        """Rewrite all document_files in place (LTAC treated as fixed).
+
+        Populates element_doc_info, element_doc_order, doc_pass_stats.
+        Does NOT commit the LTAC file even if ltac_modified is set;
+        call update_files() for that, or commit explicitly after.
+        Returns not self.had_error.
+        """
+        # When add_missing=True, do a quiet inline scan first so we know which
+        # element IDs already exist across all files.  We don't run
+        # _post_pass_checks() here because missing elements are about to be added.
+        pre_existing_ids: Optional[frozenset] = None
+        if add_missing and self.document_files:
+            self._reset_doc_processing()
+            for _p in self.document_files:
+                self._process_document_file(_p, _NullWriter(), scan_only=True)
+            pre_existing_ids = frozenset(self.element_doc_info.keys()) if self.element_doc_info else frozenset()
+
+        self._reset_doc_processing()
+        pairs: List[Tuple[str, str]] = []
+        n = len(self.document_files)
+        for i, path in enumerate(self.document_files):
+            is_last = (i == n - 1)
+            existing = pre_existing_ids if (add_missing and is_last) else None
+
+            dir_ = os.path.dirname(os.path.abspath(path))
             try:
-                os.unlink(tmp)
-            except OSError:
-                pass
-            self.error(f"error processing {path!r}: {e}")
-            return None, seen
-        except BaseException:
+                fd, tmp = tempfile.mkstemp(dir=dir_)
+            except OSError as e:
+                self.error(f"cannot create temp file for {path!r}: {e}")
+                continue
+
+            error_before = self.had_error
             try:
-                os.unlink(tmp)
-            except OSError:
-                pass
-            raise
+                line_ending = '\n'
+                try:
+                    with open(path, 'rb') as bf:
+                        line_ending = '\r\n' if b'\r\n' in bf.read(4096) else '\n'
+                except OSError:
+                    pass
+                nl = '\r\n' if line_ending == '\r\n' else ''
+                with os.fdopen(fd, 'w', encoding='utf-8', newline=nl,
+                               buffering=_DOC_IO_BUFSIZE) as out_f:
+                    self._process_document_file(path, out_f,
+                                                add_missing=(add_missing and is_last),
+                                                strip=strip,
+                                                renames=renames,
+                                                existing_ids=existing)
+            except Exception as e:
+                try:
+                    os.unlink(tmp)
+                except OSError:
+                    pass
+                self.error(f"error processing {path!r}: {e}")
+                continue
+            except BaseException:
+                try:
+                    os.unlink(tmp)
+                except OSError:
+                    pass
+                raise
 
-        if self.had_error and not error_before:
-            try:
-                os.unlink(tmp)
-            except OSError:
-                pass
-            return None, seen
+            if self.had_error and not error_before:
+                try:
+                    os.unlink(tmp)
+                except OSError:
+                    pass
+                continue
 
-        return (tmp, path), seen
+            pairs.append((tmp, path))
 
-    def fix_misplaced_documents(self) -> bool:
+        if pairs:
+            self.commit_updates(pairs)
+        # When add_missing=True, element_doc_info reflects the input files before
+        # injection; the stubs are written to output but not tracked in
+        # element_doc_info.  Skip the missing-element check to avoid spurious
+        # warnings about elements that were just injected.
+        self._post_pass_checks(
+            check_misplaced=self.config.get('ltac_order', False),
+            check_missing=not add_missing)
+        return not self.had_error
+
+    def fix_misplaced_documents(self, scan_initial_docs: bool = True) -> bool:
         """Fix misplaced element regions across all document_files in
         one commit.
 
-        For each file in self.document_files, moves element regions to their
-        correct LTAC order positions.  All changes (including LTAC if
-        self.ltac_modified) are committed atomically.
+        Pass 1: scan documents (via scan_documents()) to determine current
+        element order.  If scan_initial_docs is False, reuse an existing
+        element_doc_info (panics if None).
+        Pass 2 (only if misplaced found): rearrange regions in each affected
+        file and commit to disk.
+        Pass 3 (only if Pass 2 ran): re-scan to repopulate element_doc_info
+        and run all post-pass checks on the updated files.
         Returns not self.had_error.
         """
+        if scan_initial_docs:
+            self.scan_documents()
+        elif self.element_doc_info is None:
+            self.panic("fix_misplaced_documents(scan_initial_docs=False) called "
+                       "with no element_doc_info; run scan_documents() first")
+            return not self.had_error
+
+        # Pass 2: rearrange if needed.
         pairs = []
         for path in self.document_files:
             pair = self._fix_misplaced_document(path)
             if pair is not None:
                 pairs.append(pair)
+
+        if not pairs:
+            # Nothing was misplaced; element_doc_info from Pass 1 still valid.
+            return not self.had_error
+
+        self.commit_updates(pairs)
+
         if self.ltac_modified and self.ltac_path:
             tmp = self._make_ltac_temp(self.ltac_path)
             if tmp is not None:
-                pairs.append((tmp, self.ltac_path))
-        if pairs:
-            self.commit_updates(pairs)
-            self.ltac_modified = False
+                self.commit_updates([(tmp, self.ltac_path)])
+                self.ltac_modified = False
+
+        # Pass 3: re-scan now that files have been rearranged.
+        self.scan_documents()
         return not self.had_error
 
     def fixmissing(self) -> bool:
@@ -1728,23 +1902,15 @@ o
         (including LTAC if modified) are committed atomically.
         Returns not self.had_error.
         """
-        pairs = []
-        seen_element_ids: set = set()
-        for i, path in enumerate(self.document_files):
-            is_last = (i == len(self.document_files) - 1)
-            pair, seen_element_ids = self._rewrite_document_file(
-                path, add_missing=is_last, seen_ids=seen_element_ids)
-            if pair:
-                pairs.append(pair)
+        self.update_documents(add_missing=True)
         all_ids_ordered = [node.identifier for node in self.all_nodes_fast()
                            if node.is_definition and node.identifier]
         changed = self._mark_needs_support(all_ids_ordered)
-        if changed or self.ltac_modified:
+        if (changed or self.ltac_modified) and self.ltac_path:
             tmp = self._make_ltac_temp(self.ltac_path)
             if tmp is not None:
-                pairs.append((tmp, self.ltac_path))
-        if pairs:
-            self.commit_updates(pairs)
+                self.commit_updates([(tmp, self.ltac_path)])
+                self.ltac_modified = False
         return not self.had_error
 
     def _fix_misplaced_document(self, path: str) -> Optional[Tuple[str, str]]:
@@ -1952,30 +2118,18 @@ o
         """Atomically update document_files and LTAC (if modified) in
         one commit.
 
-        Rewrites each file in self.document_files, and if
-        self.ltac_modified is True also serialises the LTAC forest —
+        Rewrites each file in self.document_files (via update_documents),
+        and if self.ltac_modified is True also serialises the LTAC forest —
         all written to temp files first, then committed together in a
         single backup+atomic-replace operation.  Clears
-        self.ltac_modified on success.  Warns about any defined
-        element not covered by an element selector.  Returns
-        not self.had_error.
+        self.ltac_modified on success.  Returns not self.had_error.
         """
-        pairs = []
-        seen: set = set()
-        for path in self.document_files:
-            pair, seen = self._rewrite_document_file(path, add_missing=add_missing,
-                                                     strip=strip, seen_ids=seen)
-            if pair is not None:
-                pairs.append(pair)
+        self.update_documents(add_missing=add_missing, strip=strip)
         if self.ltac_modified and self.ltac_path:
             tmp = self._make_ltac_temp(self.ltac_path)
             if tmp is not None:
-                pairs.append((tmp, self.ltac_path))
-        if pairs:
-            self.commit_updates(pairs)
-            self.ltac_modified = False
-        if self.document_files:
-            self.check_element_coverage(seen)
+                self.commit_updates([(tmp, self.ltac_path)])
+                self.ltac_modified = False
         return not self.had_error
 
     # ------------------------------------------------------------------
@@ -2044,198 +2198,63 @@ o
             'option_counts':     option_counts,
         }
 
-    def _scan_doc_stats(self, path: str) -> dict:
-        """Scan a document file and return document-level statistics."""
-        pkg_regions = 0
-        elem_regions = 0
-        config_stmts = 0
-        empty_elem_regions = 0
-
-        try:
-            with open(path, encoding='utf-8', errors='replace') as f:
-                lines = f.readlines()
-        except OSError:
-            return {}
-
-        i = 0
-        in_elem_region = False
-        after_end = False
-        gap_has_content = False
-
-        while i < len(lines):
-            text = lines[i].rstrip('\r\n')
-            cm = _CASEPROC_CONFIG_RE.match(text)
-            if cm:
-                config_stmts += 1
-                i += 1
-                continue
-            m = _CASEPROC_REGION_RE.match(text)
-            if m:
-                if after_end and not gap_has_content:
-                    empty_elem_regions += 1
-                after_end = False
-                gap_has_content = False
-                selector = m.group(1)
-                kind = selector.split()[0] if selector else ''
-                if kind == 'package':
-                    pkg_regions += 1
-                elif kind == 'element':
-                    elem_regions += 1
-                    in_elem_region = True
-                i += 1
-                while i < len(lines):
-                    t = lines[i].rstrip('\r\n')
-                    if 'verocase' in t and t.lstrip().startswith('<!-- end verocase -->'):
-                        if in_elem_region:
-                            after_end = True
-                        in_elem_region = False
-                        i += 1
-                        break
-                    i += 1
-                continue
-            if after_end and text.strip() and not text.strip().startswith('<!--'):
-                gap_has_content = True
-            i += 1
-
-        if after_end and not gap_has_content:
-            empty_elem_regions += 1
-
-        return {
-            'pkg_regions':        pkg_regions,
-            'elem_regions':       elem_regions,
-            'config_stmts':       config_stmts,
-            'empty_elem_regions': empty_elem_regions,
-        }
-
-    def doc_files_stats(self) -> Optional[dict]:
-        """Return aggregated document statistics across all
-        self.document_files.
-
-        Reads the files from disk, so the result reflects any
-        transformations already saved.  Returns None if
-        self.document_files is empty.
-        """
-        if not self.document_files:
-            return None
-        totals: dict = {'pkg_regions': 0, 'elem_regions': 0,
-                        'config_stmts': 0, 'empty_elem_regions': 0}
-        for path in self.document_files:
-            ds = self._scan_doc_stats(path)
-            for k in totals:
-                totals[k] += ds.get(k, 0)
-        return totals
-
-    def _scan_document_elements(self):
-        """Scan self.document_files and return element region info.
-
-        Returns a tuple (ordered_ids, id_info) where:
-        - ordered_ids: list of (identifier, filepath, lineno) for element regions,
-          in document order
-        - id_info: dict mapping identifier ->
-          {'has_prose': bool, 'filepath': str, 'lineno': int}
-        """
-        ordered_ids = []
-        id_info = {}
-
-        for path in self.document_files:
-            try:
-                with open(path, encoding='utf-8', errors='replace') as f:
-                    lines = f.readlines()
-            except OSError:
-                continue
-
-            i = 0
-            in_elem_region = False
-            current_ident = None
-            current_lineno = None
-            after_end = False
-            gap_has_content = False
-
-            while i < len(lines):
-                text = lines[i].rstrip('\r\n')
-                # Skip config lines
-                cm = _CASEPROC_CONFIG_RE.match(text)
-                if cm:
-                    i += 1
-                    continue
-                m = _CASEPROC_REGION_RE.match(text)
-                if m:
-                    # If we were tracking prose after an end marker, finalize
-                    if after_end and current_ident is not None:
-                        id_info[current_ident]['has_prose'] = gap_has_content
-                    after_end = False
-                    gap_has_content = False
-                    in_elem_region = False
-                    current_ident = None
-                    current_lineno = None
-
-                    selector = m.group(1)
-                    parts = selector.split(None, 1)
-                    kind = parts[0] if parts else ''
-                    if kind == 'element' and len(parts) == 2:
-                        ident = parts[1].strip()
-                        in_elem_region = True
-                        current_ident = ident
-                        current_lineno = i + 1  # 1-based
-                        ordered_ids.append((ident, path, i + 1))
-                        id_info[ident] = {'has_prose': False, 'filepath': path, 'lineno': i + 1}
-
-                    i += 1
-                    # Consume until end verocase
-                    while i < len(lines):
-                        t = lines[i].rstrip('\r\n')
-                        if t.strip() == '<!-- end verocase -->':
-                            if in_elem_region:
-                                after_end = True
-                            in_elem_region = False
-                            i += 1
-                            break
-                        i += 1
-                    continue
-
-                # Check for prose after end verocase
-                if after_end and text.strip() and not text.strip().startswith('<!--'):
-                    gap_has_content = True
-                i += 1
-
-            # Finalize the last region
-            if after_end and current_ident is not None:
-                id_info[current_ident]['has_prose'] = gap_has_content
-
-        return ordered_ids, id_info
-
     def missing(self) -> List['Node']:
-        """Return LTAC elements that have no selector region in the
-        document(s)."""
-        ordered_ids, _ = self._scan_document_elements()
-        seen = {ident for ident, _, _ in ordered_ids}
+        """Return LTAC elements that have no selector region in the document(s).
+
+        Runs scan_documents() if no document pass has been done yet.
+        """
+        if self.element_doc_info is None:
+            self.scan_documents()
+        if self.element_doc_info is None:
+            return []
+        seen = set(self.element_doc_info.keys())
         all_ids_ordered = [node for node in self.all_nodes()
                            if node.is_definition and node.identifier]
         return [node for node in all_ids_ordered if node.identifier not in seen]
 
     def empty(self) -> List[str]:
-        """Return identifiers of elements whose selector region contains
-        no prose."""
-        _, elem_info = self._scan_document_elements()
+        """Return identifiers of elements whose selector region contains no prose.
+
+        Runs scan_documents() if no document pass has been done yet.
+        """
+        if self.element_doc_info is None:
+            self.scan_documents()
+        if self.element_doc_info is None:
+            return []
         return [
-            ident for ident, info in elem_info.items()
-            if not info['has_prose']
+            ident for ident, info in self.element_doc_info.items()
+            if not info.has_prose
             and not ((node := self.definition_for(ident)) and node.ext_ref)
         ]
 
     def orphans(self) -> List[str]:
-        """Return identifiers of document selector regions not present
-        in the LTAC."""
-        _, elem_info = self._scan_document_elements()
-        return [ident for ident in elem_info if ident not in self.all_definitions_for]
+        """Return identifiers of document selector regions not present in the LTAC.
+
+        Runs scan_documents() if no document pass has been done yet.
+        """
+        if self.element_doc_info is None:
+            self.scan_documents()
+        if self.element_doc_info is None:
+            return []
+        return [ident for ident, info in self.element_doc_info.items()
+                if info.is_orphan]
 
     def misplaced(self) -> list:
-        """Return elements whose document order differs from LTAC order."""
+        """Return elements whose document order differs from LTAC order.
+
+        Returns a list of (ident, lineno, filepath, pred_ident, pred_lineno) tuples.
+        Runs scan_documents() if no document pass has been done yet.
+        """
         ltac_order = [node.identifier for node in self.all_nodes()
                       if node.is_definition and node.identifier]
         ltac_pos = {ident: i for i, ident in enumerate(ltac_order)}
 
-        ordered_ids, elem_info = self._scan_document_elements()
+        if self.element_doc_order is None:
+            self.scan_documents()
+        if self.element_doc_order is None:
+            return []
+        ordered_ids = self.element_doc_order
+
         doc_entries = [(ident, filepath, lineno) for ident, filepath, lineno in ordered_ids
                        if ident in self.all_definitions_for]
 
@@ -2610,8 +2629,7 @@ o
         sub-selections) to out.
 
         Renders the element heading and any sub-selections listed in
-        config['element_selections']. Updates state.current_id and
-        state.seen_element_ids as a side-effect.
+        config['element_selections']. Updates state.current_id as a side-effect.
         Returns False and calls error() if node_id is not defined.
         """
         if state is None:
@@ -2621,7 +2639,6 @@ o
             self.error(f"element {node_id!r} not found")
             return False
         state.current_id = node_id
-        state.seen_element_ids.add(node_id)
 
         level = self.config['element_level']
         anchor = _component_anchor_id(node.node_type, node_id)
@@ -2673,24 +2690,50 @@ o
                          add_missing: bool = False,
                          strip: bool = False,
                          existing_ids: Optional[set] = None,
-                         seen_ids: Optional[set] = None) -> set:
+                         renames: Optional[Dict[str, str]] = None,
+                         scan_only: bool = False) -> None:
         """Process a document file line by line, replacing LTAC
         selector regions.
 
         Writes all output to `out`. Performs no LTAC parsing.
 
-        Returns the set of element identifiers rendered via 'element'
-        selectors during this call, seeded from `seen_ids` if
-        provided (useful for accumulating across multiple documents).
-
         When `add_missing` is True, inserts skeleton element regions
-        for every declared LTAC element not yet seen via an 'element'
-        selector. When `strip` is True, generated content is omitted
-        from all selector regions except 'warning', leaving the
-        markers in place with empty bodies.
+        for every declared LTAC element not in `existing_ids`.
+        When `strip` is True, generated content is omitted from all
+        selector regions except 'warning', leaving the markers in place
+        with empty bodies.
+
+        When `renames` is a non-empty dict mapping old_id -> new_id,
+        any '<!-- verocase element OLD_ID -->' marker is rewritten to
+        use the new ID in-place during the pass.
+
+        When `scan_only` is True, selector regions are not rendered —
+        only the markers are passed through and element tracking is
+        performed. Orphan elements (selector regions not declared in the
+        LTAC) are reported as errors immediately and also skipped when
+        `scan_only` is False.
+
+        As a side-effect, populates self.element_doc_info,
+        self.element_doc_order, and self.doc_pass_stats on the Case
+        instance (accumulating across multiple files in a single pass).
+        Callers must call _reset_doc_processing() before a fresh pass.
         """
-        _doc_state = DocState(doc_format=doc_format, seen_element_ids=set(seen_ids) if seen_ids is not None else set())
+        _doc_state = DocState(doc_format=doc_format)
         filename = getattr(f, 'name', '<stream>')
+
+        # Lazily initialize doc-pass data structures (accumulated across files).
+        if self.element_doc_info is None:
+            self.element_doc_info = {}
+            self.element_doc_order = []
+            self.doc_pass_stats = DocPassStats()
+
+        # State for has_prose tracking across the prose gap after each region.
+        _cur_ident: Optional[str] = None     # element ID being tracked
+        _cur_start_lineno: int = 0
+        _cur_is_orphan: bool = False
+        _after_end: bool = False             # past <!-- end verocase --> for _cur_ident
+        _gap_has_content: bool = False       # non-blank, non-comment content in the gap
+        _last_outer_lineno: int = 0          # lineno of last outer-loop iteration
 
         config = dict(self.config)  # local copy so directives don't affect self.config
 
@@ -2699,10 +2742,8 @@ o
                              if node.is_definition and node.identifier]
             _ltac_index: Dict[str, int] = {n.identifier: i for i, n in enumerate(_ltac_ordered)}
             _doc_ids = existing_ids if existing_ids is not None else set()
-            _missing_set: set = ({n.identifier for n in _ltac_ordered}
-                                 - _doc_state.seen_element_ids - _doc_ids)
-            _inj_state = DocState(doc_format=doc_format,
-                                  seen_element_ids=_doc_state.seen_element_ids)
+            _missing_set: set = {n.identifier for n in _ltac_ordered} - _doc_ids
+            _inj_state = DocState(doc_format=doc_format)
             _last_placed_id: Optional[str] = None
             _stubs_added = [0]
 
@@ -2749,26 +2790,61 @@ o
                     _emit_stubs_after(_last_placed_id)
                     _last_placed_id = None
                 apply_config_directive(cm.group(1), cm.group(2), config, filename, lineno)
+                self.doc_pass_stats.config_stmts += 1
                 out.write(text + '\n')
+                _last_outer_lineno = lineno
                 continue
 
             m = _CASEPROC_REGION_RE.match(text)
             if m:
+                # Finalize the previous element's prose gap before processing
+                # this new marker.
+                if _after_end and _cur_ident is not None:
+                    self.element_doc_info[_cur_ident] = ElementDocInfo(
+                        filepath=filename,
+                        start_lineno=_cur_start_lineno,
+                        end_lineno=lineno - 1,
+                        has_prose=_gap_has_content,
+                        is_orphan=_cur_is_orphan,
+                    )
+                _after_end = False
+                _gap_has_content = False
+                _cur_ident = None
+
                 selector = m.group(1)
                 sel_parts = selector.split(None, 1)
                 sel_kind = sel_parts[0] if sel_parts else ''
+
+                # Rename element IDs in-place if a rename map was provided.
+                if renames and sel_kind == 'element' and len(sel_parts) == 2:
+                    old_id = sel_parts[1].strip()
+                    if old_id in renames:
+                        new_id = renames[old_id]
+                        text = f'<!-- verocase element {new_id} -->'
+                        selector = f'element {new_id}'
+                        sel_parts = ['element', new_id]
+
                 if sel_kind == 'element' and _doc_state.after_epilogue:
                     self.error(f"'element' selector found after 'epilogue' in {filename}:{lineno}; "
                                "element selectors must not appear after an epilogue marker")
                 if sel_kind == 'epilogue':
                     _doc_state.after_epilogue = True
+                if sel_kind == 'package':
+                    self.doc_pass_stats.pkg_regions += 1
                 if add_missing:
                     if sel_kind == 'element':
                         _emit_stubs_after(_last_placed_id)
                     elif sel_kind in ('stop', 'epilogue'):
                         _emit_all_remaining()
                 found_end = _consume_region(line_iter, filename, lineno, selector, self)
+                _is_orphan = (sel_kind == 'element' and len(sel_parts) == 2
+                              and sel_parts[1].strip() not in self.all_definitions_for)
                 if strip and selector.strip() not in ('warning', 'stop', 'epilogue'):
+                    out.write(text + '\n')
+                    if found_end:
+                        out.write('<!-- end verocase -->\n')
+                elif scan_only or _is_orphan:
+                    # Scan pass or orphan element: pass markers through without rendering.
                     out.write(text + '\n')
                     if found_end:
                         out.write('<!-- end verocase -->\n')
@@ -2787,6 +2863,31 @@ o
                         out.write('<!-- end verocase -->\n')
                 if add_missing and sel_kind == 'element' and len(sel_parts) == 2:
                     _last_placed_id = sel_parts[1]
+
+                # Track new element for has_prose / element_doc_info.
+                if sel_kind == 'element' and len(sel_parts) == 2:
+                    ident = sel_parts[1].strip()
+                    is_orphan = _is_orphan
+                    if is_orphan:
+                        self.error(f"element {ident!r} in document but not declared in LTAC")
+                    self.element_doc_order.append((ident, filename, lineno))
+                    if found_end:
+                        # Track prose gap; ElementDocInfo written on next marker or EOF.
+                        _cur_ident = ident
+                        _cur_start_lineno = lineno
+                        _cur_is_orphan = is_orphan
+                        _after_end = True
+                    else:
+                        # Region had no end marker; record it now with no prose.
+                        self.element_doc_info[ident] = ElementDocInfo(
+                            filepath=filename,
+                            start_lineno=lineno,
+                            end_lineno=lineno,
+                            has_prose=False,
+                            is_orphan=is_orphan,
+                        )
+
+                _last_outer_lineno = lineno
                 continue
 
             if 'verocase' in text and text.lstrip().startswith('<!-- end verocase -->'):
@@ -2795,14 +2896,27 @@ o
                            "'<!-- verocase ...' opener above this line")
                 continue  # pragma: no cover
 
+            # Track prose content in the gap after <!-- end verocase -->.
+            if _after_end and text.strip() and not text.strip().startswith('<!--'):
+                _gap_has_content = True
+
             out.write(text + '\n')
+            _last_outer_lineno = lineno
+
+        # Finalize the last element's prose gap at end of file.
+        if _after_end and _cur_ident is not None:
+            self.element_doc_info[_cur_ident] = ElementDocInfo(
+                filepath=filename,
+                start_lineno=_cur_start_lineno,
+                end_lineno=_last_outer_lineno,
+                has_prose=_gap_has_content,
+                is_orphan=_cur_is_orphan,
+            )
 
         if add_missing:
             _emit_all_remaining()
             if _stubs_added[0]:
                 self.notify(f"Added {_stubs_added[0]} missing element(s) to {filename}")
-
-        return _doc_state.seen_element_ids
 
     def render_ltac_txt(self, node_list, out: 'TextIO', sep: str = '') -> bool:
         """Write node_list as raw LTAC text to out, normalizing
@@ -4906,6 +5020,28 @@ def render_warning(element_id: Optional[str]) -> str:
 # ---------------------------------------------------------------------------
 
 @dataclass
+class ElementDocInfo:
+    """Per-element record populated by any document processing pass."""
+    filepath: str
+    start_lineno: int   # 1-based line of <!-- verocase element ID -->
+    end_lineno: int     # 1-based last line of full region (incl. trailing prose gap)
+    has_prose: bool     # True if region has non-generated content after <!-- end verocase -->
+    is_orphan: bool     # True if present in doc but not in LTAC
+
+
+@dataclass
+class DocPassStats:
+    """Aggregate counts from a single document processing pass.
+
+    elem_regions and empty_elem_regions are derivable from element_doc_info:
+        elem_regions       = len(element_doc_info)
+        empty_elem_regions = sum(1 for e in element_doc_info.values() if not e.has_prose)
+    """
+    pkg_regions: int  = 0   # count of <!-- verocase package ... --> markers seen
+    config_stmts: int = 0   # count of <!-- verocase-config ... --> directives seen
+
+
+@dataclass
 class DocState:
     """Mutable rendering state threaded through a single document processing pass.
 
@@ -4923,9 +5059,6 @@ class DocState:
     mermaid_injected : bool
         True once the Mermaid JS <script> block has been written for this
         document; prevents duplicate injection.
-    seen_element_ids : set
-        Identifiers of elements rendered via ``element`` selectors so far;
-        updated by render_element() as a side-effect.
     after_epilogue : bool
         True once an ``epilogue`` selector has been encountered; subsequent
         element output is suppressed.
@@ -4933,7 +5066,6 @@ class DocState:
     current_id: Optional[str] = None
     doc_format: str = 'markdown'
     mermaid_injected: bool = False
-    seen_element_ids: set = field(default_factory=set)
     after_epilogue: bool = False  # True once an 'epilogue' selector has been seen
 
 
@@ -5342,13 +5474,23 @@ Here are more examples of these types and their methods/properties:
     # Saving mutations
     case.save_ltac_if_modified()   write LTAC iff ltac_modified is True
     case.reset_cache()             rebuild derived maps after direct tree edits
-    # Document processing
+    # Document processing orchestrators
+    case.scan_documents()          scan doc files; populate element_doc_info; report orphans/missing (no writes)
+    case.stdout_documents(strip=False)  render to stdout
+    case.update_documents(add_missing, strip, renames)  rewrite doc files in place
     case.fixmissing() -> bool
     case.fix_misplaced_documents() -> bool
     case.update_files(add_missing=False, strip=False) -> bool
                         rewrites document_files and LTAC (if ltac_modified);
                         works with empty document_files (LTAC-only update)
-    case.check_element_coverage(seen_element_ids)  warn about uncovered elements
+    # Document pass results (None = no pass run yet; {} = pass ran, nothing found)
+    case.element_doc_info: Optional[Dict[str, ElementDocInfo]]
+    case.element_doc_order: Optional[List[Tuple[str, str, int]]]
+    case.doc_pass_stats: Optional[DocPassStats]
+    case.important_leaves: Set[str]    (populated after LTAC load)
+    # Error handling
+    case.clear_errors()             reset had_error and suppressed messages
+    case.suppressed_reporting()     context manager: suppress stderr, had_error still set
   @dataclass Node       one node in the LTAC tree. Some operations:
     node.identifier     str: declared identifier, or '' if absent
     node.is_citation    True if introduced with ^ (cross-package citation)
@@ -5472,7 +5614,7 @@ elsewhere. If the ID is omitted, the text is the ID (after
 stripping ^{}()\\n\\r). Every definition must have a unique ID.
 
 Key options in the LTAC file (these are comma-separated inside {}):
-  needssupport  leaf element needs supporting evidence (--missing adds these)
+  needssupport  leaf element needs supporting evidence (--fixmissing adds these)
   axiomatic     accepted as foundational; needs no supporting evidence
   defeated      argument is disproved or no longer valid
   assumed       claim is treated as an assumption (no support required)
@@ -5513,20 +5655,23 @@ them. A typical document uses these selectors:
 Use --fixmissing to scaffold element regions for elements
 not yet in the document.
 
-Read-only options (marked [READ-ONLY] in --help; never modifies files):
-  --validate, --select, --info, --descendants, --stdout
-  --missing, --empty, --orphans, --misplaced, --leaves, --packages
-  --read-only (suppresses default document-update pass; use with --stats
-    or any read-only option to avoid triggering document rewrites)
-  (--stats does not itself modify files but combines with any mode)
+Read-only modes (never modify files):
+  --validate, --stdout
+
+LTAC-only output (read LTAC/config only; never open document files;
+  mutually exclusive with each other; may combine with any main mode):
+  --select, --info, --descendants
+
+Reporting options (print extra information; may combine with any mode):
+  --empty, --misplaced, --leaves, --packages
+  --stats (combines with any mode)
+
+--read-only suppresses the default document-update pass.  Useful when
+you only want reporting output or stats without rewriting files.
 
 File-modifying options (modify document files, LTAC, or both):
   default mode, --fixmissing, --fixmisplaced, --start,
   --sync, --rename, --restate, --detach, --move
-
-The read-only analysis options listed above may be freely combined with
-each other.  They cannot be combined with any file-modifying option;
-verocase will exit with an error if you try.
 
 By default the program treats the LTAC file strictly as an input and
 it will *not* modify the LTAC file. However, the options --sync,
@@ -5703,10 +5848,6 @@ More help is available:
         help='[READ-ONLY] validate and report warnings/errors; do not modify any file',
     )
     mode.add_argument(
-        '--select', '-s', type=str, metavar='SELECTOR',
-        help='[READ-ONLY] render SELECTOR to stdout and exit (see selector table below)',
-    )
-    mode.add_argument(
         '--stdout', action='store_true',
         help='[READ-ONLY] process document files and write result to stdout '
              'without modifying any stored file',
@@ -5734,57 +5875,54 @@ More help is available:
              'to describe your system, then run verocase normally. '
              '(panics if any case file already exists)',
     )
-    mode.add_argument(
-        '--info', type=str, metavar='ID',
-        help='[READ-ONLY] print full context for element ID: package, ancestors, children, '
-             'descendant count, and citation parents. Shorthand for --select "info ID".',
+
+    # LTAC-only render options: read from LTAC/config only, never open document files.
+    # Mutually exclusive with each other; may combine freely with any mode.
+    ltac_render = parser.add_mutually_exclusive_group()
+    ltac_render.add_argument(
+        '--select', '-s', type=str, metavar='SELECTOR',
+        help='render SELECTOR to stdout using LTAC/config only; '
+             'see selector table below. May combine with any mode.',
     )
-    mode.add_argument(
+    ltac_render.add_argument(
+        '--info', type=str, metavar='ID',
+        help='print full context for element ID: package, ancestors, children, '
+             'descendant count, and citation parents. '
+             'Shorthand for --select "info ID". May combine with any mode.',
+    )
+    ltac_render.add_argument(
         '--descendants', type=str, metavar='ID',
-        help='[READ-ONLY] print the LTAC definition of element ID and all its descendants '
-             'in LTAC source form. Shorthand for --select "ltac/txt ID".',
+        help='print the LTAC definition of element ID and all its descendants '
+             'in LTAC source form. Shorthand for --select "ltac/txt ID". '
+             'May combine with any mode.',
     )
 
-    # Analysis options: read-only; never modify any file.
-    # May be freely combined with each other and with --stats, --validate, --select,
-    # --info, --descendants.  Cannot be combined with any file-modifying option
-    # (--fixmissing, --fixmisplaced, --start, --sync, --rename, --restate,
-    # --detach, --move).
-    parser.add_argument(
-        '--missing', action='store_true', default=False,
-        help='[READ-ONLY] list LTAC elements that have no selector region in any document; '
-             'use --fixmissing to scaffold them',
-    )
+    # Reporting options: print extra information; may combine with any mode.
     parser.add_argument(
         '--empty', action='store_true', default=False,
-        help='[READ-ONLY] list elements whose selector region exists but has no '
+        help='list elements whose selector region exists but has no '
              'human-written prose after <!-- end verocase -->',
     )
     parser.add_argument(
-        '--orphans', action='store_true', default=False,
-        help='[READ-ONLY] list document selector regions that have no matching LTAC '
-             'declaration (stale regions left after rename/removal)',
-    )
-    parser.add_argument(
         '--misplaced', action='store_true', default=False,
-        help='[READ-ONLY] list elements whose selector region appears in the document '
+        help='list elements whose selector region appears in the document '
              'in a different order than their LTAC declaration order; '
              'use --fixmisplaced to fix them',
     )
     parser.add_argument(
         '--leaves', action='store_true', default=False,
-        help='[READ-ONLY] list all definition nodes with no children (citations and '
+        help='list all definition nodes with no children (citations and '
              'Links excluded); leads with the {needssupport} subset',
     )
     parser.add_argument(
         '--packages', action='store_true', default=False,
-        help='[READ-ONLY] list each package with element counts and the direct children '
+        help='list each package with element counts and the direct children '
              'of its root',
     )
     parser.add_argument(
         '--read-only', action='store_true', default=False, dest='read_only',
         help='[READ-ONLY] suppress the default document-update pass; load and validate only. '
-             'Useful for combining with --stats or analysis options without '
+             'Useful for combining with --stats or reporting options without '
              'triggering document rewrites. '
              'Cannot be combined with any file-modifying mode '
              '(--fixmissing, --fixmisplaced, --start, --sync, '
@@ -5899,12 +6037,12 @@ def print_stats(ltac_stats: dict, doc_stats: Optional[dict],
 
 
 # ---------------------------------------------------------------------------
-# Analysis helpers
+# Reporting helpers
 # ---------------------------------------------------------------------------
 
 
-def _print_analysis_list(header, items, fmt=str) -> None:
-    """Print a labelled analysis list, or '(none)' if empty.
+def _print_report_list(header, items, fmt=str) -> None:
+    """Print a labelled report list, or '(none)' if empty.
 
     header  -- label printed before the list
     items   -- iterable of items to print
@@ -6005,21 +6143,7 @@ def run(args: argparse.Namespace) -> bool:
     config_path = case.config_path
     ltac_path = case.ltac_path
 
-    # Detect analysis options early, before any file-modifying operations,
-    # so we can reject illegal combinations before any writes happen.
-    _has_analysis = any(getattr(args, f, False) for f in ANALYSIS_FLAGS)
-    _analysis_str = ', '.join(f'--{f}' for f in sorted(ANALYSIS_FLAGS))
     _modifying_str = ', '.join(f'--{f}' for f in sorted(FILE_MODIFYING_FLAGS))
-    if _has_analysis:
-        if any(getattr(args, f, False) for f in FILE_MODIFYING_FLAGS):
-            _panic(f"analysis options ({_analysis_str}) "
-                   f"cannot be combined with file-modifying modes ({_modifying_str})")
-        if args.sync:
-            _panic("analysis options cannot be combined with --sync (which modifies the LTAC file)")
-        if args.mutations:
-            _panic("analysis options cannot be combined with --rename/--restate/--detach/--move "
-                   "(which modify the LTAC file)")
-
     if args.read_only:
         if any(getattr(args, f, False) for f in FILE_MODIFYING_FLAGS):
             _panic(f"--read-only cannot be combined with file-modifying modes ({_modifying_str})")
@@ -6058,84 +6182,14 @@ def run(args: argparse.Namespace) -> bool:
         "docs/case.md, docs/case.markdown, docs/case.html"
     )
 
-    if _has_analysis:
-        # Analysis-only mode: no document processing, no file modification.
-        # sep is printed before each section after the first.
-        sep = ''
-        if args.missing:
-            print(sep, end=''); sep = '\n'
-            _print_analysis_list(
-                "Elements missing a selector region in the document(s):",
-                case.missing(),
-                lambda n: f"{n.node_type} {n.identifier}")
-        if args.empty:
-            print(sep, end=''); sep = '\n'
-            _print_analysis_list(
-                "Elements with no prose in the document(s):",
-                case.empty(),
-                lambda i: f"{n.node_type if (n := case.definition_for(i)) else '?'} {i}")
-        if args.orphans:
-            print(sep, end=''); sep = '\n'
-            _print_analysis_list(
-                "Orphaned selector regions in the document(s) (not in LTAC):",
-                case.orphans(),
-                lambda i: f"element {i}")
-        if args.misplaced:
-            print(sep, end=''); sep = '\n'
-            misplaced = case.misplaced()
-            def _fmt_misplaced(t):
-                ntype = n.node_type if (n := case.definition_for(t[0])) else '?'
-                if t[3]:
-                    ptype = p.node_type if (p := case.definition_for(t[3])) else '?'
-                    return (f"{ntype} {t[0]}: at line {t[1]},"
-                            f" expected after {ptype} {t[3]} (line {t[4]})")
-                return f"{ntype} {t[0]}: at line {t[1]}, expected at start of document"
-            _print_analysis_list(
-                "Misplaced elements (document order differs from LTAC order):",
-                misplaced, _fmt_misplaced)
-        if args.leaves:
-            print(sep, end=''); sep = '\n'
-            leaves = case.leaves()
-            ns_leaves = [n for n in leaves if 'needssupport' in n.options]
-            print("Leaf elements:")
-            if ns_leaves:
-                _print_analysis_list(
-                    "Leaves with {needssupport}:", ns_leaves,
-                    lambda n: n.to_ltac_line(depth_offset=n.depth))
-                print()
-            _print_analysis_list(
-                "All leaves:", leaves,
-                lambda n: n.to_ltac_line(depth_offset=n.depth))
-        if args.packages:
-            print(sep, end=''); sep = '\n'
-            case.render_packages()
-
-        return not case.had_error
-
-    def _render_stdout(selector):
-        if case.render_selector(selector, sys.stdout, doc_format='markdown'):
-            sys.stdout.write('\n')
-        case.save_ltac_if_modified()
-
-    def _scan_docs():
-        seen = case._process_document_files(case.document_files, _NullWriter(), strip=args.strip)
-        case.check_element_coverage(seen)
-
-    if args.info:
-        _render_stdout(f'info {args.info}')
-    elif args.descendants:
-        _render_stdout(f'ltac/txt {args.descendants}')
-    elif args.select:
-        _render_stdout(args.select)
-    elif args.validate:
+    if args.validate:
         if case.document_files:
-            _scan_docs()
+            case.scan_documents()
         case.save_ltac_if_modified()
     elif args.stdout:
         if not case.document_files:
             _panic(_NO_FILES_MSG)
-        seen = case._process_document_files(case.document_files, sys.stdout, strip=args.strip)
-        case.check_element_coverage(seen)
+        case.stdout_documents(strip=args.strip)
         case.save_ltac_if_modified()
     elif args.fixmissing or args.start:
         if not case.document_files:
@@ -6146,24 +6200,91 @@ def run(args: argparse.Namespace) -> bool:
             _panic(_NO_FILES_MSG)
         case.fix_misplaced_documents()
     elif args.read_only:
-        # --read-only: load, validate, and optionally report stats; no file writes.
+        # --read-only: load, validate, and optionally scan documents; no file writes.
         # Mutations are blocked above, so ltac_modified is always False here.
         if case.document_files:
-            _scan_docs()
+            case.scan_documents()
     else:
         # Default mode: rewrite document files in place (+ LTAC if modified).
         if args.update_ltac:
             case.ltac_modified = True
-        if not case.document_files and not case.ltac_modified:
-            _panic(_NO_FILES_MSG)
-        case.update_files(strip=args.strip)
+        _ltac_only = args.select or args.info or args.descendants
+        _needs_docs = not _ltac_only or args.empty or args.misplaced
+        if _needs_docs:
+            if case.document_files or case.ltac_modified:
+                case.update_files(strip=args.strip)
+            elif not (args.leaves or args.packages or _ltac_only):
+                _panic(_NO_FILES_MSG)
+
+    case.save_ltac_if_modified()
 
     if args.doublecheck:
         if case.doublecheck_cache():
             print("doublecheck: all cached values verified correct")
 
+    # Reporting options: print after the main operation.
+    _sep = ''
+    if args.select:
+        if case.render_selector(args.select, sys.stdout, doc_format='markdown'):
+            sys.stdout.write('\n')
+        _sep = '\n'
+    elif args.info:
+        if case.render_selector(f'info {args.info}', sys.stdout, doc_format='markdown'):
+            sys.stdout.write('\n')
+        _sep = '\n'
+    elif args.descendants:
+        if case.render_selector(f'ltac/txt {args.descendants}', sys.stdout, doc_format='markdown'):
+            sys.stdout.write('\n')
+        _sep = '\n'
+    if args.leaves:
+        leaves = case.leaves()
+        ns_leaves = [n for n in leaves if 'needssupport' in n.options]
+        print("Leaf elements:")
+        if ns_leaves:
+            _print_report_list(
+                "Leaves with {needssupport}:", ns_leaves,
+                lambda n: n.to_ltac_line(depth_offset=n.depth))
+            print()
+        _print_report_list(
+            "All leaves:", leaves,
+            lambda n: n.to_ltac_line(depth_offset=n.depth))
+        _sep = '\n'
+    if args.packages:
+        print(_sep, end='')
+        case.render_packages()
+        _sep = '\n'
+    if args.empty:
+        print(_sep, end=''); _sep = '\n'
+        _print_report_list(
+            "Elements with no prose in the document(s):",
+            case.empty(),
+            lambda i: f"{n.node_type if (n := case.definition_for(i)) else '?'} {i}")
+    if args.misplaced:
+        print(_sep, end=''); _sep = '\n'
+        def _fmt_misplaced(t):
+            ntype = n.node_type if (n := case.definition_for(t[0])) else '?'
+            if t[3]:
+                ptype = p.node_type if (p := case.definition_for(t[3])) else '?'
+                return (f"{ntype} {t[0]}: at line {t[1]},"
+                        f" expected after {ptype} {t[3]} (line {t[4]})")
+            return f"{ntype} {t[0]}: at line {t[1]}, expected at start of document"
+        _print_report_list(
+            "Misplaced elements (document order differs from LTAC order):",
+            case.misplaced(), _fmt_misplaced)
+
     if args.stats:
-        print_stats(case.stats(), case.doc_files_stats())
+        if case.element_doc_info is not None:
+            ei = case.element_doc_info
+            ps = case.doc_pass_stats
+            _doc_stats: Optional[dict] = {
+                'pkg_regions':        ps.pkg_regions if ps else 0,
+                'elem_regions':       len(ei),
+                'config_stmts':       ps.config_stmts if ps else 0,
+                'empty_elem_regions': sum(1 for e in ei.values() if not e.has_prose),
+            }
+        else:
+            _doc_stats = None
+        print_stats(case.stats(), _doc_stats)
 
     return not case.had_error
 

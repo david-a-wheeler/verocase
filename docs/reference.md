@@ -223,10 +223,10 @@ verocase [--config FILE] [--error] [--stats] [--strip]
          [--sync] [--rename OLD NEW] [--restate LABEL STATEMENT]
          [--detach ID] [--move ID DESTINATION]
          [--ltac FILENAME]
-         [--validate | --select SELECTOR | --stdout | --selftest
-          | --fixmissing | --fixmisplaced | --start
-          | --info ID | --descendants ID]
-         [--missing] [--empty] [--orphans] [--misplaced] [--leaves] [--packages]
+         [--validate | --stdout | --selftest
+          | --fixmissing | --fixmisplaced | --start]
+         [--select SELECTOR | --info ID | --descendants ID]
+         [--empty] [--misplaced] [--leaves] [--packages]
          [--read-only] [--update-ltac]
          [files ...]
 ```
@@ -253,7 +253,10 @@ Useful in CI to confirm the assurance case is internally consistent.
 
 ### --select SELECTOR
 
-Renders `SELECTOR` to stdout and exits.  Modifies no files.
+Renders `SELECTOR` to stdout (after any main-mode operation completes).
+Reads from the LTAC and config only; never opens document files.
+Mutually exclusive with `--info` and `--descendants`.
+May be combined with any main mode.
 See [Selectors](#selectors) for the full list of selectors and their formats.
 
 ### --stdout
@@ -324,29 +327,30 @@ After `--start`:
 `--start` is intended as a quick on-ramp for new projects and tutorials.
 Edit the generated files and run `verocase` (normal mode) to continue.
 
-### Analysis options
+### Reporting options
 
-Analysis options are **read-only**: they print information to stdout and
-never modify any file.  They may be freely combined with each other but
-cannot be combined with file-modifying modes (`--fixmissing`,
-`--fixmisplaced`, `--start`).
+Reporting options print information to stdout after the main operation completes.
+They may be freely combined with each other and with any main mode.
+Use `--read-only` alongside them if you want to suppress the default document-update pass.
+
+Orphaned document regions (selector IDs not declared in the LTAC) are reported
+as errors automatically whenever verocase processes a document — there is no
+separate `--orphans` flag.
 
 | Option | Description |
 |---|---|
-| `--missing` | List LTAC elements that have no selector region in any document.  Use `--fixmissing` to scaffold them. |
 | `--empty` | List elements whose selector region exists but has no human-written prose after `<!-- end verocase -->`. |
-| `--orphans` | List document selector regions with no matching LTAC declaration (stale regions left after rename or removal). |
 | `--misplaced` | List elements whose selector region appears in the document in a different order than their declaration order in the LTAC.  Use `--fixmisplaced` to fix them. |
 | `--leaves` | List leaf elements (no children in LTAC) with their options and references.  Leads with the `{needssupport}` subset. |
 | `--packages` | List each package with element counts and the direct children of its root element. |
 
-Multiple analysis options may be combined in a single run; each report is
-separated by a blank line and printed in the order shown above.
+Multiple reporting options may be combined in a single run; each report is
+separated by a blank line.
 
-Example: preview everything before scaffolding:
+Example: report without modifying files:
 
 ```sh
-verocase --missing --empty --orphans --misplaced
+verocase --read-only --empty --misplaced
 ```
 
 ### --ltac FILENAME
@@ -418,7 +422,7 @@ described in [File handling](#file-handling)).
 
 Suppresses the default document-update pass.  Loads and validates the LTAC
 (and any document files given) without rewriting anything.  Useful for
-combining with `--stats` or any analysis option without triggering document
+combining with `--stats` or any reporting option without triggering document
 rewrites.  Cannot be combined with any file-modifying mode (`--fixmissing`,
 `--fixmisplaced`, `--start`, `--sync`, `--rename`, `--restate`, `--detach`,
 `--move`, `--update-ltac`).
@@ -615,8 +619,8 @@ the assurance case in the document.
 `*` renders all packages in order.
 
 `verocase` warns if a declared LTAC element has no corresponding `element`
-selector in any processed document.  Use `--missing` (analysis option) to
-*list* which elements are missing without modifying any file, or use
+selector in any processed document.  Use `--read-only --empty` to report
+missing elements without modifying any file, or use
 `--fixmissing` to scaffold them automatically.
 
 ### Full element content, `stop`, and `epilogue`

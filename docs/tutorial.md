@@ -368,13 +368,6 @@ nearest already-present predecessor in the document), so the resulting
 document is already in roughly the right order.
 It also marks every leaf claim with `{needssupport}` if it lacks one.
 
-To *preview* which elements are missing without modifying any file, use
-the read-only `--missing` analysis option:
-
-```sh
-verocase --missing
-```
-
 After running `--fixmissing`, add your narrative after each
 `<!-- end verocase -->` line and run `verocase` to regenerate.
 
@@ -702,36 +695,37 @@ Without `--sync`, a mismatch produces a warning suggesting you run it.
 
 ---
 
-## Analysis options
+## Reporting options
 
-Analysis options inspect the case without modifying any file.
-They can be freely combined with each other but not with file-modifying modes.
+Reporting options print extra information about the case.
+They may be combined freely with each other and with any main mode.
+Use `--read-only` alongside them if you want to suppress the default document-update pass.
 
 | Option | What it reports |
 |---|---|
-| `--missing` | LTAC elements that have no `element` selector region in any document |
 | `--empty` | Element regions that exist in the document but have no human-written prose |
-| `--orphans` | Document selector regions whose ID is not declared in the LTAC (stale after rename/removal) |
 | `--misplaced` | Elements whose document region is in a different order than their LTAC declaration order |
 | `--leaves` | All leaf elements (no children in the LTAC), grouped by flag |
 | `--packages` | Each package with its element count and the direct children of its root |
 
-You can combine them freely:
+You can combine them freely (add `--read-only` to skip document updates):
 
 ```sh
-verocase --missing --empty --orphans --misplaced
+verocase --read-only --empty --misplaced
 ```
 
 Each report is printed in turn, separated by a blank line.
-No files are changed regardless of what is found.
+
+Orphaned document regions (selector IDs not declared in the LTAC) are
+reported as errors automatically whenever verocase processes a document.
 
 ### Typical workflow after structural changes
 
 After renaming or removing an element from the LTAC:
 
-1. `verocase --orphans`: see which old document regions are now stale.
+1. Run `verocase` (or `verocase --read-only`): orphan errors are reported automatically.
 2. Edit the document to remove (or repurpose) those orphaned regions.
-3. `verocase --missing`: confirm no LTAC elements are now unrepresented.
+3. Run `verocase --read-only --empty` to confirm no LTAC elements are now unrepresented.
 4. Run `verocase --fixmissing` if you need to scaffold any new regions.
 5. Run `verocase --misplaced` to check whether new regions need reordering;
    run `verocase --fixmisplaced` to move them automatically.

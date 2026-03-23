@@ -2408,8 +2408,7 @@ class TestPlan10Validations(unittest.TestCase):
 
 
 class TestAnalysisOptions(unittest.TestCase):
-    """Tests for the read-only analysis options: --missing, --empty, --orphans,
-    --misplaced, --leaves, --packages."""
+    """Tests for the read-only analysis options: --empty, --misplaced, --leaves, --packages."""
 
     def _write_ltac(self, content):
         fd, path = tempfile.mkstemp(suffix='.ltac')
@@ -2423,38 +2422,36 @@ class TestAnalysisOptions(unittest.TestCase):
             f.write(content)
         return path
 
-    def test_missing_analysis_lists_missing_elements(self):
-        """--missing (analysis) lists LTAC elements with no document selector region."""
+    def test_missing_elements_reported_in_stderr(self):
+        """Missing elements (in LTAC but not in document) are warned on stderr."""
         ltac = '- Claim Root: root\n  - Claim Child: child\n'
         doc = '<!-- verocase element Root -->\n<!-- end verocase -->\n'
         ltac_p = self._write_ltac(ltac)
         doc_p = self._write_doc(doc)
         try:
-            r = run('--ltac', ltac_p, '--missing', doc_p)
+            r = run('--ltac', ltac_p, '--read-only', doc_p)
             self.assertEqual(r.returncode, 0)
-            self.assertIn('missing', r.stdout.lower())
-            self.assertIn('Child', r.stdout)
-            self.assertNotIn('Root', r.stdout)
+            self.assertIn('child', r.stderr.lower())
         finally:
             os.unlink(ltac_p)
             os.unlink(doc_p)
 
-    def test_missing_analysis_none_when_all_present(self):
-        """--missing prints (none) when all LTAC elements have document regions."""
+    def test_no_missing_elements_no_warning(self):
+        """No stderr warning when all LTAC elements have document regions."""
         ltac = '- Claim Root: root\n'
         doc = '<!-- verocase element Root -->\n<!-- end verocase -->\n'
         ltac_p = self._write_ltac(ltac)
         doc_p = self._write_doc(doc)
         try:
-            r = run('--ltac', ltac_p, '--missing', doc_p)
+            r = run('--ltac', ltac_p, '--read-only', doc_p)
             self.assertEqual(r.returncode, 0)
-            self.assertIn('(none)', r.stdout)
+            self.assertNotIn("no 'element' selector", r.stderr)
         finally:
             os.unlink(ltac_p)
             os.unlink(doc_p)
 
-    def test_missing_analysis_does_not_modify_files(self):
-        """--missing (analysis) does not modify document or LTAC files."""
+    def test_read_only_does_not_modify_files_with_missing(self):
+        """--read-only does not modify document or LTAC files even when elements are missing."""
         ltac = '- Claim Root: root\n  - Claim Child: child\n'
         doc = '<!-- verocase element Root -->\n<!-- end verocase -->\n'
         ltac_p = self._write_ltac(ltac)
@@ -2462,7 +2459,7 @@ class TestAnalysisOptions(unittest.TestCase):
         try:
             original_doc = read_file(doc_p)
             original_ltac = read_file(ltac_p)
-            r = run('--ltac', ltac_p, '--missing', doc_p)
+            r = run('--ltac', ltac_p, '--read-only', doc_p)
             self.assertEqual(r.returncode, 0)
             self.assertEqual(read_file(doc_p), original_doc)
             self.assertEqual(read_file(ltac_p), original_ltac)
@@ -2492,8 +2489,8 @@ class TestAnalysisOptions(unittest.TestCase):
             os.unlink(ltac_p)
             os.unlink(doc_p)
 
-    def test_orphans_lists_regions_not_in_ltac(self):
-        """--orphans lists document regions with no matching LTAC declaration."""
+    def test_orphan_elements_produce_error(self):
+        """An element selector in the document with no matching LTAC declaration is an error."""
         ltac = '- Claim Root: root\n'
         doc = (
             '<!-- verocase element Root -->\n'
@@ -2504,10 +2501,9 @@ class TestAnalysisOptions(unittest.TestCase):
         ltac_p = self._write_ltac(ltac)
         doc_p = self._write_doc(doc)
         try:
-            r = run('--ltac', ltac_p, '--orphans', doc_p)
-            self.assertEqual(r.returncode, 0)
-            self.assertIn('OldElement', r.stdout)
-            self.assertNotIn('Root', r.stdout)
+            r = run('--ltac', ltac_p, doc_p)
+            self.assertNotEqual(r.returncode, 0)
+            self.assertIn('OldElement', r.stderr)
         finally:
             os.unlink(ltac_p)
             os.unlink(doc_p)
@@ -2604,14 +2600,14 @@ class TestAnalysisOptions(unittest.TestCase):
         finally:
             os.unlink(ltac_p)
 
-    def test_analysis_cannot_combine_with_fixmissing(self):
-        """Analysis options cannot be combined with --fixmissing."""
+    def test_reporting_combines_with_fixmissing(self):
+        """Reporting options may be combined with --fixmissing."""
         ltac = '- Claim Root: root\n'
         ltac_p = self._write_ltac(ltac)
         doc_p = self._write_doc('# Test\n')
         try:
-            r = run('--ltac', ltac_p, '--missing', '--fixmissing', doc_p)
-            self.assertNotEqual(r.returncode, 0)
+            r = run('--ltac', ltac_p, '--empty', '--fixmissing', doc_p)
+            self.assertEqual(r.returncode, 0)
         finally:
             os.unlink(ltac_p)
             os.unlink(doc_p)
@@ -2795,8 +2791,8 @@ class TestFixMisplaced(unittest.TestCase):
             os.unlink(ltac_p)
             os.unlink(doc_p)
 
-    def test_analysis_misplaced_does_not_modify_files(self):
-        """--misplaced (analysis) does not modify the document file."""
+    def test_misplaced_reports_out_of_order_elements(self):
+        """--misplaced reports elements that are out of LTAC order."""
         ltac = '- Claim A: a\n  - Claim B: b\n'
         doc = (
             '<!-- verocase element B -->\n<!-- end verocase -->\n'
@@ -2805,10 +2801,9 @@ class TestFixMisplaced(unittest.TestCase):
         ltac_p = self._write_ltac(ltac)
         doc_p = self._write_doc(doc)
         try:
-            original = read_file(doc_p)
-            r = run('--ltac', ltac_p, '--misplaced', doc_p)
+            r = run('--ltac', ltac_p, '--read-only', '--misplaced', doc_p)
             self.assertEqual(r.returncode, 0)
-            self.assertEqual(read_file(doc_p), original)
+            self.assertIn('B', r.stdout)
         finally:
             os.unlink(ltac_p)
             os.unlink(doc_p)
@@ -3121,37 +3116,27 @@ class TestReadOnly(unittest.TestCase):
             self.assertEqual(f.read(), self.doc_orig,
                              f'verocase {args} modified the document file')
 
-    # --- Analysis options (as listed in --help) ---
+    # --- Reporting options with --read-only ---
 
-    def test_missing_is_readonly(self):
-        """--missing never modifies any file."""
+    def test_empty_read_only_does_not_modify_files(self):
+        """--read-only --empty reports without modifying any file."""
         self._assert_files_unchanged(
-            '--ltac', self.ltac_path, '--missing', self.doc_path)
+            '--ltac', self.ltac_path, '--read-only', '--empty', self.doc_path)
 
-    def test_empty_is_readonly(self):
-        """--empty never modifies any file."""
+    def test_misplaced_read_only_does_not_modify_files(self):
+        """--read-only --misplaced reports without modifying any file."""
         self._assert_files_unchanged(
-            '--ltac', self.ltac_path, '--empty', self.doc_path)
+            '--ltac', self.ltac_path, '--read-only', '--misplaced', self.doc_path)
 
-    def test_orphans_is_readonly(self):
-        """--orphans never modifies any file."""
+    def test_leaves_read_only_does_not_modify_files(self):
+        """--read-only --leaves reports without modifying any file."""
         self._assert_files_unchanged(
-            '--ltac', self.ltac_path, '--orphans', self.doc_path)
+            '--ltac', self.ltac_path, '--read-only', '--leaves', self.doc_path)
 
-    def test_misplaced_is_readonly(self):
-        """--misplaced never modifies any file."""
+    def test_packages_read_only_does_not_modify_files(self):
+        """--read-only --packages reports without modifying any file."""
         self._assert_files_unchanged(
-            '--ltac', self.ltac_path, '--misplaced', self.doc_path)
-
-    def test_leaves_is_readonly(self):
-        """--leaves never modifies any file."""
-        self._assert_files_unchanged(
-            '--ltac', self.ltac_path, '--leaves', self.doc_path)
-
-    def test_packages_is_readonly(self):
-        """--packages never modifies any file."""
-        self._assert_files_unchanged(
-            '--ltac', self.ltac_path, '--packages', self.doc_path)
+            '--ltac', self.ltac_path, '--read-only', '--packages', self.doc_path)
 
     # --- Read-only modes ---
 
@@ -3160,65 +3145,81 @@ class TestReadOnly(unittest.TestCase):
         self._assert_files_unchanged(
             '--ltac', self.ltac_path, '--validate', self.doc_path)
 
-    def test_select_is_readonly(self):
-        """--select never modifies any file."""
-        self._assert_files_unchanged(
-            '--ltac', self.ltac_path, '--select', 'ltac/markdown')
-
     def test_stdout_does_not_modify_files(self):
         """--stdout writes to stdout and never modifies the document file."""
         self._assert_files_unchanged(
             '--ltac', self.ltac_path, '--stdout', self.doc_path)
 
-    def test_info_is_readonly(self):
-        """--info never modifies any file."""
+    # --- LTAC-only output options ---
+
+    def test_select_does_not_open_documents(self):
+        """--select alone never modifies any file (reads LTAC only)."""
+        self._assert_files_unchanged(
+            '--ltac', self.ltac_path, '--select', 'ltac/markdown')
+
+    def test_info_does_not_open_documents(self):
+        """--info alone never modifies any file (reads LTAC only)."""
         self._assert_files_unchanged(
             '--ltac', self.ltac_path, '--info', 'Root')
 
-    def test_descendants_is_readonly(self):
-        """--descendants never modifies any file."""
+    def test_descendants_does_not_open_documents(self):
+        """--descendants alone never modifies any file (reads LTAC only)."""
         self._assert_files_unchanged(
             '--ltac', self.ltac_path, '--descendants', 'Root')
 
     # --- Conflict guards ---
 
-    def test_analysis_blocked_with_fixmissing(self):
-        """Analysis options cannot be combined with --fixmissing."""
-        r = run('--ltac', self.ltac_path, '--missing', '--fixmissing', self.doc_path)
-        self.assertNotEqual(r.returncode, 0)
-        self.assertIn('cannot be combined', r.stderr)
+    def test_reporting_combines_with_fixmissing(self):
+        """Reporting options may be combined with --fixmissing."""
+        r = run('--ltac', self.ltac_path, '--empty', '--fixmissing', self.doc_path)
+        self.assertEqual(r.returncode, 0)
 
-    def test_analysis_blocked_with_fixmisplaced(self):
-        """Analysis options cannot be combined with --fixmisplaced."""
+    def test_reporting_combines_with_fixmisplaced(self):
+        """Reporting options may be combined with --fixmisplaced."""
         r = run('--ltac', self.ltac_path, '--leaves', '--fixmisplaced', self.doc_path)
-        self.assertNotEqual(r.returncode, 0)
-        self.assertIn('cannot be combined', r.stderr)
+        self.assertEqual(r.returncode, 0)
+        self.assertIn('Leaf', r.stdout)
 
-    def test_analysis_blocked_with_update(self):
-        """Analysis options cannot be combined with --sync (checked before any write)."""
-        r = run('--ltac', self.ltac_path, '--missing', '--sync', self.doc_path)
-        self.assertNotEqual(r.returncode, 0)
-        self.assertIn('cannot be combined', r.stderr)
-        with open(self.ltac_path, encoding='utf-8') as f:
-            self.assertEqual(f.read(), self.ltac_orig,
-                             '--sync must not have run before the error')
+    def test_reporting_combines_with_sync(self):
+        """Reporting options may be combined with --sync."""
+        r = run('--ltac', self.ltac_path, '--empty', '--sync', self.doc_path)
+        self.assertEqual(r.returncode, 0)
 
-    def test_analysis_blocked_with_rename(self):
-        """Analysis options cannot be combined with --rename (checked before any write)."""
-        r = run('--ltac', self.ltac_path, '--missing',
-                '--rename', 'Root', 'NewRoot', self.doc_path)
-        self.assertNotEqual(r.returncode, 0)
-        self.assertIn('cannot be combined', r.stderr)
+    def test_reporting_combines_with_mutation(self):
+        """Reporting options may be combined with LTAC mutations."""
+        r = run('--ltac', self.ltac_path, '--empty',
+                '--restate', 'Child', 'Updated child claim', self.doc_path)
+        self.assertEqual(r.returncode, 0)
         with open(self.ltac_path, encoding='utf-8') as f:
-            self.assertEqual(f.read(), self.ltac_orig,
-                             '--rename must not have run before the error')
+            self.assertIn('Updated child claim', f.read())
+
+    def test_select_combines_with_fixmissing(self):
+        """--select may be combined with --fixmissing."""
+        r = run('--ltac', self.ltac_path, '--select', 'ltac/markdown',
+                '--fixmissing', self.doc_path)
+        self.assertEqual(r.returncode, 0)
+        self.assertIn('Claim', r.stdout)  # ltac/markdown output present
+
+    def test_info_combines_with_default_mode(self):
+        """--info may be combined with the default document-update mode."""
+        r = run('--ltac', self.ltac_path, '--info', 'Root', self.doc_path)
+        self.assertEqual(r.returncode, 0)
+        self.assertIn('Element:', r.stdout)  # info output present
+
+    def test_descendants_combines_with_read_only(self):
+        """--descendants may be combined with --read-only."""
+        r = run('--ltac', self.ltac_path, '--descendants', 'Root',
+                '--read-only', self.doc_path)
+        self.assertEqual(r.returncode, 0)
+        self.assertIn('Root', r.stdout)  # descendants output present
+        with open(self.doc_path, encoding='utf-8') as f:
+            self.assertEqual(f.read(), self.doc_orig)
 
     # --- Combinability ---
 
-    def test_multiple_analysis_options_combinable(self):
-        """All six analysis options can be freely combined with each other."""
-        r = run('--ltac', self.ltac_path, '--missing', '--empty',
-                '--orphans', '--misplaced', '--leaves', '--packages', self.doc_path)
+    def test_multiple_reporting_options_combinable(self):
+        """Reporting options can be freely combined with each other."""
+        r = run('--ltac', self.ltac_path, '--read-only', '--empty', '--misplaced', self.doc_path)
         self.assertEqual(r.returncode, 0)
         with open(self.ltac_path, encoding='utf-8') as f:
             self.assertEqual(f.read(), self.ltac_orig)

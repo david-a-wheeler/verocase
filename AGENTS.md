@@ -1,59 +1,100 @@
-# verocase AGENTS.md
+# AGENTS.md
 
-The script `verocase` is a Python3 script for processing
-our extended version of Lightweight Text Assurance Case (LTAC) format
-and generating useful results to enable easy documentation and revision
-of assurance cases.
+This file provides guidance to AI coding assistants when working with code in this repository.
 
-To run our test suite, run:
+## What This Project Is
 
-> tests/run_tests.py
+Verocase is a command-line tool for creating and maintaining assurance cases, that is, structured arguments (with supporting evidence) that a system has properties like safety, security, or privacy. It reads a simple indented text format called LTAC (Lightweight Text Assurance Case) and updates Markdown/HTML documentation with embedded Mermaid diagrams in GSN, SACM, or CAE notation. It has zero third-party dependencies (besides optional `tomli` for Python < 3.11).
 
-Run `./verocase --help` to see how to execute it.
+## Commands
 
-If you're running on Linux or MacOS, don't add a `python3` or `python`
-prefix to run `tests/run_tests.py` or `verocase`, that's not necessary.
+**Run tests:**
+```bash
+python3 -m unittest tests.run_tests -v   # verbose
+python3 -m unittest tests.run_tests      # compact
+```
 
-See README.md for more.
+**Accept test results as new expected outputs:**
+```bash
+tests/accept_tests
+```
+
+**Run the tool:**
+```bash
+python3 verocase.py [options] [files]
+python3 verocase.py --help
+python3 verocase.py --start              # create starter case.ltac / case.md
+```
+
+**Install (for development):**
+```bash
+pip install flit
+flit install --symlink
+```
+
+## Architecture
+
+The entire implementation lives in a single file: `verocase.py`. This is intentional, because it keeps installation trivial.
+
+### Core Data Model
+
+- **`Node`**: one element in the assurance case forest of trees. Key fields: `node_type`, `identifier`, `text`, `ext_ref`, `options`, `parent`, `children`. Node types include Claim, Strategy, Evidence, Justification, Context, Assumption, Link, Relation, Connector.
+- **`Case`**: the loaded assurance case. Key fields:
+  - `roots`: package root nodes in LTAC file order. Each is Node is the head of a tree of Nodes
+  - `all_definitions_for`: id → defining Node(s). An error-free LTAC has only 1 definition for each id
+  - `citations`: id → citation Nodes
+  - `links`: id → Link Nodes
+  - `document_files`: list of Markdown/HTML output paths
+  - `config`: merged configuration dict
+
+### Processing Pipeline
+
+This can be used as a library or as a CLI. When used as a CLI:
+
+1. `main` calls `run(parse_args())`
+2. `run` calls case = Case().load(...), which creates the Case instance,
+   then loads the config and LTAC file.
+   LTAC file loading is done by `_LTACParser` which parses the `.ltac`
+   file into a forest of `Node` instances
+3. In most cases document processing eventually occurs. Document files with `<!-- verocase SELECTOR --> ... <!-- end verocase -->` regions are by default updated in-place; content outside those regions is preserved.
+
+Some important methods:
+
+* `Case.validate()`: runs validation checks (cycles, coverage, etc.)
+* `render_*()` functions: produce output in Markdown, HTML, SACM, GSN, or CAE (Mermaid) formats
+
+### Tests
+
+Tests live in `tests/run_tests.py` (unittest) with fixture data in `tests/fixtures/`. Each test scenario has a `.ltac` input, optional `.md` input, and `.expected.*` files for each output. Failures are written to `tests/results/` for review. Run `tests/accept_tests` to promote results to new expected outputs.
+
+### Configuration
+
+Config is loaded from the first of these found: `verocase.toml`, `docs/verocase.toml`, `case.toml`, `docs/case.toml`. Defaults are in `DEFAULT_CONFIG` (an immutable `MappingProxyType`).
+
+`DEFAULT_CONFIG` is the authoritative registry of valid configuration keys. `load_config` rejects unknown keys with a warning, so any new configuration option must be added to `DEFAULT_CONFIG` first. Do not add individual keyword parameters for config-driven behaviour; add the key to `DEFAULT_CONFIG` and read it from `config` inside the function.
+
+### Render functions
+
+Render functions write to a `TextIO` stream (`out`) rather than returning strings, and return `bool` (True if anything was written). Do not return content as strings from these functions; use `io.StringIO()` at the call site when a string is genuinely needed (e.g. in `_fixmissing`).
+
+### Python Version Compatibility
+
+Supports Python 3.8-3.13. Use `Optional[X]` not `X | None`, use `List[X]`/`Dict[K,V]` not `list[X]`/`dict[K,V]`. Walrus operator (`:=`) is fine.
+
+### Version Number
+
+The version string is defined near the top of `verocase.py`.
 
 ## Style
 
-Never use em dashes (long dashes); use semicolons or parentheses instead.
-A `--` for CLI long options is of course fine.
+Never use em dashes (long dashes) in any written text; use semicolons or parentheses instead. Never use `--` as a separator between text phrases. Note: `--` as a CLI long-option prefix is fine.
 
-## Key architecture notes for AI assistants
+## Documentation
 
-`verocase` is a **single Python3 script**. All logic lives there.
-We intentionally avoid adding any dependencies not built into Python to
-simplify deployment.
+The `docs/` directory includes documentation.
 
-`DEFAULT_CONFIG` is the authoritative registry of valid configuration keys.
-`load_config` rejects unknown keys with a warning, so any new configuration
-option must be added to `DEFAULT_CONFIG` first.
+- `docs/ltac-extended.txt`: the formal LTAC specification. Consult it for LTAC syntax requirements.
+- `docs/tutorial.md`: the user tutorial. Keep it up-to-date when the user interface changes.
+- `docs/reference.md`: the reference manual. Keep it up-to-date when the user interface changes.
 
-All render functions write to a `TextIO` stream (`out`) rather than returning
-strings, and return `bool` (True if anything was written).  The call
-signatures are:
-
-- Diagram renderers: `render_markdown`, `render_html`, `render_sacm`,
-  `render_sacm_html`, `render_gsn`, `render_gsn_html` →
-  `(roots: List[Node], config: dict, out: TextIO) -> bool`
-- Selection renderers: `render_referenced_by`, `render_supported_by`,
-  `render_supports`, `render_pkg_defines`, `render_pkg_citing`,
-  `render_pkg_cited`, `render_ltac_txt`, `render_info`,
-  `render_representation` → accept `out: TextIO` and `sep: str = ''`
-  (the separator to write before the first byte of content, only if
-  content is produced).
-- Assemblers: `render_element_selector`, `_render_single_package`,
-  `render_package_selector`, `render_selector` → accept `out: TextIO`.
-- `_apply_selections` accepts `out: TextIO` and `pending_sep: str = ''`.
-
-Do not return content as strings from these functions.  Use `io.StringIO()`
-at the call site when a string is genuinely needed (e.g. in `_fixmissing`).
-
-Do not add individual keyword parameters for config-driven behaviour; add
-the key to `DEFAULT_CONFIG` and read it from `config` inside the function.
-
-Changing rendered output requires updating the corresponding golden files in
-`tests/fixtures/`. Run `tests/run_tests.py` to verify. To accept all
-differing test results as the new expected values, run `tests/accept_tests`.
+The tool also has built-in help (`--help`, `--help-validations`, `--help-config`, `--help-api`, `--help-security`, etc.) implemented in `verocase.py`. Keep the built-in help up-to-date when the user interface changes; it lets users and AI quickly understand the tool without consulting a separate file.

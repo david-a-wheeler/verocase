@@ -334,7 +334,7 @@ They may be freely combined with each other and with any main mode.
 Use `--read-only` alongside them if you want to suppress the default document-update pass.
 
 Orphaned document regions (selector IDs not declared in the LTAC) are reported
-as errors automatically whenever verocase processes a document — there is no
+as errors automatically whenever verocase processes a document; there is no
 separate `--orphans` flag.
 
 | Option | Description |

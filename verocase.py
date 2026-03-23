@@ -242,7 +242,7 @@ def _assign_diagram_ids(nodes: List['Node']) -> None:
                 node.diagram_id = _unique(base + suffix, suffix)
 
 _HTML_ESCAPE_TABLE = str.maketrans({'<': '&lt;', '>': '&gt;', '"': '&quot;'})
-# Match '&' only when followed by '#' or an alphanumeric character — i.e. the
+# Match '&' only when followed by '#' or an alphanumeric character; i.e. the
 # start of a potential HTML entity (&alpha;, &#123;).  A bare '&' not followed
 # by those characters (e.g. "Smith & Jones") is left alone.
 _AMP_ENTITY_RE = re.compile(r'&(?=[#a-zA-Z0-9])')
@@ -356,7 +356,7 @@ def is_safe_url(url: str) -> bool:
     if s.startswith(_SAFE_URL_PREFIXES):
         return True
     # A URL with no colon is a bare relative path (e.g. 'hara.pdf', 'docs/foo')
-    # which the browser resolves relative to the current page — safe.
+    # which the browser resolves relative to the current page (safe).
     return ':' not in s
 
 
@@ -767,13 +767,13 @@ class Case:
         self.stderr:         'TextIO'           = stderr or sys.stderr
         self.trailing_comments: List[str]       = []
 
-        # Document pass results — None means "no pass has run yet" (distinct
+        # Document pass results; None means "no pass has run yet" (distinct
         # from {} / [] which means "pass ran and found nothing").
         self.element_doc_info: Optional[Dict[str, 'ElementDocInfo']] = None
         self.element_doc_order: Optional[List[Tuple[str, str, int]]] = None
         self.doc_pass_stats: Optional['DocPassStats'] = None
 
-        # LTAC-derived leaf set — managed by reset_cache(), not _reset_doc_processing().
+        # LTAC-derived leaf set; managed by reset_cache(), not _reset_doc_processing().
         self.important_leaves: Set[str] = set()
 
         # Error suppression: had_error is always set, output can be silenced.
@@ -826,7 +826,7 @@ class Case:
 
         had_error is still set when errors occur. Suppressed messages are
         collected in self._suppressed_messages (cleared at entry, readable
-        after exit). Nested calls wipe messages from the outer context —
+        after exit). Nested calls wipe messages from the outer context;
         avoid nesting in practice."""
         prev = self._suppress_reporting
         self._suppress_reporting = True
@@ -1681,7 +1681,7 @@ o
 
         Populates self.element_doc_info, self.element_doc_order, and
         self.doc_pass_stats as side-effects (via process_document).
-        Does NOT call _reset_doc_processing() — that is the caller's job.
+        Does NOT call _reset_doc_processing(); that is the caller's job.
         On OSError, calls self.error() and returns without raising.
         When scan_only is True, selector regions are not rendered (element
         tracking and orphan detection still run normally).
@@ -2119,7 +2119,7 @@ o
         one commit.
 
         Rewrites each file in self.document_files (via update_documents),
-        and if self.ltac_modified is True also serialises the LTAC forest —
+        and if self.ltac_modified is True also serialises the LTAC forest;
         all written to temp files first, then committed together in a
         single backup+atomic-replace operation.  Clears
         self.ltac_modified on success.  Returns not self.had_error.
@@ -2133,7 +2133,7 @@ o
         return not self.had_error
 
     # ------------------------------------------------------------------
-    # Analysis — data-returning
+    # Analysis: data-returning
     # ------------------------------------------------------------------
 
     def leaves(self) -> List['Node']:
@@ -2289,7 +2289,7 @@ o
         return result
 
     # ------------------------------------------------------------------
-    # Analysis — output-printing
+    # Analysis: output-printing
     # ------------------------------------------------------------------
 
     def packages(self) -> List[dict]:
@@ -2707,7 +2707,7 @@ o
         any '<!-- verocase element OLD_ID -->' marker is rewritten to
         use the new ID in-place during the pass.
 
-        When `scan_only` is True, selector regions are not rendered —
+        When `scan_only` is True, selector regions are not rendered;
         only the markers are passed through and element tracking is
         performed. Orphan elements (selector regions not declared in the
         LTAC) are reported as errors immediately and also skipped when
@@ -3197,7 +3197,7 @@ class _LTACParser:
                 self._case.error(f"line {lineno}: {ident!r}: type {node.node_type!r}"
                                  f" conflicts with earlier use as {known_type!r}")
             if node.is_citation:
-                pass  # Citation — tree attachment handled below
+                pass  # Citation; tree attachment handled below
             else:
                 prev_defs = self.all_definitions_for.get(ident, [])
                 if prev_defs:
@@ -4445,7 +4445,7 @@ def _cae_node_decl(node: 'Node') -> str:
         shape = f'(["{inner}"])'
     elif node.node_type == 'Evidence':
         shape = f'["{inner}"]'
-    else:  # Claim, Assumption, Context, Defeater — all ellipses
+    else:  # Claim, Assumption, Context, Defeater - all ellipses
         shape = f'(("{inner}"))'
 
     return f'    {did}{shape}:::{cls}'
@@ -4456,7 +4456,7 @@ def _cae_collect_edges(node: 'Node', write_edge) -> None:
 
     Edges are written in DFS post-order (deepest leaves first), matching the
     BT (bottom-to-top) flowchart direction: each edge goes child --> parent.
-    CAE has no dot nodes — all edges are direct.
+    CAE has no dot nodes; all edges are direct.
     Context children use dashed arrows (abstract=True).
     Defeater children use X-head edges (defeater=True).
     """
@@ -5461,7 +5461,7 @@ Here are more examples of these types and their methods/properties:
     # Validation
     case.validate_ltac() -> bool
                         (circularities, reachability, identifier rules)
-    # Mutations — each sets ltac_modified = True
+    # Mutations; each sets ltac_modified = True
     case.rename_id(old, new)
     case.restate_id(ident, new_text)
     case.detach_id(ident)

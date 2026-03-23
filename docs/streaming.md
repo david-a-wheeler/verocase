@@ -62,7 +62,7 @@ def render_item(item, out, sep='') -> bool:
 
 ## Changes by function group
 
-### Phase 1 — diagram body builders and leaf renderers
+### Phase 1: diagram body builders and leaf renderers
 
 | Function | Old signature | New signature |
 |---|---|---|
@@ -95,7 +95,7 @@ normal edges, once all leaf nodes have been identified by `_gsn_collect_edges`.
 This is a cosmetic ordering change in the Mermaid source; the rendered diagram
 is unaffected.
 
-### Phase 2 — diagram wrappers
+### Phase 2: diagram wrappers
 
 | Function | Old signature | New signature |
 |---|---|---|
@@ -112,7 +112,7 @@ is unaffected.
 `<script>` tag to the rendered string if needed) to a direct writer called
 *before* the `<pre class="mermaid">` block.
 
-### Phase 3+4 — selection renderers and assemblers
+### Phase 3+4: selection renderers and assemblers
 
 | Function | Old signature | New signature |
 |---|---|---|
@@ -130,24 +130,24 @@ is unaffected.
 | `render_package_selector` | `(pkg_id_or_star, …, state) -> str` | `(pkg_id_or_star, …, state, out) -> bool` |
 
 `_write_ltac_node_normalized` changed from `(node, lines: list, depth_offset)`
-to `(node, out: TextIO, first: list, depth_offset)` — same `first` mutable-bool
+to `(node, out: TextIO, first: list, depth_offset)`; same `first` mutable-bool
 pattern as `_render_markdown_node`.
 
 `render_info` now writes directly to `out` using `\n`-prefixed continuation
 lines instead of building a `lines` list.
 
-### Phase 5 — render_selector and call sites
+### Phase 5: render_selector and call sites
 
 | Function | Old signature | New signature |
 |---|---|---|
 | `render_selector` | `(selector, …) -> str` | `(selector, …, out, …) -> bool` |
 
-### Phase 6 — cleanup
+### Phase 6: cleanup
 
 - Removed `_render_to_str` helper.
 - Updated `AGENTS.md` to document the streaming API conventions.
 
-### Phase 7 — `_inline_rewrite_file` and `--fixmissing`
+### Phase 7: `_inline_rewrite_file` and `--fixmissing`
 
 `_inline_rewrite_file` was rewritten to stream directly to a temp file:
 
@@ -155,8 +155,8 @@ lines instead of building a `lines` list.
 - A temp file is created with `tempfile.mkstemp` and opened with the correct
   line-ending translation (`newline='\r\n'` for CRLF files, `newline=''` for
   LF files).
-- `process_document_stream` writes directly to the temp file — no
-  `io.StringIO` buffer.
+- `process_document_stream` writes directly to the temp file (no
+  `io.StringIO` buffer).
 - After streaming, the temp file is moved into place unconditionally.  No
   comparison with the original is performed; updating the mtime on every run is
   acceptable since git (not mtime) determines what actually changed.
@@ -191,7 +191,7 @@ path.  It remains only in test helpers and for small, bounded buffers:
 
 - `render_element_selector` called from `--fixmissing` stub generation in
   `_emit_stubs_after`/`_emit_all_remaining` writes directly to `out` (the temp
-  file stream) — no buffer.
+  file stream); no buffer.
 - The `io.StringIO` import is still present for doctests and any future use.
 
 ## Functions that still return strings
@@ -199,8 +199,8 @@ path.  It remains only in test helpers and for small, bounded buffers:
 A small number of helper functions still return strings because they produce
 short, fixed outputs that are immediately written:
 
-- `render_warning` — returns the short HTML comment
-- `render_statement` — returns a single node's statement text
-- `_make_heading` — constructs a short heading string
-- `_linked_list`, `hyperlink`, `bold` — string formatters
+- `render_warning`: returns the short HTML comment
+- `render_statement`: returns a single node's statement text
+- `_make_heading`: constructs a short heading string
+- `_linked_list`, `hyperlink`, `bold`: string formatters
 

@@ -59,7 +59,7 @@ file-modifying options.
 
 Add a new **`--missing`** analysis option (read-only) that merely
 *lists* elements declared in the LTAC that have no selector region in
-the document at all — the read-only counterpart to `--fixmissing`.
+the document at all; the read-only counterpart to `--fixmissing`.
 
 Output format: a header line, then one element per line with type
 and ID:
@@ -126,7 +126,7 @@ they all have evidence or are legitimately axiomatic.
 ## `--packages`
 
 List each package with its element count, its root element, and the
-direct children of that root — in LTAC syntax. Each child is followed
+direct children of that root (in LTAC syntax). Each child is followed
 by a count of itself plus all its descendants (including any citations
 and links within the subtree), so the reader can immediately judge
 which child to `--detach` and what the resulting package sizes would be.
@@ -154,7 +154,7 @@ Package Implementation (31 elements)
 When a package is getting large and I'm considering `--detach`,
 the direct children of the root are the natural candidate detach
 points, and their subtree sizes show exactly what the split would
-produce — without reading the full LTAC manually.
+produce, without reading the full LTAC manually.
 
 ---
 
@@ -174,7 +174,7 @@ Usage examples:
 
 Output: the LTAC declaration of the named element and its full
 subtree, indented as in `case.ltac`, with element IDs, titles,
-options (`{needssupport}`, `{axiomatic}`), and file/URL references —
+options (`{needssupport}`, `{axiomatic}`), and file/URL references;
 but none of the generated Markdown: no `<!-- verocase ... -->`
 comments, no `#### Claim Foo:` headings, no `**Supported by:**` lines.
 Citations (`^ID`) are shown as-is.
@@ -182,7 +182,7 @@ Citations (`^ID`) are shown as-is.
 **Why useful:** The existing `--select "Package X" --stdout` output
 is Markdown, which adds generated header lines, HTML comment markers,
 and `[text](url)` link syntax around every cross-reference. When
-evaluating a `--detach` candidate, all of that is noise — the LTAC
+evaluating a `--detach` candidate, all of that is noise; the LTAC
 indented subtree is the signal. Generalizing beyond package roots
 means any element can be inspected this way. Currently the workaround
 is `grep`-ing the raw `.ltac` file, which requires manually tracing
@@ -277,7 +277,7 @@ Evidence FormerEvidenceId
 
 `--orphans` is a read-only analysis option and never modifies any
 file. To actually remove orphaned regions, the author should review
-them manually and delete them — they may contain prose worth
+them manually and delete them; they may contain prose worth
 salvaging before deletion.
 
 **Why useful:** After renaming or removing an element in the LTAC,
@@ -306,7 +306,7 @@ where it should be relative to its siblings and neighbors.
 
 **The most common case:** `--fixmissing` (the file-modifying scaffold
 command) appends new element regions at the *end* of the document.
-After scaffolding, all newly added elements are misplaced — they sit
+After scaffolding, all newly added elements are misplaced; they sit
 at the bottom instead of near their parent. `--misplaced` identifies
 them; `--fixmisplaced` moves them.
 
@@ -326,7 +326,7 @@ its expected predecessor, preserving all content. A "region" consists
 of everything from the `<!-- verocase element ID -->` start comment
 through `<!-- end verocase -->` and then all following lines up to
 (but not including) the next `<!-- verocase element -->`,
-`<!-- verocase-config -->`, or `<!-- end verocase -->` marker — i.e.,
+`<!-- verocase-config -->`, or `<!-- end verocase -->` marker; i.e.,
 the generated header plus the author's prose block. It processes
 moves in LTAC order so that each move lands in the right place even
 when multiple elements are misplaced. It modifies the document file
@@ -357,7 +357,7 @@ position in the document, using the following algorithm:
 
 2. Insert the new stub immediately after that predecessor's full
    region: after the predecessor's `<!-- end verocase -->` tag and
-   its entire following prose block — i.e., everything up to but not
+   its entire following prose block; i.e., everything up to but not
    including the next `<!-- verocase element -->` or
    `<!-- verocase-config -->` marker.
 

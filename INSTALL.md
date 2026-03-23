@@ -70,9 +70,9 @@ pip install --break-system-packages verocase
 ```
 
 This flag tells pip to install into the system Python environment despite
-the protection.  For `verocase` the practical risk is low — it has no
+the protection.  For `verocase` the practical risk is low (it has no
 third-party dependencies, so there is nothing to conflict with system
-packages — but be aware of the trade-off: if you later install other
+packages), but be aware of the trade-off: if you later install other
 packages with `--break-system-packages`, a version conflict with a
 system-owned package could cause hard-to-diagnose breakage.
 
@@ -94,7 +94,7 @@ python3 -m venv ~/.venvs/verocase
 
 Then either call `~/.venvs/verocase/bin/verocase` directly, add
 `~/.venvs/verocase/bin` to your PATH, or create a symlink in `~/bin/`.
-(This is essentially what `pipx` does for you automatically — which is
+(This is essentially what `pipx` does for you automatically, which is
 why pipx is the recommended option.)
 
 ## Single-file installation

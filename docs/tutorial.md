@@ -569,8 +569,8 @@ base_url = "https://github.com/example/myproject/blob/main/docs/case.md"
 ```
 
 Once set, every diagram node click will take the reader directly to the
-corresponding section in the document — no GitHub Pages, no separate build
-step, no deployment pipeline needed.  The document lives in the repository
+corresponding section in the document (no GitHub Pages, no separate build
+step, no deployment pipeline needed).  The document lives in the repository
 and works as-is.
 
 **Trade-offs to be aware of:**
@@ -597,8 +597,8 @@ documents at once) or inline in a specific document with `verocase-config`:
 
 ### Per-document settings with `verocase-config`
 
-For settings that affect how a single document is rendered — heading
-levels, diagram width limits, or `base_url` — you can place directives
+For settings that affect how a single document is rendered (heading
+levels, diagram width limits, or `base_url`), you can place directives
 inline anywhere in the document:
 
 ```markdown

@@ -1147,7 +1147,7 @@ o
                 continue
             if node.node_type == 'Assumption':
                 continue
-            if any(o in _ASSERTION_STATUSES for o in node.options):
+            if any(o in _STATUS_OPTIONS for o in node.options):
                 continue
             if node.ext_ref:
                 continue
@@ -2962,17 +2962,9 @@ _NON_INFERENTIAL_TYPES = frozenset({
     'Evidence', 'Context', 'Assumption', 'Justification'
 })
 # _STATUS_OPTIONS: statuses as literal option keywords in LTAC text.
-# _ASSERTION_STATUSES: all statuses that mark an assertion as
-#   already-addressed, including 'ascited', which is implicit
-#   (derived from is_citation, not written as a literal option).
-# Use _STATUS_OPTIONS when intersecting node.options.
-# Use _ASSERTION_STATUSES when checking if any status is already present.
-# The way we're handling 'ascited' is debatable, and probably
-# worth a revisit later.
 _STATUS_OPTIONS = frozenset({
     'assumed', 'needssupport', 'axiomatic', 'defeated'
 })
-_ASSERTION_STATUSES = _STATUS_OPTIONS | {'ascited'}
 
 def _infer_id(text: str) -> str:
     """Derive an LTAC id from element text for nodes with no explicit ID.
@@ -3148,7 +3140,6 @@ class _LTACParser:
         # Assertion status: SACM spec section 11 requires mutual exclusivity.
         active = _STATUS_OPTIONS.intersection(options)
         if nodetype == 'Assumption': active = active | {'assumed'}
-        if is_citation:                 active = active | {'ascited'}
         if len(active) >= 2:
             label = identifier or f'(unnamed {nodetype})'
             self._case.error(f"line {lineno}: {label}: conflicting assertion status:"

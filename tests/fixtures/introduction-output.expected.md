@@ -4,7 +4,6 @@ This document describes the assurance case for the software.
 
 <!-- verocase element C1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c1"></a>
 ### Claim C1: The software is acceptably safe
 

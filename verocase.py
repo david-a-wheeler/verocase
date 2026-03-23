@@ -2650,7 +2650,7 @@ o
 
         out.write(sep)
         out.write(_WARNING_TEXT_SELECTOR)
-        out.write('\n\n')
+        out.write('\n')
         out.write(_make_heading(anchor, level, heading_text, fmt))
         _apply_sel(self.config['element_selections'],
                    _ELEMENT_RENDER_MAP, node, self, self.config, fmt, out, pending_sep='\n\n')
@@ -2681,7 +2681,7 @@ o
             return False
         state.current_id = pkg_id_or_star
         out.write(_WARNING_TEXT_SELECTOR)
-        out.write('\n\n')
+        out.write('\n')
         _render_single_package(pkg_root, self, self.config, state, out)
         return True
 

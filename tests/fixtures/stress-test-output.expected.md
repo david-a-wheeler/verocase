@@ -9538,7 +9538,6 @@ flowchart TD
 
 <!-- verocase element G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-g1"></a>
 ### Claim G1: Statement of G1
 
@@ -9551,7 +9550,6 @@ Stub for Claim G1.
 
 <!-- verocase element Xscope -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-xscope"></a>
 ### Context Xscope: Scope of Sys
 
@@ -9564,7 +9562,6 @@ Stub for Context Xscope.
 
 <!-- verocase element Asys -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-asys"></a>
 ### Assumption Asys: Assumption of Sys
 
@@ -9577,7 +9574,6 @@ Stub for Assumption Asys.
 
 <!-- verocase element Esys1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-esys1"></a>
 ### Evidence Esys1: System-level evidence
 
@@ -9590,7 +9586,6 @@ Stub for Evidence Esys1.
 
 <!-- verocase element Sdecomp -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-sdecomp"></a>
 ### Strategy Sdecomp: Decompose by large area
 
@@ -9605,7 +9600,6 @@ Stub for Strategy Sdecomp.
 
 <!-- verocase element Scomps -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-scomps"></a>
 ### Strategy Scomps: Argue by component
 
@@ -9620,7 +9614,6 @@ Stub for Strategy Scomps.
 
 <!-- verocase element L1top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l1top"></a>
 ### Claim L1top: Statement of L1top
 
@@ -9635,7 +9628,6 @@ Stub for Claim L1top.
 
 <!-- verocase element L1Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-l1xctx"></a>
 ### Context L1Xctx: Context of L1Xctx
 
@@ -9648,7 +9640,6 @@ Stub for Context L1Xctx.
 
 <!-- verocase element L1Esh1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l1esh1"></a>
 ### Evidence L1Esh1: Shared evidence A of L1
 
@@ -9661,7 +9652,6 @@ Stub for Evidence L1Esh1.
 
 <!-- verocase element L1Esh2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l1esh2"></a>
 ### Evidence L1Esh2: Shared evidence B of L1
 
@@ -9674,7 +9664,6 @@ Stub for Evidence L1Esh2.
 
 <!-- verocase element L1Smain -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-l1smain"></a>
 ### Strategy L1Smain: Main strategy of L1
 
@@ -9689,7 +9678,6 @@ Stub for Strategy L1Smain.
 
 <!-- verocase element L1G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l1g2"></a>
 ### Claim L1G2: Level-2 claim of L1
 
@@ -9704,7 +9692,6 @@ Stub for Claim L1G2.
 
 <!-- verocase element L1S2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-l1s2"></a>
 ### Strategy L1S2: Level-3 strategy of L1
 
@@ -9719,7 +9706,6 @@ Stub for Strategy L1S2.
 
 <!-- verocase element L1G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l1g3"></a>
 ### Claim L1G3: Level-4 claim of L1
 
@@ -9734,7 +9720,6 @@ Stub for Claim L1G3.
 
 <!-- verocase element L1S3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-l1s3"></a>
 ### Strategy L1S3: Level-5 strategy of L1
 
@@ -9749,7 +9734,6 @@ Stub for Strategy L1S3.
 
 <!-- verocase element L1G4 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l1g4"></a>
 ### Claim L1G4: Level-6 claim of L1
 
@@ -9764,7 +9748,6 @@ Stub for Claim L1G4.
 
 <!-- verocase element L1Edeep -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l1edeep"></a>
 ### Evidence L1Edeep: Deep evidence of L1
 
@@ -9777,7 +9760,6 @@ Stub for Evidence L1Edeep.
 
 <!-- verocase element L1G4b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l1g4b"></a>
 ### Claim L1G4b: Level-6 alt claim of L1
 
@@ -9792,7 +9774,6 @@ Stub for Claim L1G4b.
 
 <!-- verocase element L1G3b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l1g3b"></a>
 ### Claim L1G3b: Level-5 alt claim of L1
 
@@ -9807,7 +9788,6 @@ Stub for Claim L1G3b.
 
 <!-- verocase element L1G3c -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l1g3c"></a>
 ### Claim L1G3c: Level-4 alt claim of L1
 
@@ -9822,7 +9802,6 @@ Stub for Claim L1G3c.
 
 <!-- verocase element L1J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-l1j1"></a>
 ### Justification L1J1: Justification of L1
 
@@ -9835,7 +9814,6 @@ Stub for Justification L1J1.
 
 <!-- verocase element L1G2b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l1g2b"></a>
 ### Claim L1G2b: Level-3 alt claim of L1
 
@@ -9850,7 +9828,6 @@ Stub for Claim L1G2b.
 
 <!-- verocase element L1S2b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-l1s2b"></a>
 ### Strategy L1S2b: Level-4 alt strategy of L1
 
@@ -9865,7 +9842,6 @@ Stub for Strategy L1S2b.
 
 <!-- verocase element L1G3d -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l1g3d"></a>
 ### Claim L1G3d: Level-5 claim D of L1
 
@@ -9880,7 +9856,6 @@ Stub for Claim L1G3d.
 
 <!-- verocase element L1G3e -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l1g3e"></a>
 ### Claim L1G3e: Level-5 claim E of L1
 
@@ -9895,7 +9870,6 @@ Stub for Claim L1G3e.
 
 <!-- verocase element L1E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l1e2"></a>
 ### Evidence L1E2: Extra evidence of L1
 
@@ -9908,7 +9882,6 @@ Stub for Evidence L1E2.
 
 <!-- verocase element L1Gbr1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l1gbr1"></a>
 ### Claim L1Gbr1: Breadth claim 1 of L1
 
@@ -9923,7 +9896,6 @@ Stub for Claim L1Gbr1.
 
 <!-- verocase element L1Gbr1a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l1gbr1a"></a>
 ### Claim L1Gbr1a: Sub-claim 1a of L1
 
@@ -9938,7 +9910,6 @@ Stub for Claim L1Gbr1a.
 
 <!-- verocase element L1Ebr1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l1ebr1"></a>
 ### Evidence L1Ebr1: Evidence for breadth 1 of L1
 
@@ -9951,7 +9922,6 @@ Stub for Evidence L1Ebr1.
 
 <!-- verocase element L1Gbr1b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l1gbr1b"></a>
 ### Claim L1Gbr1b: Sub-claim 1b of L1
 
@@ -9966,7 +9936,6 @@ Stub for Claim L1Gbr1b.
 
 <!-- verocase element L1Gbr2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l1gbr2"></a>
 ### Claim L1Gbr2: Breadth claim 2 of L1
 
@@ -9981,7 +9950,6 @@ Stub for Claim L1Gbr2.
 
 <!-- verocase element L1Gbr2a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l1gbr2a"></a>
 ### Claim L1Gbr2a: Sub-claim 2a of L1
 
@@ -9996,7 +9964,6 @@ Stub for Claim L1Gbr2a.
 
 <!-- verocase element L1Ebr2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l1ebr2"></a>
 ### Evidence L1Ebr2: Evidence for breadth 2 of L1
 
@@ -10009,7 +9976,6 @@ Stub for Evidence L1Ebr2.
 
 <!-- verocase element L1Gbr2b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l1gbr2b"></a>
 ### Claim L1Gbr2b: Sub-claim 2b of L1
 
@@ -10024,7 +9990,6 @@ Stub for Claim L1Gbr2b.
 
 <!-- verocase element L1Gbr3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l1gbr3"></a>
 ### Claim L1Gbr3: Breadth claim 3 of L1
 
@@ -10039,7 +10004,6 @@ Stub for Claim L1Gbr3.
 
 <!-- verocase element L1Gbr3a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l1gbr3a"></a>
 ### Claim L1Gbr3a: Sub-claim 3a of L1
 
@@ -10054,7 +10018,6 @@ Stub for Claim L1Gbr3a.
 
 <!-- verocase element L1Ebr3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l1ebr3"></a>
 ### Evidence L1Ebr3: Evidence for breadth 3 of L1
 
@@ -10067,7 +10030,6 @@ Stub for Evidence L1Ebr3.
 
 <!-- verocase element L1Gbr3b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l1gbr3b"></a>
 ### Claim L1Gbr3b: Sub-claim 3b of L1
 
@@ -10082,7 +10044,6 @@ Stub for Claim L1Gbr3b.
 
 <!-- verocase element L1Gbr4 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l1gbr4"></a>
 ### Claim L1Gbr4: Breadth claim 4 of L1
 
@@ -10097,7 +10058,6 @@ Stub for Claim L1Gbr4.
 
 <!-- verocase element L1Gbr4a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l1gbr4a"></a>
 ### Claim L1Gbr4a: Sub-claim 4a of L1
 
@@ -10112,7 +10072,6 @@ Stub for Claim L1Gbr4a.
 
 <!-- verocase element L1Ebr4 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l1ebr4"></a>
 ### Evidence L1Ebr4: Evidence for breadth 4 of L1
 
@@ -10125,7 +10084,6 @@ Stub for Evidence L1Ebr4.
 
 <!-- verocase element L1Gbr4b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l1gbr4b"></a>
 ### Claim L1Gbr4b: Sub-claim 4b of L1
 
@@ -10140,7 +10098,6 @@ Stub for Claim L1Gbr4b.
 
 <!-- verocase element L1Gbr5 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l1gbr5"></a>
 ### Claim L1Gbr5: Breadth claim 5 of L1
 
@@ -10155,7 +10112,6 @@ Stub for Claim L1Gbr5.
 
 <!-- verocase element L1Gbr5a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l1gbr5a"></a>
 ### Claim L1Gbr5a: Sub-claim 5a of L1
 
@@ -10170,7 +10126,6 @@ Stub for Claim L1Gbr5a.
 
 <!-- verocase element L1Ebr5 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l1ebr5"></a>
 ### Evidence L1Ebr5: Evidence for breadth 5 of L1
 
@@ -10183,7 +10138,6 @@ Stub for Evidence L1Ebr5.
 
 <!-- verocase element L1Gbr5b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l1gbr5b"></a>
 ### Claim L1Gbr5b: Sub-claim 5b of L1
 
@@ -10198,7 +10152,6 @@ Stub for Claim L1Gbr5b.
 
 <!-- verocase element L1Gbr6 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l1gbr6"></a>
 ### Claim L1Gbr6: Breadth claim 6 of L1
 
@@ -10213,7 +10166,6 @@ Stub for Claim L1Gbr6.
 
 <!-- verocase element L1Gbr6a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l1gbr6a"></a>
 ### Claim L1Gbr6a: Sub-claim 6a of L1
 
@@ -10228,7 +10180,6 @@ Stub for Claim L1Gbr6a.
 
 <!-- verocase element L1Ebr6 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l1ebr6"></a>
 ### Evidence L1Ebr6: Evidence for breadth 6 of L1
 
@@ -10241,7 +10192,6 @@ Stub for Evidence L1Ebr6.
 
 <!-- verocase element L1Gbr6b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l1gbr6b"></a>
 ### Claim L1Gbr6b: Sub-claim 6b of L1
 
@@ -10256,7 +10206,6 @@ Stub for Claim L1Gbr6b.
 
 <!-- verocase element L1Gbr7 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l1gbr7"></a>
 ### Claim L1Gbr7: Breadth claim 7 of L1
 
@@ -10271,7 +10220,6 @@ Stub for Claim L1Gbr7.
 
 <!-- verocase element L1Gbr7a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l1gbr7a"></a>
 ### Claim L1Gbr7a: Sub-claim 7a of L1
 
@@ -10286,7 +10234,6 @@ Stub for Claim L1Gbr7a.
 
 <!-- verocase element L1Ebr7 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l1ebr7"></a>
 ### Evidence L1Ebr7: Evidence for breadth 7 of L1
 
@@ -10299,7 +10246,6 @@ Stub for Evidence L1Ebr7.
 
 <!-- verocase element L1Gbr7b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l1gbr7b"></a>
 ### Claim L1Gbr7b: Sub-claim 7b of L1
 
@@ -10314,7 +10260,6 @@ Stub for Claim L1Gbr7b.
 
 <!-- verocase element L1Gbr8 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l1gbr8"></a>
 ### Claim L1Gbr8: Breadth claim 8 of L1
 
@@ -10329,7 +10274,6 @@ Stub for Claim L1Gbr8.
 
 <!-- verocase element L1Gbr8a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l1gbr8a"></a>
 ### Claim L1Gbr8a: Sub-claim 8a of L1
 
@@ -10344,7 +10288,6 @@ Stub for Claim L1Gbr8a.
 
 <!-- verocase element L1Ebr8 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l1ebr8"></a>
 ### Evidence L1Ebr8: Evidence for breadth 8 of L1
 
@@ -10357,7 +10300,6 @@ Stub for Evidence L1Ebr8.
 
 <!-- verocase element L1Gbr8b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l1gbr8b"></a>
 ### Claim L1Gbr8b: Sub-claim 8b of L1
 
@@ -10372,7 +10314,6 @@ Stub for Claim L1Gbr8b.
 
 <!-- verocase element L2top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l2top"></a>
 ### Claim L2top: Statement of L2top
 
@@ -10387,7 +10328,6 @@ Stub for Claim L2top.
 
 <!-- verocase element L2Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-l2xctx"></a>
 ### Context L2Xctx: Context of L2Xctx
 
@@ -10400,7 +10340,6 @@ Stub for Context L2Xctx.
 
 <!-- verocase element L2Esh1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l2esh1"></a>
 ### Evidence L2Esh1: Shared evidence A of L2
 
@@ -10413,7 +10352,6 @@ Stub for Evidence L2Esh1.
 
 <!-- verocase element L2Esh2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l2esh2"></a>
 ### Evidence L2Esh2: Shared evidence B of L2
 
@@ -10426,7 +10364,6 @@ Stub for Evidence L2Esh2.
 
 <!-- verocase element L2Smain -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-l2smain"></a>
 ### Strategy L2Smain: Main strategy of L2
 
@@ -10441,7 +10378,6 @@ Stub for Strategy L2Smain.
 
 <!-- verocase element L2G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l2g2"></a>
 ### Claim L2G2: Level-2 claim of L2
 
@@ -10456,7 +10392,6 @@ Stub for Claim L2G2.
 
 <!-- verocase element L2S2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-l2s2"></a>
 ### Strategy L2S2: Level-3 strategy of L2
 
@@ -10471,7 +10406,6 @@ Stub for Strategy L2S2.
 
 <!-- verocase element L2G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l2g3"></a>
 ### Claim L2G3: Level-4 claim of L2
 
@@ -10486,7 +10420,6 @@ Stub for Claim L2G3.
 
 <!-- verocase element L2S3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-l2s3"></a>
 ### Strategy L2S3: Level-5 strategy of L2
 
@@ -10501,7 +10434,6 @@ Stub for Strategy L2S3.
 
 <!-- verocase element L2G4 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l2g4"></a>
 ### Claim L2G4: Level-6 claim of L2
 
@@ -10516,7 +10448,6 @@ Stub for Claim L2G4.
 
 <!-- verocase element L2Edeep -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l2edeep"></a>
 ### Evidence L2Edeep: Deep evidence of L2
 
@@ -10529,7 +10460,6 @@ Stub for Evidence L2Edeep.
 
 <!-- verocase element L2G4b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l2g4b"></a>
 ### Claim L2G4b: Level-6 alt claim of L2
 
@@ -10544,7 +10474,6 @@ Stub for Claim L2G4b.
 
 <!-- verocase element L2G3b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l2g3b"></a>
 ### Claim L2G3b: Level-5 alt claim of L2
 
@@ -10559,7 +10488,6 @@ Stub for Claim L2G3b.
 
 <!-- verocase element L2G3c -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l2g3c"></a>
 ### Claim L2G3c: Level-4 alt claim of L2
 
@@ -10574,7 +10502,6 @@ Stub for Claim L2G3c.
 
 <!-- verocase element L2J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-l2j1"></a>
 ### Justification L2J1: Justification of L2
 
@@ -10587,7 +10514,6 @@ Stub for Justification L2J1.
 
 <!-- verocase element L2G2b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l2g2b"></a>
 ### Claim L2G2b: Level-3 alt claim of L2
 
@@ -10602,7 +10528,6 @@ Stub for Claim L2G2b.
 
 <!-- verocase element L2S2b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-l2s2b"></a>
 ### Strategy L2S2b: Level-4 alt strategy of L2
 
@@ -10617,7 +10542,6 @@ Stub for Strategy L2S2b.
 
 <!-- verocase element L2G3d -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l2g3d"></a>
 ### Claim L2G3d: Level-5 claim D of L2
 
@@ -10632,7 +10556,6 @@ Stub for Claim L2G3d.
 
 <!-- verocase element L2G3e -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l2g3e"></a>
 ### Claim L2G3e: Level-5 claim E of L2
 
@@ -10647,7 +10570,6 @@ Stub for Claim L2G3e.
 
 <!-- verocase element L2E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l2e2"></a>
 ### Evidence L2E2: Extra evidence of L2
 
@@ -10660,7 +10582,6 @@ Stub for Evidence L2E2.
 
 <!-- verocase element L2Gbr1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l2gbr1"></a>
 ### Claim L2Gbr1: Breadth claim 1 of L2
 
@@ -10675,7 +10596,6 @@ Stub for Claim L2Gbr1.
 
 <!-- verocase element L2Gbr1a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l2gbr1a"></a>
 ### Claim L2Gbr1a: Sub-claim 1a of L2
 
@@ -10690,7 +10610,6 @@ Stub for Claim L2Gbr1a.
 
 <!-- verocase element L2Ebr1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l2ebr1"></a>
 ### Evidence L2Ebr1: Evidence for breadth 1 of L2
 
@@ -10703,7 +10622,6 @@ Stub for Evidence L2Ebr1.
 
 <!-- verocase element L2Gbr1b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l2gbr1b"></a>
 ### Claim L2Gbr1b: Sub-claim 1b of L2
 
@@ -10718,7 +10636,6 @@ Stub for Claim L2Gbr1b.
 
 <!-- verocase element L2Gbr2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l2gbr2"></a>
 ### Claim L2Gbr2: Breadth claim 2 of L2
 
@@ -10733,7 +10650,6 @@ Stub for Claim L2Gbr2.
 
 <!-- verocase element L2Gbr2a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l2gbr2a"></a>
 ### Claim L2Gbr2a: Sub-claim 2a of L2
 
@@ -10748,7 +10664,6 @@ Stub for Claim L2Gbr2a.
 
 <!-- verocase element L2Ebr2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l2ebr2"></a>
 ### Evidence L2Ebr2: Evidence for breadth 2 of L2
 
@@ -10761,7 +10676,6 @@ Stub for Evidence L2Ebr2.
 
 <!-- verocase element L2Gbr2b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l2gbr2b"></a>
 ### Claim L2Gbr2b: Sub-claim 2b of L2
 
@@ -10776,7 +10690,6 @@ Stub for Claim L2Gbr2b.
 
 <!-- verocase element L2Gbr3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l2gbr3"></a>
 ### Claim L2Gbr3: Breadth claim 3 of L2
 
@@ -10791,7 +10704,6 @@ Stub for Claim L2Gbr3.
 
 <!-- verocase element L2Gbr3a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l2gbr3a"></a>
 ### Claim L2Gbr3a: Sub-claim 3a of L2
 
@@ -10806,7 +10718,6 @@ Stub for Claim L2Gbr3a.
 
 <!-- verocase element L2Ebr3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l2ebr3"></a>
 ### Evidence L2Ebr3: Evidence for breadth 3 of L2
 
@@ -10819,7 +10730,6 @@ Stub for Evidence L2Ebr3.
 
 <!-- verocase element L2Gbr3b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l2gbr3b"></a>
 ### Claim L2Gbr3b: Sub-claim 3b of L2
 
@@ -10834,7 +10744,6 @@ Stub for Claim L2Gbr3b.
 
 <!-- verocase element L2Gbr4 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l2gbr4"></a>
 ### Claim L2Gbr4: Breadth claim 4 of L2
 
@@ -10849,7 +10758,6 @@ Stub for Claim L2Gbr4.
 
 <!-- verocase element L2Gbr4a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l2gbr4a"></a>
 ### Claim L2Gbr4a: Sub-claim 4a of L2
 
@@ -10864,7 +10772,6 @@ Stub for Claim L2Gbr4a.
 
 <!-- verocase element L2Ebr4 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l2ebr4"></a>
 ### Evidence L2Ebr4: Evidence for breadth 4 of L2
 
@@ -10877,7 +10784,6 @@ Stub for Evidence L2Ebr4.
 
 <!-- verocase element L2Gbr4b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l2gbr4b"></a>
 ### Claim L2Gbr4b: Sub-claim 4b of L2
 
@@ -10892,7 +10798,6 @@ Stub for Claim L2Gbr4b.
 
 <!-- verocase element L2Gbr5 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l2gbr5"></a>
 ### Claim L2Gbr5: Breadth claim 5 of L2
 
@@ -10907,7 +10812,6 @@ Stub for Claim L2Gbr5.
 
 <!-- verocase element L2Gbr5a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l2gbr5a"></a>
 ### Claim L2Gbr5a: Sub-claim 5a of L2
 
@@ -10922,7 +10826,6 @@ Stub for Claim L2Gbr5a.
 
 <!-- verocase element L2Ebr5 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l2ebr5"></a>
 ### Evidence L2Ebr5: Evidence for breadth 5 of L2
 
@@ -10935,7 +10838,6 @@ Stub for Evidence L2Ebr5.
 
 <!-- verocase element L2Gbr5b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l2gbr5b"></a>
 ### Claim L2Gbr5b: Sub-claim 5b of L2
 
@@ -10950,7 +10852,6 @@ Stub for Claim L2Gbr5b.
 
 <!-- verocase element L2Gbr6 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l2gbr6"></a>
 ### Claim L2Gbr6: Breadth claim 6 of L2
 
@@ -10965,7 +10866,6 @@ Stub for Claim L2Gbr6.
 
 <!-- verocase element L2Gbr6a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l2gbr6a"></a>
 ### Claim L2Gbr6a: Sub-claim 6a of L2
 
@@ -10980,7 +10880,6 @@ Stub for Claim L2Gbr6a.
 
 <!-- verocase element L2Ebr6 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l2ebr6"></a>
 ### Evidence L2Ebr6: Evidence for breadth 6 of L2
 
@@ -10993,7 +10892,6 @@ Stub for Evidence L2Ebr6.
 
 <!-- verocase element L2Gbr6b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l2gbr6b"></a>
 ### Claim L2Gbr6b: Sub-claim 6b of L2
 
@@ -11008,7 +10906,6 @@ Stub for Claim L2Gbr6b.
 
 <!-- verocase element L2Gbr7 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l2gbr7"></a>
 ### Claim L2Gbr7: Breadth claim 7 of L2
 
@@ -11023,7 +10920,6 @@ Stub for Claim L2Gbr7.
 
 <!-- verocase element L2Gbr7a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l2gbr7a"></a>
 ### Claim L2Gbr7a: Sub-claim 7a of L2
 
@@ -11038,7 +10934,6 @@ Stub for Claim L2Gbr7a.
 
 <!-- verocase element L2Ebr7 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l2ebr7"></a>
 ### Evidence L2Ebr7: Evidence for breadth 7 of L2
 
@@ -11051,7 +10946,6 @@ Stub for Evidence L2Ebr7.
 
 <!-- verocase element L2Gbr7b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l2gbr7b"></a>
 ### Claim L2Gbr7b: Sub-claim 7b of L2
 
@@ -11066,7 +10960,6 @@ Stub for Claim L2Gbr7b.
 
 <!-- verocase element L2Gbr8 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l2gbr8"></a>
 ### Claim L2Gbr8: Breadth claim 8 of L2
 
@@ -11081,7 +10974,6 @@ Stub for Claim L2Gbr8.
 
 <!-- verocase element L2Gbr8a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l2gbr8a"></a>
 ### Claim L2Gbr8a: Sub-claim 8a of L2
 
@@ -11096,7 +10988,6 @@ Stub for Claim L2Gbr8a.
 
 <!-- verocase element L2Ebr8 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l2ebr8"></a>
 ### Evidence L2Ebr8: Evidence for breadth 8 of L2
 
@@ -11109,7 +11000,6 @@ Stub for Evidence L2Ebr8.
 
 <!-- verocase element L2Gbr8b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l2gbr8b"></a>
 ### Claim L2Gbr8b: Sub-claim 8b of L2
 
@@ -11124,7 +11014,6 @@ Stub for Claim L2Gbr8b.
 
 <!-- verocase element L3top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l3top"></a>
 ### Claim L3top: Statement of L3top
 
@@ -11139,7 +11028,6 @@ Stub for Claim L3top.
 
 <!-- verocase element L3Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-l3xctx"></a>
 ### Context L3Xctx: Context of L3Xctx
 
@@ -11152,7 +11040,6 @@ Stub for Context L3Xctx.
 
 <!-- verocase element L3Esh1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l3esh1"></a>
 ### Evidence L3Esh1: Shared evidence A of L3
 
@@ -11165,7 +11052,6 @@ Stub for Evidence L3Esh1.
 
 <!-- verocase element L3Esh2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l3esh2"></a>
 ### Evidence L3Esh2: Shared evidence B of L3
 
@@ -11178,7 +11064,6 @@ Stub for Evidence L3Esh2.
 
 <!-- verocase element L3Smain -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-l3smain"></a>
 ### Strategy L3Smain: Main strategy of L3
 
@@ -11193,7 +11078,6 @@ Stub for Strategy L3Smain.
 
 <!-- verocase element L3G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l3g2"></a>
 ### Claim L3G2: Level-2 claim of L3
 
@@ -11208,7 +11092,6 @@ Stub for Claim L3G2.
 
 <!-- verocase element L3S2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-l3s2"></a>
 ### Strategy L3S2: Level-3 strategy of L3
 
@@ -11223,7 +11106,6 @@ Stub for Strategy L3S2.
 
 <!-- verocase element L3G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l3g3"></a>
 ### Claim L3G3: Level-4 claim of L3
 
@@ -11238,7 +11120,6 @@ Stub for Claim L3G3.
 
 <!-- verocase element L3S3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-l3s3"></a>
 ### Strategy L3S3: Level-5 strategy of L3
 
@@ -11253,7 +11134,6 @@ Stub for Strategy L3S3.
 
 <!-- verocase element L3G4 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l3g4"></a>
 ### Claim L3G4: Level-6 claim of L3
 
@@ -11268,7 +11148,6 @@ Stub for Claim L3G4.
 
 <!-- verocase element L3Edeep -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l3edeep"></a>
 ### Evidence L3Edeep: Deep evidence of L3
 
@@ -11281,7 +11160,6 @@ Stub for Evidence L3Edeep.
 
 <!-- verocase element L3G4b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l3g4b"></a>
 ### Claim L3G4b: Level-6 alt claim of L3
 
@@ -11296,7 +11174,6 @@ Stub for Claim L3G4b.
 
 <!-- verocase element L3G3b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l3g3b"></a>
 ### Claim L3G3b: Level-5 alt claim of L3
 
@@ -11311,7 +11188,6 @@ Stub for Claim L3G3b.
 
 <!-- verocase element L3G3c -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l3g3c"></a>
 ### Claim L3G3c: Level-4 alt claim of L3
 
@@ -11326,7 +11202,6 @@ Stub for Claim L3G3c.
 
 <!-- verocase element L3J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-l3j1"></a>
 ### Justification L3J1: Justification of L3
 
@@ -11339,7 +11214,6 @@ Stub for Justification L3J1.
 
 <!-- verocase element L3G2b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l3g2b"></a>
 ### Claim L3G2b: Level-3 alt claim of L3
 
@@ -11354,7 +11228,6 @@ Stub for Claim L3G2b.
 
 <!-- verocase element L3S2b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-l3s2b"></a>
 ### Strategy L3S2b: Level-4 alt strategy of L3
 
@@ -11369,7 +11242,6 @@ Stub for Strategy L3S2b.
 
 <!-- verocase element L3G3d -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l3g3d"></a>
 ### Claim L3G3d: Level-5 claim D of L3
 
@@ -11384,7 +11256,6 @@ Stub for Claim L3G3d.
 
 <!-- verocase element L3G3e -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l3g3e"></a>
 ### Claim L3G3e: Level-5 claim E of L3
 
@@ -11399,7 +11270,6 @@ Stub for Claim L3G3e.
 
 <!-- verocase element L3E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l3e2"></a>
 ### Evidence L3E2: Extra evidence of L3
 
@@ -11412,7 +11282,6 @@ Stub for Evidence L3E2.
 
 <!-- verocase element L3Gbr1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l3gbr1"></a>
 ### Claim L3Gbr1: Breadth claim 1 of L3
 
@@ -11427,7 +11296,6 @@ Stub for Claim L3Gbr1.
 
 <!-- verocase element L3Gbr1a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l3gbr1a"></a>
 ### Claim L3Gbr1a: Sub-claim 1a of L3
 
@@ -11442,7 +11310,6 @@ Stub for Claim L3Gbr1a.
 
 <!-- verocase element L3Ebr1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l3ebr1"></a>
 ### Evidence L3Ebr1: Evidence for breadth 1 of L3
 
@@ -11455,7 +11322,6 @@ Stub for Evidence L3Ebr1.
 
 <!-- verocase element L3Gbr1b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l3gbr1b"></a>
 ### Claim L3Gbr1b: Sub-claim 1b of L3
 
@@ -11470,7 +11336,6 @@ Stub for Claim L3Gbr1b.
 
 <!-- verocase element L3Gbr2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l3gbr2"></a>
 ### Claim L3Gbr2: Breadth claim 2 of L3
 
@@ -11485,7 +11350,6 @@ Stub for Claim L3Gbr2.
 
 <!-- verocase element L3Gbr2a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l3gbr2a"></a>
 ### Claim L3Gbr2a: Sub-claim 2a of L3
 
@@ -11500,7 +11364,6 @@ Stub for Claim L3Gbr2a.
 
 <!-- verocase element L3Ebr2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l3ebr2"></a>
 ### Evidence L3Ebr2: Evidence for breadth 2 of L3
 
@@ -11513,7 +11376,6 @@ Stub for Evidence L3Ebr2.
 
 <!-- verocase element L3Gbr2b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l3gbr2b"></a>
 ### Claim L3Gbr2b: Sub-claim 2b of L3
 
@@ -11528,7 +11390,6 @@ Stub for Claim L3Gbr2b.
 
 <!-- verocase element L3Gbr3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l3gbr3"></a>
 ### Claim L3Gbr3: Breadth claim 3 of L3
 
@@ -11543,7 +11404,6 @@ Stub for Claim L3Gbr3.
 
 <!-- verocase element L3Gbr3a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l3gbr3a"></a>
 ### Claim L3Gbr3a: Sub-claim 3a of L3
 
@@ -11558,7 +11418,6 @@ Stub for Claim L3Gbr3a.
 
 <!-- verocase element L3Ebr3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l3ebr3"></a>
 ### Evidence L3Ebr3: Evidence for breadth 3 of L3
 
@@ -11571,7 +11430,6 @@ Stub for Evidence L3Ebr3.
 
 <!-- verocase element L3Gbr3b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l3gbr3b"></a>
 ### Claim L3Gbr3b: Sub-claim 3b of L3
 
@@ -11586,7 +11444,6 @@ Stub for Claim L3Gbr3b.
 
 <!-- verocase element L3Gbr4 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l3gbr4"></a>
 ### Claim L3Gbr4: Breadth claim 4 of L3
 
@@ -11601,7 +11458,6 @@ Stub for Claim L3Gbr4.
 
 <!-- verocase element L3Gbr4a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l3gbr4a"></a>
 ### Claim L3Gbr4a: Sub-claim 4a of L3
 
@@ -11616,7 +11472,6 @@ Stub for Claim L3Gbr4a.
 
 <!-- verocase element L3Ebr4 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l3ebr4"></a>
 ### Evidence L3Ebr4: Evidence for breadth 4 of L3
 
@@ -11629,7 +11484,6 @@ Stub for Evidence L3Ebr4.
 
 <!-- verocase element L3Gbr4b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l3gbr4b"></a>
 ### Claim L3Gbr4b: Sub-claim 4b of L3
 
@@ -11644,7 +11498,6 @@ Stub for Claim L3Gbr4b.
 
 <!-- verocase element L3Gbr5 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l3gbr5"></a>
 ### Claim L3Gbr5: Breadth claim 5 of L3
 
@@ -11659,7 +11512,6 @@ Stub for Claim L3Gbr5.
 
 <!-- verocase element L3Gbr5a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l3gbr5a"></a>
 ### Claim L3Gbr5a: Sub-claim 5a of L3
 
@@ -11674,7 +11526,6 @@ Stub for Claim L3Gbr5a.
 
 <!-- verocase element L3Ebr5 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l3ebr5"></a>
 ### Evidence L3Ebr5: Evidence for breadth 5 of L3
 
@@ -11687,7 +11538,6 @@ Stub for Evidence L3Ebr5.
 
 <!-- verocase element L3Gbr5b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l3gbr5b"></a>
 ### Claim L3Gbr5b: Sub-claim 5b of L3
 
@@ -11702,7 +11552,6 @@ Stub for Claim L3Gbr5b.
 
 <!-- verocase element L3Gbr6 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l3gbr6"></a>
 ### Claim L3Gbr6: Breadth claim 6 of L3
 
@@ -11717,7 +11566,6 @@ Stub for Claim L3Gbr6.
 
 <!-- verocase element L3Gbr6a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l3gbr6a"></a>
 ### Claim L3Gbr6a: Sub-claim 6a of L3
 
@@ -11732,7 +11580,6 @@ Stub for Claim L3Gbr6a.
 
 <!-- verocase element L3Ebr6 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l3ebr6"></a>
 ### Evidence L3Ebr6: Evidence for breadth 6 of L3
 
@@ -11745,7 +11592,6 @@ Stub for Evidence L3Ebr6.
 
 <!-- verocase element L3Gbr6b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l3gbr6b"></a>
 ### Claim L3Gbr6b: Sub-claim 6b of L3
 
@@ -11760,7 +11606,6 @@ Stub for Claim L3Gbr6b.
 
 <!-- verocase element L3Gbr7 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l3gbr7"></a>
 ### Claim L3Gbr7: Breadth claim 7 of L3
 
@@ -11775,7 +11620,6 @@ Stub for Claim L3Gbr7.
 
 <!-- verocase element L3Gbr7a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l3gbr7a"></a>
 ### Claim L3Gbr7a: Sub-claim 7a of L3
 
@@ -11790,7 +11634,6 @@ Stub for Claim L3Gbr7a.
 
 <!-- verocase element L3Ebr7 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l3ebr7"></a>
 ### Evidence L3Ebr7: Evidence for breadth 7 of L3
 
@@ -11803,7 +11646,6 @@ Stub for Evidence L3Ebr7.
 
 <!-- verocase element L3Gbr7b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l3gbr7b"></a>
 ### Claim L3Gbr7b: Sub-claim 7b of L3
 
@@ -11818,7 +11660,6 @@ Stub for Claim L3Gbr7b.
 
 <!-- verocase element L3Gbr8 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l3gbr8"></a>
 ### Claim L3Gbr8: Breadth claim 8 of L3
 
@@ -11833,7 +11674,6 @@ Stub for Claim L3Gbr8.
 
 <!-- verocase element L3Gbr8a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l3gbr8a"></a>
 ### Claim L3Gbr8a: Sub-claim 8a of L3
 
@@ -11848,7 +11688,6 @@ Stub for Claim L3Gbr8a.
 
 <!-- verocase element L3Ebr8 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l3ebr8"></a>
 ### Evidence L3Ebr8: Evidence for breadth 8 of L3
 
@@ -11861,7 +11700,6 @@ Stub for Evidence L3Ebr8.
 
 <!-- verocase element L3Gbr8b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l3gbr8b"></a>
 ### Claim L3Gbr8b: Sub-claim 8b of L3
 
@@ -11876,7 +11714,6 @@ Stub for Claim L3Gbr8b.
 
 <!-- verocase element L4top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l4top"></a>
 ### Claim L4top: Statement of L4top
 
@@ -11891,7 +11728,6 @@ Stub for Claim L4top.
 
 <!-- verocase element L4Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-l4xctx"></a>
 ### Context L4Xctx: Context of L4Xctx
 
@@ -11904,7 +11740,6 @@ Stub for Context L4Xctx.
 
 <!-- verocase element L4Esh1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l4esh1"></a>
 ### Evidence L4Esh1: Shared evidence A of L4
 
@@ -11917,7 +11752,6 @@ Stub for Evidence L4Esh1.
 
 <!-- verocase element L4Esh2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l4esh2"></a>
 ### Evidence L4Esh2: Shared evidence B of L4
 
@@ -11930,7 +11764,6 @@ Stub for Evidence L4Esh2.
 
 <!-- verocase element L4Smain -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-l4smain"></a>
 ### Strategy L4Smain: Main strategy of L4
 
@@ -11945,7 +11778,6 @@ Stub for Strategy L4Smain.
 
 <!-- verocase element L4G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l4g2"></a>
 ### Claim L4G2: Level-2 claim of L4
 
@@ -11960,7 +11792,6 @@ Stub for Claim L4G2.
 
 <!-- verocase element L4S2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-l4s2"></a>
 ### Strategy L4S2: Level-3 strategy of L4
 
@@ -11975,7 +11806,6 @@ Stub for Strategy L4S2.
 
 <!-- verocase element L4G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l4g3"></a>
 ### Claim L4G3: Level-4 claim of L4
 
@@ -11990,7 +11820,6 @@ Stub for Claim L4G3.
 
 <!-- verocase element L4S3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-l4s3"></a>
 ### Strategy L4S3: Level-5 strategy of L4
 
@@ -12005,7 +11834,6 @@ Stub for Strategy L4S3.
 
 <!-- verocase element L4G4 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l4g4"></a>
 ### Claim L4G4: Level-6 claim of L4
 
@@ -12020,7 +11848,6 @@ Stub for Claim L4G4.
 
 <!-- verocase element L4Edeep -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l4edeep"></a>
 ### Evidence L4Edeep: Deep evidence of L4
 
@@ -12033,7 +11860,6 @@ Stub for Evidence L4Edeep.
 
 <!-- verocase element L4G4b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l4g4b"></a>
 ### Claim L4G4b: Level-6 alt claim of L4
 
@@ -12048,7 +11874,6 @@ Stub for Claim L4G4b.
 
 <!-- verocase element L4G3b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l4g3b"></a>
 ### Claim L4G3b: Level-5 alt claim of L4
 
@@ -12063,7 +11888,6 @@ Stub for Claim L4G3b.
 
 <!-- verocase element L4G3c -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l4g3c"></a>
 ### Claim L4G3c: Level-4 alt claim of L4
 
@@ -12078,7 +11902,6 @@ Stub for Claim L4G3c.
 
 <!-- verocase element L4J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-l4j1"></a>
 ### Justification L4J1: Justification of L4
 
@@ -12091,7 +11914,6 @@ Stub for Justification L4J1.
 
 <!-- verocase element L4G2b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l4g2b"></a>
 ### Claim L4G2b: Level-3 alt claim of L4
 
@@ -12106,7 +11928,6 @@ Stub for Claim L4G2b.
 
 <!-- verocase element L4S2b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-l4s2b"></a>
 ### Strategy L4S2b: Level-4 alt strategy of L4
 
@@ -12121,7 +11942,6 @@ Stub for Strategy L4S2b.
 
 <!-- verocase element L4G3d -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l4g3d"></a>
 ### Claim L4G3d: Level-5 claim D of L4
 
@@ -12136,7 +11956,6 @@ Stub for Claim L4G3d.
 
 <!-- verocase element L4G3e -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l4g3e"></a>
 ### Claim L4G3e: Level-5 claim E of L4
 
@@ -12151,7 +11970,6 @@ Stub for Claim L4G3e.
 
 <!-- verocase element L4E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l4e2"></a>
 ### Evidence L4E2: Extra evidence of L4
 
@@ -12164,7 +11982,6 @@ Stub for Evidence L4E2.
 
 <!-- verocase element L4Gbr1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l4gbr1"></a>
 ### Claim L4Gbr1: Breadth claim 1 of L4
 
@@ -12179,7 +11996,6 @@ Stub for Claim L4Gbr1.
 
 <!-- verocase element L4Gbr1a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l4gbr1a"></a>
 ### Claim L4Gbr1a: Sub-claim 1a of L4
 
@@ -12194,7 +12010,6 @@ Stub for Claim L4Gbr1a.
 
 <!-- verocase element L4Ebr1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l4ebr1"></a>
 ### Evidence L4Ebr1: Evidence for breadth 1 of L4
 
@@ -12207,7 +12022,6 @@ Stub for Evidence L4Ebr1.
 
 <!-- verocase element L4Gbr1b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l4gbr1b"></a>
 ### Claim L4Gbr1b: Sub-claim 1b of L4
 
@@ -12222,7 +12036,6 @@ Stub for Claim L4Gbr1b.
 
 <!-- verocase element L4Gbr2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l4gbr2"></a>
 ### Claim L4Gbr2: Breadth claim 2 of L4
 
@@ -12237,7 +12050,6 @@ Stub for Claim L4Gbr2.
 
 <!-- verocase element L4Gbr2a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l4gbr2a"></a>
 ### Claim L4Gbr2a: Sub-claim 2a of L4
 
@@ -12252,7 +12064,6 @@ Stub for Claim L4Gbr2a.
 
 <!-- verocase element L4Ebr2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l4ebr2"></a>
 ### Evidence L4Ebr2: Evidence for breadth 2 of L4
 
@@ -12265,7 +12076,6 @@ Stub for Evidence L4Ebr2.
 
 <!-- verocase element L4Gbr2b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l4gbr2b"></a>
 ### Claim L4Gbr2b: Sub-claim 2b of L4
 
@@ -12280,7 +12090,6 @@ Stub for Claim L4Gbr2b.
 
 <!-- verocase element L4Gbr3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l4gbr3"></a>
 ### Claim L4Gbr3: Breadth claim 3 of L4
 
@@ -12295,7 +12104,6 @@ Stub for Claim L4Gbr3.
 
 <!-- verocase element L4Gbr3a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l4gbr3a"></a>
 ### Claim L4Gbr3a: Sub-claim 3a of L4
 
@@ -12310,7 +12118,6 @@ Stub for Claim L4Gbr3a.
 
 <!-- verocase element L4Ebr3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l4ebr3"></a>
 ### Evidence L4Ebr3: Evidence for breadth 3 of L4
 
@@ -12323,7 +12130,6 @@ Stub for Evidence L4Ebr3.
 
 <!-- verocase element L4Gbr3b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l4gbr3b"></a>
 ### Claim L4Gbr3b: Sub-claim 3b of L4
 
@@ -12338,7 +12144,6 @@ Stub for Claim L4Gbr3b.
 
 <!-- verocase element L4Gbr4 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l4gbr4"></a>
 ### Claim L4Gbr4: Breadth claim 4 of L4
 
@@ -12353,7 +12158,6 @@ Stub for Claim L4Gbr4.
 
 <!-- verocase element L4Gbr4a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l4gbr4a"></a>
 ### Claim L4Gbr4a: Sub-claim 4a of L4
 
@@ -12368,7 +12172,6 @@ Stub for Claim L4Gbr4a.
 
 <!-- verocase element L4Ebr4 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l4ebr4"></a>
 ### Evidence L4Ebr4: Evidence for breadth 4 of L4
 
@@ -12381,7 +12184,6 @@ Stub for Evidence L4Ebr4.
 
 <!-- verocase element L4Gbr4b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l4gbr4b"></a>
 ### Claim L4Gbr4b: Sub-claim 4b of L4
 
@@ -12396,7 +12198,6 @@ Stub for Claim L4Gbr4b.
 
 <!-- verocase element L4Gbr5 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l4gbr5"></a>
 ### Claim L4Gbr5: Breadth claim 5 of L4
 
@@ -12411,7 +12212,6 @@ Stub for Claim L4Gbr5.
 
 <!-- verocase element L4Gbr5a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l4gbr5a"></a>
 ### Claim L4Gbr5a: Sub-claim 5a of L4
 
@@ -12426,7 +12226,6 @@ Stub for Claim L4Gbr5a.
 
 <!-- verocase element L4Ebr5 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l4ebr5"></a>
 ### Evidence L4Ebr5: Evidence for breadth 5 of L4
 
@@ -12439,7 +12238,6 @@ Stub for Evidence L4Ebr5.
 
 <!-- verocase element L4Gbr5b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l4gbr5b"></a>
 ### Claim L4Gbr5b: Sub-claim 5b of L4
 
@@ -12454,7 +12252,6 @@ Stub for Claim L4Gbr5b.
 
 <!-- verocase element L4Gbr6 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l4gbr6"></a>
 ### Claim L4Gbr6: Breadth claim 6 of L4
 
@@ -12469,7 +12266,6 @@ Stub for Claim L4Gbr6.
 
 <!-- verocase element L4Gbr6a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l4gbr6a"></a>
 ### Claim L4Gbr6a: Sub-claim 6a of L4
 
@@ -12484,7 +12280,6 @@ Stub for Claim L4Gbr6a.
 
 <!-- verocase element L4Ebr6 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l4ebr6"></a>
 ### Evidence L4Ebr6: Evidence for breadth 6 of L4
 
@@ -12497,7 +12292,6 @@ Stub for Evidence L4Ebr6.
 
 <!-- verocase element L4Gbr6b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l4gbr6b"></a>
 ### Claim L4Gbr6b: Sub-claim 6b of L4
 
@@ -12512,7 +12306,6 @@ Stub for Claim L4Gbr6b.
 
 <!-- verocase element L4Gbr7 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l4gbr7"></a>
 ### Claim L4Gbr7: Breadth claim 7 of L4
 
@@ -12527,7 +12320,6 @@ Stub for Claim L4Gbr7.
 
 <!-- verocase element L4Gbr7a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l4gbr7a"></a>
 ### Claim L4Gbr7a: Sub-claim 7a of L4
 
@@ -12542,7 +12334,6 @@ Stub for Claim L4Gbr7a.
 
 <!-- verocase element L4Ebr7 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l4ebr7"></a>
 ### Evidence L4Ebr7: Evidence for breadth 7 of L4
 
@@ -12555,7 +12346,6 @@ Stub for Evidence L4Ebr7.
 
 <!-- verocase element L4Gbr7b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l4gbr7b"></a>
 ### Claim L4Gbr7b: Sub-claim 7b of L4
 
@@ -12570,7 +12360,6 @@ Stub for Claim L4Gbr7b.
 
 <!-- verocase element L4Gbr8 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l4gbr8"></a>
 ### Claim L4Gbr8: Breadth claim 8 of L4
 
@@ -12585,7 +12374,6 @@ Stub for Claim L4Gbr8.
 
 <!-- verocase element L4Gbr8a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l4gbr8a"></a>
 ### Claim L4Gbr8a: Sub-claim 8a of L4
 
@@ -12600,7 +12388,6 @@ Stub for Claim L4Gbr8a.
 
 <!-- verocase element L4Ebr8 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l4ebr8"></a>
 ### Evidence L4Ebr8: Evidence for breadth 8 of L4
 
@@ -12613,7 +12400,6 @@ Stub for Evidence L4Ebr8.
 
 <!-- verocase element L4Gbr8b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l4gbr8b"></a>
 ### Claim L4Gbr8b: Sub-claim 8b of L4
 
@@ -12628,7 +12414,6 @@ Stub for Claim L4Gbr8b.
 
 <!-- verocase element L5top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l5top"></a>
 ### Claim L5top: Statement of L5top
 
@@ -12643,7 +12428,6 @@ Stub for Claim L5top.
 
 <!-- verocase element L5Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-l5xctx"></a>
 ### Context L5Xctx: Context of L5Xctx
 
@@ -12656,7 +12440,6 @@ Stub for Context L5Xctx.
 
 <!-- verocase element L5Esh1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l5esh1"></a>
 ### Evidence L5Esh1: Shared evidence A of L5
 
@@ -12669,7 +12452,6 @@ Stub for Evidence L5Esh1.
 
 <!-- verocase element L5Esh2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l5esh2"></a>
 ### Evidence L5Esh2: Shared evidence B of L5
 
@@ -12682,7 +12464,6 @@ Stub for Evidence L5Esh2.
 
 <!-- verocase element L5Smain -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-l5smain"></a>
 ### Strategy L5Smain: Main strategy of L5
 
@@ -12697,7 +12478,6 @@ Stub for Strategy L5Smain.
 
 <!-- verocase element L5G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l5g2"></a>
 ### Claim L5G2: Level-2 claim of L5
 
@@ -12712,7 +12492,6 @@ Stub for Claim L5G2.
 
 <!-- verocase element L5S2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-l5s2"></a>
 ### Strategy L5S2: Level-3 strategy of L5
 
@@ -12727,7 +12506,6 @@ Stub for Strategy L5S2.
 
 <!-- verocase element L5G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l5g3"></a>
 ### Claim L5G3: Level-4 claim of L5
 
@@ -12742,7 +12520,6 @@ Stub for Claim L5G3.
 
 <!-- verocase element L5S3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-l5s3"></a>
 ### Strategy L5S3: Level-5 strategy of L5
 
@@ -12757,7 +12534,6 @@ Stub for Strategy L5S3.
 
 <!-- verocase element L5G4 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l5g4"></a>
 ### Claim L5G4: Level-6 claim of L5
 
@@ -12772,7 +12548,6 @@ Stub for Claim L5G4.
 
 <!-- verocase element L5Edeep -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l5edeep"></a>
 ### Evidence L5Edeep: Deep evidence of L5
 
@@ -12785,7 +12560,6 @@ Stub for Evidence L5Edeep.
 
 <!-- verocase element L5G4b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l5g4b"></a>
 ### Claim L5G4b: Level-6 alt claim of L5
 
@@ -12800,7 +12574,6 @@ Stub for Claim L5G4b.
 
 <!-- verocase element L5G3b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l5g3b"></a>
 ### Claim L5G3b: Level-5 alt claim of L5
 
@@ -12815,7 +12588,6 @@ Stub for Claim L5G3b.
 
 <!-- verocase element L5G3c -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l5g3c"></a>
 ### Claim L5G3c: Level-4 alt claim of L5
 
@@ -12830,7 +12602,6 @@ Stub for Claim L5G3c.
 
 <!-- verocase element L5J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-l5j1"></a>
 ### Justification L5J1: Justification of L5
 
@@ -12843,7 +12614,6 @@ Stub for Justification L5J1.
 
 <!-- verocase element L5G2b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l5g2b"></a>
 ### Claim L5G2b: Level-3 alt claim of L5
 
@@ -12858,7 +12628,6 @@ Stub for Claim L5G2b.
 
 <!-- verocase element L5S2b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-l5s2b"></a>
 ### Strategy L5S2b: Level-4 alt strategy of L5
 
@@ -12873,7 +12642,6 @@ Stub for Strategy L5S2b.
 
 <!-- verocase element L5G3d -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l5g3d"></a>
 ### Claim L5G3d: Level-5 claim D of L5
 
@@ -12888,7 +12656,6 @@ Stub for Claim L5G3d.
 
 <!-- verocase element L5G3e -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l5g3e"></a>
 ### Claim L5G3e: Level-5 claim E of L5
 
@@ -12903,7 +12670,6 @@ Stub for Claim L5G3e.
 
 <!-- verocase element L5E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l5e2"></a>
 ### Evidence L5E2: Extra evidence of L5
 
@@ -12916,7 +12682,6 @@ Stub for Evidence L5E2.
 
 <!-- verocase element L5Gbr1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l5gbr1"></a>
 ### Claim L5Gbr1: Breadth claim 1 of L5
 
@@ -12931,7 +12696,6 @@ Stub for Claim L5Gbr1.
 
 <!-- verocase element L5Gbr1a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l5gbr1a"></a>
 ### Claim L5Gbr1a: Sub-claim 1a of L5
 
@@ -12946,7 +12710,6 @@ Stub for Claim L5Gbr1a.
 
 <!-- verocase element L5Ebr1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l5ebr1"></a>
 ### Evidence L5Ebr1: Evidence for breadth 1 of L5
 
@@ -12959,7 +12722,6 @@ Stub for Evidence L5Ebr1.
 
 <!-- verocase element L5Gbr1b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l5gbr1b"></a>
 ### Claim L5Gbr1b: Sub-claim 1b of L5
 
@@ -12974,7 +12736,6 @@ Stub for Claim L5Gbr1b.
 
 <!-- verocase element L5Gbr2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l5gbr2"></a>
 ### Claim L5Gbr2: Breadth claim 2 of L5
 
@@ -12989,7 +12750,6 @@ Stub for Claim L5Gbr2.
 
 <!-- verocase element L5Gbr2a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l5gbr2a"></a>
 ### Claim L5Gbr2a: Sub-claim 2a of L5
 
@@ -13004,7 +12764,6 @@ Stub for Claim L5Gbr2a.
 
 <!-- verocase element L5Ebr2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l5ebr2"></a>
 ### Evidence L5Ebr2: Evidence for breadth 2 of L5
 
@@ -13017,7 +12776,6 @@ Stub for Evidence L5Ebr2.
 
 <!-- verocase element L5Gbr2b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l5gbr2b"></a>
 ### Claim L5Gbr2b: Sub-claim 2b of L5
 
@@ -13032,7 +12790,6 @@ Stub for Claim L5Gbr2b.
 
 <!-- verocase element L5Gbr3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l5gbr3"></a>
 ### Claim L5Gbr3: Breadth claim 3 of L5
 
@@ -13047,7 +12804,6 @@ Stub for Claim L5Gbr3.
 
 <!-- verocase element L5Gbr3a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l5gbr3a"></a>
 ### Claim L5Gbr3a: Sub-claim 3a of L5
 
@@ -13062,7 +12818,6 @@ Stub for Claim L5Gbr3a.
 
 <!-- verocase element L5Ebr3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l5ebr3"></a>
 ### Evidence L5Ebr3: Evidence for breadth 3 of L5
 
@@ -13075,7 +12830,6 @@ Stub for Evidence L5Ebr3.
 
 <!-- verocase element L5Gbr3b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l5gbr3b"></a>
 ### Claim L5Gbr3b: Sub-claim 3b of L5
 
@@ -13090,7 +12844,6 @@ Stub for Claim L5Gbr3b.
 
 <!-- verocase element L5Gbr4 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l5gbr4"></a>
 ### Claim L5Gbr4: Breadth claim 4 of L5
 
@@ -13105,7 +12858,6 @@ Stub for Claim L5Gbr4.
 
 <!-- verocase element L5Gbr4a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l5gbr4a"></a>
 ### Claim L5Gbr4a: Sub-claim 4a of L5
 
@@ -13120,7 +12872,6 @@ Stub for Claim L5Gbr4a.
 
 <!-- verocase element L5Ebr4 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l5ebr4"></a>
 ### Evidence L5Ebr4: Evidence for breadth 4 of L5
 
@@ -13133,7 +12884,6 @@ Stub for Evidence L5Ebr4.
 
 <!-- verocase element L5Gbr4b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l5gbr4b"></a>
 ### Claim L5Gbr4b: Sub-claim 4b of L5
 
@@ -13148,7 +12898,6 @@ Stub for Claim L5Gbr4b.
 
 <!-- verocase element L5Gbr5 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l5gbr5"></a>
 ### Claim L5Gbr5: Breadth claim 5 of L5
 
@@ -13163,7 +12912,6 @@ Stub for Claim L5Gbr5.
 
 <!-- verocase element L5Gbr5a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l5gbr5a"></a>
 ### Claim L5Gbr5a: Sub-claim 5a of L5
 
@@ -13178,7 +12926,6 @@ Stub for Claim L5Gbr5a.
 
 <!-- verocase element L5Ebr5 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l5ebr5"></a>
 ### Evidence L5Ebr5: Evidence for breadth 5 of L5
 
@@ -13191,7 +12938,6 @@ Stub for Evidence L5Ebr5.
 
 <!-- verocase element L5Gbr5b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l5gbr5b"></a>
 ### Claim L5Gbr5b: Sub-claim 5b of L5
 
@@ -13206,7 +12952,6 @@ Stub for Claim L5Gbr5b.
 
 <!-- verocase element L5Gbr6 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l5gbr6"></a>
 ### Claim L5Gbr6: Breadth claim 6 of L5
 
@@ -13221,7 +12966,6 @@ Stub for Claim L5Gbr6.
 
 <!-- verocase element L5Gbr6a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l5gbr6a"></a>
 ### Claim L5Gbr6a: Sub-claim 6a of L5
 
@@ -13236,7 +12980,6 @@ Stub for Claim L5Gbr6a.
 
 <!-- verocase element L5Ebr6 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l5ebr6"></a>
 ### Evidence L5Ebr6: Evidence for breadth 6 of L5
 
@@ -13249,7 +12992,6 @@ Stub for Evidence L5Ebr6.
 
 <!-- verocase element L5Gbr6b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l5gbr6b"></a>
 ### Claim L5Gbr6b: Sub-claim 6b of L5
 
@@ -13264,7 +13006,6 @@ Stub for Claim L5Gbr6b.
 
 <!-- verocase element L5Gbr7 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l5gbr7"></a>
 ### Claim L5Gbr7: Breadth claim 7 of L5
 
@@ -13279,7 +13020,6 @@ Stub for Claim L5Gbr7.
 
 <!-- verocase element L5Gbr7a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l5gbr7a"></a>
 ### Claim L5Gbr7a: Sub-claim 7a of L5
 
@@ -13294,7 +13034,6 @@ Stub for Claim L5Gbr7a.
 
 <!-- verocase element L5Ebr7 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l5ebr7"></a>
 ### Evidence L5Ebr7: Evidence for breadth 7 of L5
 
@@ -13307,7 +13046,6 @@ Stub for Evidence L5Ebr7.
 
 <!-- verocase element L5Gbr7b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l5gbr7b"></a>
 ### Claim L5Gbr7b: Sub-claim 7b of L5
 
@@ -13322,7 +13060,6 @@ Stub for Claim L5Gbr7b.
 
 <!-- verocase element L5Gbr8 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l5gbr8"></a>
 ### Claim L5Gbr8: Breadth claim 8 of L5
 
@@ -13337,7 +13074,6 @@ Stub for Claim L5Gbr8.
 
 <!-- verocase element L5Gbr8a -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l5gbr8a"></a>
 ### Claim L5Gbr8a: Sub-claim 8a of L5
 
@@ -13352,7 +13088,6 @@ Stub for Claim L5Gbr8a.
 
 <!-- verocase element L5Ebr8 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-l5ebr8"></a>
 ### Evidence L5Ebr8: Evidence for breadth 8 of L5
 
@@ -13365,7 +13100,6 @@ Stub for Evidence L5Ebr8.
 
 <!-- verocase element L5Gbr8b -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-l5gbr8b"></a>
 ### Claim L5Gbr8b: Sub-claim 8b of L5
 
@@ -13380,7 +13114,6 @@ Stub for Claim L5Gbr8b.
 
 <!-- verocase element C01top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c01top"></a>
 ### Claim C01top: Statement of C01top
 
@@ -13395,7 +13128,6 @@ Stub for Claim C01top.
 
 <!-- verocase element C01Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c01xctx"></a>
 ### Context C01Xctx: Context of C01Xctx
 
@@ -13408,7 +13140,6 @@ Stub for Context C01Xctx.
 
 <!-- verocase element C01Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c01esh"></a>
 ### Evidence C01Esh: Shared evidence of C01
 
@@ -13421,7 +13152,6 @@ Stub for Evidence C01Esh.
 
 <!-- verocase element C01Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c01sass"></a>
 ### Strategy C01Sass: Assertion strategy of C01
 
@@ -13436,7 +13166,6 @@ Stub for Strategy C01Sass.
 
 <!-- verocase element C01G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c01g1"></a>
 ### Claim C01G1: Sub-claim 1 of C01
 
@@ -13451,7 +13180,6 @@ Stub for Claim C01G1.
 
 <!-- verocase element C01E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c01e1"></a>
 ### Evidence C01E1: Evidence 1 of C01
 
@@ -13464,7 +13192,6 @@ Stub for Evidence C01E1.
 
 <!-- verocase element C01G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c01g2"></a>
 ### Claim C01G2: Sub-claim 2 of C01
 
@@ -13479,7 +13206,6 @@ Stub for Claim C01G2.
 
 <!-- verocase element C01J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c01j1"></a>
 ### Justification C01J1: Justification of C01
 
@@ -13492,7 +13218,6 @@ Stub for Justification C01J1.
 
 <!-- verocase element C01G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c01g3"></a>
 ### Claim C01G3: Sub-claim 3 of C01
 
@@ -13507,7 +13232,6 @@ Stub for Claim C01G3.
 
 <!-- verocase element C01A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c01a1"></a>
 ### Assumption C01A1: Assumption of C01
 
@@ -13520,7 +13244,6 @@ Stub for Assumption C01A1.
 
 <!-- verocase element C01E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c01e2"></a>
 ### Evidence C01E2: Evidence 2 of C01
 
@@ -13533,7 +13256,6 @@ Stub for Evidence C01E2.
 
 <!-- verocase element C02top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c02top"></a>
 ### Claim C02top: Statement of C02top
 
@@ -13548,7 +13270,6 @@ Stub for Claim C02top.
 
 <!-- verocase element C02Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c02xctx"></a>
 ### Context C02Xctx: Context of C02Xctx
 
@@ -13561,7 +13282,6 @@ Stub for Context C02Xctx.
 
 <!-- verocase element C02Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c02esh"></a>
 ### Evidence C02Esh: Shared evidence of C02
 
@@ -13574,7 +13294,6 @@ Stub for Evidence C02Esh.
 
 <!-- verocase element C02Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c02sass"></a>
 ### Strategy C02Sass: Assertion strategy of C02
 
@@ -13589,7 +13308,6 @@ Stub for Strategy C02Sass.
 
 <!-- verocase element C02G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c02g1"></a>
 ### Claim C02G1: Sub-claim 1 of C02
 
@@ -13604,7 +13322,6 @@ Stub for Claim C02G1.
 
 <!-- verocase element C02E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c02e1"></a>
 ### Evidence C02E1: Evidence 1 of C02
 
@@ -13617,7 +13334,6 @@ Stub for Evidence C02E1.
 
 <!-- verocase element C02G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c02g2"></a>
 ### Claim C02G2: Sub-claim 2 of C02
 
@@ -13632,7 +13348,6 @@ Stub for Claim C02G2.
 
 <!-- verocase element C02J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c02j1"></a>
 ### Justification C02J1: Justification of C02
 
@@ -13645,7 +13360,6 @@ Stub for Justification C02J1.
 
 <!-- verocase element C02G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c02g3"></a>
 ### Claim C02G3: Sub-claim 3 of C02
 
@@ -13660,7 +13374,6 @@ Stub for Claim C02G3.
 
 <!-- verocase element C02A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c02a1"></a>
 ### Assumption C02A1: Assumption of C02
 
@@ -13673,7 +13386,6 @@ Stub for Assumption C02A1.
 
 <!-- verocase element C02E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c02e2"></a>
 ### Evidence C02E2: Evidence 2 of C02
 
@@ -13686,7 +13398,6 @@ Stub for Evidence C02E2.
 
 <!-- verocase element C03top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c03top"></a>
 ### Claim C03top: Statement of C03top
 
@@ -13701,7 +13412,6 @@ Stub for Claim C03top.
 
 <!-- verocase element C03Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c03xctx"></a>
 ### Context C03Xctx: Context of C03Xctx
 
@@ -13714,7 +13424,6 @@ Stub for Context C03Xctx.
 
 <!-- verocase element C03Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c03esh"></a>
 ### Evidence C03Esh: Shared evidence of C03
 
@@ -13727,7 +13436,6 @@ Stub for Evidence C03Esh.
 
 <!-- verocase element C03Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c03sass"></a>
 ### Strategy C03Sass: Assertion strategy of C03
 
@@ -13742,7 +13450,6 @@ Stub for Strategy C03Sass.
 
 <!-- verocase element C03G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c03g1"></a>
 ### Claim C03G1: Sub-claim 1 of C03
 
@@ -13757,7 +13464,6 @@ Stub for Claim C03G1.
 
 <!-- verocase element C03E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c03e1"></a>
 ### Evidence C03E1: Evidence 1 of C03
 
@@ -13770,7 +13476,6 @@ Stub for Evidence C03E1.
 
 <!-- verocase element C03G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c03g2"></a>
 ### Claim C03G2: Sub-claim 2 of C03
 
@@ -13785,7 +13490,6 @@ Stub for Claim C03G2.
 
 <!-- verocase element C03J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c03j1"></a>
 ### Justification C03J1: Justification of C03
 
@@ -13798,7 +13502,6 @@ Stub for Justification C03J1.
 
 <!-- verocase element C03G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c03g3"></a>
 ### Claim C03G3: Sub-claim 3 of C03
 
@@ -13813,7 +13516,6 @@ Stub for Claim C03G3.
 
 <!-- verocase element C03A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c03a1"></a>
 ### Assumption C03A1: Assumption of C03
 
@@ -13826,7 +13528,6 @@ Stub for Assumption C03A1.
 
 <!-- verocase element C03E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c03e2"></a>
 ### Evidence C03E2: Evidence 2 of C03
 
@@ -13839,7 +13540,6 @@ Stub for Evidence C03E2.
 
 <!-- verocase element C04top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c04top"></a>
 ### Claim C04top: Statement of C04top
 
@@ -13854,7 +13554,6 @@ Stub for Claim C04top.
 
 <!-- verocase element C04Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c04xctx"></a>
 ### Context C04Xctx: Context of C04Xctx
 
@@ -13867,7 +13566,6 @@ Stub for Context C04Xctx.
 
 <!-- verocase element C04Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c04esh"></a>
 ### Evidence C04Esh: Shared evidence of C04
 
@@ -13880,7 +13578,6 @@ Stub for Evidence C04Esh.
 
 <!-- verocase element C04Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c04sass"></a>
 ### Strategy C04Sass: Assertion strategy of C04
 
@@ -13895,7 +13592,6 @@ Stub for Strategy C04Sass.
 
 <!-- verocase element C04G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c04g1"></a>
 ### Claim C04G1: Sub-claim 1 of C04
 
@@ -13910,7 +13606,6 @@ Stub for Claim C04G1.
 
 <!-- verocase element C04E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c04e1"></a>
 ### Evidence C04E1: Evidence 1 of C04
 
@@ -13923,7 +13618,6 @@ Stub for Evidence C04E1.
 
 <!-- verocase element C04G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c04g2"></a>
 ### Claim C04G2: Sub-claim 2 of C04
 
@@ -13938,7 +13632,6 @@ Stub for Claim C04G2.
 
 <!-- verocase element C04J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c04j1"></a>
 ### Justification C04J1: Justification of C04
 
@@ -13951,7 +13644,6 @@ Stub for Justification C04J1.
 
 <!-- verocase element C04G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c04g3"></a>
 ### Claim C04G3: Sub-claim 3 of C04
 
@@ -13966,7 +13658,6 @@ Stub for Claim C04G3.
 
 <!-- verocase element C04A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c04a1"></a>
 ### Assumption C04A1: Assumption of C04
 
@@ -13979,7 +13670,6 @@ Stub for Assumption C04A1.
 
 <!-- verocase element C04E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c04e2"></a>
 ### Evidence C04E2: Evidence 2 of C04
 
@@ -13992,7 +13682,6 @@ Stub for Evidence C04E2.
 
 <!-- verocase element C05top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c05top"></a>
 ### Claim C05top: Statement of C05top
 
@@ -14007,7 +13696,6 @@ Stub for Claim C05top.
 
 <!-- verocase element C05Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c05xctx"></a>
 ### Context C05Xctx: Context of C05Xctx
 
@@ -14020,7 +13708,6 @@ Stub for Context C05Xctx.
 
 <!-- verocase element C05Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c05esh"></a>
 ### Evidence C05Esh: Shared evidence of C05
 
@@ -14033,7 +13720,6 @@ Stub for Evidence C05Esh.
 
 <!-- verocase element C05Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c05sass"></a>
 ### Strategy C05Sass: Assertion strategy of C05
 
@@ -14048,7 +13734,6 @@ Stub for Strategy C05Sass.
 
 <!-- verocase element C05G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c05g1"></a>
 ### Claim C05G1: Sub-claim 1 of C05
 
@@ -14063,7 +13748,6 @@ Stub for Claim C05G1.
 
 <!-- verocase element C05E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c05e1"></a>
 ### Evidence C05E1: Evidence 1 of C05
 
@@ -14076,7 +13760,6 @@ Stub for Evidence C05E1.
 
 <!-- verocase element C05G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c05g2"></a>
 ### Claim C05G2: Sub-claim 2 of C05
 
@@ -14091,7 +13774,6 @@ Stub for Claim C05G2.
 
 <!-- verocase element C05J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c05j1"></a>
 ### Justification C05J1: Justification of C05
 
@@ -14104,7 +13786,6 @@ Stub for Justification C05J1.
 
 <!-- verocase element C05G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c05g3"></a>
 ### Claim C05G3: Sub-claim 3 of C05
 
@@ -14119,7 +13800,6 @@ Stub for Claim C05G3.
 
 <!-- verocase element C05A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c05a1"></a>
 ### Assumption C05A1: Assumption of C05
 
@@ -14132,7 +13812,6 @@ Stub for Assumption C05A1.
 
 <!-- verocase element C05E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c05e2"></a>
 ### Evidence C05E2: Evidence 2 of C05
 
@@ -14145,7 +13824,6 @@ Stub for Evidence C05E2.
 
 <!-- verocase element C06top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c06top"></a>
 ### Claim C06top: Statement of C06top
 
@@ -14160,7 +13838,6 @@ Stub for Claim C06top.
 
 <!-- verocase element C06Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c06xctx"></a>
 ### Context C06Xctx: Context of C06Xctx
 
@@ -14173,7 +13850,6 @@ Stub for Context C06Xctx.
 
 <!-- verocase element C06Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c06esh"></a>
 ### Evidence C06Esh: Shared evidence of C06
 
@@ -14186,7 +13862,6 @@ Stub for Evidence C06Esh.
 
 <!-- verocase element C06Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c06sass"></a>
 ### Strategy C06Sass: Assertion strategy of C06
 
@@ -14201,7 +13876,6 @@ Stub for Strategy C06Sass.
 
 <!-- verocase element C06G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c06g1"></a>
 ### Claim C06G1: Sub-claim 1 of C06
 
@@ -14216,7 +13890,6 @@ Stub for Claim C06G1.
 
 <!-- verocase element C06E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c06e1"></a>
 ### Evidence C06E1: Evidence 1 of C06
 
@@ -14229,7 +13902,6 @@ Stub for Evidence C06E1.
 
 <!-- verocase element C06G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c06g2"></a>
 ### Claim C06G2: Sub-claim 2 of C06
 
@@ -14244,7 +13916,6 @@ Stub for Claim C06G2.
 
 <!-- verocase element C06J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c06j1"></a>
 ### Justification C06J1: Justification of C06
 
@@ -14257,7 +13928,6 @@ Stub for Justification C06J1.
 
 <!-- verocase element C06G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c06g3"></a>
 ### Claim C06G3: Sub-claim 3 of C06
 
@@ -14272,7 +13942,6 @@ Stub for Claim C06G3.
 
 <!-- verocase element C06A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c06a1"></a>
 ### Assumption C06A1: Assumption of C06
 
@@ -14285,7 +13954,6 @@ Stub for Assumption C06A1.
 
 <!-- verocase element C06E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c06e2"></a>
 ### Evidence C06E2: Evidence 2 of C06
 
@@ -14298,7 +13966,6 @@ Stub for Evidence C06E2.
 
 <!-- verocase element C07top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c07top"></a>
 ### Claim C07top: Statement of C07top
 
@@ -14313,7 +13980,6 @@ Stub for Claim C07top.
 
 <!-- verocase element C07Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c07xctx"></a>
 ### Context C07Xctx: Context of C07Xctx
 
@@ -14326,7 +13992,6 @@ Stub for Context C07Xctx.
 
 <!-- verocase element C07Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c07esh"></a>
 ### Evidence C07Esh: Shared evidence of C07
 
@@ -14339,7 +14004,6 @@ Stub for Evidence C07Esh.
 
 <!-- verocase element C07Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c07sass"></a>
 ### Strategy C07Sass: Assertion strategy of C07
 
@@ -14354,7 +14018,6 @@ Stub for Strategy C07Sass.
 
 <!-- verocase element C07G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c07g1"></a>
 ### Claim C07G1: Sub-claim 1 of C07
 
@@ -14369,7 +14032,6 @@ Stub for Claim C07G1.
 
 <!-- verocase element C07E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c07e1"></a>
 ### Evidence C07E1: Evidence 1 of C07
 
@@ -14382,7 +14044,6 @@ Stub for Evidence C07E1.
 
 <!-- verocase element C07G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c07g2"></a>
 ### Claim C07G2: Sub-claim 2 of C07
 
@@ -14397,7 +14058,6 @@ Stub for Claim C07G2.
 
 <!-- verocase element C07J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c07j1"></a>
 ### Justification C07J1: Justification of C07
 
@@ -14410,7 +14070,6 @@ Stub for Justification C07J1.
 
 <!-- verocase element C07G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c07g3"></a>
 ### Claim C07G3: Sub-claim 3 of C07
 
@@ -14425,7 +14084,6 @@ Stub for Claim C07G3.
 
 <!-- verocase element C07A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c07a1"></a>
 ### Assumption C07A1: Assumption of C07
 
@@ -14438,7 +14096,6 @@ Stub for Assumption C07A1.
 
 <!-- verocase element C07E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c07e2"></a>
 ### Evidence C07E2: Evidence 2 of C07
 
@@ -14451,7 +14108,6 @@ Stub for Evidence C07E2.
 
 <!-- verocase element C08top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c08top"></a>
 ### Claim C08top: Statement of C08top
 
@@ -14466,7 +14122,6 @@ Stub for Claim C08top.
 
 <!-- verocase element C08Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c08xctx"></a>
 ### Context C08Xctx: Context of C08Xctx
 
@@ -14479,7 +14134,6 @@ Stub for Context C08Xctx.
 
 <!-- verocase element C08Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c08esh"></a>
 ### Evidence C08Esh: Shared evidence of C08
 
@@ -14492,7 +14146,6 @@ Stub for Evidence C08Esh.
 
 <!-- verocase element C08Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c08sass"></a>
 ### Strategy C08Sass: Assertion strategy of C08
 
@@ -14507,7 +14160,6 @@ Stub for Strategy C08Sass.
 
 <!-- verocase element C08G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c08g1"></a>
 ### Claim C08G1: Sub-claim 1 of C08
 
@@ -14522,7 +14174,6 @@ Stub for Claim C08G1.
 
 <!-- verocase element C08E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c08e1"></a>
 ### Evidence C08E1: Evidence 1 of C08
 
@@ -14535,7 +14186,6 @@ Stub for Evidence C08E1.
 
 <!-- verocase element C08G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c08g2"></a>
 ### Claim C08G2: Sub-claim 2 of C08
 
@@ -14550,7 +14200,6 @@ Stub for Claim C08G2.
 
 <!-- verocase element C08J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c08j1"></a>
 ### Justification C08J1: Justification of C08
 
@@ -14563,7 +14212,6 @@ Stub for Justification C08J1.
 
 <!-- verocase element C08G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c08g3"></a>
 ### Claim C08G3: Sub-claim 3 of C08
 
@@ -14578,7 +14226,6 @@ Stub for Claim C08G3.
 
 <!-- verocase element C08A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c08a1"></a>
 ### Assumption C08A1: Assumption of C08
 
@@ -14591,7 +14238,6 @@ Stub for Assumption C08A1.
 
 <!-- verocase element C08E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c08e2"></a>
 ### Evidence C08E2: Evidence 2 of C08
 
@@ -14604,7 +14250,6 @@ Stub for Evidence C08E2.
 
 <!-- verocase element C09top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c09top"></a>
 ### Claim C09top: Statement of C09top
 
@@ -14619,7 +14264,6 @@ Stub for Claim C09top.
 
 <!-- verocase element C09Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c09xctx"></a>
 ### Context C09Xctx: Context of C09Xctx
 
@@ -14632,7 +14276,6 @@ Stub for Context C09Xctx.
 
 <!-- verocase element C09Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c09esh"></a>
 ### Evidence C09Esh: Shared evidence of C09
 
@@ -14645,7 +14288,6 @@ Stub for Evidence C09Esh.
 
 <!-- verocase element C09Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c09sass"></a>
 ### Strategy C09Sass: Assertion strategy of C09
 
@@ -14660,7 +14302,6 @@ Stub for Strategy C09Sass.
 
 <!-- verocase element C09G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c09g1"></a>
 ### Claim C09G1: Sub-claim 1 of C09
 
@@ -14675,7 +14316,6 @@ Stub for Claim C09G1.
 
 <!-- verocase element C09E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c09e1"></a>
 ### Evidence C09E1: Evidence 1 of C09
 
@@ -14688,7 +14328,6 @@ Stub for Evidence C09E1.
 
 <!-- verocase element C09G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c09g2"></a>
 ### Claim C09G2: Sub-claim 2 of C09
 
@@ -14703,7 +14342,6 @@ Stub for Claim C09G2.
 
 <!-- verocase element C09J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c09j1"></a>
 ### Justification C09J1: Justification of C09
 
@@ -14716,7 +14354,6 @@ Stub for Justification C09J1.
 
 <!-- verocase element C09G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c09g3"></a>
 ### Claim C09G3: Sub-claim 3 of C09
 
@@ -14731,7 +14368,6 @@ Stub for Claim C09G3.
 
 <!-- verocase element C09A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c09a1"></a>
 ### Assumption C09A1: Assumption of C09
 
@@ -14744,7 +14380,6 @@ Stub for Assumption C09A1.
 
 <!-- verocase element C09E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c09e2"></a>
 ### Evidence C09E2: Evidence 2 of C09
 
@@ -14757,7 +14392,6 @@ Stub for Evidence C09E2.
 
 <!-- verocase element C10top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c10top"></a>
 ### Claim C10top: Statement of C10top
 
@@ -14772,7 +14406,6 @@ Stub for Claim C10top.
 
 <!-- verocase element C10Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c10xctx"></a>
 ### Context C10Xctx: Context of C10Xctx
 
@@ -14785,7 +14418,6 @@ Stub for Context C10Xctx.
 
 <!-- verocase element C10Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c10esh"></a>
 ### Evidence C10Esh: Shared evidence of C10
 
@@ -14798,7 +14430,6 @@ Stub for Evidence C10Esh.
 
 <!-- verocase element C10Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c10sass"></a>
 ### Strategy C10Sass: Assertion strategy of C10
 
@@ -14813,7 +14444,6 @@ Stub for Strategy C10Sass.
 
 <!-- verocase element C10G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c10g1"></a>
 ### Claim C10G1: Sub-claim 1 of C10
 
@@ -14828,7 +14458,6 @@ Stub for Claim C10G1.
 
 <!-- verocase element C10E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c10e1"></a>
 ### Evidence C10E1: Evidence 1 of C10
 
@@ -14841,7 +14470,6 @@ Stub for Evidence C10E1.
 
 <!-- verocase element C10G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c10g2"></a>
 ### Claim C10G2: Sub-claim 2 of C10
 
@@ -14856,7 +14484,6 @@ Stub for Claim C10G2.
 
 <!-- verocase element C10J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c10j1"></a>
 ### Justification C10J1: Justification of C10
 
@@ -14869,7 +14496,6 @@ Stub for Justification C10J1.
 
 <!-- verocase element C10G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c10g3"></a>
 ### Claim C10G3: Sub-claim 3 of C10
 
@@ -14884,7 +14510,6 @@ Stub for Claim C10G3.
 
 <!-- verocase element C10A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c10a1"></a>
 ### Assumption C10A1: Assumption of C10
 
@@ -14897,7 +14522,6 @@ Stub for Assumption C10A1.
 
 <!-- verocase element C10E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c10e2"></a>
 ### Evidence C10E2: Evidence 2 of C10
 
@@ -14910,7 +14534,6 @@ Stub for Evidence C10E2.
 
 <!-- verocase element C11top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c11top"></a>
 ### Claim C11top: Statement of C11top
 
@@ -14925,7 +14548,6 @@ Stub for Claim C11top.
 
 <!-- verocase element C11Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c11xctx"></a>
 ### Context C11Xctx: Context of C11Xctx
 
@@ -14938,7 +14560,6 @@ Stub for Context C11Xctx.
 
 <!-- verocase element C11Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c11esh"></a>
 ### Evidence C11Esh: Shared evidence of C11
 
@@ -14951,7 +14572,6 @@ Stub for Evidence C11Esh.
 
 <!-- verocase element C11Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c11sass"></a>
 ### Strategy C11Sass: Assertion strategy of C11
 
@@ -14966,7 +14586,6 @@ Stub for Strategy C11Sass.
 
 <!-- verocase element C11G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c11g1"></a>
 ### Claim C11G1: Sub-claim 1 of C11
 
@@ -14981,7 +14600,6 @@ Stub for Claim C11G1.
 
 <!-- verocase element C11E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c11e1"></a>
 ### Evidence C11E1: Evidence 1 of C11
 
@@ -14994,7 +14612,6 @@ Stub for Evidence C11E1.
 
 <!-- verocase element C11G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c11g2"></a>
 ### Claim C11G2: Sub-claim 2 of C11
 
@@ -15009,7 +14626,6 @@ Stub for Claim C11G2.
 
 <!-- verocase element C11J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c11j1"></a>
 ### Justification C11J1: Justification of C11
 
@@ -15022,7 +14638,6 @@ Stub for Justification C11J1.
 
 <!-- verocase element C11G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c11g3"></a>
 ### Claim C11G3: Sub-claim 3 of C11
 
@@ -15037,7 +14652,6 @@ Stub for Claim C11G3.
 
 <!-- verocase element C11A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c11a1"></a>
 ### Assumption C11A1: Assumption of C11
 
@@ -15050,7 +14664,6 @@ Stub for Assumption C11A1.
 
 <!-- verocase element C11E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c11e2"></a>
 ### Evidence C11E2: Evidence 2 of C11
 
@@ -15063,7 +14676,6 @@ Stub for Evidence C11E2.
 
 <!-- verocase element C12top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c12top"></a>
 ### Claim C12top: Statement of C12top
 
@@ -15078,7 +14690,6 @@ Stub for Claim C12top.
 
 <!-- verocase element C12Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c12xctx"></a>
 ### Context C12Xctx: Context of C12Xctx
 
@@ -15091,7 +14702,6 @@ Stub for Context C12Xctx.
 
 <!-- verocase element C12Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c12esh"></a>
 ### Evidence C12Esh: Shared evidence of C12
 
@@ -15104,7 +14714,6 @@ Stub for Evidence C12Esh.
 
 <!-- verocase element C12Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c12sass"></a>
 ### Strategy C12Sass: Assertion strategy of C12
 
@@ -15119,7 +14728,6 @@ Stub for Strategy C12Sass.
 
 <!-- verocase element C12G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c12g1"></a>
 ### Claim C12G1: Sub-claim 1 of C12
 
@@ -15134,7 +14742,6 @@ Stub for Claim C12G1.
 
 <!-- verocase element C12E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c12e1"></a>
 ### Evidence C12E1: Evidence 1 of C12
 
@@ -15147,7 +14754,6 @@ Stub for Evidence C12E1.
 
 <!-- verocase element C12G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c12g2"></a>
 ### Claim C12G2: Sub-claim 2 of C12
 
@@ -15162,7 +14768,6 @@ Stub for Claim C12G2.
 
 <!-- verocase element C12J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c12j1"></a>
 ### Justification C12J1: Justification of C12
 
@@ -15175,7 +14780,6 @@ Stub for Justification C12J1.
 
 <!-- verocase element C12G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c12g3"></a>
 ### Claim C12G3: Sub-claim 3 of C12
 
@@ -15190,7 +14794,6 @@ Stub for Claim C12G3.
 
 <!-- verocase element C12A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c12a1"></a>
 ### Assumption C12A1: Assumption of C12
 
@@ -15203,7 +14806,6 @@ Stub for Assumption C12A1.
 
 <!-- verocase element C12E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c12e2"></a>
 ### Evidence C12E2: Evidence 2 of C12
 
@@ -15216,7 +14818,6 @@ Stub for Evidence C12E2.
 
 <!-- verocase element C13top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c13top"></a>
 ### Claim C13top: Statement of C13top
 
@@ -15231,7 +14832,6 @@ Stub for Claim C13top.
 
 <!-- verocase element C13Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c13xctx"></a>
 ### Context C13Xctx: Context of C13Xctx
 
@@ -15244,7 +14844,6 @@ Stub for Context C13Xctx.
 
 <!-- verocase element C13Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c13esh"></a>
 ### Evidence C13Esh: Shared evidence of C13
 
@@ -15257,7 +14856,6 @@ Stub for Evidence C13Esh.
 
 <!-- verocase element C13Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c13sass"></a>
 ### Strategy C13Sass: Assertion strategy of C13
 
@@ -15272,7 +14870,6 @@ Stub for Strategy C13Sass.
 
 <!-- verocase element C13G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c13g1"></a>
 ### Claim C13G1: Sub-claim 1 of C13
 
@@ -15287,7 +14884,6 @@ Stub for Claim C13G1.
 
 <!-- verocase element C13E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c13e1"></a>
 ### Evidence C13E1: Evidence 1 of C13
 
@@ -15300,7 +14896,6 @@ Stub for Evidence C13E1.
 
 <!-- verocase element C13G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c13g2"></a>
 ### Claim C13G2: Sub-claim 2 of C13
 
@@ -15315,7 +14910,6 @@ Stub for Claim C13G2.
 
 <!-- verocase element C13J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c13j1"></a>
 ### Justification C13J1: Justification of C13
 
@@ -15328,7 +14922,6 @@ Stub for Justification C13J1.
 
 <!-- verocase element C13G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c13g3"></a>
 ### Claim C13G3: Sub-claim 3 of C13
 
@@ -15343,7 +14936,6 @@ Stub for Claim C13G3.
 
 <!-- verocase element C13A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c13a1"></a>
 ### Assumption C13A1: Assumption of C13
 
@@ -15356,7 +14948,6 @@ Stub for Assumption C13A1.
 
 <!-- verocase element C13E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c13e2"></a>
 ### Evidence C13E2: Evidence 2 of C13
 
@@ -15369,7 +14960,6 @@ Stub for Evidence C13E2.
 
 <!-- verocase element C14top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c14top"></a>
 ### Claim C14top: Statement of C14top
 
@@ -15384,7 +14974,6 @@ Stub for Claim C14top.
 
 <!-- verocase element C14Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c14xctx"></a>
 ### Context C14Xctx: Context of C14Xctx
 
@@ -15397,7 +14986,6 @@ Stub for Context C14Xctx.
 
 <!-- verocase element C14Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c14esh"></a>
 ### Evidence C14Esh: Shared evidence of C14
 
@@ -15410,7 +14998,6 @@ Stub for Evidence C14Esh.
 
 <!-- verocase element C14Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c14sass"></a>
 ### Strategy C14Sass: Assertion strategy of C14
 
@@ -15425,7 +15012,6 @@ Stub for Strategy C14Sass.
 
 <!-- verocase element C14G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c14g1"></a>
 ### Claim C14G1: Sub-claim 1 of C14
 
@@ -15440,7 +15026,6 @@ Stub for Claim C14G1.
 
 <!-- verocase element C14E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c14e1"></a>
 ### Evidence C14E1: Evidence 1 of C14
 
@@ -15453,7 +15038,6 @@ Stub for Evidence C14E1.
 
 <!-- verocase element C14G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c14g2"></a>
 ### Claim C14G2: Sub-claim 2 of C14
 
@@ -15468,7 +15052,6 @@ Stub for Claim C14G2.
 
 <!-- verocase element C14J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c14j1"></a>
 ### Justification C14J1: Justification of C14
 
@@ -15481,7 +15064,6 @@ Stub for Justification C14J1.
 
 <!-- verocase element C14G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c14g3"></a>
 ### Claim C14G3: Sub-claim 3 of C14
 
@@ -15496,7 +15078,6 @@ Stub for Claim C14G3.
 
 <!-- verocase element C14A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c14a1"></a>
 ### Assumption C14A1: Assumption of C14
 
@@ -15509,7 +15090,6 @@ Stub for Assumption C14A1.
 
 <!-- verocase element C14E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c14e2"></a>
 ### Evidence C14E2: Evidence 2 of C14
 
@@ -15522,7 +15102,6 @@ Stub for Evidence C14E2.
 
 <!-- verocase element C15top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c15top"></a>
 ### Claim C15top: Statement of C15top
 
@@ -15537,7 +15116,6 @@ Stub for Claim C15top.
 
 <!-- verocase element C15Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c15xctx"></a>
 ### Context C15Xctx: Context of C15Xctx
 
@@ -15550,7 +15128,6 @@ Stub for Context C15Xctx.
 
 <!-- verocase element C15Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c15esh"></a>
 ### Evidence C15Esh: Shared evidence of C15
 
@@ -15563,7 +15140,6 @@ Stub for Evidence C15Esh.
 
 <!-- verocase element C15Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c15sass"></a>
 ### Strategy C15Sass: Assertion strategy of C15
 
@@ -15578,7 +15154,6 @@ Stub for Strategy C15Sass.
 
 <!-- verocase element C15G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c15g1"></a>
 ### Claim C15G1: Sub-claim 1 of C15
 
@@ -15593,7 +15168,6 @@ Stub for Claim C15G1.
 
 <!-- verocase element C15E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c15e1"></a>
 ### Evidence C15E1: Evidence 1 of C15
 
@@ -15606,7 +15180,6 @@ Stub for Evidence C15E1.
 
 <!-- verocase element C15G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c15g2"></a>
 ### Claim C15G2: Sub-claim 2 of C15
 
@@ -15621,7 +15194,6 @@ Stub for Claim C15G2.
 
 <!-- verocase element C15J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c15j1"></a>
 ### Justification C15J1: Justification of C15
 
@@ -15634,7 +15206,6 @@ Stub for Justification C15J1.
 
 <!-- verocase element C15G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c15g3"></a>
 ### Claim C15G3: Sub-claim 3 of C15
 
@@ -15649,7 +15220,6 @@ Stub for Claim C15G3.
 
 <!-- verocase element C15A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c15a1"></a>
 ### Assumption C15A1: Assumption of C15
 
@@ -15662,7 +15232,6 @@ Stub for Assumption C15A1.
 
 <!-- verocase element C15E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c15e2"></a>
 ### Evidence C15E2: Evidence 2 of C15
 
@@ -15675,7 +15244,6 @@ Stub for Evidence C15E2.
 
 <!-- verocase element C16top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c16top"></a>
 ### Claim C16top: Statement of C16top
 
@@ -15690,7 +15258,6 @@ Stub for Claim C16top.
 
 <!-- verocase element C16Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c16xctx"></a>
 ### Context C16Xctx: Context of C16Xctx
 
@@ -15703,7 +15270,6 @@ Stub for Context C16Xctx.
 
 <!-- verocase element C16Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c16esh"></a>
 ### Evidence C16Esh: Shared evidence of C16
 
@@ -15716,7 +15282,6 @@ Stub for Evidence C16Esh.
 
 <!-- verocase element C16Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c16sass"></a>
 ### Strategy C16Sass: Assertion strategy of C16
 
@@ -15731,7 +15296,6 @@ Stub for Strategy C16Sass.
 
 <!-- verocase element C16G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c16g1"></a>
 ### Claim C16G1: Sub-claim 1 of C16
 
@@ -15746,7 +15310,6 @@ Stub for Claim C16G1.
 
 <!-- verocase element C16E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c16e1"></a>
 ### Evidence C16E1: Evidence 1 of C16
 
@@ -15759,7 +15322,6 @@ Stub for Evidence C16E1.
 
 <!-- verocase element C16G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c16g2"></a>
 ### Claim C16G2: Sub-claim 2 of C16
 
@@ -15774,7 +15336,6 @@ Stub for Claim C16G2.
 
 <!-- verocase element C16J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c16j1"></a>
 ### Justification C16J1: Justification of C16
 
@@ -15787,7 +15348,6 @@ Stub for Justification C16J1.
 
 <!-- verocase element C16G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c16g3"></a>
 ### Claim C16G3: Sub-claim 3 of C16
 
@@ -15802,7 +15362,6 @@ Stub for Claim C16G3.
 
 <!-- verocase element C16A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c16a1"></a>
 ### Assumption C16A1: Assumption of C16
 
@@ -15815,7 +15374,6 @@ Stub for Assumption C16A1.
 
 <!-- verocase element C16E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c16e2"></a>
 ### Evidence C16E2: Evidence 2 of C16
 
@@ -15828,7 +15386,6 @@ Stub for Evidence C16E2.
 
 <!-- verocase element C17top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c17top"></a>
 ### Claim C17top: Statement of C17top
 
@@ -15843,7 +15400,6 @@ Stub for Claim C17top.
 
 <!-- verocase element C17Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c17xctx"></a>
 ### Context C17Xctx: Context of C17Xctx
 
@@ -15856,7 +15412,6 @@ Stub for Context C17Xctx.
 
 <!-- verocase element C17Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c17esh"></a>
 ### Evidence C17Esh: Shared evidence of C17
 
@@ -15869,7 +15424,6 @@ Stub for Evidence C17Esh.
 
 <!-- verocase element C17Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c17sass"></a>
 ### Strategy C17Sass: Assertion strategy of C17
 
@@ -15884,7 +15438,6 @@ Stub for Strategy C17Sass.
 
 <!-- verocase element C17G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c17g1"></a>
 ### Claim C17G1: Sub-claim 1 of C17
 
@@ -15899,7 +15452,6 @@ Stub for Claim C17G1.
 
 <!-- verocase element C17E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c17e1"></a>
 ### Evidence C17E1: Evidence 1 of C17
 
@@ -15912,7 +15464,6 @@ Stub for Evidence C17E1.
 
 <!-- verocase element C17G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c17g2"></a>
 ### Claim C17G2: Sub-claim 2 of C17
 
@@ -15927,7 +15478,6 @@ Stub for Claim C17G2.
 
 <!-- verocase element C17J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c17j1"></a>
 ### Justification C17J1: Justification of C17
 
@@ -15940,7 +15490,6 @@ Stub for Justification C17J1.
 
 <!-- verocase element C17G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c17g3"></a>
 ### Claim C17G3: Sub-claim 3 of C17
 
@@ -15955,7 +15504,6 @@ Stub for Claim C17G3.
 
 <!-- verocase element C17A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c17a1"></a>
 ### Assumption C17A1: Assumption of C17
 
@@ -15968,7 +15516,6 @@ Stub for Assumption C17A1.
 
 <!-- verocase element C17E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c17e2"></a>
 ### Evidence C17E2: Evidence 2 of C17
 
@@ -15981,7 +15528,6 @@ Stub for Evidence C17E2.
 
 <!-- verocase element C18top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c18top"></a>
 ### Claim C18top: Statement of C18top
 
@@ -15996,7 +15542,6 @@ Stub for Claim C18top.
 
 <!-- verocase element C18Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c18xctx"></a>
 ### Context C18Xctx: Context of C18Xctx
 
@@ -16009,7 +15554,6 @@ Stub for Context C18Xctx.
 
 <!-- verocase element C18Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c18esh"></a>
 ### Evidence C18Esh: Shared evidence of C18
 
@@ -16022,7 +15566,6 @@ Stub for Evidence C18Esh.
 
 <!-- verocase element C18Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c18sass"></a>
 ### Strategy C18Sass: Assertion strategy of C18
 
@@ -16037,7 +15580,6 @@ Stub for Strategy C18Sass.
 
 <!-- verocase element C18G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c18g1"></a>
 ### Claim C18G1: Sub-claim 1 of C18
 
@@ -16052,7 +15594,6 @@ Stub for Claim C18G1.
 
 <!-- verocase element C18E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c18e1"></a>
 ### Evidence C18E1: Evidence 1 of C18
 
@@ -16065,7 +15606,6 @@ Stub for Evidence C18E1.
 
 <!-- verocase element C18G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c18g2"></a>
 ### Claim C18G2: Sub-claim 2 of C18
 
@@ -16080,7 +15620,6 @@ Stub for Claim C18G2.
 
 <!-- verocase element C18J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c18j1"></a>
 ### Justification C18J1: Justification of C18
 
@@ -16093,7 +15632,6 @@ Stub for Justification C18J1.
 
 <!-- verocase element C18G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c18g3"></a>
 ### Claim C18G3: Sub-claim 3 of C18
 
@@ -16108,7 +15646,6 @@ Stub for Claim C18G3.
 
 <!-- verocase element C18A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c18a1"></a>
 ### Assumption C18A1: Assumption of C18
 
@@ -16121,7 +15658,6 @@ Stub for Assumption C18A1.
 
 <!-- verocase element C18E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c18e2"></a>
 ### Evidence C18E2: Evidence 2 of C18
 
@@ -16134,7 +15670,6 @@ Stub for Evidence C18E2.
 
 <!-- verocase element C19top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c19top"></a>
 ### Claim C19top: Statement of C19top
 
@@ -16149,7 +15684,6 @@ Stub for Claim C19top.
 
 <!-- verocase element C19Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c19xctx"></a>
 ### Context C19Xctx: Context of C19Xctx
 
@@ -16162,7 +15696,6 @@ Stub for Context C19Xctx.
 
 <!-- verocase element C19Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c19esh"></a>
 ### Evidence C19Esh: Shared evidence of C19
 
@@ -16175,7 +15708,6 @@ Stub for Evidence C19Esh.
 
 <!-- verocase element C19Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c19sass"></a>
 ### Strategy C19Sass: Assertion strategy of C19
 
@@ -16190,7 +15722,6 @@ Stub for Strategy C19Sass.
 
 <!-- verocase element C19G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c19g1"></a>
 ### Claim C19G1: Sub-claim 1 of C19
 
@@ -16205,7 +15736,6 @@ Stub for Claim C19G1.
 
 <!-- verocase element C19E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c19e1"></a>
 ### Evidence C19E1: Evidence 1 of C19
 
@@ -16218,7 +15748,6 @@ Stub for Evidence C19E1.
 
 <!-- verocase element C19G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c19g2"></a>
 ### Claim C19G2: Sub-claim 2 of C19
 
@@ -16233,7 +15762,6 @@ Stub for Claim C19G2.
 
 <!-- verocase element C19J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c19j1"></a>
 ### Justification C19J1: Justification of C19
 
@@ -16246,7 +15774,6 @@ Stub for Justification C19J1.
 
 <!-- verocase element C19G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c19g3"></a>
 ### Claim C19G3: Sub-claim 3 of C19
 
@@ -16261,7 +15788,6 @@ Stub for Claim C19G3.
 
 <!-- verocase element C19A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c19a1"></a>
 ### Assumption C19A1: Assumption of C19
 
@@ -16274,7 +15800,6 @@ Stub for Assumption C19A1.
 
 <!-- verocase element C19E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c19e2"></a>
 ### Evidence C19E2: Evidence 2 of C19
 
@@ -16287,7 +15812,6 @@ Stub for Evidence C19E2.
 
 <!-- verocase element C20top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c20top"></a>
 ### Claim C20top: Statement of C20top
 
@@ -16302,7 +15826,6 @@ Stub for Claim C20top.
 
 <!-- verocase element C20Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c20xctx"></a>
 ### Context C20Xctx: Context of C20Xctx
 
@@ -16315,7 +15838,6 @@ Stub for Context C20Xctx.
 
 <!-- verocase element C20Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c20esh"></a>
 ### Evidence C20Esh: Shared evidence of C20
 
@@ -16328,7 +15850,6 @@ Stub for Evidence C20Esh.
 
 <!-- verocase element C20Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c20sass"></a>
 ### Strategy C20Sass: Assertion strategy of C20
 
@@ -16343,7 +15864,6 @@ Stub for Strategy C20Sass.
 
 <!-- verocase element C20G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c20g1"></a>
 ### Claim C20G1: Sub-claim 1 of C20
 
@@ -16358,7 +15878,6 @@ Stub for Claim C20G1.
 
 <!-- verocase element C20E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c20e1"></a>
 ### Evidence C20E1: Evidence 1 of C20
 
@@ -16371,7 +15890,6 @@ Stub for Evidence C20E1.
 
 <!-- verocase element C20G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c20g2"></a>
 ### Claim C20G2: Sub-claim 2 of C20
 
@@ -16386,7 +15904,6 @@ Stub for Claim C20G2.
 
 <!-- verocase element C20J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c20j1"></a>
 ### Justification C20J1: Justification of C20
 
@@ -16399,7 +15916,6 @@ Stub for Justification C20J1.
 
 <!-- verocase element C20G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c20g3"></a>
 ### Claim C20G3: Sub-claim 3 of C20
 
@@ -16414,7 +15930,6 @@ Stub for Claim C20G3.
 
 <!-- verocase element C20A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c20a1"></a>
 ### Assumption C20A1: Assumption of C20
 
@@ -16427,7 +15942,6 @@ Stub for Assumption C20A1.
 
 <!-- verocase element C20E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c20e2"></a>
 ### Evidence C20E2: Evidence 2 of C20
 
@@ -16440,7 +15954,6 @@ Stub for Evidence C20E2.
 
 <!-- verocase element C21top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c21top"></a>
 ### Claim C21top: Statement of C21top
 
@@ -16455,7 +15968,6 @@ Stub for Claim C21top.
 
 <!-- verocase element C21Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c21xctx"></a>
 ### Context C21Xctx: Context of C21Xctx
 
@@ -16468,7 +15980,6 @@ Stub for Context C21Xctx.
 
 <!-- verocase element C21Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c21esh"></a>
 ### Evidence C21Esh: Shared evidence of C21
 
@@ -16481,7 +15992,6 @@ Stub for Evidence C21Esh.
 
 <!-- verocase element C21Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c21sass"></a>
 ### Strategy C21Sass: Assertion strategy of C21
 
@@ -16496,7 +16006,6 @@ Stub for Strategy C21Sass.
 
 <!-- verocase element C21G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c21g1"></a>
 ### Claim C21G1: Sub-claim 1 of C21
 
@@ -16511,7 +16020,6 @@ Stub for Claim C21G1.
 
 <!-- verocase element C21E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c21e1"></a>
 ### Evidence C21E1: Evidence 1 of C21
 
@@ -16524,7 +16032,6 @@ Stub for Evidence C21E1.
 
 <!-- verocase element C21G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c21g2"></a>
 ### Claim C21G2: Sub-claim 2 of C21
 
@@ -16539,7 +16046,6 @@ Stub for Claim C21G2.
 
 <!-- verocase element C21J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c21j1"></a>
 ### Justification C21J1: Justification of C21
 
@@ -16552,7 +16058,6 @@ Stub for Justification C21J1.
 
 <!-- verocase element C21G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c21g3"></a>
 ### Claim C21G3: Sub-claim 3 of C21
 
@@ -16567,7 +16072,6 @@ Stub for Claim C21G3.
 
 <!-- verocase element C21A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c21a1"></a>
 ### Assumption C21A1: Assumption of C21
 
@@ -16580,7 +16084,6 @@ Stub for Assumption C21A1.
 
 <!-- verocase element C21E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c21e2"></a>
 ### Evidence C21E2: Evidence 2 of C21
 
@@ -16593,7 +16096,6 @@ Stub for Evidence C21E2.
 
 <!-- verocase element C22top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c22top"></a>
 ### Claim C22top: Statement of C22top
 
@@ -16608,7 +16110,6 @@ Stub for Claim C22top.
 
 <!-- verocase element C22Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c22xctx"></a>
 ### Context C22Xctx: Context of C22Xctx
 
@@ -16621,7 +16122,6 @@ Stub for Context C22Xctx.
 
 <!-- verocase element C22Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c22esh"></a>
 ### Evidence C22Esh: Shared evidence of C22
 
@@ -16634,7 +16134,6 @@ Stub for Evidence C22Esh.
 
 <!-- verocase element C22Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c22sass"></a>
 ### Strategy C22Sass: Assertion strategy of C22
 
@@ -16649,7 +16148,6 @@ Stub for Strategy C22Sass.
 
 <!-- verocase element C22G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c22g1"></a>
 ### Claim C22G1: Sub-claim 1 of C22
 
@@ -16664,7 +16162,6 @@ Stub for Claim C22G1.
 
 <!-- verocase element C22E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c22e1"></a>
 ### Evidence C22E1: Evidence 1 of C22
 
@@ -16677,7 +16174,6 @@ Stub for Evidence C22E1.
 
 <!-- verocase element C22G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c22g2"></a>
 ### Claim C22G2: Sub-claim 2 of C22
 
@@ -16692,7 +16188,6 @@ Stub for Claim C22G2.
 
 <!-- verocase element C22J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c22j1"></a>
 ### Justification C22J1: Justification of C22
 
@@ -16705,7 +16200,6 @@ Stub for Justification C22J1.
 
 <!-- verocase element C22G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c22g3"></a>
 ### Claim C22G3: Sub-claim 3 of C22
 
@@ -16720,7 +16214,6 @@ Stub for Claim C22G3.
 
 <!-- verocase element C22A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c22a1"></a>
 ### Assumption C22A1: Assumption of C22
 
@@ -16733,7 +16226,6 @@ Stub for Assumption C22A1.
 
 <!-- verocase element C22E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c22e2"></a>
 ### Evidence C22E2: Evidence 2 of C22
 
@@ -16746,7 +16238,6 @@ Stub for Evidence C22E2.
 
 <!-- verocase element C23top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c23top"></a>
 ### Claim C23top: Statement of C23top
 
@@ -16761,7 +16252,6 @@ Stub for Claim C23top.
 
 <!-- verocase element C23Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c23xctx"></a>
 ### Context C23Xctx: Context of C23Xctx
 
@@ -16774,7 +16264,6 @@ Stub for Context C23Xctx.
 
 <!-- verocase element C23Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c23esh"></a>
 ### Evidence C23Esh: Shared evidence of C23
 
@@ -16787,7 +16276,6 @@ Stub for Evidence C23Esh.
 
 <!-- verocase element C23Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c23sass"></a>
 ### Strategy C23Sass: Assertion strategy of C23
 
@@ -16802,7 +16290,6 @@ Stub for Strategy C23Sass.
 
 <!-- verocase element C23G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c23g1"></a>
 ### Claim C23G1: Sub-claim 1 of C23
 
@@ -16817,7 +16304,6 @@ Stub for Claim C23G1.
 
 <!-- verocase element C23E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c23e1"></a>
 ### Evidence C23E1: Evidence 1 of C23
 
@@ -16830,7 +16316,6 @@ Stub for Evidence C23E1.
 
 <!-- verocase element C23G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c23g2"></a>
 ### Claim C23G2: Sub-claim 2 of C23
 
@@ -16845,7 +16330,6 @@ Stub for Claim C23G2.
 
 <!-- verocase element C23J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c23j1"></a>
 ### Justification C23J1: Justification of C23
 
@@ -16858,7 +16342,6 @@ Stub for Justification C23J1.
 
 <!-- verocase element C23G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c23g3"></a>
 ### Claim C23G3: Sub-claim 3 of C23
 
@@ -16873,7 +16356,6 @@ Stub for Claim C23G3.
 
 <!-- verocase element C23A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c23a1"></a>
 ### Assumption C23A1: Assumption of C23
 
@@ -16886,7 +16368,6 @@ Stub for Assumption C23A1.
 
 <!-- verocase element C23E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c23e2"></a>
 ### Evidence C23E2: Evidence 2 of C23
 
@@ -16899,7 +16380,6 @@ Stub for Evidence C23E2.
 
 <!-- verocase element C24top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c24top"></a>
 ### Claim C24top: Statement of C24top
 
@@ -16914,7 +16394,6 @@ Stub for Claim C24top.
 
 <!-- verocase element C24Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c24xctx"></a>
 ### Context C24Xctx: Context of C24Xctx
 
@@ -16927,7 +16406,6 @@ Stub for Context C24Xctx.
 
 <!-- verocase element C24Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c24esh"></a>
 ### Evidence C24Esh: Shared evidence of C24
 
@@ -16940,7 +16418,6 @@ Stub for Evidence C24Esh.
 
 <!-- verocase element C24Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c24sass"></a>
 ### Strategy C24Sass: Assertion strategy of C24
 
@@ -16955,7 +16432,6 @@ Stub for Strategy C24Sass.
 
 <!-- verocase element C24G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c24g1"></a>
 ### Claim C24G1: Sub-claim 1 of C24
 
@@ -16970,7 +16446,6 @@ Stub for Claim C24G1.
 
 <!-- verocase element C24E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c24e1"></a>
 ### Evidence C24E1: Evidence 1 of C24
 
@@ -16983,7 +16458,6 @@ Stub for Evidence C24E1.
 
 <!-- verocase element C24G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c24g2"></a>
 ### Claim C24G2: Sub-claim 2 of C24
 
@@ -16998,7 +16472,6 @@ Stub for Claim C24G2.
 
 <!-- verocase element C24J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c24j1"></a>
 ### Justification C24J1: Justification of C24
 
@@ -17011,7 +16484,6 @@ Stub for Justification C24J1.
 
 <!-- verocase element C24G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c24g3"></a>
 ### Claim C24G3: Sub-claim 3 of C24
 
@@ -17026,7 +16498,6 @@ Stub for Claim C24G3.
 
 <!-- verocase element C24A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c24a1"></a>
 ### Assumption C24A1: Assumption of C24
 
@@ -17039,7 +16510,6 @@ Stub for Assumption C24A1.
 
 <!-- verocase element C24E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c24e2"></a>
 ### Evidence C24E2: Evidence 2 of C24
 
@@ -17052,7 +16522,6 @@ Stub for Evidence C24E2.
 
 <!-- verocase element C25top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c25top"></a>
 ### Claim C25top: Statement of C25top
 
@@ -17067,7 +16536,6 @@ Stub for Claim C25top.
 
 <!-- verocase element C25Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c25xctx"></a>
 ### Context C25Xctx: Context of C25Xctx
 
@@ -17080,7 +16548,6 @@ Stub for Context C25Xctx.
 
 <!-- verocase element C25Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c25esh"></a>
 ### Evidence C25Esh: Shared evidence of C25
 
@@ -17093,7 +16560,6 @@ Stub for Evidence C25Esh.
 
 <!-- verocase element C25Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c25sass"></a>
 ### Strategy C25Sass: Assertion strategy of C25
 
@@ -17108,7 +16574,6 @@ Stub for Strategy C25Sass.
 
 <!-- verocase element C25G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c25g1"></a>
 ### Claim C25G1: Sub-claim 1 of C25
 
@@ -17123,7 +16588,6 @@ Stub for Claim C25G1.
 
 <!-- verocase element C25E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c25e1"></a>
 ### Evidence C25E1: Evidence 1 of C25
 
@@ -17136,7 +16600,6 @@ Stub for Evidence C25E1.
 
 <!-- verocase element C25G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c25g2"></a>
 ### Claim C25G2: Sub-claim 2 of C25
 
@@ -17151,7 +16614,6 @@ Stub for Claim C25G2.
 
 <!-- verocase element C25J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c25j1"></a>
 ### Justification C25J1: Justification of C25
 
@@ -17164,7 +16626,6 @@ Stub for Justification C25J1.
 
 <!-- verocase element C25G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c25g3"></a>
 ### Claim C25G3: Sub-claim 3 of C25
 
@@ -17179,7 +16640,6 @@ Stub for Claim C25G3.
 
 <!-- verocase element C25A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c25a1"></a>
 ### Assumption C25A1: Assumption of C25
 
@@ -17192,7 +16652,6 @@ Stub for Assumption C25A1.
 
 <!-- verocase element C25E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c25e2"></a>
 ### Evidence C25E2: Evidence 2 of C25
 
@@ -17205,7 +16664,6 @@ Stub for Evidence C25E2.
 
 <!-- verocase element C26top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c26top"></a>
 ### Claim C26top: Statement of C26top
 
@@ -17220,7 +16678,6 @@ Stub for Claim C26top.
 
 <!-- verocase element C26Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c26xctx"></a>
 ### Context C26Xctx: Context of C26Xctx
 
@@ -17233,7 +16690,6 @@ Stub for Context C26Xctx.
 
 <!-- verocase element C26Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c26esh"></a>
 ### Evidence C26Esh: Shared evidence of C26
 
@@ -17246,7 +16702,6 @@ Stub for Evidence C26Esh.
 
 <!-- verocase element C26Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c26sass"></a>
 ### Strategy C26Sass: Assertion strategy of C26
 
@@ -17261,7 +16716,6 @@ Stub for Strategy C26Sass.
 
 <!-- verocase element C26G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c26g1"></a>
 ### Claim C26G1: Sub-claim 1 of C26
 
@@ -17276,7 +16730,6 @@ Stub for Claim C26G1.
 
 <!-- verocase element C26E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c26e1"></a>
 ### Evidence C26E1: Evidence 1 of C26
 
@@ -17289,7 +16742,6 @@ Stub for Evidence C26E1.
 
 <!-- verocase element C26G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c26g2"></a>
 ### Claim C26G2: Sub-claim 2 of C26
 
@@ -17304,7 +16756,6 @@ Stub for Claim C26G2.
 
 <!-- verocase element C26J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c26j1"></a>
 ### Justification C26J1: Justification of C26
 
@@ -17317,7 +16768,6 @@ Stub for Justification C26J1.
 
 <!-- verocase element C26G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c26g3"></a>
 ### Claim C26G3: Sub-claim 3 of C26
 
@@ -17332,7 +16782,6 @@ Stub for Claim C26G3.
 
 <!-- verocase element C26A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c26a1"></a>
 ### Assumption C26A1: Assumption of C26
 
@@ -17345,7 +16794,6 @@ Stub for Assumption C26A1.
 
 <!-- verocase element C26E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c26e2"></a>
 ### Evidence C26E2: Evidence 2 of C26
 
@@ -17358,7 +16806,6 @@ Stub for Evidence C26E2.
 
 <!-- verocase element C27top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c27top"></a>
 ### Claim C27top: Statement of C27top
 
@@ -17373,7 +16820,6 @@ Stub for Claim C27top.
 
 <!-- verocase element C27Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c27xctx"></a>
 ### Context C27Xctx: Context of C27Xctx
 
@@ -17386,7 +16832,6 @@ Stub for Context C27Xctx.
 
 <!-- verocase element C27Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c27esh"></a>
 ### Evidence C27Esh: Shared evidence of C27
 
@@ -17399,7 +16844,6 @@ Stub for Evidence C27Esh.
 
 <!-- verocase element C27Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c27sass"></a>
 ### Strategy C27Sass: Assertion strategy of C27
 
@@ -17414,7 +16858,6 @@ Stub for Strategy C27Sass.
 
 <!-- verocase element C27G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c27g1"></a>
 ### Claim C27G1: Sub-claim 1 of C27
 
@@ -17429,7 +16872,6 @@ Stub for Claim C27G1.
 
 <!-- verocase element C27E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c27e1"></a>
 ### Evidence C27E1: Evidence 1 of C27
 
@@ -17442,7 +16884,6 @@ Stub for Evidence C27E1.
 
 <!-- verocase element C27G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c27g2"></a>
 ### Claim C27G2: Sub-claim 2 of C27
 
@@ -17457,7 +16898,6 @@ Stub for Claim C27G2.
 
 <!-- verocase element C27J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c27j1"></a>
 ### Justification C27J1: Justification of C27
 
@@ -17470,7 +16910,6 @@ Stub for Justification C27J1.
 
 <!-- verocase element C27G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c27g3"></a>
 ### Claim C27G3: Sub-claim 3 of C27
 
@@ -17485,7 +16924,6 @@ Stub for Claim C27G3.
 
 <!-- verocase element C27A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c27a1"></a>
 ### Assumption C27A1: Assumption of C27
 
@@ -17498,7 +16936,6 @@ Stub for Assumption C27A1.
 
 <!-- verocase element C27E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c27e2"></a>
 ### Evidence C27E2: Evidence 2 of C27
 
@@ -17511,7 +16948,6 @@ Stub for Evidence C27E2.
 
 <!-- verocase element C28top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c28top"></a>
 ### Claim C28top: Statement of C28top
 
@@ -17526,7 +16962,6 @@ Stub for Claim C28top.
 
 <!-- verocase element C28Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c28xctx"></a>
 ### Context C28Xctx: Context of C28Xctx
 
@@ -17539,7 +16974,6 @@ Stub for Context C28Xctx.
 
 <!-- verocase element C28Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c28esh"></a>
 ### Evidence C28Esh: Shared evidence of C28
 
@@ -17552,7 +16986,6 @@ Stub for Evidence C28Esh.
 
 <!-- verocase element C28Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c28sass"></a>
 ### Strategy C28Sass: Assertion strategy of C28
 
@@ -17567,7 +17000,6 @@ Stub for Strategy C28Sass.
 
 <!-- verocase element C28G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c28g1"></a>
 ### Claim C28G1: Sub-claim 1 of C28
 
@@ -17582,7 +17014,6 @@ Stub for Claim C28G1.
 
 <!-- verocase element C28E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c28e1"></a>
 ### Evidence C28E1: Evidence 1 of C28
 
@@ -17595,7 +17026,6 @@ Stub for Evidence C28E1.
 
 <!-- verocase element C28G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c28g2"></a>
 ### Claim C28G2: Sub-claim 2 of C28
 
@@ -17610,7 +17040,6 @@ Stub for Claim C28G2.
 
 <!-- verocase element C28J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c28j1"></a>
 ### Justification C28J1: Justification of C28
 
@@ -17623,7 +17052,6 @@ Stub for Justification C28J1.
 
 <!-- verocase element C28G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c28g3"></a>
 ### Claim C28G3: Sub-claim 3 of C28
 
@@ -17638,7 +17066,6 @@ Stub for Claim C28G3.
 
 <!-- verocase element C28A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c28a1"></a>
 ### Assumption C28A1: Assumption of C28
 
@@ -17651,7 +17078,6 @@ Stub for Assumption C28A1.
 
 <!-- verocase element C28E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c28e2"></a>
 ### Evidence C28E2: Evidence 2 of C28
 
@@ -17664,7 +17090,6 @@ Stub for Evidence C28E2.
 
 <!-- verocase element C29top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c29top"></a>
 ### Claim C29top: Statement of C29top
 
@@ -17679,7 +17104,6 @@ Stub for Claim C29top.
 
 <!-- verocase element C29Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c29xctx"></a>
 ### Context C29Xctx: Context of C29Xctx
 
@@ -17692,7 +17116,6 @@ Stub for Context C29Xctx.
 
 <!-- verocase element C29Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c29esh"></a>
 ### Evidence C29Esh: Shared evidence of C29
 
@@ -17705,7 +17128,6 @@ Stub for Evidence C29Esh.
 
 <!-- verocase element C29Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c29sass"></a>
 ### Strategy C29Sass: Assertion strategy of C29
 
@@ -17720,7 +17142,6 @@ Stub for Strategy C29Sass.
 
 <!-- verocase element C29G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c29g1"></a>
 ### Claim C29G1: Sub-claim 1 of C29
 
@@ -17735,7 +17156,6 @@ Stub for Claim C29G1.
 
 <!-- verocase element C29E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c29e1"></a>
 ### Evidence C29E1: Evidence 1 of C29
 
@@ -17748,7 +17168,6 @@ Stub for Evidence C29E1.
 
 <!-- verocase element C29G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c29g2"></a>
 ### Claim C29G2: Sub-claim 2 of C29
 
@@ -17763,7 +17182,6 @@ Stub for Claim C29G2.
 
 <!-- verocase element C29J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c29j1"></a>
 ### Justification C29J1: Justification of C29
 
@@ -17776,7 +17194,6 @@ Stub for Justification C29J1.
 
 <!-- verocase element C29G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c29g3"></a>
 ### Claim C29G3: Sub-claim 3 of C29
 
@@ -17791,7 +17208,6 @@ Stub for Claim C29G3.
 
 <!-- verocase element C29A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c29a1"></a>
 ### Assumption C29A1: Assumption of C29
 
@@ -17804,7 +17220,6 @@ Stub for Assumption C29A1.
 
 <!-- verocase element C29E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c29e2"></a>
 ### Evidence C29E2: Evidence 2 of C29
 
@@ -17817,7 +17232,6 @@ Stub for Evidence C29E2.
 
 <!-- verocase element C30top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c30top"></a>
 ### Claim C30top: Statement of C30top
 
@@ -17832,7 +17246,6 @@ Stub for Claim C30top.
 
 <!-- verocase element C30Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c30xctx"></a>
 ### Context C30Xctx: Context of C30Xctx
 
@@ -17845,7 +17258,6 @@ Stub for Context C30Xctx.
 
 <!-- verocase element C30Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c30esh"></a>
 ### Evidence C30Esh: Shared evidence of C30
 
@@ -17858,7 +17270,6 @@ Stub for Evidence C30Esh.
 
 <!-- verocase element C30Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c30sass"></a>
 ### Strategy C30Sass: Assertion strategy of C30
 
@@ -17873,7 +17284,6 @@ Stub for Strategy C30Sass.
 
 <!-- verocase element C30G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c30g1"></a>
 ### Claim C30G1: Sub-claim 1 of C30
 
@@ -17888,7 +17298,6 @@ Stub for Claim C30G1.
 
 <!-- verocase element C30E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c30e1"></a>
 ### Evidence C30E1: Evidence 1 of C30
 
@@ -17901,7 +17310,6 @@ Stub for Evidence C30E1.
 
 <!-- verocase element C30G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c30g2"></a>
 ### Claim C30G2: Sub-claim 2 of C30
 
@@ -17916,7 +17324,6 @@ Stub for Claim C30G2.
 
 <!-- verocase element C30J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c30j1"></a>
 ### Justification C30J1: Justification of C30
 
@@ -17929,7 +17336,6 @@ Stub for Justification C30J1.
 
 <!-- verocase element C30G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c30g3"></a>
 ### Claim C30G3: Sub-claim 3 of C30
 
@@ -17944,7 +17350,6 @@ Stub for Claim C30G3.
 
 <!-- verocase element C30A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c30a1"></a>
 ### Assumption C30A1: Assumption of C30
 
@@ -17957,7 +17362,6 @@ Stub for Assumption C30A1.
 
 <!-- verocase element C30E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c30e2"></a>
 ### Evidence C30E2: Evidence 2 of C30
 
@@ -17970,7 +17374,6 @@ Stub for Evidence C30E2.
 
 <!-- verocase element C31top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c31top"></a>
 ### Claim C31top: Statement of C31top
 
@@ -17985,7 +17388,6 @@ Stub for Claim C31top.
 
 <!-- verocase element C31Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c31xctx"></a>
 ### Context C31Xctx: Context of C31Xctx
 
@@ -17998,7 +17400,6 @@ Stub for Context C31Xctx.
 
 <!-- verocase element C31Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c31esh"></a>
 ### Evidence C31Esh: Shared evidence of C31
 
@@ -18011,7 +17412,6 @@ Stub for Evidence C31Esh.
 
 <!-- verocase element C31Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c31sass"></a>
 ### Strategy C31Sass: Assertion strategy of C31
 
@@ -18026,7 +17426,6 @@ Stub for Strategy C31Sass.
 
 <!-- verocase element C31G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c31g1"></a>
 ### Claim C31G1: Sub-claim 1 of C31
 
@@ -18041,7 +17440,6 @@ Stub for Claim C31G1.
 
 <!-- verocase element C31E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c31e1"></a>
 ### Evidence C31E1: Evidence 1 of C31
 
@@ -18054,7 +17452,6 @@ Stub for Evidence C31E1.
 
 <!-- verocase element C31G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c31g2"></a>
 ### Claim C31G2: Sub-claim 2 of C31
 
@@ -18069,7 +17466,6 @@ Stub for Claim C31G2.
 
 <!-- verocase element C31J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c31j1"></a>
 ### Justification C31J1: Justification of C31
 
@@ -18082,7 +17478,6 @@ Stub for Justification C31J1.
 
 <!-- verocase element C31G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c31g3"></a>
 ### Claim C31G3: Sub-claim 3 of C31
 
@@ -18097,7 +17492,6 @@ Stub for Claim C31G3.
 
 <!-- verocase element C31A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c31a1"></a>
 ### Assumption C31A1: Assumption of C31
 
@@ -18110,7 +17504,6 @@ Stub for Assumption C31A1.
 
 <!-- verocase element C31E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c31e2"></a>
 ### Evidence C31E2: Evidence 2 of C31
 
@@ -18123,7 +17516,6 @@ Stub for Evidence C31E2.
 
 <!-- verocase element C32top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c32top"></a>
 ### Claim C32top: Statement of C32top
 
@@ -18138,7 +17530,6 @@ Stub for Claim C32top.
 
 <!-- verocase element C32Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c32xctx"></a>
 ### Context C32Xctx: Context of C32Xctx
 
@@ -18151,7 +17542,6 @@ Stub for Context C32Xctx.
 
 <!-- verocase element C32Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c32esh"></a>
 ### Evidence C32Esh: Shared evidence of C32
 
@@ -18164,7 +17554,6 @@ Stub for Evidence C32Esh.
 
 <!-- verocase element C32Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c32sass"></a>
 ### Strategy C32Sass: Assertion strategy of C32
 
@@ -18179,7 +17568,6 @@ Stub for Strategy C32Sass.
 
 <!-- verocase element C32G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c32g1"></a>
 ### Claim C32G1: Sub-claim 1 of C32
 
@@ -18194,7 +17582,6 @@ Stub for Claim C32G1.
 
 <!-- verocase element C32E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c32e1"></a>
 ### Evidence C32E1: Evidence 1 of C32
 
@@ -18207,7 +17594,6 @@ Stub for Evidence C32E1.
 
 <!-- verocase element C32G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c32g2"></a>
 ### Claim C32G2: Sub-claim 2 of C32
 
@@ -18222,7 +17608,6 @@ Stub for Claim C32G2.
 
 <!-- verocase element C32J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c32j1"></a>
 ### Justification C32J1: Justification of C32
 
@@ -18235,7 +17620,6 @@ Stub for Justification C32J1.
 
 <!-- verocase element C32G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c32g3"></a>
 ### Claim C32G3: Sub-claim 3 of C32
 
@@ -18250,7 +17634,6 @@ Stub for Claim C32G3.
 
 <!-- verocase element C32A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c32a1"></a>
 ### Assumption C32A1: Assumption of C32
 
@@ -18263,7 +17646,6 @@ Stub for Assumption C32A1.
 
 <!-- verocase element C32E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c32e2"></a>
 ### Evidence C32E2: Evidence 2 of C32
 
@@ -18276,7 +17658,6 @@ Stub for Evidence C32E2.
 
 <!-- verocase element C33top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c33top"></a>
 ### Claim C33top: Statement of C33top
 
@@ -18291,7 +17672,6 @@ Stub for Claim C33top.
 
 <!-- verocase element C33Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c33xctx"></a>
 ### Context C33Xctx: Context of C33Xctx
 
@@ -18304,7 +17684,6 @@ Stub for Context C33Xctx.
 
 <!-- verocase element C33Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c33esh"></a>
 ### Evidence C33Esh: Shared evidence of C33
 
@@ -18317,7 +17696,6 @@ Stub for Evidence C33Esh.
 
 <!-- verocase element C33Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c33sass"></a>
 ### Strategy C33Sass: Assertion strategy of C33
 
@@ -18332,7 +17710,6 @@ Stub for Strategy C33Sass.
 
 <!-- verocase element C33G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c33g1"></a>
 ### Claim C33G1: Sub-claim 1 of C33
 
@@ -18347,7 +17724,6 @@ Stub for Claim C33G1.
 
 <!-- verocase element C33E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c33e1"></a>
 ### Evidence C33E1: Evidence 1 of C33
 
@@ -18360,7 +17736,6 @@ Stub for Evidence C33E1.
 
 <!-- verocase element C33G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c33g2"></a>
 ### Claim C33G2: Sub-claim 2 of C33
 
@@ -18375,7 +17750,6 @@ Stub for Claim C33G2.
 
 <!-- verocase element C33J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c33j1"></a>
 ### Justification C33J1: Justification of C33
 
@@ -18388,7 +17762,6 @@ Stub for Justification C33J1.
 
 <!-- verocase element C33G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c33g3"></a>
 ### Claim C33G3: Sub-claim 3 of C33
 
@@ -18403,7 +17776,6 @@ Stub for Claim C33G3.
 
 <!-- verocase element C33A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c33a1"></a>
 ### Assumption C33A1: Assumption of C33
 
@@ -18416,7 +17788,6 @@ Stub for Assumption C33A1.
 
 <!-- verocase element C33E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c33e2"></a>
 ### Evidence C33E2: Evidence 2 of C33
 
@@ -18429,7 +17800,6 @@ Stub for Evidence C33E2.
 
 <!-- verocase element C34top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c34top"></a>
 ### Claim C34top: Statement of C34top
 
@@ -18444,7 +17814,6 @@ Stub for Claim C34top.
 
 <!-- verocase element C34Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c34xctx"></a>
 ### Context C34Xctx: Context of C34Xctx
 
@@ -18457,7 +17826,6 @@ Stub for Context C34Xctx.
 
 <!-- verocase element C34Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c34esh"></a>
 ### Evidence C34Esh: Shared evidence of C34
 
@@ -18470,7 +17838,6 @@ Stub for Evidence C34Esh.
 
 <!-- verocase element C34Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c34sass"></a>
 ### Strategy C34Sass: Assertion strategy of C34
 
@@ -18485,7 +17852,6 @@ Stub for Strategy C34Sass.
 
 <!-- verocase element C34G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c34g1"></a>
 ### Claim C34G1: Sub-claim 1 of C34
 
@@ -18500,7 +17866,6 @@ Stub for Claim C34G1.
 
 <!-- verocase element C34E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c34e1"></a>
 ### Evidence C34E1: Evidence 1 of C34
 
@@ -18513,7 +17878,6 @@ Stub for Evidence C34E1.
 
 <!-- verocase element C34G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c34g2"></a>
 ### Claim C34G2: Sub-claim 2 of C34
 
@@ -18528,7 +17892,6 @@ Stub for Claim C34G2.
 
 <!-- verocase element C34J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c34j1"></a>
 ### Justification C34J1: Justification of C34
 
@@ -18541,7 +17904,6 @@ Stub for Justification C34J1.
 
 <!-- verocase element C34G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c34g3"></a>
 ### Claim C34G3: Sub-claim 3 of C34
 
@@ -18556,7 +17918,6 @@ Stub for Claim C34G3.
 
 <!-- verocase element C34A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c34a1"></a>
 ### Assumption C34A1: Assumption of C34
 
@@ -18569,7 +17930,6 @@ Stub for Assumption C34A1.
 
 <!-- verocase element C34E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c34e2"></a>
 ### Evidence C34E2: Evidence 2 of C34
 
@@ -18582,7 +17942,6 @@ Stub for Evidence C34E2.
 
 <!-- verocase element C35top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c35top"></a>
 ### Claim C35top: Statement of C35top
 
@@ -18597,7 +17956,6 @@ Stub for Claim C35top.
 
 <!-- verocase element C35Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c35xctx"></a>
 ### Context C35Xctx: Context of C35Xctx
 
@@ -18610,7 +17968,6 @@ Stub for Context C35Xctx.
 
 <!-- verocase element C35Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c35esh"></a>
 ### Evidence C35Esh: Shared evidence of C35
 
@@ -18623,7 +17980,6 @@ Stub for Evidence C35Esh.
 
 <!-- verocase element C35Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c35sass"></a>
 ### Strategy C35Sass: Assertion strategy of C35
 
@@ -18638,7 +17994,6 @@ Stub for Strategy C35Sass.
 
 <!-- verocase element C35G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c35g1"></a>
 ### Claim C35G1: Sub-claim 1 of C35
 
@@ -18653,7 +18008,6 @@ Stub for Claim C35G1.
 
 <!-- verocase element C35E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c35e1"></a>
 ### Evidence C35E1: Evidence 1 of C35
 
@@ -18666,7 +18020,6 @@ Stub for Evidence C35E1.
 
 <!-- verocase element C35G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c35g2"></a>
 ### Claim C35G2: Sub-claim 2 of C35
 
@@ -18681,7 +18034,6 @@ Stub for Claim C35G2.
 
 <!-- verocase element C35J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c35j1"></a>
 ### Justification C35J1: Justification of C35
 
@@ -18694,7 +18046,6 @@ Stub for Justification C35J1.
 
 <!-- verocase element C35G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c35g3"></a>
 ### Claim C35G3: Sub-claim 3 of C35
 
@@ -18709,7 +18060,6 @@ Stub for Claim C35G3.
 
 <!-- verocase element C35A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c35a1"></a>
 ### Assumption C35A1: Assumption of C35
 
@@ -18722,7 +18072,6 @@ Stub for Assumption C35A1.
 
 <!-- verocase element C35E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c35e2"></a>
 ### Evidence C35E2: Evidence 2 of C35
 
@@ -18735,7 +18084,6 @@ Stub for Evidence C35E2.
 
 <!-- verocase element C36top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c36top"></a>
 ### Claim C36top: Statement of C36top
 
@@ -18750,7 +18098,6 @@ Stub for Claim C36top.
 
 <!-- verocase element C36Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c36xctx"></a>
 ### Context C36Xctx: Context of C36Xctx
 
@@ -18763,7 +18110,6 @@ Stub for Context C36Xctx.
 
 <!-- verocase element C36Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c36esh"></a>
 ### Evidence C36Esh: Shared evidence of C36
 
@@ -18776,7 +18122,6 @@ Stub for Evidence C36Esh.
 
 <!-- verocase element C36Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c36sass"></a>
 ### Strategy C36Sass: Assertion strategy of C36
 
@@ -18791,7 +18136,6 @@ Stub for Strategy C36Sass.
 
 <!-- verocase element C36G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c36g1"></a>
 ### Claim C36G1: Sub-claim 1 of C36
 
@@ -18806,7 +18150,6 @@ Stub for Claim C36G1.
 
 <!-- verocase element C36E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c36e1"></a>
 ### Evidence C36E1: Evidence 1 of C36
 
@@ -18819,7 +18162,6 @@ Stub for Evidence C36E1.
 
 <!-- verocase element C36G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c36g2"></a>
 ### Claim C36G2: Sub-claim 2 of C36
 
@@ -18834,7 +18176,6 @@ Stub for Claim C36G2.
 
 <!-- verocase element C36J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c36j1"></a>
 ### Justification C36J1: Justification of C36
 
@@ -18847,7 +18188,6 @@ Stub for Justification C36J1.
 
 <!-- verocase element C36G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c36g3"></a>
 ### Claim C36G3: Sub-claim 3 of C36
 
@@ -18862,7 +18202,6 @@ Stub for Claim C36G3.
 
 <!-- verocase element C36A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c36a1"></a>
 ### Assumption C36A1: Assumption of C36
 
@@ -18875,7 +18214,6 @@ Stub for Assumption C36A1.
 
 <!-- verocase element C36E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c36e2"></a>
 ### Evidence C36E2: Evidence 2 of C36
 
@@ -18888,7 +18226,6 @@ Stub for Evidence C36E2.
 
 <!-- verocase element C37top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c37top"></a>
 ### Claim C37top: Statement of C37top
 
@@ -18903,7 +18240,6 @@ Stub for Claim C37top.
 
 <!-- verocase element C37Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c37xctx"></a>
 ### Context C37Xctx: Context of C37Xctx
 
@@ -18916,7 +18252,6 @@ Stub for Context C37Xctx.
 
 <!-- verocase element C37Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c37esh"></a>
 ### Evidence C37Esh: Shared evidence of C37
 
@@ -18929,7 +18264,6 @@ Stub for Evidence C37Esh.
 
 <!-- verocase element C37Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c37sass"></a>
 ### Strategy C37Sass: Assertion strategy of C37
 
@@ -18944,7 +18278,6 @@ Stub for Strategy C37Sass.
 
 <!-- verocase element C37G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c37g1"></a>
 ### Claim C37G1: Sub-claim 1 of C37
 
@@ -18959,7 +18292,6 @@ Stub for Claim C37G1.
 
 <!-- verocase element C37E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c37e1"></a>
 ### Evidence C37E1: Evidence 1 of C37
 
@@ -18972,7 +18304,6 @@ Stub for Evidence C37E1.
 
 <!-- verocase element C37G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c37g2"></a>
 ### Claim C37G2: Sub-claim 2 of C37
 
@@ -18987,7 +18318,6 @@ Stub for Claim C37G2.
 
 <!-- verocase element C37J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c37j1"></a>
 ### Justification C37J1: Justification of C37
 
@@ -19000,7 +18330,6 @@ Stub for Justification C37J1.
 
 <!-- verocase element C37G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c37g3"></a>
 ### Claim C37G3: Sub-claim 3 of C37
 
@@ -19015,7 +18344,6 @@ Stub for Claim C37G3.
 
 <!-- verocase element C37A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c37a1"></a>
 ### Assumption C37A1: Assumption of C37
 
@@ -19028,7 +18356,6 @@ Stub for Assumption C37A1.
 
 <!-- verocase element C37E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c37e2"></a>
 ### Evidence C37E2: Evidence 2 of C37
 
@@ -19041,7 +18368,6 @@ Stub for Evidence C37E2.
 
 <!-- verocase element C38top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c38top"></a>
 ### Claim C38top: Statement of C38top
 
@@ -19056,7 +18382,6 @@ Stub for Claim C38top.
 
 <!-- verocase element C38Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c38xctx"></a>
 ### Context C38Xctx: Context of C38Xctx
 
@@ -19069,7 +18394,6 @@ Stub for Context C38Xctx.
 
 <!-- verocase element C38Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c38esh"></a>
 ### Evidence C38Esh: Shared evidence of C38
 
@@ -19082,7 +18406,6 @@ Stub for Evidence C38Esh.
 
 <!-- verocase element C38Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c38sass"></a>
 ### Strategy C38Sass: Assertion strategy of C38
 
@@ -19097,7 +18420,6 @@ Stub for Strategy C38Sass.
 
 <!-- verocase element C38G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c38g1"></a>
 ### Claim C38G1: Sub-claim 1 of C38
 
@@ -19112,7 +18434,6 @@ Stub for Claim C38G1.
 
 <!-- verocase element C38E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c38e1"></a>
 ### Evidence C38E1: Evidence 1 of C38
 
@@ -19125,7 +18446,6 @@ Stub for Evidence C38E1.
 
 <!-- verocase element C38G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c38g2"></a>
 ### Claim C38G2: Sub-claim 2 of C38
 
@@ -19140,7 +18460,6 @@ Stub for Claim C38G2.
 
 <!-- verocase element C38J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c38j1"></a>
 ### Justification C38J1: Justification of C38
 
@@ -19153,7 +18472,6 @@ Stub for Justification C38J1.
 
 <!-- verocase element C38G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c38g3"></a>
 ### Claim C38G3: Sub-claim 3 of C38
 
@@ -19168,7 +18486,6 @@ Stub for Claim C38G3.
 
 <!-- verocase element C38A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c38a1"></a>
 ### Assumption C38A1: Assumption of C38
 
@@ -19181,7 +18498,6 @@ Stub for Assumption C38A1.
 
 <!-- verocase element C38E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c38e2"></a>
 ### Evidence C38E2: Evidence 2 of C38
 
@@ -19194,7 +18510,6 @@ Stub for Evidence C38E2.
 
 <!-- verocase element C39top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c39top"></a>
 ### Claim C39top: Statement of C39top
 
@@ -19209,7 +18524,6 @@ Stub for Claim C39top.
 
 <!-- verocase element C39Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c39xctx"></a>
 ### Context C39Xctx: Context of C39Xctx
 
@@ -19222,7 +18536,6 @@ Stub for Context C39Xctx.
 
 <!-- verocase element C39Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c39esh"></a>
 ### Evidence C39Esh: Shared evidence of C39
 
@@ -19235,7 +18548,6 @@ Stub for Evidence C39Esh.
 
 <!-- verocase element C39Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c39sass"></a>
 ### Strategy C39Sass: Assertion strategy of C39
 
@@ -19250,7 +18562,6 @@ Stub for Strategy C39Sass.
 
 <!-- verocase element C39G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c39g1"></a>
 ### Claim C39G1: Sub-claim 1 of C39
 
@@ -19265,7 +18576,6 @@ Stub for Claim C39G1.
 
 <!-- verocase element C39E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c39e1"></a>
 ### Evidence C39E1: Evidence 1 of C39
 
@@ -19278,7 +18588,6 @@ Stub for Evidence C39E1.
 
 <!-- verocase element C39G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c39g2"></a>
 ### Claim C39G2: Sub-claim 2 of C39
 
@@ -19293,7 +18602,6 @@ Stub for Claim C39G2.
 
 <!-- verocase element C39J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c39j1"></a>
 ### Justification C39J1: Justification of C39
 
@@ -19306,7 +18614,6 @@ Stub for Justification C39J1.
 
 <!-- verocase element C39G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c39g3"></a>
 ### Claim C39G3: Sub-claim 3 of C39
 
@@ -19321,7 +18628,6 @@ Stub for Claim C39G3.
 
 <!-- verocase element C39A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c39a1"></a>
 ### Assumption C39A1: Assumption of C39
 
@@ -19334,7 +18640,6 @@ Stub for Assumption C39A1.
 
 <!-- verocase element C39E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c39e2"></a>
 ### Evidence C39E2: Evidence 2 of C39
 
@@ -19347,7 +18652,6 @@ Stub for Evidence C39E2.
 
 <!-- verocase element C40top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c40top"></a>
 ### Claim C40top: Statement of C40top
 
@@ -19362,7 +18666,6 @@ Stub for Claim C40top.
 
 <!-- verocase element C40Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c40xctx"></a>
 ### Context C40Xctx: Context of C40Xctx
 
@@ -19375,7 +18678,6 @@ Stub for Context C40Xctx.
 
 <!-- verocase element C40Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c40esh"></a>
 ### Evidence C40Esh: Shared evidence of C40
 
@@ -19388,7 +18690,6 @@ Stub for Evidence C40Esh.
 
 <!-- verocase element C40Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c40sass"></a>
 ### Strategy C40Sass: Assertion strategy of C40
 
@@ -19403,7 +18704,6 @@ Stub for Strategy C40Sass.
 
 <!-- verocase element C40G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c40g1"></a>
 ### Claim C40G1: Sub-claim 1 of C40
 
@@ -19418,7 +18718,6 @@ Stub for Claim C40G1.
 
 <!-- verocase element C40E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c40e1"></a>
 ### Evidence C40E1: Evidence 1 of C40
 
@@ -19431,7 +18730,6 @@ Stub for Evidence C40E1.
 
 <!-- verocase element C40G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c40g2"></a>
 ### Claim C40G2: Sub-claim 2 of C40
 
@@ -19446,7 +18744,6 @@ Stub for Claim C40G2.
 
 <!-- verocase element C40J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c40j1"></a>
 ### Justification C40J1: Justification of C40
 
@@ -19459,7 +18756,6 @@ Stub for Justification C40J1.
 
 <!-- verocase element C40G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c40g3"></a>
 ### Claim C40G3: Sub-claim 3 of C40
 
@@ -19474,7 +18770,6 @@ Stub for Claim C40G3.
 
 <!-- verocase element C40A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c40a1"></a>
 ### Assumption C40A1: Assumption of C40
 
@@ -19487,7 +18782,6 @@ Stub for Assumption C40A1.
 
 <!-- verocase element C40E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c40e2"></a>
 ### Evidence C40E2: Evidence 2 of C40
 
@@ -19500,7 +18794,6 @@ Stub for Evidence C40E2.
 
 <!-- verocase element C41top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c41top"></a>
 ### Claim C41top: Statement of C41top
 
@@ -19515,7 +18808,6 @@ Stub for Claim C41top.
 
 <!-- verocase element C41Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c41xctx"></a>
 ### Context C41Xctx: Context of C41Xctx
 
@@ -19528,7 +18820,6 @@ Stub for Context C41Xctx.
 
 <!-- verocase element C41Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c41esh"></a>
 ### Evidence C41Esh: Shared evidence of C41
 
@@ -19541,7 +18832,6 @@ Stub for Evidence C41Esh.
 
 <!-- verocase element C41Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c41sass"></a>
 ### Strategy C41Sass: Assertion strategy of C41
 
@@ -19556,7 +18846,6 @@ Stub for Strategy C41Sass.
 
 <!-- verocase element C41G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c41g1"></a>
 ### Claim C41G1: Sub-claim 1 of C41
 
@@ -19571,7 +18860,6 @@ Stub for Claim C41G1.
 
 <!-- verocase element C41E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c41e1"></a>
 ### Evidence C41E1: Evidence 1 of C41
 
@@ -19584,7 +18872,6 @@ Stub for Evidence C41E1.
 
 <!-- verocase element C41G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c41g2"></a>
 ### Claim C41G2: Sub-claim 2 of C41
 
@@ -19599,7 +18886,6 @@ Stub for Claim C41G2.
 
 <!-- verocase element C41J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c41j1"></a>
 ### Justification C41J1: Justification of C41
 
@@ -19612,7 +18898,6 @@ Stub for Justification C41J1.
 
 <!-- verocase element C41G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c41g3"></a>
 ### Claim C41G3: Sub-claim 3 of C41
 
@@ -19627,7 +18912,6 @@ Stub for Claim C41G3.
 
 <!-- verocase element C41A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c41a1"></a>
 ### Assumption C41A1: Assumption of C41
 
@@ -19640,7 +18924,6 @@ Stub for Assumption C41A1.
 
 <!-- verocase element C41E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c41e2"></a>
 ### Evidence C41E2: Evidence 2 of C41
 
@@ -19653,7 +18936,6 @@ Stub for Evidence C41E2.
 
 <!-- verocase element C42top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c42top"></a>
 ### Claim C42top: Statement of C42top
 
@@ -19668,7 +18950,6 @@ Stub for Claim C42top.
 
 <!-- verocase element C42Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c42xctx"></a>
 ### Context C42Xctx: Context of C42Xctx
 
@@ -19681,7 +18962,6 @@ Stub for Context C42Xctx.
 
 <!-- verocase element C42Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c42esh"></a>
 ### Evidence C42Esh: Shared evidence of C42
 
@@ -19694,7 +18974,6 @@ Stub for Evidence C42Esh.
 
 <!-- verocase element C42Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c42sass"></a>
 ### Strategy C42Sass: Assertion strategy of C42
 
@@ -19709,7 +18988,6 @@ Stub for Strategy C42Sass.
 
 <!-- verocase element C42G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c42g1"></a>
 ### Claim C42G1: Sub-claim 1 of C42
 
@@ -19724,7 +19002,6 @@ Stub for Claim C42G1.
 
 <!-- verocase element C42E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c42e1"></a>
 ### Evidence C42E1: Evidence 1 of C42
 
@@ -19737,7 +19014,6 @@ Stub for Evidence C42E1.
 
 <!-- verocase element C42G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c42g2"></a>
 ### Claim C42G2: Sub-claim 2 of C42
 
@@ -19752,7 +19028,6 @@ Stub for Claim C42G2.
 
 <!-- verocase element C42J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c42j1"></a>
 ### Justification C42J1: Justification of C42
 
@@ -19765,7 +19040,6 @@ Stub for Justification C42J1.
 
 <!-- verocase element C42G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c42g3"></a>
 ### Claim C42G3: Sub-claim 3 of C42
 
@@ -19780,7 +19054,6 @@ Stub for Claim C42G3.
 
 <!-- verocase element C42A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c42a1"></a>
 ### Assumption C42A1: Assumption of C42
 
@@ -19793,7 +19066,6 @@ Stub for Assumption C42A1.
 
 <!-- verocase element C42E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c42e2"></a>
 ### Evidence C42E2: Evidence 2 of C42
 
@@ -19806,7 +19078,6 @@ Stub for Evidence C42E2.
 
 <!-- verocase element C43top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c43top"></a>
 ### Claim C43top: Statement of C43top
 
@@ -19821,7 +19092,6 @@ Stub for Claim C43top.
 
 <!-- verocase element C43Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c43xctx"></a>
 ### Context C43Xctx: Context of C43Xctx
 
@@ -19834,7 +19104,6 @@ Stub for Context C43Xctx.
 
 <!-- verocase element C43Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c43esh"></a>
 ### Evidence C43Esh: Shared evidence of C43
 
@@ -19847,7 +19116,6 @@ Stub for Evidence C43Esh.
 
 <!-- verocase element C43Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c43sass"></a>
 ### Strategy C43Sass: Assertion strategy of C43
 
@@ -19862,7 +19130,6 @@ Stub for Strategy C43Sass.
 
 <!-- verocase element C43G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c43g1"></a>
 ### Claim C43G1: Sub-claim 1 of C43
 
@@ -19877,7 +19144,6 @@ Stub for Claim C43G1.
 
 <!-- verocase element C43E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c43e1"></a>
 ### Evidence C43E1: Evidence 1 of C43
 
@@ -19890,7 +19156,6 @@ Stub for Evidence C43E1.
 
 <!-- verocase element C43G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c43g2"></a>
 ### Claim C43G2: Sub-claim 2 of C43
 
@@ -19905,7 +19170,6 @@ Stub for Claim C43G2.
 
 <!-- verocase element C43J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c43j1"></a>
 ### Justification C43J1: Justification of C43
 
@@ -19918,7 +19182,6 @@ Stub for Justification C43J1.
 
 <!-- verocase element C43G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c43g3"></a>
 ### Claim C43G3: Sub-claim 3 of C43
 
@@ -19933,7 +19196,6 @@ Stub for Claim C43G3.
 
 <!-- verocase element C43A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c43a1"></a>
 ### Assumption C43A1: Assumption of C43
 
@@ -19946,7 +19208,6 @@ Stub for Assumption C43A1.
 
 <!-- verocase element C43E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c43e2"></a>
 ### Evidence C43E2: Evidence 2 of C43
 
@@ -19959,7 +19220,6 @@ Stub for Evidence C43E2.
 
 <!-- verocase element C44top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c44top"></a>
 ### Claim C44top: Statement of C44top
 
@@ -19974,7 +19234,6 @@ Stub for Claim C44top.
 
 <!-- verocase element C44Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c44xctx"></a>
 ### Context C44Xctx: Context of C44Xctx
 
@@ -19987,7 +19246,6 @@ Stub for Context C44Xctx.
 
 <!-- verocase element C44Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c44esh"></a>
 ### Evidence C44Esh: Shared evidence of C44
 
@@ -20000,7 +19258,6 @@ Stub for Evidence C44Esh.
 
 <!-- verocase element C44Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c44sass"></a>
 ### Strategy C44Sass: Assertion strategy of C44
 
@@ -20015,7 +19272,6 @@ Stub for Strategy C44Sass.
 
 <!-- verocase element C44G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c44g1"></a>
 ### Claim C44G1: Sub-claim 1 of C44
 
@@ -20030,7 +19286,6 @@ Stub for Claim C44G1.
 
 <!-- verocase element C44E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c44e1"></a>
 ### Evidence C44E1: Evidence 1 of C44
 
@@ -20043,7 +19298,6 @@ Stub for Evidence C44E1.
 
 <!-- verocase element C44G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c44g2"></a>
 ### Claim C44G2: Sub-claim 2 of C44
 
@@ -20058,7 +19312,6 @@ Stub for Claim C44G2.
 
 <!-- verocase element C44J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c44j1"></a>
 ### Justification C44J1: Justification of C44
 
@@ -20071,7 +19324,6 @@ Stub for Justification C44J1.
 
 <!-- verocase element C44G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c44g3"></a>
 ### Claim C44G3: Sub-claim 3 of C44
 
@@ -20086,7 +19338,6 @@ Stub for Claim C44G3.
 
 <!-- verocase element C44A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c44a1"></a>
 ### Assumption C44A1: Assumption of C44
 
@@ -20099,7 +19350,6 @@ Stub for Assumption C44A1.
 
 <!-- verocase element C44E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c44e2"></a>
 ### Evidence C44E2: Evidence 2 of C44
 
@@ -20112,7 +19362,6 @@ Stub for Evidence C44E2.
 
 <!-- verocase element C45top -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c45top"></a>
 ### Claim C45top: Statement of C45top
 
@@ -20127,7 +19376,6 @@ Stub for Claim C45top.
 
 <!-- verocase element C45Xctx -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-c45xctx"></a>
 ### Context C45Xctx: Context of C45Xctx
 
@@ -20140,7 +19388,6 @@ Stub for Context C45Xctx.
 
 <!-- verocase element C45Esh -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c45esh"></a>
 ### Evidence C45Esh: Shared evidence of C45
 
@@ -20153,7 +19400,6 @@ Stub for Evidence C45Esh.
 
 <!-- verocase element C45Sass -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-c45sass"></a>
 ### Strategy C45Sass: Assertion strategy of C45
 
@@ -20168,7 +19414,6 @@ Stub for Strategy C45Sass.
 
 <!-- verocase element C45G1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c45g1"></a>
 ### Claim C45G1: Sub-claim 1 of C45
 
@@ -20183,7 +19428,6 @@ Stub for Claim C45G1.
 
 <!-- verocase element C45E1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c45e1"></a>
 ### Evidence C45E1: Evidence 1 of C45
 
@@ -20196,7 +19440,6 @@ Stub for Evidence C45E1.
 
 <!-- verocase element C45G2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c45g2"></a>
 ### Claim C45G2: Sub-claim 2 of C45
 
@@ -20211,7 +19454,6 @@ Stub for Claim C45G2.
 
 <!-- verocase element C45J1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-c45j1"></a>
 ### Justification C45J1: Justification of C45
 
@@ -20224,7 +19466,6 @@ Stub for Justification C45J1.
 
 <!-- verocase element C45G3 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-c45g3"></a>
 ### Claim C45G3: Sub-claim 3 of C45
 
@@ -20239,7 +19480,6 @@ Stub for Claim C45G3.
 
 <!-- verocase element C45A1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-c45a1"></a>
 ### Assumption C45A1: Assumption of C45
 
@@ -20252,7 +19492,6 @@ Stub for Assumption C45A1.
 
 <!-- verocase element C45E2 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-c45e2"></a>
 ### Evidence C45E2: Evidence 2 of C45
 

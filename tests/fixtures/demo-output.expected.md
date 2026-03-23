@@ -884,7 +884,6 @@ flowchart BT
 
 <!-- verocase element Security -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-security"></a>
 ### Claim Security: The website is adequately secure against moderate threats
 
@@ -899,7 +898,6 @@ top-level claim the entire assurance case supports.
 
 <!-- verocase element XScope -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-xscope"></a>
 ### Context XScope: OWASP Top Ten threat model defines the threat scope
 
@@ -916,7 +914,6 @@ It was agreed with the customer as the applicable scope for this engagement.
 
 <!-- verocase element SArg -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-sarg"></a>
 ### Strategy SArg: Security is argued by examining access control, data protection, deployment, and monitoring
 
@@ -934,7 +931,6 @@ SArg demonstrates a Strategy with no Context or Justification children.
 
 <!-- verocase element Access -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-access"></a>
 ### Claim Access: User access control prevents unauthorized actions
 
@@ -951,7 +947,6 @@ authorisation, and protection against client-side injection attacks.
 
 <!-- verocase element AAdmin -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="assumption-aadmin"></a>
 ### Assumption AAdmin: Site administrators follow the published access management policy
 
@@ -966,7 +961,6 @@ administrators is outside the threat model for this case.
 
 <!-- verocase element SAccess -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-saccess"></a>
 ### Strategy SAccess: Access control is argued by examining authentication and authorization
 
@@ -985,7 +979,6 @@ which GSN renders beside the Strategy rather than below it.
 
 <!-- verocase element XAuthStd -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-xauthstd"></a>
 ### Context XAuthStd: NIST SP 800-63B Level 2 defines the required authentication assurance level
 
@@ -1004,7 +997,6 @@ claims in this sub-argument.
 
 <!-- verocase element AuthN -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-authn"></a>
 ### Claim AuthN: All users are authenticated before accessing protected resources
 
@@ -1021,7 +1013,6 @@ delay and are recorded in the audit log.
 
 <!-- verocase element EvLogin -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-evlogin"></a>
 ### Evidence EvLogin: Login audit log shows no unauthorized access in last 90 days
 
@@ -1038,7 +1029,6 @@ anomalous access patterns.
 
 <!-- verocase element JMechanism -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-jmechanism"></a>
 ### Justification JMechanism: Password-plus-MFA provides industry-standard two-factor authentication
 
@@ -1053,7 +1043,6 @@ both password-stuffing attacks and phished credentials.
 
 <!-- verocase element XLogPolicy -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-xlogpolicy"></a>
 ### Context XLogPolicy: Log retention policy requires 90-day audit trail
 
@@ -1070,7 +1059,6 @@ slow-burn credential-abuse campaigns.
 
 <!-- verocase element AuthZ -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-authz"></a>
 ### Claim AuthZ: Users can only access resources appropriate to their role
 
@@ -1087,7 +1075,6 @@ access control team and approved by the relevant department head.
 
 <!-- verocase element EvRBAC -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-evrbac"></a>
 ### Evidence EvRBAC: Role-based access control configuration review passed
 
@@ -1104,7 +1091,6 @@ violations were found.
 
 <!-- verocase element AuthZAdmin -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-authzadmin"></a>
 ### Claim AuthZAdmin: Administrative functions require elevated privilege
 
@@ -1119,7 +1105,6 @@ control is assumed to be correctly enforced by the framework.
 
 <!-- verocase element XSSFree -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-xssfree"></a>
 ### Claim XSSFree: Cross-site scripting attacks are mitigated
 
@@ -1136,7 +1121,6 @@ context-aware output encoding on all dynamic content.
 
 <!-- verocase element EvCSP -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-evcsp"></a>
 ### Evidence EvCSP: Content Security Policy headers verified by automated scanner
 
@@ -1153,7 +1137,6 @@ known inline-script injection patterns.
 
 <!-- verocase element R1 -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="relation-r1"></a>
 ### Relation R1
 
@@ -1170,7 +1153,6 @@ uniformly applied. This is cited as a counter-argument to XSSFree.
 
 <!-- verocase element SqlFree -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-sqlfree"></a>
 ### Claim SqlFree: SQL injection attacks are mitigated
 
@@ -1188,7 +1170,6 @@ defeated: remediation is required before the case can be reasserted.
 
 <!-- verocase element EvPenTest -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-evpentest"></a>
 ### Evidence EvPenTest: Penetration test report identifies active vulnerabilities in multiple endpoints
 
@@ -1206,7 +1187,6 @@ flagged multiple endpoints with inconsistent XSS output encoding.
 
 <!-- verocase element DBVuln -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-dbvuln"></a>
 ### Claim DBVuln: Active SQL injection vulnerability found in search endpoint
 
@@ -1222,7 +1202,6 @@ case can be reasserted.
 
 <!-- verocase element Data -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-data"></a>
 ### Claim Data: Sensitive user data is protected in transit and at rest
 
@@ -1240,7 +1219,6 @@ privacy regulations.
 
 <!-- verocase element XRegulation -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-xregulation"></a>
 ### Context XRegulation: GDPR and applicable state privacy laws govern data handling
 
@@ -1257,7 +1235,6 @@ policy covering these obligations has been reviewed by legal counsel.
 
 <!-- verocase element AEncrypt -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-aencrypt"></a>
 ### Claim AEncrypt: TLS 1.3 is correctly deployed on all public endpoints
 
@@ -1273,7 +1250,6 @@ deployed, not that the protocol is sound.
 
 <!-- verocase element SData -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-sdata"></a>
 ### Strategy SData: Data protection is argued by examining encryption, minimization, and audit logging
 
@@ -1292,7 +1268,6 @@ Justification child (JDataArch), which GSN renders flanking the Strategy.
 
 <!-- verocase element XDataScope -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-xdatascope"></a>
 ### Context XDataScope: GDPR Article 32 and state privacy law specify the required technical security measures
 
@@ -1311,7 +1286,6 @@ the normative scope for all data protection claims in this sub-argument.
 
 <!-- verocase element JDataArch -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-jdataarch"></a>
 ### Justification JDataArch: Treating encryption, minimisation, and audit as independent sub-arguments mirrors the layered controls recommended by the EDPB
 
@@ -1327,7 +1301,6 @@ simplifies gap analysis against GDPR Article 32 compliance checklists.
 
 <!-- verocase element Encrypt -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-encrypt"></a>
 ### Claim Encrypt: All sensitive data is encrypted in transit and at rest
 
@@ -1344,7 +1317,6 @@ hardware security module and rotated annually.
 
 <!-- verocase element EvTLS -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-evtls"></a>
 ### Evidence EvTLS: TLS configuration scan achieves A+ rating
 
@@ -1361,7 +1333,6 @@ public-facing endpoints.
 
 <!-- verocase element EvDB -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-evdb"></a>
 ### Evidence EvDB: Database-level encryption enabled and key management audited
 
@@ -1378,7 +1349,6 @@ comply with the organisation's cryptographic standards policy.
 
 <!-- verocase element Minimise -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-minimise"></a>
 ### Claim Minimise: Only necessary data is collected and retained per the privacy policy
 
@@ -1395,7 +1365,6 @@ runs nightly and is monitored for failures.
 
 <!-- verocase element DataMap -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-datamap"></a>
 ### Claim DataMap: The data flow diagram covers all personal data stores and flows
 
@@ -1411,7 +1380,6 @@ further support.
 
 <!-- verocase element JRetention -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-jretention"></a>
 ### Justification JRetention: Data minimisation reduces breach impact and aids regulatory compliance
 
@@ -1427,7 +1395,6 @@ responses.
 
 <!-- verocase element AuditAccess -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-auditaccess"></a>
 ### Claim AuditAccess: All sensitive data access events are logged and periodically reviewed
 
@@ -1443,7 +1410,6 @@ forthcoming access monitoring policy, which has not yet been finalised.
 
 <!-- verocase element MetaClaim -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-metaclaim"></a>
 ### Claim MetaClaim: This assurance case addresses all applicable data protection requirements
 
@@ -1459,7 +1425,6 @@ inadvertently omitted.
 
 <!-- verocase element Deployment -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-deployment"></a>
 ### Claim Deployment: Deployment configuration follows security hardening guidelines
 
@@ -1476,7 +1441,6 @@ Drift from the baseline triggers an automated alert.
 
 <!-- verocase element EvHarden -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-evharden"></a>
 ### Evidence EvHarden: Server hardening checklist completed and signed off
 
@@ -1494,7 +1458,6 @@ hardening.
 
 <!-- verocase element XProd -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-xprod"></a>
 ### Context XProd: Production environment enforces HTTPS-only connections
 
@@ -1509,7 +1472,6 @@ any application code, preventing accidental cleartext transmission.
 
 <!-- verocase element Monitoring -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-monitoring"></a>
 ### Claim Monitoring: Security events are detected and responded to in a timely manner
 
@@ -1527,7 +1489,6 @@ prevent material harm.
 
 <!-- verocase element SMonitor -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="strategy-smonitor"></a>
 ### Strategy SMonitor: Detection capability is argued by examining alerting coverage, SOC capacity, and response procedures
 
@@ -1548,7 +1509,6 @@ in GSN; the third (XSLA) remains below as a regular in-context-of child.
 
 <!-- verocase element XSIEMScope -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-xsiemscope"></a>
 ### Context XSIEMScope: The SIEM deployment covers all application, network, and host event sources
 
@@ -1566,7 +1526,6 @@ create blind spots that make AlertCoverage unverifiable.
 
 <!-- verocase element JSOCModel -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="justification-jsocmodel"></a>
 ### Justification JSOCModel: The 24/7 follow-the-sun SOC model ensures trained responders are always available
 
@@ -1584,7 +1543,6 @@ justification for asserting that human review is continuously available.
 
 <!-- verocase element XSLA -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-xsla"></a>
 ### Context XSLA: The service-level agreement requires critical alerts to be acknowledged within 15 minutes
 
@@ -1602,7 +1560,6 @@ ResponseTime claim is measured.
 
 <!-- verocase element AlertCoverage -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-alertcoverage"></a>
 ### Claim AlertCoverage: All OWASP Top Ten attack patterns trigger at least one SIEM alert
 
@@ -1619,7 +1576,6 @@ case confirming it fires on a representative attack sample.
 
 <!-- verocase element EvAlertCoverage -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-evalertcoverage"></a>
 ### Evidence EvAlertCoverage: SIEM rule audit confirms coverage of all current OWASP Top Ten patterns
 
@@ -1637,7 +1593,6 @@ framework.
 
 <!-- verocase element ResponseTime -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-responsetime"></a>
 ### Claim ResponseTime: Critical security alerts are acknowledged within the required timeframe
 
@@ -1654,7 +1609,6 @@ The claim requires this latency to remain within the SLA threshold.
 
 <!-- verocase element EvResponseTime -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-evresponsetime"></a>
 ### Evidence EvResponseTime: SOC metrics show 99.2% of critical alerts acknowledged within 15 minutes over the past year
 

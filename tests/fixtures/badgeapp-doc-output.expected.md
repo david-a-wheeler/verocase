@@ -146,7 +146,6 @@ Additional context and evidence packages supporting the argument.
 
 <!-- verocase element Security -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-security"></a>
 ### Claim Security: The system is adequately secure against moderate threats
 
@@ -159,7 +158,6 @@ This is the top-level claim for the entire assurance case.
 
 <!-- verocase element Requirements -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-requirements"></a>
 ### Claim Requirements: Security requirements are identified and met
 
@@ -174,7 +172,6 @@ The security requirements are documented and verified against the implementation
 
 <!-- verocase element Design -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="claim-design"></a>
 ### Claim Design: The security design is documented and reviewed
 
@@ -189,7 +186,6 @@ The system design incorporates security from the ground up.
 
 <!-- verocase element ReqSpec -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-reqspec"></a>
 ### Evidence ReqSpec: Requirements specification
 
@@ -204,7 +200,6 @@ See the full requirements document for details.
 
 <!-- verocase element TestCoverage -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-testcoverage"></a>
 ### Evidence TestCoverage: Test coverage report
 
@@ -219,7 +214,6 @@ All security tests pass with full coverage of requirements.
 
 <!-- verocase element DesignDoc -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-designdoc"></a>
 ### Evidence DesignDoc: Security architecture document
 
@@ -234,7 +228,6 @@ The architecture has been reviewed by the security team.
 
 <!-- verocase element ThreatModel -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="evidence-threatmodel"></a>
 ### Evidence ThreatModel: Threat model
 
@@ -249,7 +242,6 @@ Threats are systematically identified and mitigated.
 
 <!-- verocase element ReqScope -->
 <!-- DO NOT EDIT text from here until "end verocase" -->
-
 <a id="context-reqscope"></a>
 ### Context ReqScope: Applies to all user-facing features
 

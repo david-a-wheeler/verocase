@@ -5886,11 +5886,13 @@ More help is available:
     ltac_render.add_argument(
         '--info', type=str, metavar='ID',
         help='print context for ID: package, ancestors, children, '
-             'descendant count, and citation parents',
+             'descendant count, and citation parents. '
+             'Shorthand for --select "info ID".',
     )
     ltac_render.add_argument(
         '--descendants', type=str, metavar='ID',
-        help='print LTAC source for ID and all its descendants',
+        help='print LTAC source for ID and all its descendants. '
+             'Shorthand for --select "ltac/txt ID".',
     )
 
     # Reporting options: print extra information; may combine with any mode.

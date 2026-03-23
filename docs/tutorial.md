@@ -5,6 +5,7 @@ This is the tutorial for `verocase`.
 that makes it *easy* and *efficient*
 to create and maintain a small or moderately-sized assurance case,
 e.g., for justifying why a system is secure against attack.
+
 It's designed to be easy to use for humans *and* AI.
 
 ## What's an assurance case?
@@ -129,6 +130,10 @@ The original `case.md` is backed up to `.backups/` before any change.
 
 ### Element syntax
 
+LTAC files are indentation-sensitive line-oriented files in UTF-8 text format.
+LTAC files can include blank lines and comments.
+Comments begin with `#` and must match the indent of the next element.
+
 Every non-blank line in an LTAC file defines or cites one *element*:
 
 ```
@@ -149,8 +154,6 @@ INDENT - TYPE [^][IDENTIFIER]: statement text [{options}] [(ext_ref)]
   for this element.  Shown as a clickable link in the rendered document.
   Elements with an `ext_ref` are never flagged as empty by `--empty`.
 
-One or more blank lines ends one *package* and begins the next.
-
 ### Element types
 
 | Type | Purpose |
@@ -165,6 +168,8 @@ One or more blank lines ends one *package* and begins the next.
 
 The most common types are `Claim`, `Strategy`, and `Evidence`.
 `Context` and `Assumption` add background or preconditions.
+It's quite common to have Claims, supported by other Claims, which are
+then supported by other Claims.
 
 Here's a richer example:
 

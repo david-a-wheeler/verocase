@@ -5,7 +5,56 @@ This file documents the most important user-facing changes to verocode. For deta
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.7.1] - 2026-03-23
+
+### Added
+
+- CAE (Claims, Arguments, Evidence) diagram notation via the `cae/mermaid`
+  selector; renders the argument structure in CAE style with abstract nodes
+  styled distinctly.
+- LTAC files now support comment lines starting with `#`; blank lines may
+  appear freely (they are considered to be within a comment group).
+- `bottom_padding` configuration key is now fully supported: adds an invisible
+  padding node in Mermaid diagrams so GitHub's floating controls do not
+  obscure the bottom row.
+- `case.toml` is now accepted as an alternative config file name alongside
+  `verocase.toml`.
+- `--start` now includes some sample element text in the generated stub,
+  making it easier to understand the format immediately.
+
+### Changed
+
+- Lots of internal reorganization to more clearly separate the
+  "process LTAC" modes/operations from the "process document files"
+  operations. This led to a number of under-the-hood API changes that I
+  believe greatly simplify and clean it up.
+- Reporting options (`--empty`, `--misplaced`, `--leaves`, `--packages`) may
+  now be freely combined with any main mode (e.g. `--fixmissing --empty`).
+  They are no longer restricted to read-only use; add `--read-only` explicitly
+  if you want to suppress the default document-update pass.
+- `--select`, `--info`, and `--descendants` now read from the LTAC and config
+  only (never open document files) and may be combined with any main mode.
+  They are mutually exclusive with each other but no longer mutually exclusive
+  with modes like `--fixmissing`.
+
+### Removed
+
+- `--missing` and `--orphans` flags removed.  Orphan regions (document
+  selectors whose ID is no longer in the LTAC) are now reported as errors
+  automatically during document processing.  To check for undocumented
+  elements without modifying files, use `--read-only --empty`.
+- asCited option in LTAC (we handle citations differently, this was
+  confusing and unnecessary).
+
+### Fixed
+
+- Generated element and package regions no longer have a spurious blank line
+  between the "DO NOT EDIT" warning comment and the heading.
+- Several GSN diagram layout fixes: bottom-padding connector length, Dagre
+  cycle avoidance in LR subgraphs, and Strategy same-level placement.
+- Several CAE diagram fixes: edge direction (was upside-down), BottomPadding
+  placement, abstract-node CSS class application.
+- Improved `&` escaping in HTML output and tightened URL/attribute sanitisation.
 
 ## [0.7.0] - 2026-03-17
 
@@ -192,6 +241,7 @@ Initial release.
 - Distributed as a single dependency-free Python script (`verocase.py`) and
   as a PyPI package installable with `pip install verocase`.
 
-[Unreleased]: https://github.com/david-a-wheeler/verocase/compare/v0.7.0...HEAD
+[Unreleased]: https://github.com/david-a-wheeler/verocase/compare/v0.7.1...HEAD
+[0.7.1]: https://github.com/david-a-wheeler/verocase/compare/v0.7.0...v0.7.1
 [0.7.0]: https://github.com/david-a-wheeler/verocase/compare/v0.1.0...v0.7.0
 [0.1.0]: https://github.com/david-a-wheeler/verocase/releases/tag/v0.1.0

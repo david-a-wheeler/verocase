@@ -9,7 +9,6 @@ SPDX-License-Identifier: MIT
 import argparse
 import copy
 import datetime
-import io
 import os
 import re
 import shutil
@@ -38,13 +37,10 @@ except ImportError:
 __version__ = '0.7.1'
 
 __all__ = [
-    # Exceptions
-    'VerocaseError',
-    # Data types
-    'Node',
-    'Case',
     'DEFAULT_CONFIG',
-    # Standalone analysis helpers
+    'Case',
+    'Node',
+    'VerocaseError',
     'print_stats',
 ]
 
@@ -1378,7 +1374,7 @@ o
                         continue
                     if key in visiting:
                         start_idx = next(i for i, n in enumerate(path) if id(n) == key)
-                        cycle = path[start_idx:] + [succ]
+                        cycle = [*path[start_idx:], succ]
                         trail = ' -> '.join(n.identifier or f'({n.node_type})' for n in cycle)
                         self.panic(f"circularity detected: {trail}")
                     visiting.add(key)
@@ -2084,7 +2080,7 @@ o
             pred_ident = None
             for j in range(ltac_idx - 1, -1, -1):
                 candidate = ltac_order[j]
-                s, e = find_region(result, candidate)
+                s, _e = find_region(result, candidate)
                 if s is not None:
                     pred_ident = candidate
                     break
@@ -2103,7 +2099,7 @@ o
             else:
                 insert_after = -1
             insert_pos = insert_after + 1
-            result[insert_pos:insert_pos] = [''] + region_lines
+            result[insert_pos:insert_pos] = ['', *region_lines]
 
         new_content = '\n'.join(result)
         if had_trailing:
@@ -3139,7 +3135,8 @@ class _LTACParser:
 
         # Assertion status: SACM spec section 11 requires mutual exclusivity.
         active = _STATUS_OPTIONS.intersection(options)
-        if nodetype == 'Assumption': active = active | {'assumed'}
+        if nodetype == 'Assumption':
+            active = active | {'assumed'}
         if len(active) >= 2:
             label = identifier or f'(unnamed {nodetype})'
             self._case.error(f"line {lineno}: {label}: conflicting assertion status:"
@@ -6133,8 +6130,6 @@ def run(args: argparse.Namespace) -> bool:
         document_files=list(args.files) if args.files else None,
         strict=args.error,
     )
-    config = case.config
-    config_path = case.config_path
     ltac_path = case.ltac_path
 
     _modifying_str = ', '.join(f'--{f}' for f in sorted(FILE_MODIFYING_FLAGS))

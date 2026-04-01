@@ -17,7 +17,7 @@ jobs:
           cache: "pip"
           cache-dependency-path: .github/workflows/ci.yml
       - name: Install ruff
-        run: pip install ruff
+        run: pip install ruff==0.15.8
       - name: Run lint
         run: ruff check verocase.py
 
@@ -31,7 +31,7 @@ jobs:
           cache: "pip"
           cache-dependency-path: .github/workflows/ci.yml
       - name: Install pyright
-        run: pip install pyright
+        run: pip install pyright==1.1.408
       - name: Run type check
         run: pyright verocase.py
 

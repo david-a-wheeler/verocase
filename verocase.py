@@ -764,10 +764,10 @@ class Case:
     _NON_INCREMENTAL_CACHE_FIELDS = frozenset({"important_leaves"})
 
     def __init__(self, stderr=None):
-        self.roots: List["Node"] = []
-        self.all_definitions_for: Dict[str, List["Node"]] = {}
-        self.citations: Dict[str, List["Node"]] = {}
-        self.links: Dict[str, List["Node"]] = {}
+        self.roots: List[Node] = []
+        self.all_definitions_for: Dict[str, List[Node]] = {}
+        self.citations: Dict[str, List[Node]] = {}
+        self.links: Dict[str, List[Node]] = {}
         self.document_files: List[str] = []
         self.config: dict = dict(DEFAULT_CONFIG)
         self.had_error: bool = False
@@ -776,14 +776,14 @@ class Case:
         self.ltac_line_ending: str = "\n"
         self.ltac_path: Optional[str] = None
         self.config_path: Optional[str] = None
-        self.stderr: "TextIO" = stderr or sys.stderr
+        self.stderr: TextIO = stderr or sys.stderr
         self.trailing_comments: List[str] = []
 
         # Document pass results; None means "no pass has run yet" (distinct
         # from {} / [] which means "pass ran and found nothing").
-        self.element_doc_info: Optional[Dict[str, "ElementDocInfo"]] = None
+        self.element_doc_info: Optional[Dict[str, ElementDocInfo]] = None
         self.element_doc_order: Optional[List[Tuple[str, str, int]]] = None
-        self.doc_pass_stats: Optional["DocPassStats"] = None
+        self.doc_pass_stats: Optional[DocPassStats] = None
 
         # LTAC-derived leaf set; managed by reset_cache(), not
         # _reset_doc_processing().
@@ -1147,7 +1147,7 @@ class Case:
                 return None
             return [nodes.parent]
         else:
-            result: List["Node"] = []
+            result: List[Node] = []
             seen_ids: set = set()
             for n in nodes:
                 if n.parent is not None and id(n.parent) not in seen_ids:
@@ -1263,8 +1263,8 @@ class Case:
         Does not modify any stored state.  Used by doublecheck_cache() and
         reset_cache().
         """
-        all_definitions_for: Dict[str, List["Node"]] = {}
-        citations: Dict[str, List["Node"]] = {}
+        all_definitions_for: Dict[str, List[Node]] = {}
+        citations: Dict[str, List[Node]] = {}
         important_leaves: Set[str] = set()
 
         # Pass 1: collect definitions, citations, and important leaves.
@@ -1281,8 +1281,8 @@ class Case:
                     important_leaves.add(node.identifier)
 
         # Pass 2: resolve link_target on all Link nodes.
-        links: Dict[str, List["Node"]] = {}
-        link_targets: Dict[int, Optional["Node"]] = {}
+        links: Dict[str, List[Node]] = {}
+        link_targets: Dict[int, Optional[Node]] = {}
         for node in self.all_nodes():
             if node.node_type != "Link" or not node.identifier:
                 continue
@@ -4105,7 +4105,7 @@ def _sacm_effective_sources(
     edges. Counter/abstract options are intentionally ignored (only counts
     matter here).
     """
-    sources: List[Tuple["Node", "Node"]] = []
+    sources: List[Tuple[Node, Node]] = []
     for child in node.children:
         if child.node_type == "Context":
             pass
@@ -4138,7 +4138,7 @@ def _gsn_visual_children(
     non-Link grandchildren of Relation children (with parent=Relation child).
     Link targets are cross-package citations and are not counted.
     """
-    result: List[Tuple["Node", "Node"]] = []
+    result: List[Tuple[Node, Node]] = []
     for child in node.children:
         if child.node_type == "Link":
             pass
@@ -4161,7 +4161,7 @@ def _insert_connectors_for_overflow(
     synthetic Connector at the position of the first removed item.
     counter is passed to _make_syn_connector to produce unique IDs.
     """
-    groups: Dict[int, Tuple["Node", List["Node"]]] = {}
+    groups: Dict[int, Tuple[Node, List[Node]]] = {}
     for src, parent in overflow:
         pid = id(parent)
         if pid not in groups:

@@ -8,6 +8,16 @@ Verocase is a command-line tool for creating and maintaining assurance cases, th
 
 ## Commands
 
+**Run all checks (lint + tests):**
+```bash
+make check
+```
+
+**Run linter only:**
+```bash
+ruff check verocase.py
+```
+
 **Run tests:**
 ```bash
 python3 -m unittest tests.run_tests -v   # verbose

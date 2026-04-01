@@ -1,11 +1,14 @@
 # verocase: Simple Makefile to simplify checking
 
-.PHONY: check test lint
+.PHONY: verify test lint typecheck
 
-check: lint test
+verify: lint typecheck test
 
 lint:
 	ruff check verocase.py
+
+typecheck:
+	pyright verocase.py
 
 test:
 	python3 -m unittest tests.run_tests

@@ -4625,7 +4625,9 @@ def _write_bottom_padding(leaves, write_edge, bt_direction: bool) -> None:
                 write_edge(f"    {did} ~~~~ {bp}")
 
 
-def _sacm_diagram_body(roots: List["Node"], config: dict, out: TextIO) -> None:
+def _sacm_diagram_body(
+    roots: List["Node"], config: dict, out: TextIO
+) -> None:
     """Write the SACM diagram content without opening/closing fence markers."""
     base_url = config["base_url"]
     pkg_label = config["pkg_label"]
@@ -4714,7 +4716,7 @@ def render_sacm(roots: List["Node"], config: dict, out: TextIO) -> bool:
 
 
 def render_sacm_html(
-    roots: Iterable["Node"],
+    roots: List["Node"],
     config: dict,
     out: TextIO,
     state: Optional["DocState"] = None,
@@ -4916,7 +4918,9 @@ def _gsn_collect_edges(node, write_edge, leaf_nodes):
         leaf_nodes.append(node)
 
 
-def _gsn_diagram_body(roots: List["Node"], config: dict, out: TextIO) -> None:
+def _gsn_diagram_body(
+    roots: List["Node"], config: dict, out: TextIO
+) -> None:
     """Write the GSN diagram content without opening/closing fence markers."""
     base_url = config["base_url"]
     pkg_label = config["pkg_label"]
@@ -4983,7 +4987,7 @@ def render_gsn(roots: List["Node"], config: dict, out: TextIO) -> bool:
 
 
 def render_gsn_html(
-    roots: Iterable["Node"],
+    roots: List["Node"],
     config: dict,
     out: TextIO,
     state: Optional["DocState"] = None,
@@ -5207,7 +5211,9 @@ def _cae_collect_edges(node: "Node", write_edge) -> None:
             )
 
 
-def _cae_diagram_body(roots: List["Node"], config: dict, out: TextIO) -> None:
+def _cae_diagram_body(
+    roots: List["Node"], config: dict, out: TextIO
+) -> None:
     """Write the CAE diagram content without opening/closing fence markers."""
     base_url = config["base_url"]
     pkg_label = config["pkg_label"]
@@ -5292,7 +5298,7 @@ def render_cae(roots: List["Node"], config: dict, out: TextIO) -> bool:
 
 
 def render_cae_html(
-    roots: Iterable["Node"],
+    roots: List["Node"],
     config: dict,
     out: TextIO,
     state: Optional["DocState"] = None,

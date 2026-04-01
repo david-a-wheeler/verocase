@@ -54,6 +54,63 @@ def get_indent(line: str) -> str:
     return re.match(r"^(\s*)", line).group(1)
 
 
+def fmt_docstring_open(line: str, max_len: int) -> list:
+    """Wrap a long docstring opening line (starts with triple-quote)."""
+    m = re.match(r'^(\s*)("""|\'\'\')\s*(.*)', line.rstrip())
+    if not m:
+        return [line]
+    indent, quotes, text = m.groups()
+    if not text.strip() or " " not in text.strip():
+        return [line]
+    # Wrap at width that accounts for the quote prefix on line 1
+    first_width = max_len - len(indent) - len(quotes)
+    if first_width < 10:
+        return [line]
+    result = subprocess.run(
+        ["fmt", f"-w{first_width}"],
+        input=text.strip() + "\n",
+        capture_output=True,
+        text=True,
+    )
+    wrapped = result.stdout.rstrip().splitlines()
+    if not wrapped:
+        return [line]
+    out = [indent + quotes + wrapped[0] + "\n"]
+    for w in wrapped[1:]:
+        out.append(indent + w + "\n")
+    if any(len(l.rstrip()) > max_len for l in out):
+        return [line]
+    return out
+
+
+def fmt_docstring_oneliner(line: str, max_len: int) -> list:
+    """Convert an overlong one-liner docstring to multi-line."""
+    m = re.match(r'^(\s*)("""|\'\'\')\s*(.*?)\s*("""|\'\'\')\s*$', line.rstrip())
+    if not m:
+        return [line]
+    indent, open_q, text, close_q = m.groups()
+    if not text.strip() or " " not in text.strip():
+        return [line]
+    width = max_len - len(indent)
+    result = subprocess.run(
+        ["fmt", f"-w{width}"],
+        input=text.strip() + "\n",
+        capture_output=True,
+        text=True,
+    )
+    wrapped = result.stdout.rstrip().splitlines()
+    if not wrapped:
+        return [line]
+    out = [indent + open_q + wrapped[0] + "\n"]
+    for w in wrapped[1:]:
+        out.append(indent + w + "\n")
+    out.append(indent + close_q + "\n")
+    if any(len(l.rstrip()) > max_len for l in out):
+        return [line]
+    return out
+
+
+
 def fmt_comment_block(lines: list, max_len: int) -> list:
     """Reflow a block of # comment lines using fmt."""
     if not any(len(l.rstrip()) > max_len for l in lines):
@@ -166,6 +223,23 @@ def process(infile: str, outfile: str) -> None:
                 out.extend(block)
             i = j
             continue
+
+        # --- Docstring opening line ("""text...) ---
+        if (
+            lineno in docstring_lines
+            and len(line.rstrip()) > MAX_LEN
+            and (stripped.startswith('"""') or stripped.startswith("'''"))
+        ):
+            q = '"""' if stripped.startswith('"""') else "'''"
+            # One-liner: starts AND ends with quotes
+            if stripped.endswith(q) and len(stripped) > 6:
+                wrapped = fmt_docstring_oneliner(line, MAX_LEN)
+            else:
+                wrapped = fmt_docstring_open(line, MAX_LEN)
+            if wrapped != [line]:
+                out.extend(wrapped)
+                i += 1
+                continue
 
         # --- Docstring prose paragraph ---
         if lineno in docstring_lines and is_prose_line(line):

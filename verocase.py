@@ -186,7 +186,8 @@ _MERMAID_ID_SYNTAX_RE = re.compile(r"[()\[\]{}<>]")
 
 
 def _sanitize_mermaid_id(identifier: str) -> str:
-    """Return a Mermaid-safe base ID for *identifier*, with no uniqueness suffix.
+    """Return a Mermaid-safe base ID for *identifier*, with no uniqueness
+    suffix.
 
     Spaces become underscores; Mermaid syntax characters are deleted; a
     digit-leading result is prefixed with '_'; the reserved word 'end' gains a
@@ -277,7 +278,8 @@ def escape_html(text: str) -> str:
 
 
 def escape_html_content(text: str) -> str:
-    """Escape text for use as HTML element content, preserving & for HTML entities.
+    """Escape text for use as HTML element content, preserving & for HTML
+    entities.
 
     Only escapes < and >.  Ampersands are deliberately left alone so that
     HTML entities written in the LTAC source (e.g. &alpha;, &le;) survive
@@ -651,7 +653,8 @@ class Node:
 
     @property
     def is_incontextof(self) -> bool:
-        """True if this node attaches via InContextOf (--o), not SupportedBy (-->).
+        """True if this node attaches via InContextOf (--o), not SupportedBy
+        (-->).
 
         Determined solely by node type (Context, Assumption, Justification);
         assertion-status options like 'assumed' or 'axiomatic' are orthogonal
@@ -806,7 +809,9 @@ class Case:
 
     def warn(self, msg: str) -> None:
         """Print a warning; if strict mode is on, escalate to error().
-        If reporting is suppressed, the message is collected instead of printed."""
+
+        If reporting is suppressed, the message is collected instead of
+        printed."""
         if self.strict:
             self.error(msg)
         elif self._suppress_reporting:
@@ -982,7 +987,8 @@ class Case:
             self.panic(f"invalid TOML in config file {config_path!r}: {e}")
         if not isinstance(parsed, dict):
             self.panic(
-                f"config file must contain a TOML table, not {type(parsed).__name__}"
+                f"config file must contain a TOML table, not "
+                f"{type(parsed).__name__}"
             )
         for key in parsed:
             if key not in DEFAULT_CONFIG:
@@ -992,7 +998,8 @@ class Case:
         mb = cfg.get("max_backups")
         if not isinstance(mb, int) or mb < 0:
             self.warn(
-                f"invalid value for max_backups: {mb!r}; using default {DEFAULT_CONFIG['max_backups']}"
+                f"invalid value for max_backups: {mb!r}; using default "
+                f"{DEFAULT_CONFIG['max_backups']}"
             )
             cfg["max_backups"] = DEFAULT_CONFIG["max_backups"]
         return cfg
@@ -1013,7 +1020,8 @@ class Case:
         if os.path.exists("docs/case.ltac"):
             return "docs/case.ltac"
         self.panic(
-            "no LTAC file found; use --ltac, set ltac_file in config, or create case.ltac. See --help"
+            "no LTAC file found; use --ltac, set ltac_file in config, "
+            "or create case.ltac. See --help"
         )
 
     def _find_document_files(
@@ -1168,7 +1176,8 @@ class Case:
         return list(self.roots)
 
     def _mark_needs_support(self, candidate_ids: List[str]) -> int:
-        """Add 'needssupport' option to leaf elements with no existing assertion status.
+        """Add 'needssupport' option to leaf elements with no existing
+        assertion status.
 
         Only modifies defined nodes that are leaves (no non-Link children),
         have no existing assertion status, and have no ext_ref (a non-empty
@@ -1194,7 +1203,8 @@ class Case:
             count += 1
         if count:
             self.notify(
-                f"Adding {count} needsSupport marking(s) to leaves in the LTAC file"
+                f"Adding {count} needsSupport marking(s) to leaves in the "
+                f"LTAC file"
             )
         return count
 
@@ -1512,7 +1522,8 @@ class Case:
                     else root.node_type
                 )
                 self.error(
-                    f"{label}: package root is unreachable from {self.roots[0].node_type}"
+                    f"{label}: package root is unreachable from "
+                    f"{self.roots[0].node_type}"
                     f" {self.roots[0].identifier}"
                 )
 
@@ -1577,11 +1588,11 @@ class Case:
         >>> import io
         >>> case = Case()
         >>> _LTACParser(case).parse(['- Claim C1: The software is safe',
-        ...                         '  - Evidence E1: Test results (tests.pdf)'])
+        ...     '  - Evidence E1: Test results'])
         >>> buf = io.StringIO()
         >>> case.write_ltac(buf)
         >>> buf.getvalue()
-        '- Claim C1: The software is safe\\n  - Evidence E1: Test results (tests.pdf)\\n'
+        '- Claim C1: The software is safe\\n  - Evidence E1: Test results\\n'
         """
         for i, root in enumerate(self.roots):
             root.write_ltac_subtree(out)
@@ -1600,7 +1611,8 @@ class Case:
     ) -> Optional[str]:
         """Write content to a temp file in the same directory as path.
 
-        If line_ending is '\\r\\n', converts all '\\n' to '\\r\\n' before writing.
+        If line_ending is '\\r\\n', converts all '\\n' to '\\r\\n'
+        before writing.
         Returns the temp file path, or None if writing failed (error already
         reported).
         """
@@ -1821,7 +1833,8 @@ class Case:
             for ident in self.all_definitions_for:
                 if ident not in self.element_doc_info:
                     self.warn(
-                        f"element {ident!r} has no 'element' selector in any processed file"
+                        f"element {ident!r} has no 'element' selector in "
+                        f"any processed file"
                     )
 
         # Important leaves with no prose.
@@ -1831,7 +1844,8 @@ class Case:
                 node = self.definition_for(ident)
                 if node and not node.ext_ref:
                     self.warn(
-                        f"element {ident!r} ({node.node_type}) has no prose in its document region"
+                        f"element {ident!r} ({node.node_type}) has no prose "
+                        f"in its document region"
                     )
 
         # Misplaced elements.
@@ -1853,7 +1867,8 @@ class Case:
                 for i, (ident, filepath, lineno) in enumerate(doc_entries):
                     if i not in lis_idx:
                         self.warn(
-                            f"{filepath}:{lineno}: element {ident!r} is out of LTAC order"
+                            f"{filepath}:{lineno}: element {ident!r} is out "
+                            f"of LTAC order"
                         )
 
     def scan_documents(self) -> bool:
@@ -2397,7 +2412,8 @@ class Case:
         return [node for node in all_ids_ordered if node.identifier not in seen]
 
     def empty(self) -> List[str]:
-        """Return identifiers of elements whose selector region contains no prose.
+        """Return identifiers of elements whose selector region contains
+        no prose.
 
         Runs scan_documents() if no document pass has been done yet.
         """
@@ -2413,7 +2429,8 @@ class Case:
         ]
 
     def orphans(self) -> List[str]:
-        """Return identifiers of document selector regions not present in the LTAC.
+        """Return identifiers of document selector regions not present in
+        the LTAC.
 
         Runs scan_documents() if no document pass has been done yet.
         """
@@ -2567,7 +2584,8 @@ class Case:
 
         desc_count = node.subtree_count
         out.write(
-            f"\nDescendants: {desc_count} (including self, all descendants, citations, and links in subtree)"
+            f"\nDescendants: {desc_count} (including self, all descendants, "
+            f"citations, and links in subtree)"
         )
 
         citation_nodes = self.citations.get(element_id, [])
@@ -2589,12 +2607,16 @@ class Case:
                     if n.is_citation and n.identifier == element_id:
                         parent_node = n.parent
                         if parent_node:
-                            parent_desc = f"{parent_node.node_type} {parent_node.identifier}"
+                            parent_desc = (
+                                f"{parent_node.node_type} "
+                                f"{parent_node.identifier}"
+                            )
                             cp_name = (
                                 parent_node.pkg_root.identifier or "(unnamed)"
                             )
                             out.write(
-                                f"\n  Cited as ^{element_id} by: {parent_desc} (Package {cp_name})"
+                                f"\n  Cited as ^{element_id} by: "
+                                f"{parent_desc} (Package {cp_name})"
                             )
                         else:
                             out.write(
@@ -2650,7 +2672,8 @@ class Case:
             self.panic(f"--detach: {target_id!r} is not defined")
         if node.parent is None:
             self.panic(
-                f"--detach: {target_id!r} is a top-level package root; cannot detach"
+                f"--detach: {target_id!r} is a top-level package root; "
+                f"cannot detach"
             )
 
         parent = node.parent
@@ -2768,7 +2791,8 @@ class Case:
 
         if display_type == "config":
             self.error(
-                "use '<!-- verocase-config KEY = VALUE -->' (not '<!-- verocase config ...-->')"
+                "use '<!-- verocase-config KEY = VALUE -->' "
+                "(not '<!-- verocase config ...-->')"
             )
             return False
         elif display_type == "warning":
@@ -2782,8 +2806,8 @@ class Case:
                 self.error("'stop' selector takes no parameters")
                 return False
             out.write(
-                "<!-- Content from here is not part of any element's full content "
-                "and will not be repositioned by --fixmisplaced. -->"
+                "<!-- Content from here is not part of any element's full "
+                "content and will not be repositioned by --fixmisplaced. -->"
             )
             return True
         elif display_type == "epilogue":
@@ -2791,8 +2815,10 @@ class Case:
                 self.error("'epilogue' selector takes no parameters")
                 return False
             out.write(
-                "<!-- Content from here is epilogue: not part of any element's full content, "
-                "will not be repositioned by --fixmisplaced, and new element stubs "
+                "<!-- Content from here is epilogue: not part of any "
+                "element's full content, "
+                "will not be repositioned by --fixmisplaced, and new element "
+                "stubs "
                 "from --fixmissing are inserted before this point. -->"
             )
             return True
@@ -3126,8 +3152,10 @@ class Case:
 
                 if sel_kind == "element" and _doc_state.after_epilogue:
                     self.error(
-                        f"'element' selector found after 'epilogue' in {filename}:{lineno}; "
-                        "element selectors must not appear after an epilogue marker"
+                        f"'element' selector found after 'epilogue' in "
+                        f"{filename}:{lineno}; "
+                        "element selectors must not appear after an epilogue "
+                        "marker"
                     )
                 if sel_kind == "epilogue":
                     _doc_state.after_epilogue = True
@@ -3190,7 +3218,8 @@ class Case:
                     is_orphan = _is_orphan
                     if is_orphan:
                         self.error(
-                            f"element {ident!r} in document but not declared in LTAC"
+                            f"element {ident!r} in document"
+                            f" but not declared in LTAC"
                         )
                     self.element_doc_order.append((ident, filename, lineno))
                     if found_end:
@@ -3269,7 +3298,8 @@ class Case:
         for path in _START_CANDIDATES:
             if os.path.exists(path):
                 self.panic(
-                    f"--start: {path!r} already exists; remove it before using --start"
+                    f"--start: {path!r} already exists;"
+                    f" remove it before using --start"
                 )
 
     def _write_start_stubs(self) -> None:
@@ -3335,7 +3365,8 @@ _LTAC_LINE_RE = re.compile(
 
 
 def _is_dubious_reference(ref: str) -> bool:
-    """Return True if ref is non-empty, has no '.' anywhere, and doesn't start with '#'.
+    """Return True if ref is non-empty, has no '.' anywhere, and doesn't
+    start with '#'.
 
     Such references are likely to be parenthetical comments accidentally parsed
     as references rather than genuine file paths or URLs.
@@ -3459,7 +3490,8 @@ class _LTACParser:
 
         if is_citation and not identifier:
             self._case.error(
-                f"line {lineno}: citation requires an identifier (e.g. '- {nodetype} ^ID:')"
+                f"line {lineno}: citation requires an identifier"
+                f" (e.g. '- {nodetype} ^ID:')"
             )
         elif (
             not is_citation
@@ -3467,7 +3499,8 @@ class _LTACParser:
             and not has_colon
         ):
             self._case.error(
-                f"line {lineno}: element requires ':' after the identifier (e.g. '- {nodetype} ID: text')"
+                f"line {lineno}: element requires ':' after the identifier"
+                f" (e.g. '- {nodetype} ID: text')"
             )
         elif (
             not is_citation
@@ -3476,8 +3509,8 @@ class _LTACParser:
             and not text
         ):
             self._case.error(
-                f"line {lineno}: {nodetype} element has no identifier and no statement;"
-                f" cannot contribute to the argument"
+                f"line {lineno}: {nodetype} element has no identifier"
+                f" and no statement; cannot contribute to the argument"
             )
 
         id_inferred = False
@@ -3518,7 +3551,8 @@ class _LTACParser:
             label = identifier or f"(unnamed {nodetype})"
             self._case.error(
                 f"line {lineno}: {label}: conflicting assertion status:"
-                f" {', '.join(sorted(active))} (mutually exclusive per SACM spec section 11)"
+                f" {', '.join(sorted(active))}"
+                f" (mutually exclusive per SACM spec section 11)"
             )
 
         # Dubious reference: warn if the reference looks like a parenthetical
@@ -3535,7 +3569,9 @@ class _LTACParser:
         return node
 
     def _attach_node(self, node: Node, lineno: int) -> None:
-        """Register the node's identifier, attach it to the tree, and push it onto the stack."""
+        """Register the node's identifier, attach it to the tree, and push it
+        onto the stack.
+        """
         if node.node_type == "Link":
             target_id = node.identifier
             if node.is_citation:
@@ -3657,8 +3693,9 @@ class _LTACParser:
                                 and link_node.text != node.text
                             ):
                                 self._case.warn(
-                                    f"line {link_node.lineno}: Link ^{ident!r}:"
-                                    f" statement {link_node.text!r} differs from"
+                                    f"line {link_node.lineno}:"
+                                    f" Link ^{ident!r}: statement"
+                                    f" {link_node.text!r} differs from"
                                     f" citation; use --sync to sync"
                                 )
                             self.links.setdefault(ident, []).append(link_node)
@@ -3703,8 +3740,10 @@ class _LTACParser:
             parent_depth = self._stack[-1][0]
             if node.depth > parent_depth + 1:
                 self._case.error(
-                    f"line {lineno}: indentation jumps from depth {parent_depth}"
-                    f" to depth {node.depth} (increase must be exactly 2 spaces / 1 level)"
+                    f"line {lineno}: indentation jumps"
+                    f" from depth {parent_depth}"
+                    f" to depth {node.depth}"
+                    f" (increase must be exactly 2 spaces / 1 level)"
                 )
         elif node.depth > 0:
             self._case.error(
@@ -3763,7 +3802,8 @@ class _LTACParser:
                 "Justification",
             ):
                 self._case.warn(
-                    f"line {lineno}: external citation ^{node.identifier!r} has type"
+                    f"line {lineno}: external citation"
+                    f" ^{node.identifier!r} has type"
                     f" {node.node_type!r}; only Claim and Justification are"
                     f" recommended for cross-package citations"
                 )
@@ -3781,7 +3821,8 @@ class _LTACParser:
         self._stack.append((node.depth, node))
 
     def _finalize_package(self) -> None:
-        """Flush the current package's root into results and reset package state."""
+        """Flush the current package's root into results and reset package
+        state."""
         self.results.extend(self._current_pkg)
         self._current_pkg = []
         self._stack = []
@@ -3915,7 +3956,8 @@ def _render_markdown_node(
 
 
 def render_markdown(roots: List[Node], config: dict, out: TextIO) -> bool:
-    """Write a list of nodes as an indented markdown bullet list with hyperlinks.
+    """Write a list of nodes as an indented markdown bullet list with
+    hyperlinks.
 
     Each item is '- NodeType ID: text' where the label is a hyperlink to
     the element's document anchor when base_url is set.  If an ext_ref is
@@ -4255,7 +4297,8 @@ _HAIR_SPACE = "\u200a"
 
 
 def _sacm_assertion_suffix(node_type: str, options: List[str]) -> str:
-    """Return the mermaid assertion-state suffix for the given node type and options.
+    """Return the mermaid assertion-state suffix for the given node type
+    and options.
 
     Valid nodes carry at most one assertion status (enforced by
     check_assertion_status).  The order below is a rendering fallback only.
@@ -4645,7 +4688,8 @@ def render_sacm_html(
 
 
 def _gsn_assertion_suffix(node_type: str, options: List[str]) -> str:
-    """Return the GSN mermaid assertion-state suffix for the given node type and options.
+    """Return the GSN mermaid assertion-state suffix for the given node type
+    and options.
 
     >>> _gsn_assertion_suffix('Claim', {'defeated'})
     '<br>✗'
@@ -4677,7 +4721,8 @@ def _gsn_assertion_suffix(node_type: str, options: List[str]) -> str:
 
 
 def _gsn_node_decl(node: "Node") -> str:
-    """Return the mermaid node-declaration line for a single LTAC node (GSN style).
+    """Return the mermaid node-declaration line for a single LTAC node
+    (GSN style).
 
     Returns '' for Relation and Link nodes.
     diagram_id must already be set on the node.
@@ -4748,7 +4793,8 @@ flowchart TD
 
 
 def _gsn_collect_edges(node, write_edge, leaf_nodes):
-    """Write GSN edges for *node* and its subtree (DFS pre-order) via write_edge.
+    """Write GSN edges for *node* and its subtree (DFS pre-order) via
+    write_edge.
 
     Nodes with no outgoing edges are appended to leaf_nodes.
     """
@@ -4906,32 +4952,34 @@ def render_gsn_html(
 # CAE/mermaid renderer
 # ---------------------------------------------------------------------------
 
-_CAE_BODY_HEADER = """\
----
-config:
-  theme: neutral
-  flowchart:
-    curve: linear
-    htmlLabels: true
-    rankSpacing: 60
-    nodeSpacing: 45
-    padding: 15
----
-flowchart BT
-    classDef invisible        opacity:0
-    classDef connector        fill:none,stroke:#cccccc,stroke-width:1px
-    classDef caeClaimClass    fill:#dce8f8,stroke:#2874a6,stroke-width:2px,color:#000
-    classDef caeArgClass      fill:#fdebd0,stroke:#d35400,stroke-width:3px,color:#000
-    classDef caeEvidClass     fill:#d5f5e3,stroke:#1e8449,stroke-width:2px,color:#000
-    classDef caeInfoClass     fill:#f0f0f0,stroke:#999999,stroke-width:1px,stroke-dasharray:4 3,color:#000
-    classDef caeAssumedClass  fill:#e8daef,stroke:#76448a,stroke-width:2px,stroke-dasharray:4 3,color:#000
-    classDef caeSideClass     fill:#d6eaf8,stroke:#1a5276,stroke-width:2px,color:#000
-    classDef caeDefeaterClass fill:#fadbd8,stroke:#c0392b,stroke-width:4px,color:#000
-    classDef abstractClaim    stroke-width:2px,stroke-dasharray:5 5"""
+_CAE_BODY_HEADER = (
+    "---\n"
+    "config:\n"
+    "  theme: neutral\n"
+    "  flowchart:\n"
+    "    curve: linear\n"
+    "    htmlLabels: true\n"
+    "    rankSpacing: 60\n"
+    "    nodeSpacing: 45\n"
+    "    padding: 15\n"
+    "---\n"
+    "flowchart BT\n"
+    "    classDef invisible        opacity:0\n"
+    "    classDef connector        fill:none,stroke:#cccccc,stroke-width:1px\n"
+    "    classDef caeClaimClass    fill:#dce8f8,stroke:#2874a6,stroke-width:2px,color:#000\n"  # noqa: E501
+    "    classDef caeArgClass      fill:#fdebd0,stroke:#d35400,stroke-width:3px,color:#000\n"  # noqa: E501
+    "    classDef caeEvidClass     fill:#d5f5e3,stroke:#1e8449,stroke-width:2px,color:#000\n"  # noqa: E501
+    "    classDef caeInfoClass     fill:#f0f0f0,stroke:#999999,stroke-width:1px,stroke-dasharray:4 3,color:#000\n"  # noqa: E501
+    "    classDef caeAssumedClass  fill:#e8daef,stroke:#76448a,stroke-width:2px,stroke-dasharray:4 3,color:#000\n"  # noqa: E501
+    "    classDef caeSideClass     fill:#d6eaf8,stroke:#1a5276,stroke-width:2px,color:#000\n"  # noqa: E501
+    "    classDef caeDefeaterClass fill:#fadbd8,stroke:#c0392b,stroke-width:4px,color:#000\n"  # noqa: E501
+    "    classDef abstractClaim    stroke-width:2px,stroke-dasharray:5 5"
+)
 
 
 def _cae_assertion_suffix(node_type: str, options) -> str:
-    """Return the CAE mermaid assertion-state suffix for the given node type and options.
+    """Return the CAE mermaid assertion-state suffix for the given node type
+    and options.
 
     >>> _cae_assertion_suffix('Claim', {'defeated'})
     '<br>DEFEATED'
@@ -4951,7 +4999,8 @@ def _cae_assertion_suffix(node_type: str, options) -> str:
 
 
 def _cae_node_decl(node: "Node") -> str:
-    """Return the mermaid node-declaration line for a single LTAC node (CAE style).
+    """Return the mermaid node-declaration line for a single LTAC node
+    (CAE style).
 
     Returns '' for Relation and Link nodes.
     diagram_id must already be set on the node.
@@ -5022,7 +5071,8 @@ def _cae_node_decl(node: "Node") -> str:
 
 
 def _cae_collect_edges(node: "Node", write_edge) -> None:
-    """Write CAE edges for *node* and its subtree (DFS post-order) via write_edge.
+    """Write CAE edges for *node* and its subtree (DFS post-order) via
+    write_edge.
 
     Edges are written in DFS post-order (deepest leaves first), matching the
     BT (bottom-to-top) flowchart direction: each edge goes child --> parent.
@@ -5245,7 +5295,7 @@ _VALID_DISPLAY_TYPES = {
     "warning",
     "stop",
     "epilogue",
-    "config",  # recognized to give a helpful error directing users to verocase-config
+    "config",  # recognized to give a helpful error (see verocase-config)
     "referenced_by",
     "supported_by",
     "supports",
@@ -5307,7 +5357,8 @@ def _render_or_all(
     config: dict,
     out: TextIO,
 ) -> bool:
-    """Resolve element_id and render to out, or render all packages if element_id is '*'."""
+    """Resolve element_id and render to out, or render all packages if
+    element_id is '*'."""
     if element_id == "*":
         return render_all_packages(case.roots, render_fn, config, out)
     nodes = case.nodes_for(element_id, current_element)
@@ -5350,7 +5401,9 @@ def _linked_list(pairs: List[tuple], fmt: str, bold_first: bool = True) -> str:
 def render_referenced_by(
     node: Node, case: "Case", config: dict, fmt: str, out: TextIO, sep: str = ""
 ) -> bool:
-    """Write 'Referenced by: ...' line to out; return False if no packages to list."""
+    """Write 'Referenced by: ...' line to out; return False if no packages
+    to list.
+    """
     ident = node.identifier
     pkg_ids = []
     defs = case.all_definitions_for.get(ident, [])
@@ -5639,7 +5692,8 @@ def _apply_sel(
     out: TextIO,
     pending_sep: str = "",
 ) -> bool:
-    """Apply sub-selections from a comma-separated string, writing each separated by blank lines.
+    """Apply sub-selections from a comma-separated string, writing each
+    separated by blank lines.
 
     Each entry in render_map must accept (primary, case, config, fmt, out, sep).
     Returns True if anything was written.
@@ -5671,7 +5725,11 @@ def _make_heading(anchor: str, level: int, heading_text: str, fmt: str) -> str:
             [f'<a id="{anchor}"></a>', "#" * level + " " + heading_text]
         )
     else:
-        return f'<h{level} id="{anchor}">{escape_html_content(heading_text)}</h{level}>'
+        return (
+            f'<h{level} id="{anchor}">'
+            f"{escape_html_content(heading_text)}"
+            f"</h{level}>"
+        )
 
 
 def _render_single_package(
@@ -5707,7 +5765,8 @@ def _render_single_package(
 
 
 _WARNING_TEXT = (
-    "<!-- WARNING: DO NOT EDIT text within verocase SELECTOR ... end verocase. -->\n"
+    "<!-- WARNING: DO NOT EDIT text within verocase"
+    " SELECTOR ... end verocase. -->\n"
     "<!-- Those regions are regenerated. -->"
 )
 
@@ -5741,7 +5800,7 @@ class ElementDocInfo:
     end_lineno: (
         int  # 1-based last line of full region (incl. trailing prose gap)
     )
-    has_prose: bool  # True if region has non-generated content after <!-- end verocase -->
+    has_prose: bool  # True if region has content after <!-- end verocase -->
     is_orphan: bool  # True if present in doc but not in LTAC
 
 
@@ -5762,7 +5821,8 @@ class DocPassStats:
 
 @dataclass
 class DocState:
-    """Mutable rendering state threaded through a single document processing pass.
+    """Mutable rendering state threaded through a single document processing
+    pass.
 
     Create a fresh instance for each independent rendering pass.  When calling
     case.render_selector() outside of process_document(), a default
@@ -5866,20 +5926,24 @@ def apply_config_directive(
     """Apply a verocase-config directive, warning on invalid key or value."""
     if key not in DEFAULT_CONFIG:
         print(
-            f"verocase: warning: {filename}:{lineno}: verocase-config: unknown key {key!r}",
+            f"verocase: warning: {filename}:{lineno}:"
+            f" verocase-config: unknown key {key!r}",
             file=sys.stderr,
         )
         return
     pattern = _ALLOWED_CONFIG_VALUES.get(key)
     if pattern is None:
         print(
-            f"verocase: warning: {filename}:{lineno}: verocase-config: key {key!r} is not dynamically settable",
+            f"verocase: warning: {filename}:{lineno}:"
+            f" verocase-config: key {key!r}"
+            f" is not dynamically settable",
             file=sys.stderr,
         )
         return
     elif not pattern.match(value):
         print(
-            f"verocase: warning: {filename}:{lineno}: verocase-config: invalid value {value!r} for {key!r}",
+            f"verocase: warning: {filename}:{lineno}:"
+            f" verocase-config: invalid value {value!r} for {key!r}",
             file=sys.stderr,
         )
         return
@@ -5905,7 +5969,8 @@ def _consume_region(
     selector: str,
     case: "Case" = None,
 ) -> bool:
-    """Consume lines from line_iter until '<!-- end verocase -->', return True if found.
+    """Consume lines from line_iter until '<!-- end verocase -->', return
+    True if found.
 
     If EOF is reached before finding the end marker, calls error() and
     returns False. Panics immediately if a nested directive is found before
@@ -5930,7 +5995,10 @@ def _consume_region(
                     case.panic(msg)
                 else:
                     _panic(msg)
-    msg = f"{filename}:{start_lineno}: unclosed '<!-- verocase {selector} -->' region"
+    msg = (
+        f"{filename}:{start_lineno}: unclosed"
+        f" '<!-- verocase {selector} -->' region"
+    )
     if case is not None:
         case.error(msg)
     else:
@@ -5951,7 +6019,7 @@ _START_LTAC = """\
     - Claim ^Verification
 
 - Claim Requirements: Security requirements are identified and met
-  - Strategy SecTriad: Security triad (CIA) and access control address the requirements
+  - Strategy SecTriad: Security triad (CIA) and access control
     - Claim Confidentiality: Confidentiality is maintained
     - Claim Integrity: Integrity is maintained
     - Claim Availability: Availability is maintained
@@ -6108,24 +6176,40 @@ Additional checks when document files are processed:
 
 _HELP_CONFIGURATION = (
     """\
-Configuration keys (--config FILE, TOML file; auto-discovered as verocase.toml or case.toml):
-  document_files     list of document file paths to process (default: auto-discover)
-  ltac_file          LTAC file path (alternative to --ltac; default: auto-discover)
-  max_backups        number of timestamped backup snapshots to keep (default: 20)
-  base_url           base URL for hyperlinks in sacm/gsn mermaid output (default: "")
-  bottom_padding     add invisible BottomPadding node in mermaid diagrams (default: true)
-  markdown_base_url  base URL for hyperlinks in ltac/markdown and ltac/html output (default: "")
+Configuration keys (--config FILE, TOML file;
+  auto-discovered as verocase.toml or case.toml):
+  document_files     list of document file paths to process
+                       (default: auto-discover)
+  ltac_file          LTAC file path (alternative to --ltac;
+                       default: auto-discover)
+  max_backups        number of timestamped backup snapshots to keep
+                       (default: 20)
+  base_url           base URL for hyperlinks in sacm/gsn mermaid output
+                       (default: "")
+  bottom_padding     add invisible BottomPadding node in mermaid diagrams
+                       (default: true)
+  markdown_base_url  base URL for hyperlinks in ltac/markdown and
+                       ltac/html output (default: "")
   default_renderer   renderer for 'sacm'/'gsn' shorthands: "mermaid" (default)
-  default_representation  content for 'package' selector: "sacm" (default), "gsn", "cae", or "ltac"
+  default_representation  content for 'package' selector: "sacm" (default),
+                       "gsn", "cae", or "ltac"
   element_level      heading level (1-6) for 'element' selector (default: 3)
-  element_selections comma-separated list for element sub-sections (default: referenced_by,supported_by,supports,ext_ref)
-  max_mermaid_children      max visual children before width narrowing (default: 8; 0 disables)
-  mermaid_js_url     URL for Mermaid JS script in HTML output (default: CDN URL; "" disables)
-  narrowed_mermaid_children children kept (left+right) when narrowing (default: 6; must be >=2 and <max)
+  element_selections comma-separated list for element sub-sections
+                       (default: referenced_by,supported_by,supports,ext_ref)
+  max_mermaid_children  max visual children before width narrowing
+                       (default: 8; 0 disables)
+  mermaid_js_url     URL for Mermaid JS script in HTML output
+                       (default: CDN URL; "" disables)
+  narrowed_mermaid_children  children kept (left+right) when narrowing
+                       (default: 6; must be >=2 and <max)
   package_level      heading level (1-6) for 'package' selector (default: 3)
-  package_selections comma-separated list for package sub-sections (default: representation,pkg_defines,pkg_citing,pkg_cited)
-  pkg_label          word used to identify packages in output (default: "Package ")
-  warn_dubious_reference  warn when a reference looks like a parenthetical comment (default: true)
+  package_selections comma-separated list for package sub-sections
+                       (default: representation,pkg_defines,
+                       pkg_citing,pkg_cited)
+  pkg_label          word used to identify packages in output
+                       (default: "Package ")
+  warn_dubious_reference  warn when a reference looks like a parenthetical
+                       comment (default: true)
 
 Configuration values that can be changed by verocase-config are:
 """
@@ -6238,9 +6322,11 @@ Here are more examples of these types and their methods/properties:
     case.save_ltac_if_modified()   write LTAC iff ltac_modified is True
     case.reset_cache()             rebuild derived maps after direct tree edits
     # Document processing orchestrators
-    case.scan_documents()          scan doc files; populate element_doc_info; report orphans/missing (no writes)
+    case.scan_documents()          scan doc files; populate element_doc_info;
+                                     report orphans/missing (no writes)
     case.stdout_documents(strip=False)  render to stdout
-    case.update_documents(add_missing, strip, renames)  rewrite doc files in place
+    case.update_documents(add_missing, strip, renames)
+                                     rewrite doc files in place
     case.fixmissing() -> bool
     case.fix_misplaced_documents() -> bool
     case.update_files(add_missing=False, strip=False) -> bool
@@ -6254,7 +6340,8 @@ Here are more examples of these types and their methods/properties:
     case.important_leaves: Set[str]    (populated after LTAC load)
     # Error handling
     case.clear_errors()             reset had_error and suppressed messages
-    case.suppressed_reporting()     context manager: suppress stderr, had_error still set
+    case.suppressed_reporting()     context manager: suppress stderr,
+                                       had_error still set
   @dataclass Node       one node in the LTAC tree. Some operations:
     node.identifier     str: declared identifier, or '' if absent
     node.is_citation    True if introduced with ^ (cross-package citation)
@@ -6278,7 +6365,8 @@ import verocase; help(verocase) will also display those same docstrings.
 
 
 class _NullWriter:
-    """Write sink that discards all output; equivalent to /dev/null for streams."""
+    """Write sink that discards all output; equivalent to /dev/null for streams.
+    """
 
     def write(self, s):
         pass
@@ -6291,7 +6379,8 @@ class _NullWriter:
 
 
 class _HelpTopicAction(argparse.Action):
-    """Custom action for --help-validations / --help-config: record that the flag was given.
+    """Custom action for --help-validations / --help-config: record that the
+    flag was given.
 
     All requested help sections are collected during parsing and printed
     together at the end of parse_args() before exiting, so multiple --help*
@@ -6308,7 +6397,8 @@ class _HelpTopicAction(argparse.Action):
 
 
 class _MutationAction(argparse.Action):
-    """Accumulate --rename/--restate/--detach/--move operations as ordered tuples.
+    """Accumulate --rename/--restate/--detach/--move operations as ordered
+    tuples.
 
     All four options share a single ordered queue (dest='mutations').
     Tuples are (op, a, b) where b is None for --detach (single-argument option).
@@ -6334,7 +6424,10 @@ def parse_args(args=None) -> argparse.Namespace:
     (or sys.argv)."""
     parser = argparse.ArgumentParser(
         prog="verocase",
-        description="Process assurance case LTAC file and update documentation files (Markdown/HTML)",
+        description=(
+            "Process assurance case LTAC file"
+            " and update documentation files (Markdown/HTML)"
+        ),
         formatter_class=argparse.RawDescriptionHelpFormatter,
         add_help=False,
         epilog="""\
@@ -6562,7 +6655,10 @@ More help is available:
         "--config",
         type=str,
         metavar="FILE",
-        help="path to a TOML config file (default: auto-discover verocase.toml or case.toml)",
+        help=(
+            "path to a TOML config file"
+            " (default: auto-discover verocase.toml or case.toml)"
+        ),
     )
     parser.add_argument(
         "--error",
@@ -6592,7 +6688,8 @@ More help is available:
         help=(
             "regenerate documents with empty selector regions "
             '(only "warning" content is preserved); '
-            "useful for reviewing document structure without generated content, "
+            "useful for reviewing document structure"
+            " without generated content, "
             "especially for AI tools reading the document; "
             "combine with --stdout to write the stripped result to stdout "
             "without modifying the files"
@@ -6601,7 +6698,10 @@ More help is available:
     parser.add_argument(
         "--sync",
         action="store_true",
-        help="update the LTAC file to synchronize citation statements with their declarations",
+        help=(
+            "update the LTAC file to synchronize citation statements"
+            " with their declarations"
+        ),
     )
     parser.add_argument(
         "--rename",
@@ -6627,10 +6727,13 @@ More help is available:
         dest="mutations",
         default=None,
         help=(
-            "replace ID's definition with a citation (^ID) in its current location "
+            "replace ID's definition with a citation (^ID)"
+            " in its current location "
             "and move its subtree to a new top-level package. "
-            "Panics if ID is not defined or is already a top-level package root. "
-            "Joins the shared mutation queue with --rename, --restate, and --move."
+            "Panics if ID is not defined"
+            " or is already a top-level package root. "
+            "Joins the shared mutation queue"
+            " with --rename, --restate, and --move."
         ),
     )
     parser.add_argument(
@@ -6644,11 +6747,14 @@ More help is available:
             "move ID's definition to be a child of DESTINATION. "
             "ID may be anywhere in the tree (top-level or nested). "
             "If ^ID is already a direct child of DESTINATION it is replaced by "
-            "the definition; otherwise the definition is appended as the last child. "
-            "No citation is left at the original location; to leave one behind, "
+            "the definition; otherwise the definition"
+            " is appended as the last child. "
+            "No citation is left at the original location;"
+            " to leave one behind, "
             "run --detach ID first, then --move ID DESTINATION. "
             "Panics if ID or DESTINATION is not defined. "
-            "Joins the shared mutation queue with --rename, --restate, and --detach."
+            "Joins the shared mutation queue"
+            " with --rename, --restate, and --detach."
         ),
     )
     parser.set_defaults(mutations=[])
@@ -6662,14 +6768,21 @@ More help is available:
     parser.add_argument(
         "files",
         nargs="*",
-        help="Documentation file(s) (Markdown/HTML) to update in place (default: auto-discover case.md or docs/case.md etc.)",
+        help=(
+            "Documentation file(s) (Markdown/HTML)"
+            " to update in place (default: auto-discover"
+            " case.md or docs/case.md etc.)"
+        ),
     )
 
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument(
         "--validate",
         action="store_true",
-        help="[READ-ONLY] validate and report warnings/errors; do not modify any file",
+        help=(
+            "[READ-ONLY] validate and report warnings/errors;"
+            " do not modify any file"
+        ),
     )
     mode.add_argument(
         "--stdout",
@@ -6680,29 +6793,42 @@ More help is available:
     mode.add_argument(
         "--selftest",
         action="store_true",
-        help="run the built-in doctest suite and exit (0 = all pass, 1 = any fail)",
+        help=(
+            "run the built-in doctest suite and exit"
+            " (0 = all pass, 1 = any fail)"
+        ),
     )
     mode.add_argument(
         "--fixmissing",
         action="store_true",
-        help="re-render document files and insert element selectors for missing elements "
-        "near their natural position in LTAC order; "
-        "may modify the LTAC to add needsSupport to some leaf elements",
+        help=(
+            "re-render document files and insert element selectors"
+            " for missing elements "
+            "near their natural position in LTAC order; "
+            "may modify the LTAC to add needsSupport to some leaf elements"
+        ),
     )
     mode.add_argument(
         "--fixmisplaced",
         action="store_true",
-        help="move element regions that appear in the wrong order (relative to LTAC order) "
-        "to their correct position in the document; use --misplaced first to preview",
+        help=(
+            "move element regions that appear in the wrong order"
+            " (relative to LTAC order) "
+            "to their correct position in the document;"
+            " use --misplaced first to preview"
+        ),
     )
     mode.add_argument(
         "--start",
         action="store_true",
-        help="create starter case.ltac and case.md files, then run --fixmissing "
-        "to add missing sections for elements and needsSupport markings "
-        "to the new LTAC file. After --start, edit case.ltac and case.md "
-        "to describe your system, then run verocase normally. "
-        "(panics if any case file already exists)",
+        help=(
+            "create starter case.ltac and case.md files,"
+            " then run --fixmissing "
+            "to add missing sections for elements and needsSupport markings "
+            "to the new LTAC file. After --start, edit case.ltac and case.md "
+            "to describe your system, then run verocase normally. "
+            "(panics if any case file already exists)"
+        ),
     )
 
     # LTAC-only render options: read from LTAC/config only, never open
@@ -6714,7 +6840,10 @@ More help is available:
         "-s",
         type=str,
         metavar="SELECTOR",
-        help="render SELECTOR to stdout (LTAC/config only; see selector table below)",
+        help=(
+            "render SELECTOR to stdout"
+            " (LTAC/config only; see selector table below)"
+        ),
     )
     ltac_render.add_argument(
         "--info",
@@ -6767,12 +6896,15 @@ More help is available:
         action="store_true",
         default=False,
         dest="read_only",
-        help="[READ-ONLY] suppress the default document-update pass; load and validate only. "
-        "Useful for combining with --stats or reporting options without "
-        "triggering document rewrites. "
-        "Cannot be combined with any file-modifying mode "
-        "(--fixmissing, --fixmisplaced, --start, --sync, "
-        "--rename, --restate, --detach, --move, --update-ltac).",
+        help=(
+            "[READ-ONLY] suppress the default document-update pass;"
+            " load and validate only. "
+            "Useful for combining with --stats or reporting options without "
+            "triggering document rewrites. "
+            "Cannot be combined with any file-modifying mode "
+            "(--fixmissing, --fixmisplaced, --start, --sync, "
+            "--rename, --restate, --detach, --move, --update-ltac)."
+        ),
     )
     parser.add_argument(
         "--update-ltac",
@@ -6855,7 +6987,8 @@ def print_stats(
         )
         if num_packages >= 2:
             print(
-                f"  - Second largest package: {pkgs[1][1]} ({pkgs[1][0]} elements)",
+                f"  - Second largest package:"
+                f" {pkgs[1][1]} ({pkgs[1][0]} elements)",
                 file=out,
             )
         if num_packages >= 3:
@@ -6873,7 +7006,8 @@ def print_stats(
     # Elements including links and citations
     print("- Elements including links and citations:", file=out)
     print(
-        f"  - Total all elements including links and citations: {ltac_stats['total_full']}",
+        f"  - Total all elements including links"
+        f" and citations: {ltac_stats['total_full']}",
         file=out,
     )
     print(f"  - Total Citations: {ltac_stats['total_citations']}", file=out)
@@ -6888,15 +7022,19 @@ def print_stats(
         for node_type, count in sorted(def_type_counts.items()):
             print(f"    - {node_type}: {count}", file=out)
     print(
-        f"  - Total leaf definitions (no children): {ltac_stats['leaf_definitions']}",
+        f"  - Total leaf definitions (no children):"
+        f" {ltac_stats['leaf_definitions']}",
         file=out,
     )
     print(
-        f"  - Total leaf Claim definitions (no children): {ltac_stats['leaf_claims']}",
+        f"  - Total leaf Claim definitions (no children):"
+        f" {ltac_stats['leaf_claims']}",
         file=out,
     )
     print(
-        f"  - Total bottommost Claim definitions (no Claim descendants): {ltac_stats['bottommost_claims']}",
+        f"  - Total bottommost Claim definitions"
+        f" (no Claim descendants):"
+        f" {ltac_stats['bottommost_claims']}",
         file=out,
     )
     option_counts = ltac_stats["option_counts"]
@@ -6952,7 +7090,8 @@ def _print_report_list(header, items, fmt=str) -> None:
 
 
 def _is_element_region_terminator(line: str) -> bool:
-    """Return True if line begins a boundary that ends the current element's full content.
+    """Return True if line begins a boundary that ends the current element's
+    full content.
 
     An element's "full content" runs from its <!-- verocase element ID -->
     marker through <!-- end verocase --> and then continues through any
@@ -7039,13 +7178,15 @@ def run(args: argparse.Namespace) -> bool:
     if args.read_only:
         if any(getattr(args, f, False) for f in FILE_MODIFYING_FLAGS):
             _panic(
-                f"--read-only cannot be combined with file-modifying modes ({_modifying_str})"
+                f"--read-only cannot be combined with"
+                f" file-modifying modes ({_modifying_str})"
             )
         if args.sync:
             _panic("--read-only cannot be combined with --sync")
         if args.mutations:
             _panic(
-                "--read-only cannot be combined with --rename/--restate/--detach/--move"
+                "--read-only cannot be combined with"
+                " --rename/--restate/--detach/--move"
             )
         if args.update_ltac:
             _panic("--read-only cannot be combined with --update-ltac")
@@ -7073,7 +7214,8 @@ def run(args: argparse.Namespace) -> bool:
             _panic("LTAC validation failed after mutations; no files updated")
 
     _NO_FILES_MSG = (
-        "no document files found; specify files on the command line, set document_files "
+        "no document files found; specify files on the command line,"
+        " set document_files "
         "in config, or create one of: case.md, case.markdown, case.html, "
         "docs/case.md, docs/case.markdown, docs/case.html"
     )

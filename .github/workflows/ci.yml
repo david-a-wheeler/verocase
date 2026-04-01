@@ -1,5 +1,7 @@
 name: CI
 
+# Note: this pins dependencies; update here to update dependencies.
+
 on:
   push:
     branches: ["main"]

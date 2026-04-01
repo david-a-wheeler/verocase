@@ -7,6 +7,7 @@ SPDX-License-Identifier: MIT
 """
 
 import argparse
+import contextlib
 import copy
 import datetime
 import os
@@ -1040,17 +1041,20 @@ class Case:
             ltac_dir = os.path.dirname(os.path.abspath(ltac_path))
             cwd = os.path.abspath(".")
             if ltac_dir != cwd:
-                for ext in ("md", "markdown", "html"):
-                    candidates.append(os.path.join(ltac_dir, f"case.{ext}"))
-        for name in (
-            "case.md",
-            "case.markdown",
-            "case.html",
-            "docs/case.md",
-            "docs/case.markdown",
-            "docs/case.html",
-        ):
-            candidates.append(name)
+                candidates.extend(
+                    os.path.join(ltac_dir, f"case.{ext}")
+                    for ext in ("md", "markdown", "html")
+                )
+        candidates.extend(
+            (
+                "case.md",
+                "case.markdown",
+                "case.html",
+                "docs/case.md",
+                "docs/case.markdown",
+                "docs/case.html",
+            )
+        )
         for candidate in candidates:
             if os.path.exists(candidate):
                 return [candidate]
@@ -1124,12 +1128,12 @@ class Case:
         - Link nodes whose link_target is node
         """
         ident = node.identifier
-        result = []
-        for n in self.all_nodes():
-            if (n.is_citation and n.identifier == ident) or (
-                n.node_type == "Link" and n.link_target is node
-            ):
-                result.append(n)
+        result = [
+            n
+            for n in self.all_nodes()
+            if (n.is_citation and n.identifier == ident)
+            or (n.node_type == "Link" and n.link_target is node)
+        ]
         return result
 
     def parents(
@@ -1671,15 +1675,14 @@ class Case:
             return  # best-effort: skip backup if snapshot dir can't be created
 
         for src in sorted(srcs):
-            try:
+            with contextlib.suppress(OSError):
+                # best-effort: skip files that can't be read or written
                 rel = os.path.relpath(src, ltac_dir)
                 if rel.startswith(".."):
                     rel = os.path.join("absolute", src.lstrip(os.sep))
                 dst = os.path.join(snapshot_dir, rel)
                 os.makedirs(os.path.dirname(dst) or ".", exist_ok=True)
                 shutil.copy2(src, dst)
-            except OSError:
-                pass  # best-effort: skip files that can't be read or written
 
         # Rotate: silently remove oldest snapshots when over the limit.
         try:
@@ -1711,7 +1714,7 @@ class Case:
         for tmp, final in pairs:
             try:
                 os.replace(tmp, final)
-            except OSError as e:
+            except OSError as e:  # noqa: PERF203 -- except calls self.panic (not pass); restructuring would change semantics
                 self.panic(f"cannot update {final!r}: {e}")
 
     def _make_ltac_temp(self, path: str) -> Optional[str]:
@@ -4116,14 +4119,16 @@ def _sacm_effective_sources(
                 elif gc.node_type == "Relation":
                     for ggc in gc.children:
                         if ggc.node_type not in ("Context", "Relation", "Link"):
-                            sources.append((ggc, gc))
+                            sources.append((ggc, gc))  # noqa: PERF401 -- mixed parents (gc vs child) prevent clean comprehension
                 elif gc.node_type not in ("Relation", "Link"):
                     sources.append((gc, child))
             sources.append((child, node))
         elif child.node_type == "Relation":
-            for gc in child.children:
-                if gc.node_type not in ("Context", "Relation", "Link"):
-                    sources.append((gc, child))
+            sources.extend(
+                (gc, child)
+                for gc in child.children
+                if gc.node_type not in ("Context", "Relation", "Link")
+            )
         elif child.node_type != "Link":
             sources.append((child, node))
     return sources
@@ -4143,9 +4148,11 @@ def _gsn_visual_children(
         if child.node_type == "Link":
             pass
         elif child.node_type == "Relation":
-            for gc in child.children:
-                if gc.node_type != "Link":
-                    result.append((gc, child))
+            result.extend(
+                (gc, child)
+                for gc in child.children
+                if gc.node_type != "Link"
+            )
         else:
             result.append((child, node))
     return result
@@ -5543,14 +5550,13 @@ def render_pkg_defines(
 ) -> bool:
     """Write 'Defines: ...' list for a package to out."""
     pkg_id = pkg_root.identifier
-    defined = []
-    for node in case.all_nodes_fast(pkg_root):
-        if (
-            node.is_definition
-            and node.identifier
-            and node.pkg_root.identifier == pkg_id
-        ):
-            defined.append(node)
+    defined = [
+        node
+        for node in case.all_nodes_fast(pkg_root)
+        if node.is_definition
+        and node.identifier
+        and node.pkg_root.identifier == pkg_id
+    ]
     if not defined:
         return False
     pairs = [

@@ -21,7 +21,20 @@ from bisect import bisect_left
 from collections import deque
 from contextlib import contextmanager
 from dataclasses import dataclass, field
-from typing import Dict, Iterable, List, Optional, Set, TextIO, Tuple, Union
+from typing import (
+    AbstractSet,
+    Callable,
+    Dict,
+    Iterable,
+    List,
+    NoReturn,
+    Optional,
+    Set,
+    TextIO,
+    Tuple,
+    Union,
+    cast,
+)
 
 # TOML support: tomllib is in the standard library since Python 3.11.
 # On older Python versions, the third-party 'tomli' package is a drop-in
@@ -74,7 +87,7 @@ class VerocaseError(Exception):
     """
 
 
-def _panic(msg: str) -> None:
+def _panic(msg: str) -> NoReturn:
     """Print a fatal error to stderr and raise VerocaseError."""
     print(f"verocase: fatal: {msg}", file=sys.stderr)
     raise VerocaseError(msg)
@@ -589,7 +602,7 @@ class Node:
         while stack:
             n = stack.pop()
             count += 1
-            stack.extend(n.children)
+            stack.extend(n.children)  # type: ignore[arg-type]
         return count
 
     def write_ltac_subtree(self, out: "TextIO", depth_offset: int = 0) -> None:
@@ -820,7 +833,7 @@ class Case:
         else:
             print(f"verocase: warning: {msg}", file=self.stderr)
 
-    def panic(self, msg: str) -> None:
+    def panic(self, msg: str) -> NoReturn:
         """Print a fatal error to stderr and raise VerocaseError."""
         print(f"verocase: fatal: {msg}", file=self.stderr)
         self.had_error = True
@@ -1654,6 +1667,7 @@ class Case:
         if max_backups <= 0:
             return
 
+        assert self.ltac_path is not None  # always set before _make_backup
         now = datetime.datetime.now()
         ts = (
             now.strftime("%Y-%m-%dT%H%M%S") + f".{now.microsecond // 10000:02d}"
@@ -1780,7 +1794,7 @@ class Case:
         add_missing: bool = False,
         strip: bool = False,
         renames: Optional[Dict[str, str]] = None,
-        existing_ids: Optional[set] = None,
+        existing_ids: Optional[AbstractSet] = None,
         scan_only: bool = False,
     ) -> None:
         """Process a single document file, writing output to `out`.
@@ -2279,6 +2293,8 @@ class Case:
             start, end = find_region(result, ltac_ident)
             if start is None:
                 continue
+            assert end is not None  # find_region returns (int,int)
+            # or (None,None) — never (int,None)
             region_lines = result[start : end + 1]
             remove_start = start
             if remove_start > 0 and result[remove_start - 1].strip() == "":
@@ -2781,7 +2797,7 @@ class Case:
         out: "TextIO",
         current_element: Optional["Node"] = None,
         doc_format: str = "markdown",
-        state: "DocState" = None,
+        state: Optional["DocState"] = None,
     ) -> bool:
         """Parse selector and write the rendered output to out;
         return True if anything written.
@@ -2923,7 +2939,7 @@ class Case:
         node_id: str,
         out: "TextIO",
         *,
-        state: "DocState" = None,
+        state: Optional["DocState"] = None,
         sep: str = "",
     ) -> bool:
         """Write a full element section (heading + configured
@@ -2966,7 +2982,11 @@ class Case:
         return True
 
     def render_package(
-        self, pkg_id_or_star: str, out: "TextIO", *, state: "DocState" = None
+        self,
+        pkg_id_or_star: str,
+        out: "TextIO",
+        *,
+        state: Optional["DocState"] = None,
     ) -> bool:
         """Write a full package section (heading + diagram +
         sub-selections) to out.
@@ -3006,7 +3026,7 @@ class Case:
         doc_format: str = "markdown",
         add_missing: bool = False,
         strip: bool = False,
-        existing_ids: Optional[set] = None,
+        existing_ids: Optional[AbstractSet] = None,
         renames: Optional[Dict[str, str]] = None,
         scan_only: bool = False,
     ) -> None:
@@ -3044,6 +3064,8 @@ class Case:
             self.element_doc_info = {}
             self.element_doc_order = []
             self.doc_pass_stats = DocPassStats()
+        assert self.doc_pass_stats is not None
+        assert self.element_doc_order is not None
 
         # State for has_prose tracking across the prose gap after each region.
         _cur_ident: Optional[str] = None  # element ID being tracked
@@ -3059,6 +3081,18 @@ class Case:
             self.config
         )  # local copy so directives don't affect self.config
 
+        # These are redefined inside `if add_missing:` below with real
+        # implementations; the no-ops here keep pyright happy and serve
+        # as safe fallbacks when add_missing is False.
+        _last_placed_id: Optional[str] = None
+        _stubs_added: List[int] = [0]
+
+        def _emit_stubs_after(placed_id: Optional[str]) -> None:
+            pass
+
+        def _emit_all_remaining() -> None:
+            pass
+
         if add_missing:
             _ltac_ordered = [
                 node
@@ -3071,7 +3105,7 @@ class Case:
             _doc_ids = existing_ids if existing_ids is not None else set()
             _missing_set: set = {n.identifier for n in _ltac_ordered} - _doc_ids
             _inj_state = DocState(doc_format=doc_format)
-            _last_placed_id: Optional[str] = None
+            _last_placed_id = None
             _stubs_added = [0]
 
             def _write_stub(ident: str) -> None:
@@ -3881,26 +3915,6 @@ def _resolve_ext_ref(ext_ref: str, base_url: str) -> str:
     return ext_ref
 
 
-def _node_url(
-    node: Node, base_url: str, pkg_label: str = DEFAULT_CONFIG["pkg_label"]
-) -> str:
-    """Return the hyperlink URL for a node, or '' if none can be determined.
-
-    If the node has an ext_ref, it is resolved via _resolve_ext_ref (relative
-    refs are joined with the directory of base_url when base_url is set).
-    Otherwise a URL is constructed from base_url and a GitHub-style fragment.
-    Returns '' when base_url is empty and no ext_ref is present.
-
-    NOTE: Mermaid click statements use _node_anchor_url directly so that
-    clicking always navigates to the element section, not to its ext_ref.
-    The ext_ref is shown separately in the rendered document text.
-    """
-    if node.ext_ref:
-        return _resolve_ext_ref(node.ext_ref, base_url)
-    if not base_url:
-        return ""
-    return _node_anchor_url(node, base_url, pkg_label)
-
 
 def _render_markdown_node(
     node: Node,
@@ -3979,7 +3993,7 @@ def _render_html_node(
     indent: int,
     base_url: str,
     out: TextIO,
-    pkg_label: str = DEFAULT_CONFIG["pkg_label"],
+    pkg_label: str = cast(str, DEFAULT_CONFIG["pkg_label"]),
 ) -> None:
     """Write an HTML li element for node directly to out, recurse into children.
 
@@ -4589,7 +4603,9 @@ def _write_bottom_padding(leaves, write_edge, bt_direction: bool) -> None:
                 write_edge(f"    {did} ~~~~ {bp}")
 
 
-def _sacm_diagram_body(roots: List["Node"], config: dict, out: TextIO) -> None:
+def _sacm_diagram_body(
+    roots: List["Node"], config: dict, out: TextIO
+) -> None:
     """Write the SACM diagram content without opening/closing fence markers."""
     base_url = config["base_url"]
     pkg_label = config["pkg_label"]
@@ -4678,7 +4694,10 @@ def render_sacm(roots: List["Node"], config: dict, out: TextIO) -> bool:
 
 
 def render_sacm_html(
-    roots: List["Node"], config: dict, out: TextIO, state: "DocState" = None
+    roots: List["Node"],
+    config: dict,
+    out: TextIO,
+    state: Optional["DocState"] = None,
 ) -> bool:
     """Write SACM diagram as a <pre class="mermaid"> block to out."""
     _maybe_inject_mermaid_js(config, state, out)
@@ -4877,7 +4896,9 @@ def _gsn_collect_edges(node, write_edge, leaf_nodes):
         leaf_nodes.append(node)
 
 
-def _gsn_diagram_body(roots: List["Node"], config: dict, out: TextIO) -> None:
+def _gsn_diagram_body(
+    roots: List["Node"], config: dict, out: TextIO
+) -> None:
     """Write the GSN diagram content without opening/closing fence markers."""
     base_url = config["base_url"]
     pkg_label = config["pkg_label"]
@@ -4944,7 +4965,10 @@ def render_gsn(roots: List["Node"], config: dict, out: TextIO) -> bool:
 
 
 def render_gsn_html(
-    roots: List["Node"], config: dict, out: TextIO, state: "DocState" = None
+    roots: List["Node"],
+    config: dict,
+    out: TextIO,
+    state: Optional["DocState"] = None,
 ) -> bool:
     """Write GSN diagram as a <pre class="mermaid"> block to out."""
     _maybe_inject_mermaid_js(config, state, out)
@@ -5165,7 +5189,9 @@ def _cae_collect_edges(node: "Node", write_edge) -> None:
             )
 
 
-def _cae_diagram_body(roots: List["Node"], config: dict, out: TextIO) -> None:
+def _cae_diagram_body(
+    roots: List["Node"], config: dict, out: TextIO
+) -> None:
     """Write the CAE diagram content without opening/closing fence markers."""
     base_url = config["base_url"]
     pkg_label = config["pkg_label"]
@@ -5250,7 +5276,10 @@ def render_cae(roots: List["Node"], config: dict, out: TextIO) -> bool:
 
 
 def render_cae_html(
-    roots: List["Node"], config: dict, out: TextIO, state: "DocState" = None
+    roots: List["Node"],
+    config: dict,
+    out: TextIO,
+    state: Optional["DocState"] = None,
 ) -> bool:
     """Write CAE diagram as a <pre class="mermaid"> block to out."""
     _maybe_inject_mermaid_js(config, state, out)
@@ -5469,8 +5498,7 @@ def render_supports(
 ) -> bool:
     """Write 'Supports: ...' line to out; return False if no parents at all."""
     pairs = []
-    has_direct_parent = node.parent is not None
-    if has_direct_parent:
+    if node.parent is not None:
         p = node.parent
         pairs.append(
             (
@@ -5478,7 +5506,7 @@ def render_supports(
                 _element_anchor_url(p.node_type, p.identifier, config),
             )
         )
-    for parent in case.parents(case.citations_and_links(node)):
+    for parent in case.parents(case.citations_and_links(node)) or []:
         if not parent.identifier:
             continue
         pairs.append(
@@ -5493,7 +5521,8 @@ def render_supports(
         return False
     out.write(sep)
     out.write(
-        "Supports: " + _linked_list(pairs, fmt, bold_first=has_direct_parent)
+        "Supports: "
+        + _linked_list(pairs, fmt, bold_first=(node.parent is not None))
     )
     return True
 
@@ -5530,7 +5559,7 @@ def _render_ext_ref(
 # Map selection name -> fn(node, all_roots, id_info, config, fmt, out, sep).
 # render_referenced_by and render_supports already match (primary, case,
 # config, fmt, out, sep).
-_ELEMENT_RENDER_MAP: Dict[str, callable] = {
+_ELEMENT_RENDER_MAP: Dict[str, Callable[..., bool]] = {
     "referenced_by": render_referenced_by,
     "supported_by": lambda node, _case, config, fmt, o, s: render_supported_by(
         node, config, fmt, o, s
@@ -5636,8 +5665,8 @@ def render_representation(
     fmt: str,
     out: TextIO,
     sep: str = "",
-    state: "DocState" = None,
-    case: "Case" = None,
+    state: Optional["DocState"] = None,
+    case: Optional["Case"] = None,
 ) -> bool:
     """Write the default diagram representation for a package to out."""
     notation = config["default_representation"]
@@ -5680,7 +5709,7 @@ def render_representation(
 
 # render_pkg_defines/citing/cited now match (primary, case, config, fmt,
 # out, sep); representation needs an adapter.
-_PACKAGE_RENDER_MAP: Dict[str, callable] = {
+_PACKAGE_RENDER_MAP: Dict[str, Callable[..., bool]] = {
     "representation": lambda pkg, case, config, fmt, o, s: (
         render_representation(pkg, case.roots, config, fmt, o, s, case=case)
     ),
@@ -5692,7 +5721,7 @@ _PACKAGE_RENDER_MAP: Dict[str, callable] = {
 
 def _apply_sel(
     sel_str: str,
-    render_map: Dict[str, callable],
+    render_map: Dict[str, Callable[..., bool]],
     primary: Node,
     case: "Case",
     config: dict,
@@ -5860,7 +5889,7 @@ class DocState:
 
 
 def _maybe_inject_mermaid_js(
-    config: dict, state: "DocState", out: TextIO
+    config: dict, state: Optional["DocState"], out: TextIO
 ) -> None:
     """Write the Mermaid JS <script> block to out if not yet injected.
 
@@ -5975,7 +6004,7 @@ def _consume_region(
     filename: str,
     start_lineno: int,
     selector: str,
-    case: "Case" = None,
+    case: Optional["Case"] = None,
 ) -> bool:
     """Consume lines from line_iter until '<!-- end verocase -->', return
     True if found.
@@ -6415,6 +6444,7 @@ class _MutationAction(argparse.Action):
 
     def __call__(self, _parser, namespace, values, option_string=None):
         mutations = getattr(namespace, self.dest, None) or []
+        assert option_string is not None  # always set for optional arguments
         op = option_string.lstrip(
             "-"
         )  # 'rename', 'restate', 'detach', or 'move'
@@ -7076,7 +7106,9 @@ def print_stats(
 # ---------------------------------------------------------------------------
 
 
-def _print_report_list(header, items, fmt=str) -> None:
+def _print_report_list(
+    header, items, fmt: Callable[..., str] = str
+) -> None:
     """Print a labelled report list, or '(none)' if empty.
 
     header  -- label printed before the list items   -- iterable of items
@@ -7144,7 +7176,7 @@ def _is_element_region_terminator(line: str) -> bool:
 _DOC_IO_BUFSIZE = 256 * 1024  # 262144 bytes = 256 KiB
 
 
-def run_selftests() -> None:
+def run_selftests() -> bool:
     """Run all doctests embedded in this module and exit.
 
     Exits with code 0 if every test passes, 1 if any fail.
@@ -7181,6 +7213,7 @@ def run(args: argparse.Namespace) -> bool:
         strict=args.error,
     )
     ltac_path = case.ltac_path
+    assert ltac_path is not None  # always set after Case.load()
 
     _modifying_str = ", ".join(f"--{f}" for f in sorted(FILE_MODIFYING_FLAGS))
     if args.read_only:

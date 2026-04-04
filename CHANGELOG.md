@@ -5,6 +5,28 @@ This file documents the most important user-facing changes to verocode. For deta
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.2] - 2026-04-05
+
+### Added
+
+- `CONTRIBUTING.md` with guidance for contributors.
+- Pyright type checking integrated into CI (Python 3.13, standard mode);
+  zero type errors at release.
+- `make verify` target runs linting, type checking, and tests together.
+  (`make check` is renamed to `make verify`.)
+- Dependabot configured for weekly updates to GitHub Actions and pip
+  dependencies.
+- Pinned ruff and pyright versions in CI with pip caching, so CI runs are
+  faster and more reproducible.
+
+### Changed
+
+- Three `Case` methods promoted from private to public API:
+  `make_ltac_temp`, `check_no_existing_case_files`, and `write_start_stubs`.
+- `run_selftests()` return type corrected to `bool` (was `None`); this was
+  a minor latent bug surfaced by type checking.
+- CI updated to use `actions/checkout` v6.
+
 ## [0.7.1] - 2026-03-23
 
 ### Added
@@ -241,7 +263,8 @@ Initial release.
 - Distributed as a single dependency-free Python script (`verocase.py`) and
   as a PyPI package installable with `pip install verocase`.
 
-[Unreleased]: https://github.com/david-a-wheeler/verocase/compare/v0.7.1...HEAD
+[Unreleased]: https://github.com/david-a-wheeler/verocase/compare/v0.7.2...HEAD
+[0.7.2]: https://github.com/david-a-wheeler/verocase/compare/v0.7.1...v0.7.2
 [0.7.1]: https://github.com/david-a-wheeler/verocase/compare/v0.7.0...v0.7.1
 [0.7.0]: https://github.com/david-a-wheeler/verocase/compare/v0.1.0...v0.7.0
 [0.1.0]: https://github.com/david-a-wheeler/verocase/releases/tag/v0.1.0

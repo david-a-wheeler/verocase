@@ -11,7 +11,15 @@ Install some tools for development. Install Python3, then:
 ```bash
 pip install flit
 flit install --symlink
+pipx install ruff
+pipx install pyright
 ```
+
+We use:
+
+- `ruff` as a linter (to detect style issues and likely mistakes)
+- `pyright` for type-checking
+- `unittest` (Python built-in) for the test framework
 
 ## Development commands
 
@@ -24,9 +32,9 @@ make verify
 
 ## Architecture
 
-The entire implementation lives in a single file: `verocase.py`. This is intentional, because it keeps installation trivial.
+The entire implementation lives in a single file: `verocase.py`. This is intentional, because it keeps installation trivial. Users can copy that one file anywhere and use the tool, they don't *have* to use pip or pipx or whatever.
 
-See the file [AGENTS.md](./AGENTS.md) for more about its architecture. We put the information there to ensure that AI agents will find it.
+See the file [AGENTS.md](./AGENTS.md) for more about its architecture. We put the information there to ensure that AI agents will find it. The `--help-api` and `--help-api-details` options should also be helpful.
 
 ## Documentation
 
